@@ -1,0 +1,241 @@
+<template>
+  <!-- 添加新增控件 -->
+  <div class="addAct">
+    <div class="head clear">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item to="/home/sell">客户管理</el-breadcrumb-item>
+        <el-breadcrumb-item to="/home/sell/sellIndex">客户查询</el-breadcrumb-item>
+        <el-breadcrumb-item>明细</el-breadcrumb-item>
+      </el-breadcrumb>
+      <h1>
+        <i class="el-icon-back" @click="back"></i>
+        <span>明细</span>
+      </h1>
+    </div>
+    <div class="content">
+      <div class="selBox">
+        <el-form ref="form" :model="form" label-width="80px" :inline='true'>
+          <el-form-item label="活动名称">
+            <el-input size='small'></el-input>
+          </el-form-item>
+          <el-form-item label="活动名称">
+            <el-input size='small'></el-input>
+          </el-form-item>
+          <el-form-item label="活动名称">
+            <el-input size='small'></el-input>
+          </el-form-item>
+          <el-form-item label="活动名称">
+            <el-input size='small'></el-input>
+          </el-form-item>
+          <el-form-item label="活动名称">
+            <el-input size='small'></el-input>
+          </el-form-item>
+          <el-form-item label="活动名称">
+            <el-input size='small'></el-input>
+          </el-form-item>
+          <el-form-item label="活动名称">
+            <el-input size='small'></el-input>
+          </el-form-item>
+          <el-form-item label="活动名称">
+            <el-input size='small'></el-input>
+          </el-form-item>
+          <el-form-item label="活动名称">
+            <el-input size='small'></el-input>
+          </el-form-item>
+          <el-form-item label="活动名称">
+            <el-input size='small'></el-input>
+          </el-form-item>
+          
+        </el-form>
+      </div>
+      <div class="tab">
+        <el-tabs v-model="activeName"  @tab-click="handleClick">
+          <el-tab-pane label="主要开户行信息" name="first">
+            <div class="tab">
+              <el-table
+                :data="tableData"
+                style="width: 100%"
+                height="700"
+                >
+                <el-table-column
+                  type="index"
+                  label="编号"
+                  width="150">
+                </el-table-column>
+                <el-table-column
+                  prop="themeId"
+                  label="ID"
+                  v-if="false"
+                  >
+                </el-table-column>
+                <el-table-column
+                  prop="themeName"
+                  label="主题名称"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="createTimeStr"
+                  show-overflow-tooltip
+                  label="创建时间"
+                  >
+                </el-table-column>
+              <div slot="empty">
+                <div>
+                  <img src="../../assets/img/none.png" alt="" width="140" height="140" />
+                </div>
+                <p >未查询到明细</p>
+              </div>
+              </el-table>
+              <div class="block">
+                <el-pagination
+                  :current-page="currentPage"
+                  :page-sizes="[10, 100]"
+                  :page-size="pageSize"
+                  layout="sizes,total, jumper, prev, pager, next"
+                  :total="total">
+                </el-pagination>
+              </div>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="股权结构" name="second">股权结构</el-tab-pane>
+          <el-tab-pane label="管理层及主要联系人" name="third">管理层及主要联系人</el-tab-pane>
+          <el-tab-pane label="业务往来信息" name="fourth">业务往来信息</el-tab-pane>
+          <el-tab-pane label="代理商拜访记录" name="fifth">代理商拜访记录</el-tab-pane>
+        </el-tabs>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import formTest from "../../assets/js/formTest";
+export default {
+  name: "AddSell",
+  data() {
+    return {
+      activeName: 'first',
+      tableData:[],
+      currentPage:1,
+      pageSize:10,
+      total:0
+    }
+  },
+  methods: {
+    handleClick(tab, event) {
+        console.log(tab, event);
+      },
+    changeCon() {},
+    changeSign(val) {},
+    // 表单验证
+    submitForm(formName) {},
+    submitForm1(formName) {},
+    resetForm(formName) {},
+    resetForm1(formName) {},
+    qx() {},
+    //发送测试短信
+    send(shopInfoId, mobiles, content, noticeRegisterId) {},
+    // 清空表单
+    clear() {},
+    //获取主题列表
+    getTheme(shopid) {},
+    //新增营销活动
+    submit() {},
+    change() {},
+    //roi时间选择事件
+    selRuleFormTime() {},
+    //获取短信签名列表
+    getSignatures(shopInfoId) {},
+    getSnapshots(id) {},
+
+    //获取用户店铺列表
+    getShopList() {},
+
+    // 点击弹出测试短信框
+    cs() {
+      this.csdialogVisible = true;
+    },
+    handleSelect(item) {
+      console.log(item);
+    },
+    //创建主题按钮
+    create() {
+      this.dialogVisible = true;
+    },
+    // 点击返回按钮
+    back() {
+      window.history.back();
+    },
+    back1() {
+      this.dialogVisible = false;
+    },
+
+    // 创建主题和测试短信关闭
+    close() {
+      this.dialogVisible = false;
+      this.csdialogVisible = false;
+    },
+    // 添加主题 的提交
+    commit() {
+      this.dialogVisible = false;
+      this.csdialogVisible = false;
+    }
+  }
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang='scss' >
+$sc: 12;
+.addAct {
+  .head {
+    h1 {
+      opacity: 0.87;
+      font-size: 18px;
+      color: #000;
+      letter-spacing: 0;
+      line-height: 42px;
+      height: 42px;
+      font-weight: bold;
+      padding: 0 50px;
+      span {
+        border-left: 1px solid #ccc;
+        padding: 0 20px;
+      }
+      i {
+        font-weight: bold;
+        margin-right: 20px;
+        cursor: pointer;
+      }
+    }
+    .el-breadcrumb {
+      line-height: 30px;
+      margin-left: 50px;
+      margin-right: 20px;
+    }
+  }
+  .content{
+    height: 100%;
+    // background: pink;
+    padding:20px 50px;
+    .selBox{
+      .el-form--inline .el-form-item{
+        margin-right:0 ;
+        width: 200px;
+      }
+    }
+    .tab{
+      .block {
+        background: #fff;
+        bottom: 26px;
+        padding: 10px;
+        .el-pagination{
+          width: 100%;
+          text-align: center
+        }
+        
+      }
+    }
+  }
+}
+</style>

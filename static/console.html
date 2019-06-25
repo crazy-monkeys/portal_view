@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>WebSocket Logger</title>
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+<style type="text/css">
+    html,body{
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+    .container{
+        height: 100%;
+        overflow-y: scroll;
+        background: #333;
+        color: #aaa;
+    }
+    .left-margin-20{
+        margin-left:40px;
+    }
+    .infotext{
+        color:#A8C023;
+    }
+    .debugtext {
+        color:green;
+    }
+    .warntext{
+        color:#D6BF55;
+    }
+    .errortext{
+        color:#FF6B68;
+    }
+    .classname{
+        color:#299999;
+    }
+    .threadname{
+        color:#AE8ABE;
+    }
+</style>
+<div id="log-container" class="container">
+    <div></div>
+</div>
+</body>
+<script>
+    var stompClient = null;
+    $(document).ready(function() {openSocket();});
+    function openSocket() {
+        if(stompClient==null){
+            var socket = new SockJS(document.location.protocol + "//" + window.location.host + '/crm-web/websocket?token=kl');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({token:"kl"}, function(frame) {
+                stompClient.subscribe('/topic/pullLogger', function(event) {
+                    var content=JSON.parse(event.body);
+                    switch (content.level) {
+                        case 'INFO':
+                            content.level = '<span class="infotext">' + content.level + '</span>';
+                            break;
+                        case 'DEBUG':
+                            content.level = '<span class="debugtext">' + content.level + '</span>';
+                            break;
+                        case 'WARN':
+                            content.level = '<span class="warntext">' + content.level + '</span>';
+                            break;
+                        case 'ERROR':
+                            content.level = '<span class="errortext">' + content.level + '</span>';
+                            break;
+                    }
+                    content.threadName = "<span class='threadname'>" + content.threadName + "</span>";
+                    content.className = "<span class='classname'>" + content.className + "</span>";
+                    $("#log-container div").append("<p>");
+                    $("#log-container div").append(content.timestamp);
+                    $("#log-container div").append(" ");
+                    $("#log-container div").append(content.level);
+                    $("#log-container div").append(" --- [");
+                    $("#log-container div").append(content.threadName);
+                    $("#log-container div").append("] ");
+                    $("#log-container div").append(content.className);
+                    $("#log-container div").append("   : ");
+                    $("#log-container div").append(content.body);
+                    $("#log-container div").append("</p>");
+                    if(content.exception != "") {
+                        $("#log-container div").append("<p class='left-margin-20'>" + content.exception + "</p>");
+                    }
+                    if(content.cause != "") {
+                        $("#log-container div").append("<p class='left-margin-20'>" + content.cause + "</p>");
+                    }
+                    $("#log-container").scrollTop($("#log-container div").height() - $("#log-container").height());
+                },{
+                    token:"kltoen"
+                });
+            });
+        }
+    }
+    function closeSocket() {
+        if (stompClient != null) {
+            stompClient.disconnect();
+            stompClient=null;
+        }
+    }
+    function clear(){
+        $("#log-container div").html("");
+    }
+</script>
+</body>
+</html>

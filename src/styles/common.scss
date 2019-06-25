@@ -1,0 +1,237 @@
+
+@import './variable.scss';
+* {
+  box-sizing: border-box;
+}
+
+.page-container {
+  padding: 14px 24px;
+  position: relative;
+}
+.page-header {
+  padding: 0 24px;
+  .title {
+    font-size: $xLarge;
+    color: $grey-10;
+    opacity: .87;
+    margin: 12px 0 15px;
+  }
+
+}
+
+.page-block {
+  position: relative;
+  margin: 16px 0;
+  background: $white;
+  box-shadow: 0 0 8px 0 rgba($grey-10, .05);
+  &:first-of-type {
+    margin-top: 0;
+  }
+  &::last-of-type {
+    margin-bottom: 0;
+  }
+  .header {
+    padding: 0 32px;
+    height: 56px;
+    line-height: 56px;
+    border-bottom: 1px solid $grey-4;
+    h4 {
+      font-size: $large;
+      color: $grey-deep;
+    }
+  }
+  .section {
+    padding: 24px 32px;
+  }
+  .el-table th:first-of-type {
+    padding-left: 32px;
+  }
+  .el-table th:last-of-type {
+    padding-right: 32px;
+  }
+  .el-table__body td:first-of-type {
+    padding-left: 32px;
+  }
+  .el-table__body td:last-of-type {
+    padding-right: 32px;
+  }
+}
+
+.page-content {
+  background: $white;
+  box-shadow: 0 0 8px 0 rgba($grey-10, .05);
+  .filter-bar {
+    min-height: 32px;
+    padding: 12px 32px;
+    color: $grey;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .filter-area {
+      display: flex;
+      align-items: center;
+    }
+    .action-area {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+  }
+  .page-footer {
+    padding: 12px 32px;
+  }
+}
+
+.float-footer {
+  position: relative;
+  margin: 16px -24px -14px;
+  background: $white;
+  display: flex;
+  padding: 12px 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination-bar {
+  padding: 12px 32px;
+}
+
+.el-radio-group {
+  margin: 0 16px;
+  .el-radio-button:first-of-type {
+    .el-radio-button__inner {
+      border-radius: 2px 0 0 2px;
+    }
+  }
+  .el-radio-button:last-of-type {
+    .el-radio-button__inner {
+      border-radius: 0 2px 2px 0;
+    }
+  }
+  .el-radio-button__inner {
+    font-size: $small;
+  }
+  .unex {
+    font-size: $small;
+  }
+  .is-active {
+    .el-radio-button__inner {
+      background: $white;
+      color: $blue;
+      border-color: $blue;
+    }
+  }
+}
+
+.filter-panel-button.el-button {
+  position: relative;
+  z-index: 2;
+  margin: -10px -32px -13px 20px;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  &:hover, &:focus {
+    background: $white;
+    border-color: $grey-4;
+  }
+  span {
+    height: 34px;
+    line-height: 34px;
+  }
+  .unex:first-of-type {
+    position: relative;
+    font-size: $xLarge;
+    top: 4px;
+    margin-right: 4px;
+  }
+  .unex:last-of-type {
+    font-size: $small;
+  }
+}
+
+.filter-panel {
+  padding: 24px 32px;
+  border-top: 1px solid $grey-4;
+  label {
+    width: 100%;
+    color: $grey;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .el-range-editor.el-input__inner.el-range-editor--small {
+    width: 100%;
+  }
+  .el-select {
+    width: 100%;
+  }
+  .el-input__inner {
+    width: 100%;
+  }
+  .inline-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    span {
+      margin: 0 12px;
+    }
+  }
+  .el-row {
+    margin-bottom: 12px;
+    &::last-of-type {
+      margin-bottom: 0;
+    }
+  }
+  .button-group {
+    margin-top: 24px;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+
+.search-button {
+  &.el-button {
+    border-radius: 2px;
+  }
+  &.el-button--primary.is-plain{
+    background: $white;
+    &:hover, &:focus {
+      color: $white;
+    }
+  }
+}
+
+.export-button.el-button {
+  padding: 7px 15px 7px 25px;
+  position: relative;
+  &.el-button--text{
+    color: $grey;
+  }
+  .unex:first-of-type {
+    left: 0;
+    top: 50%;
+    position: absolute;
+    font-size: $xLarge;
+    transform: translate(0, -50%);
+  }
+}
+
+.create-button.el-button {
+  padding: 7px 15px;
+  border-radius: 2px;
+  font-size: $normal;
+  width: 80px;
+  min-width: 80px;
+  .unex {
+    font-size: $normal;
+  }
+}
+
+.error-button.el-button {
+  background-color: $errorColor;
+  border-color: $errorColor;
+  &:hover, &focus {
+    background-color: $errorColor;
+    border-color: $errorColor;
+  }
+}
