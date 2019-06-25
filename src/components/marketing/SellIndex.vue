@@ -6,50 +6,40 @@
           <el-breadcrumb-item to='/home/sell'>客户管理</el-breadcrumb-item>
           <el-breadcrumb-item>客户查询</el-breadcrumb-item>
         </el-breadcrumb>
-        <h1>客户查询</h1>
+        <!-- <h1>客户查询</h1> -->
       </div>
-      <div class="sels clear">
-        <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true'>
-          <el-form-item label="活动名称">
-            <el-input size='small'></el-input>
-          </el-form-item>
-          <el-form-item label="活动名称">
-            <el-input size='small'></el-input>
-          </el-form-item>
-          <el-form-item label="活动名称">
-            <el-input size='small'></el-input>
-          </el-form-item>
-          <el-form-item label="活动名称">
-            <el-input size='small'></el-input>
-          </el-form-item>
-          <el-form-item label="活动名称">
-            <el-input size='small'></el-input>
-          </el-form-item>
-          <el-form-item label="活动名称">
-            <el-input size='small'></el-input>
-          </el-form-item>
-          <el-form-item label="活动名称">
-            <el-input size='small'></el-input>
-          </el-form-item>
-          <el-form-item label="活动名称">
-            <el-input size='small'></el-input>
-          </el-form-item>
-          <el-form-item label="活动名称">
-            <el-input size='small'></el-input>
-          </el-form-item>
-          <el-form-item label="活动名称">
-            <el-input size='small'></el-input>
-          </el-form-item>
-          <el-form-item label=" ">
-            <el-button @click="search" size='small' type='primary' plain>搜索</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-      <div class="box">
-        <div class="btns clear">
-          <el-button @click="add" class="add" size='small' type='primary'>明细</el-button>
-          <el-button class="add" size='small' type='primary'>导出</el-button>
+      <!-- <transition-group enter-active-class="animated slideInRight" leave-active-class="animated slideOutLeft"> -->
+       
+        <div class="sels clear" >
+          <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true'>
+            <el-form-item label="客户名称" v-if='checkedCities.indexOf(1)!=-1'>
+              <el-input size='small' placeholder="请输入"></el-input>
+            </el-form-item>
+            <el-form-item label="英文名称" v-if='checkedCities.indexOf(2)!=-1'>
+              <el-input size='small' placeholder="请输入"></el-input>
+            </el-form-item>
+            <el-form-item label="客户号" v-if='checkedCities.indexOf(3)!=-1'>
+              <el-input size='small' placeholder="请输入"></el-input>
+            </el-form-item>
+            <el-form-item label="代理商" v-if='checkedCities.indexOf(4)!=-1'>
+              <el-input size='small' placeholder="请输入"></el-input>
+            </el-form-item>
+            <el-form-item label="客户类别" v-if='checkedCities.indexOf(5)!=-1'>
+              <el-input size='small' placeholder="请输入"></el-input>
+            </el-form-item>
+            <el-form-item label="报备日期" v-if='checkedCities.indexOf(6)!=-1'>
+                <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期"
+                  end-placeholder="结束日期">
+                </el-date-picker>
+              </el-form-item>
+            <el-form-item :label="checkedCities.length==0 ?'' : ' '">
+              <el-button size='small' type='primary' plain>搜索</el-button>
+              <el-button @click='dialogVisible = true'  size='small' type='primary' plain>更多</el-button>
+            </el-form-item>
+          </el-form>
         </div>
+      <!-- </transition-group> -->
+      <div class="box">
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" height="700" @row-click='rowClick'>
             <el-table-column prop="" width='30' show-overflow-tooltip label="">
@@ -58,21 +48,20 @@
             </el-table-column>
             <el-table-column prop="" show-overflow-tooltip label="客户中文名">
             </el-table-column>
-            <el-table-column prop="" label="活动名称" show-overflow-tooltip>
+            <el-table-column prop="" label="客户英文名" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="" label="人群名称" show-overflow-tooltip>
+            <el-table-column prop="" label="客户号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="" show-overflow-tooltip label="发送时间">
+            <el-table-column prop="" show-overflow-tooltip label="代理商">
             </el-table-column>
-            <el-table-column prop="" label="发送人数" show-overflow-tooltip>
+            <el-table-column prop="" label="客户类别" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="发送总量">
+            <el-table-column show-overflow-tooltip prop="" label="客户状态">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="成功发送总量">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="发送状态" width="80">
-            </el-table-column>
-            <el-table-column prop="" show-overflow-tooltip label="ROI">
+            <el-table-column show-overflow-tooltip prop="" label="操作">
+              <template scope-slot='scope'>
+                <el-button type='text' size='small' @click='add'>明细</el-button>
+              </template>
             </el-table-column>
             <div slot="empty">
               <div>
@@ -83,22 +72,74 @@
           </el-table>
         </div>
         <div class="block">
-          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-            :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+            :current-page="currentPage" :page-sizes="[10, 100]" :page-size="10"
+            layout="sizes,total, jumper, prev, pager, next" :total="total">
           </el-pagination>
         </div>
       </div>
     </div>
+    <el-dialog
+        title="筛选条件选取"
+        :visible.sync="dialogVisible"
+        width="600px"
+        >
+        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+          <div style="margin: 15px 0;"></div>
+          <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+            <el-checkbox v-for="con in conditions" :label="con.value" :key="con.value">{{con.label}}</el-checkbox>
+        </el-checkbox-group>
+        <!-- <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="sure">确 定</el-button>
+        </span> -->
+    </el-dialog>
   </div>
 </template>
 
 <script>
+  import Dialog from '@/components/marketing/coms/dialog.vue'
   import formTest from '../../assets/js/formTest'
   export default {
     name: 'SellIndex',
+    components:{
+      Dialog
+    },
     data() {
 
       return {
+        checkAll: false,
+        checkedCities: [
+          1,2
+        ],
+        conditions: [
+        {
+            label:'客户名称',
+            value:1
+          },
+          {
+            label:'英文名称',
+            value:2
+          },
+          {
+            label:'客户号',
+            value:3
+          },
+          {
+            label:'代理商',
+            value:4
+          },
+          {
+            label:'客户类别',
+            value:5
+          },
+          {
+            label:'报备日期',
+            value:6
+          }
+        ],
+        isIndeterminate: false,
+        onoff:true,
         ok: 0,
         childrenBtn: true,
         look: false,
@@ -289,7 +330,9 @@
         //短信内容 显示否
         smsdialogVisible: false,
         //营销活动列表数据
-        tableData: [],
+        tableData: [
+          {}
+        ],
         //第几页
         currentPage: 1,
         //每页的容量
@@ -349,6 +392,28 @@
       },
     },
     methods: {
+      handleCheckAllChange(val) {
+        console.log(val)
+        this.checkedCities = val ? [1,2,3,4,5,6] : [];
+        this.isIndeterminate = false;
+      },
+      handleCheckedCitiesChange(value) {
+        console.log(value)
+        let checkedCount = value.length;
+        this.checkAll = checkedCount === this.conditions.length;
+        this.isIndeterminate = checkedCount > 0 && checkedCount < this.conditions.length;
+      },
+      sure(){
+        this.dialogVisible = false
+      },
+      handleClose(done) {
+                this.$confirm('确认关闭？')
+                .then(_ => {
+                    done();
+                })
+                .catch(_ => {});
+            },
+      
       q(index) {
         return this.pageSize * (this.currentPage - 1) + index + 1
       },
@@ -775,55 +840,14 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
   $sc:12;
-
   .sell {
-    .empty {
-      p {
-        margin-top: 23px;
-      }
-    }
-
-    .el-dialog {
-      .el-textarea__inner {
-        width: 100%;
-        height: 100%;
-        background: transparent;
-        text-indent: 0;
-      }
-
-      .line {
-        height: 40px;
-        line-height: 40px;
-
-        span {
-          float: right;
-        }
-
-        .fail {
-          color: red
-        }
-
-        .suc {
-          color: green
-        }
-
-        .beg {
-          color: #3366FF
-        }
-
-        .act {
-          color: #ccc
+    .el-dialog{
+      .el-checkbox-group{
+        .el-checkbox{
+          width: 150px;
         }
       }
     }
-
-    .sms {
-      font-size: 14px;
-      color: #333333;
-      letter-spacing: 0;
-      line-height: 22px;
-    }
-
     .head {
       h1 {
         opacity: 0.87;
@@ -832,19 +856,8 @@
         letter-spacing: 0;
         line-height: 42px;
         height: 42px;
-        font-weight: bold;
+        /* font-weight: bold; */
         padding: 0 50px;
-
-        span {
-          border-left: 1px solid #ccc;
-          padding: 0 20px
-        }
-
-        i {
-          font-weight: bold;
-          margin-right: 20px;
-          cursor: pointer;
-        }
       }
 
       .el-breadcrumb {
@@ -854,150 +867,58 @@
         font-size: 14px;
       }
     }
-
     .sels {
       background: #fff;
       padding: 10px 30px;
       margin: 0 20px 10px 20px;
 
       .form {
+        /* max-width: 1000px; */
         .el-form-item__label {
           height: 30px;
         }
-
         .el-form-item {
           margin-bottom: 0;
         }
-      }
-
-      .drop {
-        width: 286px;
-        height: 32px;
-        line-height: 30px;
-        margin: 12px 0 12px 20px;
-        border: 1px solid #ccc;
-        box-sizing: border-box;
-
-        .sel {
-          width: 180px;
-
-          .el-input__inner {
-            border: none;
-            height: 28px;
-            ;
-          }
+        .el-date-editor{
+          width: 414px;
         }
-
-        .el-dropdown {
-
-          border-right: 1px solid #ccc;
-          padding: 0 10px;
-
-          span {
-            font-size: 14px
-          }
-
-          .el-dropdown-menu__item {
-            width: 100px
-          }
-        }
-
       }
-
-      .el-date-editor {
-        margin: 12px 0 12px 20px;
-        height: 32px;
-        line-height: 32px;
-        border-radius: 0;
-
-        .el-range-separator {
-          line-height: 32px;
-          height: 32px;
-        }
-
-      }
-
-
     }
-
     .box {
       margin: 0 20px 20px 20px;
       background: #FFFFFF;
       box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
       border-radius: 2px;
       position: relative;
-
-
-
       .btns {
-
         .add {
           margin: 12px 0 12px 30px;
         }
-
-
       }
-
       .tab {
-
         .el-table {
-
           td {
             height: 64px;
             line-height: 64px;
-
             .cell {
-              // overflow: hidden;
-              // text-overflow:ellipsis;
-              // display: -webkit-box;
-              // -webkit-line-clamp: 2;
-              // -webkit-box-orient: vertical;
-              // width:100px;
               font-size: 12px;
               color: #333333;
               letter-spacing: 0;
               line-height: 18px;
-
-              .el-dropdown {
-                font-size: 12px;
-                color: #3366FF;
-                letter-spacing: 0;
-                line-height: 18px;
-              }
-
-              .el-button {
-                font-size: 12px;
-                color: #3366FF;
-                letter-spacing: 0;
-                line-height: 12px;
-              }
+              
             }
 
           }
         }
-
       }
-
       .block {
-        // position: absolute;
-        bottom: 26px;
         padding: 10px;
-
         .el-pagination {
           width: 100%;
-          text-align: center
+          text-align: center;
         }
-
       }
-
-    }
-
-    .bottom {
-      text-align: center;
-      font-size: 12px;
-      color: #999999;
-      letter-spacing: 0;
-      line-height: 16px;
     }
   }
 </style>

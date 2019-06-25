@@ -3,7 +3,7 @@
     <div class="zd" @click="zd" v-if="!statu"></div>
     <div class="zk" v-if="statu" @click="zk"></div>
     <div class="tbbtn" @click="tb"></div>
-    <div class="proName">CRM</div>
+    <div class="proName">Portal</div>
     <div class="shopName" @click="fnToggle">
       <div class="top">{{loginName}}</div>
       <div class="down">{{shopName}}</div>
@@ -387,7 +387,7 @@ $sc: 12;
     color: #ffffff;
     letter-spacing: 0;
     float: right;
-    background: #000;
+    background: #A761D6;
     display: flex;
     justify-content: center;
     align-items: center;

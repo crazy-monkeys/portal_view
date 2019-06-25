@@ -11,26 +11,6 @@ export default new Router({
       redirect: { name: 'tb' },
       component: resolve => require(['@/components/Home'], resolve),
       children: [
-        {
-          path: '/home/member/data',
-          name: 'member',
-          component: resolve => require(['@/components/insight/MemberList'], resolve)
-        },
-        {
-          path: '/home/member/data/edit/:merchantId/:shopId/:id',
-          name: 'editMember',
-          component: resolve => require(['@/components/insight/EditMember'], resolve)
-        },
-        {
-          path: '/home/order/analysis',
-          name: 'order',
-          component: resolve => require(['@/components/insight/OrderList'], resolve)
-        },
-        {
-          path: '/home/goods/data',
-          name: 'goods',
-          component: resolve => require(['@/components/insight/GoodsList'], resolve)
-        },
         //首页
         {
           path: 'tb',
@@ -184,51 +164,7 @@ export default new Router({
           name: 'signReminder',
           component: resolve => require(['@/components/careless/SignReminder'], resolve),
         },
-        {
-          path: 'level',
-          name: 'level',
-          component: resolve => require(['@/components/equity/Level'], resolve),
-          // meta: {keepAlive: true}
-        },
-        {
-          path: 'point',
-          name: 'point',
-          component: resolve => require(['@/components/equity/Bound'], resolve),
-          // meta: {keepAlive: true}
-
-        },
-        {
-          path: 'coupon/exchange',
-          name: 'Coupon',
-          component: resolve => require(['@/components/equity/Coupon'], resolve),
-          // meta: {keepAlive: true}
-        },
-        {
-          path: 'addCoupon/:id',
-          component: resolve => require(['@/components/equity/AddCoupon'], resolve),
-          name: 'AddCoupon',
-        },
-        {
-          path: 'couponRep/:id/:apiMerchantId',
-          name: 'CouponRep',
-          component: resolve => require(['@/components/equity/CouponRep'], resolve),
-        },
-        {
-          path: 'couponCampaign/list',
-          name: 'CouponCampaign',
-          component: resolve => require(['@/components/equity/CouponCampaign'], resolve),
-          // meta: {keepAlive: true}
-        },
-        {
-          path: 'editCoupon/:id/:apiMerchantId',
-          name: 'EditCoupon',
-          component: resolve => require(['@/components/equity/EditCoupon'], resolve),
-        },
-        {
-          path: '/home/shop',
-          name: 'shop',
-          component: resolve => require(['@/components/system/Shop'], resolve),
-        },
+        
         //资源设置
         {
           path: '/home/source',
@@ -245,18 +181,8 @@ export default new Router({
           name: 'resource',
           component: resolve => require(['@/components/system/Resource'], resolve),
         },
-        {
-          path: 'merchant',
-          name: 'merchant',
-          component: resolve => require(['@/components/equity/Merchant'], resolve),
-          // meta: {keepAlive: true}
-
-        },
-        {
-          path: 'users/:id',
-          name: 'users',
-          component: resolve => require(['@/components/equity/Users'], resolve),
-        },
+        
+        
         {
           path: 'manage/black',
           name: 'black',
@@ -303,7 +229,7 @@ export default new Router({
 
         },
         {
-          path: 'photoCondition/:id/:type',
+          path: 'photoCondition',
           name: 'photoCondition',
           component: resolve => require(['@/components/manage/PhotoCondition'], resolve),
         },
@@ -312,22 +238,6 @@ export default new Router({
           name: 'outCustom',
           component: resolve => require(['@/components/manage/OutCustom'], resolve),
           // meta: {keepAlive: true}
-
-        },
-        {
-          path: 'eg',
-          name: 'eg',
-          component: resolve => require(['@/components/equity/eg1'], resolve),
-        },
-        {
-          path: 'eg2',
-          name: 'eg2',
-          component: resolve => require(['@/components/equity/eg2'], resolve),
-        },
-        {
-          path: 'tag/:id/:templateId/:name',
-          name: 'tag',
-          component: resolve => require(['@/components/manage/Tag'], resolve),
         },
         {
           path: 'account/settings',
@@ -344,7 +254,6 @@ export default new Router({
           name: 'organization',
           component: resolve => require(['@/components/system/Organization'], resolve),
         },
-
         {
           path: 'account/add',
           name: 'accountAdd',
@@ -355,57 +264,6 @@ export default new Router({
           name: 'permission',
           component: resolve => require(['@/components/system/Permission'], resolve),
         },
-        {
-          path: 'customer',
-          name: 'customerIndex',
-          component: resolve => require(['@/components/customer/Index'], resolve),
-          meta: { keepAlive: true },
-          redirect: {
-            name: 'customerRetained'
-          },
-          children: [
-            {
-              path: 'retained',
-              name: 'customerRetained',
-              component: resolve => require(['@/components/customer/Retained'], resolve),
-            },
-            {
-              path: 'repurchase',
-              name: 'customerRepurchase',
-              component: resolve => require(['@/components/customer/Repurchase'], resolve),
-            }
-          ]
-        },
-        {
-          path: 'product-analysis/relation',
-          name: 'productRelation',
-          component: resolve => require(['@/components/productAnalysis/Relation'], resolve)
-        },
-        {
-          path: 'coupon/list',
-          name: 'couponList',
-          component: resolve => require(['@/components/coupon/List'], resolve)
-        },
-        {
-          path: 'coupon/create-tmall',
-          name: 'createTmallCoupon',
-          component: resolve => require(['@/components/coupon/TmallCreate'], resolve)
-        },
-        {
-          path: 'coupon/edit-tamll/:id',
-          name: 'editTmallCoupon',
-          component: resolve => require(['@/components/coupon/TmallCreate'], resolve)
-        },
-        {
-          path: 'coupon/create-offline',
-          name: 'createOfflineCoupon',
-          component: resolve => require(['@/components/coupon/OfflineCreate'], resolve)
-        },
-        {
-          path: 'coupon/edit-offline/:id',
-          name: 'editOfflineCoupon',
-          component: resolve => require(['@/components/coupon/OfflineCreate'], resolve)
-        }
       ]
     },
     {

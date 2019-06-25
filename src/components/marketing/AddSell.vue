@@ -7,37 +7,48 @@
         <el-breadcrumb-item to="/home/sell/sellIndex">客户查询</el-breadcrumb-item>
         <el-breadcrumb-item>明细</el-breadcrumb-item>
       </el-breadcrumb>
-      <h1>
-        <i class="el-icon-back" @click="back"></i>
-        <span>明细</span>
-      </h1>
     </div>
     <div class="content">
       <div class="selBox">
-        <el-form ref="form" :model="form" label-width="80px" :inline='true'>
-          <el-form-item label="活动名称">
-            <el-input size='small'></el-input>
+        <el-form ref="form" :model="form" class="form" label-position='top' :inline='true'>
+          <el-form-item label="客户号">
+            <el-input size='small'  placeholder="" :readonly="true"></el-input>
           </el-form-item>
-          <el-form-item label="活动名称">
-            <el-input size='small'></el-input>
+          <el-form-item label="公司名称">
+            <el-input size='small' placeholder="" :readonly="true"></el-input>
           </el-form-item>
-          <el-form-item label="活动名称">
-            <el-input size='small'></el-input>
+          <el-form-item label="英文名">
+            <el-input size='small' placeholder="" :readonly="true"></el-input>
           </el-form-item>
-          <el-form-item label="活动名称">
-            <el-input size='small'></el-input>
+          <el-form-item label="客户类型">
+            <el-input size='small' placeholder="" :readonly="true"></el-input>
           </el-form-item>
-          <el-form-item label="活动名称">
-            <el-input size='small'></el-input>
+          <el-form-item label="销售">
+            <el-input size='small' placeholder="" :readonly="true"></el-input>
           </el-form-item>
-          <el-form-item label="活动名称">
-            <el-input size='small'></el-input>
+          <el-form-item label="阿米巴">
+            <el-input size='small' placeholder="" :readonly="true"></el-input>
           </el-form-item>
-          <el-form-item label="活动名称">
-            <el-input size='small'></el-input>
+          <el-form-item label="公司资产">
+            <el-input size='small' placeholder="" :readonly="true"></el-input>
           </el-form-item>
-          <el-form-item label="活动名称">
-            <el-input size='small'></el-input>
+          <el-form-item label="员工人数">
+            <el-input size='small' placeholder="" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="注册日期">
+            <el-input size='small' placeholder="" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="公司总机">
+            <el-input size='small' placeholder="" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="办公地址">
+            <el-input size='small' placeholder="" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="注册地址">
+            <el-input size='small' placeholder="" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="业务介绍" >
+            <el-input type='textarea' v-model='form.txt' :rows="5" placeholder="" resize='none' :readonly="true"></el-input>
           </el-form-item>
         </el-form>
       </div>
@@ -45,20 +56,19 @@
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="主要开户行信息" name="first">
             <div class="tabBox">
-              <el-table :data="tableData" style="width: 100%" height="700">
-                <el-table-column type="index" label="编号" width="150">
+              <el-table :data="tableData" style="width: 100%" height="">
+                <el-table-column prop="" label="ID" v-if="false">
                 </el-table-column>
-                <el-table-column prop="themeId" label="ID" v-if="false">
+                <el-table-column prop="" label="银行名称" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="themeName" label="主题名称" show-overflow-tooltip>
+                <el-table-column prop="" label="银行地址" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="createTimeStr" show-overflow-tooltip label="创建时间">
+                <el-table-column prop="" label="账号" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="" label="银行识别码" show-overflow-tooltip>
                 </el-table-column>
                 <div slot="empty">
-                  <div>
-                    <img src="../../assets/img/none.png" alt="" width="140" height="140" />
-                  </div>
-                  <p>未查询到明细</p>
+                  无数据
                 </div>
               </el-table>
               <div class="block">
@@ -70,20 +80,13 @@
           </el-tab-pane>
           <el-tab-pane label="股权结构" name="second">
             <div class="tabBox">
-              <el-table :data="tableData" style="width: 100%" height="700">
-                <el-table-column type="index" label="编号" width="150">
+              <el-table :data="tableData" style="width: 100%" height="">
+                <el-table-column prop="" label="股东" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="themeId" label="ID" v-if="false">
-                </el-table-column>
-                <el-table-column prop="themeName" label="主题名称" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="createTimeStr" show-overflow-tooltip label="创建时间">
+                <el-table-column prop="" label="占比" show-overflow-tooltip>
                 </el-table-column>
                 <div slot="empty">
-                  <div>
-                    <img src="../../assets/img/none.png" alt="" width="140" height="140" />
-                  </div>
-                  <p>未查询到明细</p>
+                  无数据
                 </div>
               </el-table>
               <div class="block">
@@ -95,20 +98,22 @@
           </el-tab-pane>
           <el-tab-pane label="管理层及主要联系人" name="third">
             <div class="tabBox">
-              <el-table :data="tableData" style="width: 100%" height="700">
-                <el-table-column type="index" label="编号" width="150">
+              <el-table :data="tableData" style="width: 100%" height="">
+                <el-table-column prop="" label="部门" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="themeId" label="ID" v-if="false">
+                <el-table-column prop="" label="姓名" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="themeName" label="主题名称" show-overflow-tooltip>
+                <el-table-column prop="" label="职位" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="createTimeStr" show-overflow-tooltip label="创建时间">
+                <el-table-column prop="" label="电话号码" show-overflow-tooltip>
                 </el-table-column>
+                <el-table-column prop="" label="电子邮件" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="" label="备注" show-overflow-tooltip>
+                </el-table-column>
+                
                 <div slot="empty">
-                  <div>
-                    <img src="../../assets/img/none.png" alt="" width="140" height="140" />
-                  </div>
-                  <p>未查询到明细</p>
+                  无数据
                 </div>
               </el-table>
               <div class="block">
@@ -120,7 +125,7 @@
           </el-tab-pane>
           <el-tab-pane label="业务往来信息" name="fourth">
             <div class="tabBox">
-              <el-table :data="tableData" style="width: 100%" height="700">
+              <el-table :data="tableData" style="width: 100%" height="">
                 <el-table-column type="index" label="编号" width="150">
                 </el-table-column>
                 <el-table-column prop="themeId" label="ID" v-if="false">
@@ -130,10 +135,7 @@
                 <el-table-column prop="createTimeStr" show-overflow-tooltip label="创建时间">
                 </el-table-column>
                 <div slot="empty">
-                  <div>
-                    <img src="../../assets/img/none.png" alt="" width="140" height="140" />
-                  </div>
-                  <p>未查询到明细</p>
+                  无数据
                 </div>
               </el-table>
               <div class="block">
@@ -145,20 +147,17 @@
           </el-tab-pane>
           <el-tab-pane label="代理商拜访记录" name="fifth">
             <div class="tabBox">
-              <el-table :data="tableData" style="width: 100%" height="700">
-                <el-table-column type="index" label="编号" width="150">
-                </el-table-column>
-                <el-table-column prop="themeId" label="ID" v-if="false">
-                </el-table-column>
-                <el-table-column prop="themeName" label="主题名称" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="createTimeStr" show-overflow-tooltip label="创建时间">
-                </el-table-column>
+              <el-table :data="tableData" style="width: 100%" height="">
+                  <el-table-column prop="" label="客户名" show-overflow-tooltip>
+                  </el-table-column>
+                  <el-table-column prop="" label="项目地址" show-overflow-tooltip>
+                  </el-table-column>
+                  <el-table-column prop="" label="备注" show-overflow-tooltip>
+                  </el-table-column>
+                  <el-table-column prop="" label="附件" show-overflow-tooltip>
+                  </el-table-column>
                 <div slot="empty">
-                  <div>
-                    <img src="../../assets/img/none.png" alt="" width="140" height="140" />
-                  </div>
-                  <p>未查询到明细</p>
+                  无数据
                 </div>
               </el-table>
               <div class="block">
@@ -180,6 +179,9 @@
     name: "AddSell",
     data() {
       return {
+        form:{
+          txt:''
+        },
         activeName: 'first',
         tableData: [],
         currentPage: 1,
@@ -297,9 +299,22 @@
         justify-content: space-between;
         background: #fff;
 
-        .el-form--inline .el-form-item {
-          margin-bottom: 0;
-          width: 200px;
+        .form{
+          max-width:1000px;
+          .el-form-item {
+            margin-bottom: 0;
+            width: 200px;
+            .el-form-item__label{
+              height: 30px;
+            }
+          }
+          .el-form-item:last-child{
+            width:100%;
+            .el-textarea__inner{
+              width: 414px;
+              margin-top:2px;
+            }
+          }
         }
       }
 

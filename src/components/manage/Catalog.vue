@@ -1,5 +1,5 @@
 <template>
-  <div class="sell">
+  <div class="catalog">
     <div>
       <div class="head clear">
         <el-breadcrumb separator="/">
@@ -47,8 +47,9 @@
       </div>
       <div class="box">
         <div class="btns clear">
-          <el-button @click="add" class="add" size='small' type='primary'>明细</el-button>
-          <el-button class="add" size='small' type='primary'>导出</el-button>
+          <el-button @click="add" class="add" size='small' type='primary'>新建</el-button>
+          <el-button @click="add" class="add" size='small' type='primary'>修改</el-button>
+          <el-button @click="add" class="add" size='small' type='primary'>删除</el-button>
         </div>
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" height="700" @row-click='rowClick'>
@@ -95,7 +96,7 @@
 <script>
   import formTest from '../../assets/js/formTest'
   export default {
-    name: 'SellIndex',
+    name: 'catalog',
     data() {
 
       return {
@@ -776,7 +777,7 @@
 <style lang='scss'>
   $sc:12;
 
-  .sell {
+  .catalog {
     .empty {
       p {
         margin-top: 23px;
