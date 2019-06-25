@@ -100,7 +100,7 @@
                     ></el-option>
                   </el-select>
                 </el-form-item>
-                
+
                 <el-form-item label="等级" filterable prop='levelId'>
                   <el-select v-model="form.levelId" placeholder="请选择">
                     <el-option
@@ -147,7 +147,7 @@
                       <el-input v-model="form.goodsName"></el-input> - <el-input v-model="form.skuCode"></el-input>
                     </div>
                     <div  class='pointBox' style="display:'inline-block'" v-if="form.goodsType==1">
-                      <el-input v-model="form.skuCode"></el-input> 
+                      <el-input v-model="form.skuCode"></el-input>
                     </div>
                     <div  class='pointBox' style="display:'inline-block'" v-if="form.goodsType==3">
                       <el-input v-model="form.goodsName"></el-input>
@@ -177,7 +177,7 @@
                 <el-table-column label prop width="30" show-overflow-tooltip></el-table-column>
                 <el-table-column type="selection" prop label width="30" :reserve-selection='true'></el-table-column>
                 <el-table-column label="会员ID" v-if="false" prop="memberId" show-overflow-tooltip></el-table-column>
-                
+
                 <el-table-column label="会员名称" prop="memberRealName" show-overflow-tooltip></el-table-column>
                 <el-table-column label="手机号码" prop="memberMobile" show-overflow-tooltip></el-table-column>
                 <el-table-column label="入会时间"  prop="memberCreateTime" show-overflow-tooltip></el-table-column>
@@ -285,7 +285,7 @@
                 <el-tooltip class="item" effect="dark" :content="(moreMsg.province != null ? moreMsg.province : '未知')+'-' +(moreMsg.city  != null ? moreMsg.city : '未知')+'-' +(moreMsg.district  != null ? moreMsg.district : '未知')" placement="top-start">
 
               <div>
-                
+
                 <span>来自</span>  {{moreMsg.province != null ? moreMsg.province : '未知'}}-{{moreMsg.city  != null ? moreMsg.city : '未知'}}-{{moreMsg.district  != null ? moreMsg.district : '未知'}}
               </div>
               </el-tooltip>
@@ -299,7 +299,7 @@
               </div>
               <el-tooltip class="item" effect="dark" :content="(moreMsg.memberEmail != null ? moreMsg.memberEmail  :'无')" placement="top-start">
               <div>
-                
+
                 <span>电子邮箱</span> {{moreMsg.memberEmail   ? moreMsg.memberEmail : '未知'}}
 
               </div>
@@ -307,7 +307,7 @@
 
               <el-tooltip class="item" effect="dark" :content="(moreMsg.birthday != null ? moreMsg.birthday  :'无')" placement="top-start">
               <div>
-                
+
                 <span>生日</span> {{moreMsg.birthday   ? moreMsg.birthday : '未知'}}
 
               </div>
@@ -320,12 +320,12 @@
               <div>
                 <span>客户类型</span> {{moreMsg.customerType ==1 ? '老客户' : '新客户'}}
               </div>
-            </div> 
+            </div>
             <div class="r">
               <div>
                 <span>累计消费</span> {{moreMsg.totalPrice != null  ?moreMsg.totalPrice  : '0'}}元 (共{{moreMsg.totalCnt != null  ?moreMsg.totalCnt  : '0'}}笔订单)
               </div>
-            </div> 
+            </div>
           </div>
           <div class="property clear">
             <h3>自定义属性</h3>
@@ -576,9 +576,9 @@ export default {
           { required: false, message: "请选择等级", trigger: "change" }
         ]
       },
-      pickerOptions0:{ 
+      pickerOptions0:{
         disabledDate(time) {
-          return time.getTime() > Date.now() -8.64e7;//如果没有后面的-8.64e7就是不可以选择今天的 
+          return time.getTime() > Date.now() -8.64e7;//如果没有后面的-8.64e7就是不可以选择今天的
         }
       },
       exportArr: [],
@@ -753,7 +753,7 @@ export default {
     shopId:{
       handler:function(n,o){
         this.getStore(n)
-        
+
       }
     },
     "form.orderCreateTime": {
@@ -805,17 +805,17 @@ export default {
     },
     "form.goodsType": {
       handler: function(n, o) {
-          this.form.goodsName = '' 
-          this.form.skuCode = '' 
+          this.form.goodsName = ''
+          this.form.skuCode = ''
       }
     },
     "form.memberType": {
       handler: function(n, o) {
-          this.form.memberMobile = '' 
-          this.form.memberVipCode = '' 
-          this.form.memberName = '' 
-          this.form.taobaoId = '' 
-          this.form.memberEmail = '' 
+          this.form.memberMobile = ''
+          this.form.memberVipCode = ''
+          this.form.memberName = ''
+          this.form.taobaoId = ''
+          this.form.memberEmail = ''
       }
     },
   },
@@ -833,7 +833,7 @@ export default {
             console.log('入会人数渠道列表',res)
           if (res.data.code == 1) {
             this.chartData1.rows[index].shops = res.data.data
-            
+
           } else {
             this.chartData1.rows[index].shops=[]
           }
@@ -857,7 +857,7 @@ export default {
           if (res.data.code == 1) {
             this.chartData1.columns = ['marketingName','memberTotal','marketingCode','shops']
             this.chartData1.rows = res.data.data
-            
+
             if(this.chartData1.rows.length == 0){
               this.dataEmpty1 = true
             }else{
@@ -923,8 +923,6 @@ export default {
             //     ]
             //   },
             //   {
-            //     marketingCode: "宝尊电商",
-            //     marketingName: "baozun",
             //     salesTotal: 600,
             //     shops:[
             //       {
@@ -942,7 +940,7 @@ export default {
             //     ]
             //   }
             // ]
-            
+
             if(this.chartData2.rows.length == 0){
               this.dataEmpty2 = true
             }else{
@@ -994,7 +992,7 @@ export default {
             //   shopName: "linefriends",
             // }
             console.log(this.chartData2.rows[index].shops)
-            
+
           } else {
             this.chartData2.rows[index].shops=[]
           }
@@ -1019,7 +1017,7 @@ export default {
             this.chartData3.columns = ['province','memberTotal']
             this.chartData3.rows = res.data.data
             // this.chartData3.rows = [
-              
+
             //   {
             //     province: "深圳",
             //     memberTotal: 40000,
@@ -1037,7 +1035,7 @@ export default {
             //     memberTotal: 70421,
             //   },
             // ]
-            
+
             if(this.chartData3.rows.length == 0){
               this.dataEmpty3 = true
             }else{
@@ -1077,7 +1075,7 @@ export default {
         ).join("&");
     },
     b(row){
-        return row.memberId 
+        return row.memberId
     },
     uniqObjInArray(objarray){
         let len = objarray.length;
@@ -1099,13 +1097,13 @@ export default {
     getSource(){
       this.$http({
         method: "get",
-        url: "" + process.env.API_ROOT + "/place/list" 
+        url: "" + process.env.API_ROOT + "/place/list"
       })
       .then(res => {
         console.log("渠道list", res);
         if(res.data.code==1){
           this.types = res.data.data;
-          
+
         }else{
 
         }
@@ -1233,7 +1231,7 @@ export default {
                 this.getSell()
                 this.getMemberPro()
               }
-              
+
             } else {
               this.form.merchantId=''
               this.getShopList('');
@@ -1274,7 +1272,7 @@ export default {
       this.getPoint(id,this.form.merchantId)
       this.getLevel(id)
       this.getCoupon(id,this.form.merchantId)
-      
+
     },
     //查询基本信息
     getBase(id){
@@ -1347,7 +1345,7 @@ export default {
           "" +
           process.env.API_ROOT +
           "/member/list/grade/flow?memberId=" +
-          id 
+          id
       })
         .then(res => {
           console.log("等级流水", res);
@@ -1462,7 +1460,7 @@ export default {
         if (this.form.orderType) {
           data.memberSource = this.form.orderType;
         }
-        
+
         //等级
         if (this.form.levelId !== 0) {
           data.levelId = this.form.levelId;
@@ -1608,7 +1606,7 @@ export default {
         if (this.form.orderType) {
           data.memberSource = this.form.orderType;
         }
-        
+
         //等级
         if (this.form.levelId !== 0) {
           data.levelId = this.form.levelId;
@@ -1679,10 +1677,10 @@ export default {
         this.tableData=[]
         this.total = 0
       }
-      
 
 
-      
+
+
     }
   },
   beforeRouteEnter(to, form, next) {
@@ -1766,7 +1764,7 @@ $sc: 12;
     }
   }
   .el-dialog{
-    
+
     .el-tabs--card > .el-tabs__header .el-tabs__item{
       width: 140px;
       text-align: center;
@@ -1805,7 +1803,7 @@ $sc: 12;
             }
           }
       }
-          
+
         .r{
           float: right;
           width: 200px;
@@ -1821,14 +1819,14 @@ $sc: 12;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            
+
             span{
               display: inline-block;
               width: 60px;
               color: #999999;
             }
           }
-          
+
         }
   }
   .el-tabs__nav-scroll{
@@ -1837,7 +1835,7 @@ $sc: 12;
   .el-tabs__content{
     padding: 0 20px;
     margin-bottom: 20px;
-    
+
   }
   .moreMsg {
     li {
@@ -2014,7 +2012,7 @@ $sc: 12;
                 border-radius: 0;
               }
             }
-            
+
           }
           .pointBox{
             height: 38px;
@@ -2031,7 +2029,7 @@ $sc: 12;
                 border-radius: 0;
               }
             }
-            
+
           }
           .el-select {
               height: 38px;
@@ -2051,7 +2049,7 @@ $sc: 12;
               }
             }
           }
-          
+
         }
       }
     }
