@@ -340,7 +340,6 @@ export default {
     }
   },
   created(){
-    this.getAccountList()
   },
   watch:{
     'form.checkedRoles':{
