@@ -62,7 +62,12 @@ export default new Router({
               component: resolve => require(['@/components/marketing/SellIndex'], resolve),
               // meta: {keepAlive: true}
             },
-          
+            {
+              path: 'addSell',
+              name: 'AddSell',
+              component: resolve => require(['@/components/marketing/AddSell'], resolve),
+              // meta: {keepAlive: true}
+            },
           ]
         },
         /////////客户关怀

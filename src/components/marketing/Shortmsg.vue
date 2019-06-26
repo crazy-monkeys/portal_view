@@ -194,11 +194,7 @@
           return this.pageSize * (this.currentPage - 1) + index + 1
         },
         add() {
-          this.$router.push(
-            {
-              name: 'AddSell'
-            }
-          )
+          
         },
         // 分页
         handleSizeChange(val) {
