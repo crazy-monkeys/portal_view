@@ -9,6 +9,7 @@ html,
 body {
   height: 100%;
   font-size: 12px;
+  font-family: 'zt2'
 }
 
 body,
@@ -116,7 +117,7 @@ input::-ms-clear {
 
   border-radius: 5px;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  background: #ccc
+  background: #800080
 }
 
 /*滚动条里面轨道*/

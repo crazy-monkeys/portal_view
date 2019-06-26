@@ -8,36 +8,41 @@
         </el-breadcrumb>
         <!-- <h1>客户查询</h1> -->
       </div>
-      <!-- <transition-group enter-active-class="animated slideInRight" leave-active-class="animated slideOutLeft"> -->
-       
+     
         <div class="sels clear" >
-          <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true'>
-            <el-form-item label="客户名称" v-if='checkedCities.indexOf(1)!=-1'>
+          <el-button @click='change'  size='small' type='primary' plain>{{!dialogVisible ? '展开筛选条件' :'收起筛选条件'}}
+          </el-button>
+          <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
+          <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible' >
+            <el-form-item label="客户名称" >
               <el-input size='small' placeholder="请输入"></el-input>
             </el-form-item>
-            <el-form-item label="英文名称" v-if='checkedCities.indexOf(2)!=-1'>
+            <el-form-item label="英文名称" >
               <el-input size='small' placeholder="请输入"></el-input>
             </el-form-item>
-            <el-form-item label="客户号" v-if='checkedCities.indexOf(3)!=-1'>
+            <el-form-item label="客户号" >
               <el-input size='small' placeholder="请输入"></el-input>
             </el-form-item>
-            <el-form-item label="代理商" v-if='checkedCities.indexOf(4)!=-1'>
+            <el-form-item label="代理商" >
               <el-input size='small' placeholder="请输入"></el-input>
             </el-form-item>
-            <el-form-item label="客户类别" v-if='checkedCities.indexOf(5)!=-1'>
+            <el-form-item label="客户类别" >
               <el-input size='small' placeholder="请输入"></el-input>
             </el-form-item>
-            <el-form-item label="报备日期" v-if='checkedCities.indexOf(6)!=-1'>
+            <el-form-item label="报备日期" >
                 <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期"
                   end-placeholder="结束日期">
                 </el-date-picker>
               </el-form-item>
             <el-form-item :label="checkedCities.length==0 ?'' : ' '">
               <el-button size='small' type='primary' plain>搜索</el-button>
-              <el-button @click='dialogVisible = true'  size='small' type='primary' plain>更多</el-button>
+              <el-button @click='dialogVisible = true'  size='small' type='primary' plain>重置</el-button>
             </el-form-item>
           </el-form>
+      <!-- </transition-group> -->
+
         </div>
+
       <!-- </transition-group> -->
       <div class="box">
         <div class="tab">
@@ -58,7 +63,7 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" label="客户状态">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="操作">
+            <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
               <template scope-slot='scope'>
                 <el-button type='text' size='small' @click='add'>明细</el-button>
               </template>
@@ -79,7 +84,7 @@
         </div>
       </div>
     </div>
-    <el-dialog
+    <!-- <el-dialog
         title="筛选条件选取"
         :visible.sync="dialogVisible"
         width="600px"
@@ -89,11 +94,7 @@
           <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
             <el-checkbox v-for="con in conditions" :label="con.value" :key="con.value">{{con.label}}</el-checkbox>
         </el-checkbox-group>
-        <!-- <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="sure">确 定</el-button>
-        </span> -->
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 
@@ -331,7 +332,21 @@
         smsdialogVisible: false,
         //营销活动列表数据
         tableData: [
-          {}
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
         ],
         //第几页
         currentPage: 1,
@@ -392,6 +407,9 @@
       },
     },
     methods: {
+      change(){
+        this.dialogVisible =!this.dialogVisible
+      },
       handleCheckAllChange(val) {
         console.log(val)
         this.checkedCities = val ? [1,2,3,4,5,6] : [];

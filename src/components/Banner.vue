@@ -1,8 +1,11 @@
 <template>
   <div class="banner">
-    <div class="zd" @click="zd" v-if="!statu"></div>
-    <div class="zk" v-if="statu" @click="zk"></div>
-    <div class="tbbtn" @click="tb"></div>
+    <div class="zd" @click="zd" v-if="!statu">
+      <i class="el-icon-s-fold"></i>
+    </div>
+    <div class="zk" v-if="statu" @click="zk">
+      <i class="el-icon-s-unfold"></i>
+    </div>
     <div class="proName">Portal</div>
     <div class="shopName" @click="fnToggle">
       <div class="top">{{loginName}}</div>
@@ -13,9 +16,15 @@
       </div>
     </div>
     <div class="ts" @click="ts">
-      <div>6</div>
+      <el-tooltip class="item" effect="light" content="公告" placement="top-start">
+        <i class="el-icon-message"></i>
+      </el-tooltip>
     </div>
-    <div class="help" @click="help"></div>
+    <div class="help" @click="help">
+        <el-tooltip class="item" effect="light" content="帮助" placement="top-start">
+            <i class="el-icon-question"></i>
+          </el-tooltip>
+    </div>
 
 
     <el-dialog
@@ -83,7 +92,7 @@ export default {
   name: "Banner",
   data() {
     return {
-      loginName:"admin",
+      loginName:"adminadminadminadminadminadminadminadminadmin",
       userId:'',
       shopId:'',
       shopName:'管理员',
@@ -216,16 +225,7 @@ export default {
       // console.log(e);
     },
     quit() {
-      this.$http
-        .get("" + process.env.API_ROOT + "/login/logout")
-        .then(res => {
-          console.log(res);
-          this.$router.push("/login");
-        })
-        .catch(error => {
-          console.log(error);
-          alert("登入失败");
-        });
+        this.$router.push("/login");
     },
     tb() {
       this.$router.push("/home/tb");
@@ -244,20 +244,25 @@ export default {
 <style lang='scss'>
 $sc: 12;
 .banner {
+  min-width: 500px;
+  color: #fff;
+  height: 64px;
+  background: #800080;
   .danger{
     margin-bottom: 20px;
   }
-  height: 64px;
-  background: #fff;
   .zd {
     height: 100%;
     width: 56px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url("../assets/img/zd.png") center no-repeat;
+    /* background: url("../assets/img/zd.png") center no-repeat; */
     cursor: pointer;
     float: left;
+    i{
+      font-size:22px;
+    }
   }
   .zk {
     height: 100%;
@@ -265,9 +270,12 @@ $sc: 12;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url("../assets/img/zk.png") center no-repeat;
+    /* background: url("../assets/img/zk.png") center no-repeat; */
     cursor: pointer;
     float: left;
+    i{
+      font-size:22px;
+    }
   }
   .tbbtn {
     height: 100%;
@@ -286,9 +294,12 @@ $sc: 12;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url("../assets/img/help.png") center no-repeat;
+    /* background: url("../assets/img/help.png") center no-repeat; */
     cursor: pointer;
     float: right;
+    i{
+      font-size:22px;
+    }
   }
   .ts {
     height: 100%;
@@ -296,11 +307,14 @@ $sc: 12;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url("../assets/img/ts.png") center no-repeat;
+    /* background: url("../assets/img/ts.png") center no-repeat; */
     cursor: pointer;
     float: right;
     border-right: 1px solid #e8e8e8;
     position: relative;
+    i{
+      font-size:22px;
+    }
     div {
       height: 18px;
       width: 18px;
@@ -318,9 +332,8 @@ $sc: 12;
     position: relative;
     width: 120px;
     height: 40px;
-    font-family: SFNSText;
     font-size: 14px;
-    color: #333333;
+    color: #fff;
     letter-spacing: 0;
     float: right;
     padding: 12px;
@@ -365,7 +378,7 @@ $sc: 12;
       }
     }
     .top {
-      width: 120px;
+      width: 100px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -373,7 +386,6 @@ $sc: 12;
     }
     .down {
       font-size: 12px;
-      color: #666666;
       line-height: 20px;
       white-space: nowrap;
       overflow: hidden;
@@ -381,13 +393,14 @@ $sc: 12;
     }
   }
   .proName {
+    border-left: 1px solid #fff;
     height: 100%;
     width: 56px;
     font-size: 16px;
-    color: #ffffff;
+    color: #fff;
     letter-spacing: 0;
     float: right;
-    background: #A761D6;
+    background: #800080;
     display: flex;
     justify-content: center;
     align-items: center;

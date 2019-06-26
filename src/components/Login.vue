@@ -27,7 +27,7 @@
         </el-form-item>
       </el-form>
       <div class="logo">
-      <img src="../assets/img/loginBg.png" alt="">
+      <img src="../../static/logostr.png" alt="">
     </div>
   </div>
 </template>
@@ -110,11 +110,21 @@ $sc:12;
   // overflow: hidden;
   margin: 0 auto;
   .logo{
+    position: relative;
     overflow: hidden;
+    margin-right: 280px;
     height: 100%;
     text-align: center;
+    background: #41589b;
     img{
-      height: 100%;
+      position: absolute;
+      /* height: 100%; */
+      width:500px;
+      left:20%;
+      top:20%;
+      /* right:0; */
+      /* top:0; */
+      margin:auto;
     }
   }
 

@@ -269,7 +269,7 @@ export default new Router({
     {
       path: '/login',
       name: 'Login',
-      component: resolve => require(['@/components/Login'], resolve),
+      component: resolve => require(['@/components/Login1'], resolve),
     },
     {
       path: '/',

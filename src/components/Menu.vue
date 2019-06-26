@@ -2,10 +2,10 @@
   <div class="menu">
     <transition-group enter-active-class="animated slideInLeft" leave-active-class="animated slideOutLeft">
       <div class="logo" :key='1'>
-        <img src="../assets/img/logo.png" alt="">
+        <img src="../../static/logo.png" alt="">
         <div class="msg" v-if="!isCollapse">紫光展锐</div>
       </div>
-      <el-menu :key='2' class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse"
+      <el-menu  :key='2' text-color='#800080'  class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse"
         :unique-opened="true" :router='true' :default-active='$route.path'>
         <template v-for="item1 in list">
           <template v-if="item1.children.length !=0">
@@ -70,7 +70,7 @@
             resourceId: '1',
             resourceName: '客户管理',
             resourceUrl: '#1',
-            resourceIconClass: 'el-icon-s-promotion',
+            resourceIconClass: 'el-icon-s-custom',
             children: [
               {
                 resourceId: '11',
@@ -123,7 +123,7 @@
             resourceId: '2',
             resourceName: '授信额度',
             resourceUrl: '#2',
-            resourceIconClass: 'el-icon-s-promotion',
+            resourceIconClass: 'el-icon-collection-tag',
             children: [
               {
                 resourceId: '21',
@@ -149,7 +149,7 @@
             resourceId: '3',
             resourceName: '价格管理',
             resourceUrl: '#3',
-            resourceIconClass: 'el-icon-s-promotion',
+            resourceIconClass: 'el-icon-s-data',
             children: [
               {
                 resourceId: '31',
@@ -237,7 +237,7 @@
             resourceId: '5',
             resourceName: '订单管理',
             resourceUrl: '#5',
-            resourceIconClass: 'el-icon-s-promotion',
+            resourceIconClass: 'el-icon-s-order',
             children: [
               {
                 resourceId: '51',
@@ -263,7 +263,7 @@
             resourceId: '6',
             resourceName: '代理商管理',
             resourceUrl: '#6',
-            resourceIconClass: 'el-icon-s-promotion',
+            resourceIconClass: 'el-icon-bicycle',
             children: [
               {
                 resourceId: '61',
@@ -289,7 +289,7 @@
             resourceId: '7',
             resourceName: '销售管理',
             resourceUrl: '#7',
-            resourceIconClass: 'el-icon-s-promotion',
+            resourceIconClass: 'el-icon-s-shop',
             children: [
               {
                 resourceId: '71',
@@ -351,7 +351,7 @@
             resourceId: '8',
             resourceName: '系统管理',
             resourceUrl: '#8',
-            resourceIconClass: 'el-icon-s-promotion',
+            resourceIconClass: 'el-icon-setting',
             children: [
               {
                 resourceId: '81',
@@ -480,27 +480,30 @@
     overflow-y: auto;
 
     .el-menu {
+
       height: 84%;
       border: none;
       // background: rgba(167,97,214,0.5);
       // background: purple;
+      i{
+        color: #800080
+      }
+
     }
 
     .logo {
       height: 120px;
       text-align: center;
-
       img {
-        margin-top: 40px;
-        width: 36px;
-        height: 36px;
+        margin-top: 20px;
+        width: 44px;
+        height: 44px;
       }
-
       .msg {
         width: 240px;
-        font-size: 18px;
-        color: #A761D6;
-        letter-spacing: -0.7px;
+        font-size: 24px;
+        color: #800080;
+        letter-spacing: 1px;
         font-style: italic;
         font-weight: bold
       }

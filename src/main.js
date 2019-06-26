@@ -13,7 +13,7 @@ import 'url-search-params-polyfill'
 //解决ie不支持 ES6 问题
 import 'babel-polyfill'
 //引入 ele ui
-import '../ele/index.css'
+import '../ele/style.css'
 import ElementUI from 'element-ui';
 Vue.use(ElementUI);
 Vue.use(echarts)

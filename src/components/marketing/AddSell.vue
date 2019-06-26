@@ -48,7 +48,7 @@
             <el-input size='small' placeholder="" :readonly="true"></el-input>
           </el-form-item>
           <el-form-item label="业务介绍" >
-            <el-input type='textarea' v-model='form.txt' :rows="5" placeholder="" resize='none' :readonly="true"></el-input>
+            <el-input type='textarea' v-model='form.txt' :rows="2" placeholder="" resize='none' :readonly="true"></el-input>
           </el-form-item>
         </el-form>
       </div>
@@ -300,7 +300,7 @@
         background: #fff;
 
         .form{
-          max-width:1000px;
+          max-width:1300px;
           .el-form-item {
             margin-bottom: 0;
             width: 200px;
