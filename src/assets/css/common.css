@@ -36,7 +36,9 @@ ul,
 ol,
 dl,
 li,
-dd {
+dd,
+th,
+td {
   margin: 0;
   font-weight: normal;
 }

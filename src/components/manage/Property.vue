@@ -47,14 +47,13 @@
       </div>
       <div class="box">
         <div class="btns clear">
-          <el-button @click="add" class="add" size='small' type='primary'>修改</el-button>
-          <el-button @click="add" class="add" size='small' type='primary'>释放</el-button>
-          <el-button @click="add" class="add" size='small' type='primary'>转移</el-button>
-          <el-button @click="add" class="add" size='small' type='primary'>类型变更</el-button>
+          <el-button  class="add" size='small' type='primary'>释放</el-button>
+          <el-button  class="add" @click='remove' size='small' type='primary'>转移</el-button>
+          <el-button  class="add" size='small' type='primary'>类型变更</el-button>
         </div>
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" height="700" @row-click='rowClick'>
-            <el-table-column prop="" width='30' show-overflow-tooltip label="">
+            <el-table-column prop="" type="selection" width='30' show-overflow-tooltip label="">
             </el-table-column>
             <el-table-column type="index" width='100' label="编号" :index='q'>
             </el-table-column>
@@ -74,8 +73,12 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" label="发送状态" width="80">
             </el-table-column>
-            <el-table-column prop="" show-overflow-tooltip label="ROI">
+            <el-table-column show-overflow-tooltip prop="" label="操作" width="80">
+              <template scope-slot='scope'>
+                <el-button type='text' size='small'>修改</el-button>
+              </template>
             </el-table-column>
+           
             <div slot="empty">
               <div>
                 <img src="../../assets/img/none.png" alt="" width="140" height="140" />
@@ -99,7 +102,6 @@
   export default {
     name: 'Theme',
     data() {
-
       return {
         ok: 0,
         childrenBtn: true,
@@ -291,7 +293,9 @@
         //短信内容 显示否
         smsdialogVisible: false,
         //营销活动列表数据
-        tableData: [],
+        tableData: [
+          {}
+        ],
         //第几页
         currentPage: 1,
         //每页的容量
@@ -351,6 +355,9 @@
       },
     },
     methods: {
+      remove(){
+        
+      },
       q(index) {
         return this.pageSize * (this.currentPage - 1) + index + 1
       },
@@ -960,19 +967,6 @@
               letter-spacing: 0;
               line-height: 18px;
 
-              .el-dropdown {
-                font-size: 12px;
-                color: #3366FF;
-                letter-spacing: 0;
-                line-height: 18px;
-              }
-
-              .el-button {
-                font-size: 12px;
-                color: #3366FF;
-                letter-spacing: 0;
-                line-height: 12px;
-              }
             }
 
           }

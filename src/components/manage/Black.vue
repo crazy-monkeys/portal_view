@@ -43,15 +43,27 @@
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="主要开户行信息" name="first">
             <div class="tabBox">
-              <el-table :data="tableData" style="width: 100%">
-                <el-table-column type="
-                index" label="编号" width="150">
+              <el-table :data="tableData1" style="width: 100%">
+                <el-table-column type="index" label="编号" width="150">
                 </el-table-column>
-                <el-table-column prop="themeId" label="ID" v-if="false">
+                <el-table-column prop="" label="ID" v-if="false">
                 </el-table-column>
-                <el-table-column prop="themeName" label="主题名称" show-overflow-tooltip>
+                <el-table-column prop="" label="主题名称" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="createTimeStr" show-overflow-tooltip label="创建时间">
+                <el-table-column prop="" show-overflow-tooltip label="创建时间">
+                </el-table-column>
+                <el-table-column prop="" show-overflow-tooltip label="操作">
+                    <template slot-scope="scope">
+                    </template>
+                </el-table-column>
+                <el-table-column align="center">
+                  <template slot="header" slot-scope="scope">
+                    <el-button size='small' type='primary'>新增</el-button>
+                  </template>
+                  <template slot-scope="scope">
+                      <el-button size='small' type='text'>删除</el-button>
+                      
+                  </template>
                 </el-table-column>
                 <div slot="empty">
                   无数据
@@ -66,7 +78,7 @@
           </el-tab-pane>
           <el-tab-pane label="股权结构" name="second">
             <div class="tabBox">
-              <el-table :data="tableData" style="width: 100%" height="">
+              <el-table :data="tableData" style="width: 100%" >
                 <el-table-column type="index" label="编号" width="150">
                 </el-table-column>
                 <el-table-column prop="themeId" label="ID" v-if="false">
@@ -88,7 +100,7 @@
           </el-tab-pane>
           <el-tab-pane label="管理层及主要联系人" name="third">
             <div class="tabBox">
-              <el-table :data="tableData" style="width: 100%" height="">
+              <el-table :data="tableData" style="width: 100%" >
                 <el-table-column type="index" label="编号" width="150">
                 </el-table-column>
                 <el-table-column prop="themeId" label="ID" v-if="false">
@@ -110,14 +122,14 @@
           </el-tab-pane>
           <el-tab-pane label="业务往来信息" name="fourth">
             <div class="tabBox">
-              <el-table :data="tableData" style="width: 100%" height="">
+              <el-table :data="tableData" style="width: 100%" >
                 <el-table-column type="index" label="编号" width="150">
                 </el-table-column>
-                <el-table-column prop="themeId" label="ID" v-if="false">
+                <el-table-column prop="themeId" label="" v-if="false">
                 </el-table-column>
-                <el-table-column prop="themeName" label="主题名称" show-overflow-tooltip>
+                <el-table-column prop="themeName" label="" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="createTimeStr" show-overflow-tooltip label="创建时间">
+                <el-table-column prop="createTimeStr" show-overflow-tooltip label="">
                 </el-table-column>
                 <div slot="empty">
                   无数据
@@ -132,14 +144,14 @@
           </el-tab-pane>
           <el-tab-pane label="代理商拜访记录" name="fifth">
             <div class="tabBox">
-              <el-table :data="tableData" style="width: 100%" height="">
+              <el-table :data="tableData" style="width: 100%" >
                 <el-table-column type="index" label="编号" width="150">
                 </el-table-column>
-                <el-table-column prop="themeId" label="ID" v-if="false">
+                <el-table-column prop="" label="" v-if="false">
                 </el-table-column>
-                <el-table-column prop="themeName" label="主题名称" show-overflow-tooltip>
+                <el-table-column prop="" label="" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="createTimeStr" show-overflow-tooltip label="创建时间">
+                <el-table-column prop="" show-overflow-tooltip label="">
                 </el-table-column>
                 <div slot="empty">
                   无数据
@@ -170,7 +182,12 @@
       return {
         form: {},
         activeName: 'first',
-        tableData: [],
+        tableData: [
+          {}
+        ],
+        tableData1: [
+          {}
+        ],
         currentPage: 1,
         pageSize: 10,
         total: 0
