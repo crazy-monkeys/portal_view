@@ -6,36 +6,79 @@
         <el-breadcrumb-item to="/home/sell">客户管理</el-breadcrumb-item>
         <el-breadcrumb-item>客户报备</el-breadcrumb-item>
       </el-breadcrumb>
-      <h1>
-        客户报备
-      </h1>
     </div>
     <div class="content">
       <div class="selBox">
         <el-form ref="form" :model="form" label-width="80px" :inline='true'>
-          <el-form-item label="活动名称">
+          <el-form-item label="客户号">
+            <el-input size='small' :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="中文名">
             <el-input size='small'></el-input>
           </el-form-item>
-          <el-form-item label="活动名称">
+          <el-form-item label="英文名">
             <el-input size='small'></el-input>
           </el-form-item>
-          <el-form-item label="活动名称">
+         <el-form-item label="客户类型" >
+              <el-select v-model="value1" size="small" filterable placeholder="请选择">
+                <el-option
+                  v-for="item in options1"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          <el-form-item label="销售" >
+              <el-select v-model="value2" size="small" filterable placeholder="请选择">
+                <el-option
+                  v-for="item in options2"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          <el-form-item label="阿米巴" >
+              <el-select v-model="value3" size="small" filterable placeholder="请选择">
+                <el-option
+                  v-for="item in options3"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          <el-form-item label="公司资产">
             <el-input size='small'></el-input>
           </el-form-item>
-          <el-form-item label="活动名称">
+          <el-form-item label="员工人数">
             <el-input size='small'></el-input>
           </el-form-item>
-          <el-form-item label="活动名称">
+          <el-form-item label="注册时间" size='small'>
+            <el-date-picker
+              v-model="value1"
+              type="date"
+              placeholder="选择日期">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="传真">
             <el-input size='small'></el-input>
           </el-form-item>
-          <el-form-item label="活动名称">
+          <el-form-item label="母公司">
             <el-input size='small'></el-input>
           </el-form-item>
-          <el-form-item label="活动名称">
+          <el-form-item label="公司总机">
             <el-input size='small'></el-input>
           </el-form-item>
-          <el-form-item label="活动名称">
+          <el-form-item label="注册地址">
             <el-input size='small'></el-input>
+          </el-form-item>
+          <el-form-item label="办公地址">
+            <el-input size='small'></el-input>
+          </el-form-item>
+          <el-form-item label="业务介绍" >
+            <el-input type='textarea' v-model='form.txt' :rows="2" placeholder="" resize='none'></el-input>
           </el-form-item>
         </el-form>
       </div>
@@ -51,10 +94,6 @@
                 <el-table-column prop="" label="主题名称" show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column prop="" show-overflow-tooltip label="创建时间">
-                </el-table-column>
-                <el-table-column prop="" show-overflow-tooltip label="操作">
-                    <template slot-scope="scope">
-                    </template>
                 </el-table-column>
                 <el-table-column align="center">
                   <template slot="header" slot-scope="scope">
@@ -87,6 +126,15 @@
                 </el-table-column>
                 <el-table-column prop="createTimeStr" show-overflow-tooltip label="创建时间">
                 </el-table-column>
+                <el-table-column align="center">
+                  <template slot="header" slot-scope="scope">
+                    <el-button size='small' type='primary'>新增</el-button>
+                  </template>
+                  <template slot-scope="scope">
+                      <el-button size='small' type='text'>删除</el-button>
+                      
+                  </template>
+                </el-table-column>
                 <div slot="empty">
                   无数据
                 </div>
@@ -108,6 +156,15 @@
                 <el-table-column prop="themeName" label="主题名称" show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column prop="createTimeStr" show-overflow-tooltip label="创建时间">
+                </el-table-column>
+                <el-table-column align="center">
+                  <template slot="header" slot-scope="scope">
+                    <el-button size='small' type='primary'>新增</el-button>
+                  </template>
+                  <template slot-scope="scope">
+                      <el-button size='small' type='text'>删除</el-button>
+                      
+                  </template>
                 </el-table-column>
                 <div slot="empty">
                   无数据
@@ -131,27 +188,14 @@
                 </el-table-column>
                 <el-table-column prop="createTimeStr" show-overflow-tooltip label="">
                 </el-table-column>
-                <div slot="empty">
-                  无数据
-                </div>
-              </el-table>
-              <div class="block">
-                <el-pagination :current-page="currentPage" :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next"
-                  :total="total">
-                </el-pagination>
-              </div>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="代理商拜访记录" name="fifth">
-            <div class="tabBox">
-              <el-table :data="tableData" style="width: 100%" >
-                <el-table-column type="index" label="编号" width="150">
-                </el-table-column>
-                <el-table-column prop="" label="" v-if="false">
-                </el-table-column>
-                <el-table-column prop="" label="" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="" show-overflow-tooltip label="">
+                <el-table-column align="center">
+                  <template slot="header" slot-scope="scope">
+                    <el-button size='small' type='primary'>新增</el-button>
+                  </template>
+                  <template slot-scope="scope">
+                      <el-button size='small' type='text'>删除</el-button>
+                      
+                  </template>
                 </el-table-column>
                 <div slot="empty">
                   无数据
@@ -180,6 +224,33 @@
     name: "black",
     data() {
       return {
+        options1: [{
+          value: '选项1',
+          label: 'Mass Market'
+        }, {
+          value: '选项2',
+          label: 'Account Market'
+        }],
+        value1: '',
+
+        options2: [{
+          value: '选项1',
+          label: '销售A'
+        }, {
+          value: '选项2',
+          label: '销售B'
+        }],
+        value2: '',
+
+        options3: [{
+          value: '选项1',
+          label: '阿米巴A'
+        }, {
+          value: '选项2',
+          label: '阿米巴B'
+        }],
+        value3: '',
+
         form: {},
         activeName: 'first',
         tableData: [

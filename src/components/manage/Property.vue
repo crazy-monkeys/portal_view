@@ -6,7 +6,6 @@
           <el-breadcrumb-item to='/home/sell'>客户管理</el-breadcrumb-item>
           <el-breadcrumb-item>客户维护</el-breadcrumb-item>
         </el-breadcrumb>
-        <h1>客户维护</h1>
       </div>
       <div class="sels clear">
           <el-form ref="form" :model="form" class="form" label-position='top' :inline='true'>
@@ -63,21 +62,17 @@
             </el-table-column>
             <el-table-column type="index" width='100' label="编号" :index='q'>
             </el-table-column>
-            <el-table-column prop="" show-overflow-tooltip label="客户中文名">
+            <el-table-column prop="t1" show-overflow-tooltip label="客户中文名">
             </el-table-column>
-            <el-table-column prop="" label="活动名称" show-overflow-tooltip>
+            <el-table-column prop="t2" label="客户英文名" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="" label="人群名称" show-overflow-tooltip>
+            <el-table-column prop="t3" label="客户号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="" show-overflow-tooltip label="发送时间">
+            <el-table-column prop="t4" show-overflow-tooltip label="代理商">
             </el-table-column>
-            <el-table-column prop="" label="发送人数" show-overflow-tooltip>
+            <el-table-column prop="t5" label="客户类型" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="发送总量">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="成功发送总量">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="发送状态" width="80">
+            <el-table-column show-overflow-tooltip prop="t6" label="客户状态">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" label="操作" width="80">
               <template scope-slot='scope'>
@@ -109,20 +104,20 @@
       >
         <div class="sels clear">
             <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true'>
-                <el-form-item label="活动名称">
-                    <el-select v-model="value" size='small' filterable placeholder="请选择">
+                <el-form-item label="代理商">
+                    <el-select v-model="value1" size='small' filterable placeholder="请选择">
                         <el-option
-                          v-for="item in options"
+                          v-for="item in options1"
                           :key="item.value"
                           :label="item.label"
                           :value="item.value">
                         </el-option>
                       </el-select>
                 </el-form-item>
-                <el-form-item label="活动名称">
-                    <el-select v-model="value" size='small' filterable placeholder="请选择">
+                <el-form-item label="销售">
+                    <el-select v-model="value2" size='small' filterable placeholder="请选择">
                         <el-option
-                          v-for="item in options"
+                          v-for="item in options2"
                           :key="item.value"
                           :label="item.label"
                           :value="item.value">
@@ -140,13 +135,13 @@
           <el-table :data="tableData1" style="width: 100%" >
             <el-table-column type="index" width='100' label="编号" :index='q'>
             </el-table-column>
-            <el-table-column prop="" show-overflow-tooltip label="客户中文名">
+            <el-table-column prop="t11" show-overflow-tooltip label="客户中文名">
             </el-table-column>
-            <el-table-column prop="" label="活动名称" show-overflow-tooltip>
+            <el-table-column prop="t12" label="活动名称" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="" label="人群名称" show-overflow-tooltip>
+            <el-table-column prop="t13" label="人群名称" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="" show-overflow-tooltip label="发送时间">
+            <el-table-column prop="t14" show-overflow-tooltip label="发送时间">
             </el-table-column>
             <div slot="empty">
               <div>
@@ -184,6 +179,24 @@
     name: 'Theme',
     data() {
       return {
+        options2: [{
+          value: '选项1',
+          label: '销售A'
+        }, {
+          value: '选项2',
+          label: '销售B'
+        }],
+        value2: '',
+
+        options1: [{
+          value: '选项1',
+          label: '代理商A'
+        }, {
+          value: '选项2',
+          label: '代理商B'
+        }],
+        value1: '',
+
         txt:'',
         form:{},
         options: [],
@@ -191,7 +204,22 @@
         dialogVisible:false,
         dialogVisible1:false,
         tableData: [
-          {}
+          {
+            t1:'测试客户A',
+            t2:'Test CustomerB',
+            t3:'001',
+            t4:'代理商A',
+            t5:'Mass Market'
+            
+          },
+          {
+            t1:'审批中',
+            t2:'Test CustomerB',
+            t3:'002',
+            t4:'',
+            t5:'Account Market'
+            
+          }
         ],
         tableData1: [
           {}

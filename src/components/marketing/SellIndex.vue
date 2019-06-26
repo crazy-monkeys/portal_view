@@ -26,8 +26,15 @@
             <el-form-item label="代理商" >
               <el-input size='small' placeholder="请输入"></el-input>
             </el-form-item>
-            <el-form-item label="客户类别" >
-              <el-input size='small' placeholder="请输入"></el-input>
+            <el-form-item label="客户类型" >
+              <el-select v-model="value" size="small" filterable placeholder="请选择">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
             </el-form-item>
             <el-form-item label="报备日期" class="date">
                 <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期"
@@ -51,17 +58,17 @@
             </el-table-column>
             <el-table-column type="index" width='100' label="编号" :index='q'>
             </el-table-column>
-            <el-table-column prop="" show-overflow-tooltip label="客户中文名">
+            <el-table-column prop="1" show-overflow-tooltip label="客户中文名">
             </el-table-column>
-            <el-table-column prop="" label="客户英文名" show-overflow-tooltip>
+            <el-table-column prop="2" label="客户英文名" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="" label="客户号" show-overflow-tooltip>
+            <el-table-column prop="3" label="客户号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="" show-overflow-tooltip label="代理商">
+            <el-table-column prop="4" show-overflow-tooltip label="代理商">
             </el-table-column>
-            <el-table-column prop="" label="客户类别" show-overflow-tooltip>
+            <el-table-column prop="5" label="客户类型" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="客户状态">
+            <el-table-column show-overflow-tooltip prop="6" label="报备状态">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
               <template scope-slot='scope'>
@@ -108,6 +115,14 @@
     },
     data() {
       return {
+        options: [{
+          value: '选项1',
+          label: 'Mass Market'
+        }, {
+          value: '选项2',
+          label: 'Account Market'
+        }],
+        value: '',
         checkAll: false,
         checkedCities: [
           1,2
@@ -120,42 +135,27 @@
           {
             label:'英文名称',
             value:2
-          },
-          {
-            label:'客户号',
-            value:3
-          },
-          {
-            label:'代理商',
-            value:4
-          },
-          {
-            label:'客户类别',
-            value:5
-          },
-          {
-            label:'报备日期',
-            value:6
           }
         ],
         isIndeterminate: false,
         dialogVisible: false,
         tableData: [
-          {},
-          {},
-          {},
-          {},
-          {},
-          {},
-          {},
-          {},
-          {},
-          {},
-          {},
-          {},
-          {},
-          {},
-          {},
+          {
+            1:'测试客户A',
+            2:'Test CustomerB',
+            3:'001',
+            4:'代理商A',
+            5:'Mass Market',
+            6:'报备客户'
+          },
+          {
+            1:'测试客户B',
+            2:'Test CustomerB',
+            3:'002',
+            4:'',
+            5:'Account Market',
+            6:'未报备客户'
+          }
         ],
         //第几页
         currentPage: 1,
