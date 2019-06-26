@@ -365,7 +365,6 @@
         display: flex;
         justify-content: space-between;
         background: #fff;
-
         .form{
           max-width:1300px;
           .el-form-item {

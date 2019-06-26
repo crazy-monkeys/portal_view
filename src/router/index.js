@@ -62,50 +62,9 @@ export default new Router({
               component: resolve => require(['@/components/marketing/SellIndex'], resolve),
               // meta: {keepAlive: true}
             },
-            {
-              path: 'addSell/:id',
-              name: 'AddSell',
-              component: resolve => require(['@/components/marketing/AddSell'], resolve),
-            },
-            {
-              path: 'report/:id',
-              name: 'Report',
-              component: resolve => require(['@/components/marketing/Report'], resolve),
-            },
-            {
-              path: 'details/:id',
-              name: 'Details',
-              component: resolve => require(['@/components/marketing/Details'], resolve),
-            },
-            {
-              path: 'editSell/:id',
-              name: 'EditSell',
-              component: resolve => require(['@/components/marketing/EditSell'], resolve),
-            },
+          
           ]
         },
-        //定制短信的增删改查
-        {
-          path: 'shortmsgDetails/:id',
-          name: 'ShortmsgDetails',
-          component: resolve => require(['@/components/marketing/shortmsgDetails'], resolve),
-        },
-        {
-          path: 'shortmsgReport/:id',
-          name: 'ShortmsgReport',
-          component: resolve => require(['@/components/marketing/shortmsgReport'], resolve),
-        },
-        {
-          path: 'shortmsgEdit/:id',
-          name: 'ShortmsgEdit',
-          component: resolve => require(['@/components/marketing/shortmsgEdit'], resolve),
-        },
-        {
-          path: 'shortmsgAdd',
-          name: 'ShortmsgAdd',
-          component: resolve => require(['@/components/marketing/shortmsgAdd'], resolve),
-        },
-
         /////////客户关怀
         //客户关怀的增删改查
         {
@@ -209,7 +168,6 @@ export default new Router({
           name: 'group',
           component: resolve => require(['@/components/manage/Group'], resolve),
           // meta: {keepAlive: true}
-
         },
         {
           path: 'addGroup',
@@ -226,7 +184,6 @@ export default new Router({
           name: 'photo',
           component: resolve => require(['@/components/manage/Photo'], resolve),
           // meta: {keepAlive: true}
-
         },
         {
           path: 'photoCondition',

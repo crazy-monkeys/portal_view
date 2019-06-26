@@ -114,13 +114,10 @@
 </template>
 
 <script>
-  import Dialog from '@/components/marketing/coms/dialog.vue'
   import formTest from '../../assets/js/formTest'
   export default {
     name: 'SellIndex',
-    components:{
-      Dialog
-    },
+    
     data() {
       return {
         options: [{

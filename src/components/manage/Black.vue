@@ -9,7 +9,7 @@
     </div>
     <div class="content">
       <div class="selBox">
-        <el-form ref="form" :model="form" label-width="80px" :inline='true'>
+        <el-form ref="form" :model="form"  label-position='top' class="form" :inline='true'>
           <el-form-item label="客户号">
             <el-input size='small' :readonly="true"></el-input>
           </el-form-item>
@@ -55,13 +55,6 @@
           <el-form-item label="员工人数">
             <el-input size='small'></el-input>
           </el-form-item>
-          <el-form-item label="注册时间" size='small'>
-            <el-date-picker
-              v-model="value1"
-              type="date"
-              placeholder="选择日期">
-            </el-date-picker>
-          </el-form-item>
           <el-form-item label="传真">
             <el-input size='small'></el-input>
           </el-form-item>
@@ -71,12 +64,70 @@
           <el-form-item label="公司总机">
             <el-input size='small'></el-input>
           </el-form-item>
-          <el-form-item label="注册地址">
-            <el-input size='small'></el-input>
+          <el-form-item label="注册时间" size='small' class="date">
+              <el-date-picker
+                v-model="value1"
+                type="date"
+                placeholder="选择日期">
+              </el-date-picker>
+            </el-form-item>
+          <el-form-item label="注册地址" class="address">
+              <el-select v-model="value3" size="small" filterable placeholder="省">
+                  <el-option
+                    v-for="item in options3"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+                <el-select v-model="value3" size="small" filterable placeholder="市">
+                    <el-option
+                      v-for="item in options3"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                  <el-select v-model="value3" size="small" filterable placeholder="区">
+                      <el-option
+                        v-for="item in options3"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                      </el-option>
+                    </el-select>
+                    <el-input size='small' placeholder="详细地址"></el-input>
           </el-form-item>
-          <el-form-item label="办公地址">
-            <el-input size='small'></el-input>
+          
+          <el-form-item label="办公地址" class="address">
+              <el-select v-model="value3" size="small" filterable placeholder="省">
+                  <el-option
+                    v-for="item in options3"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+                <el-select v-model="value3" size="small" filterable placeholder="市">
+                    <el-option
+                      v-for="item in options3"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                  <el-select v-model="value3" size="small" filterable placeholder="区">
+                      <el-option
+                        v-for="item in options3"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                      </el-option>
+                    </el-select>
+                    <el-input size='small' placeholder="详细地址"></el-input>
+
           </el-form-item>
+          
           <el-form-item label="业务介绍" >
             <el-input type='textarea' v-model='form.txt' :rows="2" placeholder="" resize='none'></el-input>
           </el-form-item>
@@ -373,10 +424,35 @@
         display: flex;
         justify-content: space-between;
         background: #fff;
-
-        .el-form--inline .el-form-item {
-          margin-bottom: 0;
-          width: 200px;
+        .form{
+          max-width:1300px;
+          .el-form-item {
+            margin-bottom: 0;
+            width: 200px;
+            .el-form-item__label{
+              height: 30px;
+            }
+          }
+          .el-form-item:last-child{
+            /* width:100%; */
+            .el-textarea__inner{
+              width: 414px;
+              margin-top:2px;
+            }
+          }
+          .date{
+            width: 200px;
+            .el-date-editor{
+              width:200px;
+            }
+          }
+          .address{
+            width:100%;
+            .el-select,.el-input{
+              width: 200px;
+              margin-right:10px
+            }
+          }
         }
       }
 

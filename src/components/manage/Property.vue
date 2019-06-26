@@ -7,49 +7,46 @@
           <el-breadcrumb-item>客户维护</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <div class="sels clear">
-          <el-form ref="form" :model="form" class="form" label-position='top' :inline='true'>
-            <el-form-item label="客户号">
-              <el-input size='small'  placeholder="" ></el-input>
+      <div class="sels clear" >
+          <el-button @click='change'  size='small' type='primary' plain>{{!dialogVisible3 ? '展开筛选条件' :'收起筛选条件'}}
+          </el-button>
+          <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
+          <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible3' >
+            <el-form-item label="客户名称" >
+              <el-input size='small' placeholder="请输入"></el-input>
             </el-form-item>
-            <el-form-item label="公司名称">
-              <el-input size='small' placeholder="" ></el-input>
+            <el-form-item label="英文名称" >
+              <el-input size='small' placeholder="请输入"></el-input>
             </el-form-item>
-            <el-form-item label="英文名">
-              <el-input size='small' placeholder="" ></el-input>
+            <el-form-item label="客户号" >
+              <el-input size='small' placeholder="请输入"></el-input>
             </el-form-item>
-            <el-form-item label="客户类型">
-              <el-input size='small' placeholder="" ></el-input>
+            <el-form-item label="代理商" >
+              <el-input size='small' placeholder="请输入"></el-input>
             </el-form-item>
-            <el-form-item label="销售">
-              <el-input size='small' placeholder="" ></el-input>
+            <el-form-item label="客户类型" >
+              <el-select v-model="value" size="small" filterable placeholder="请选择">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
             </el-form-item>
-            <el-form-item label="阿米巴">
-              <el-input size='small' placeholder="" ></el-input>
-            </el-form-item>
-            <el-form-item label="公司资产">
-              <el-input size='small' placeholder="" ></el-input>
-            </el-form-item>
-            <el-form-item label="员工人数">
-              <el-input size='small' placeholder="" ></el-input>
-            </el-form-item>
-            <el-form-item label="注册日期">
-              <el-input size='small' placeholder="" ></el-input>
-            </el-form-item>
-            <el-form-item label="公司总机">
-              <el-input size='small' placeholder="" ></el-input>
-            </el-form-item>
-            <el-form-item label="办公地址">
-              <el-input size='small' placeholder="" ></el-input>
-            </el-form-item>
-            <el-form-item label="注册地址">
-              <el-input size='small' placeholder="" ></el-input>
-            </el-form-item>
-            <el-form-item label="业务介绍" >
-              <el-input type='textarea' v-model='form.txt' :rows="2" placeholder="" resize='none' ></el-input>
+            <el-form-item label="报备日期" class="date">
+                <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期"
+                  end-placeholder="结束日期">
+                </el-date-picker>
+              </el-form-item>
+            <el-form-item label=" ">
+              <el-button size='small' type='primary' plain>搜索</el-button>
+              <el-button @click='dialogVisible3 = true'  size='small' type='primary' plain>重置</el-button>
             </el-form-item>
           </el-form>
-      </div>
+      <!-- </transition-group> -->
+
+        </div>
       <div class="box">
         <div class="btns clear">
           <el-button  class="add" @click='open' size='small' type='primary'>释放</el-button>
@@ -202,6 +199,7 @@
         options: [],
         value: '',
         dialogVisible:false,
+        dialogVisible3:false,
         dialogVisible1:false,
         tableData: [
           {
@@ -232,6 +230,9 @@
       }
     },
     methods: {
+      change(){
+        this.dialogVisible3 =!this.dialogVisible3
+      },
       changeType(){
         this.dialogVisible1 = true
       },
@@ -341,12 +342,14 @@
         }
         .el-form-item {
           margin-bottom: 0;
+          .el-select{
+            width:200px
+          }
         }
-        .el-form-item:last-child{
-          width:100%;
-          .el-textarea__inner{
+        .date{
+          width: 414px;
+          .el-date-editor{
             width: 414px;
-            margin-top:2px;
           }
         }
       }
@@ -384,21 +387,6 @@
         }
 
       }
-
-      .el-date-editor {
-        margin: 12px 0 12px 20px;
-        height: 32px;
-        line-height: 32px;
-        border-radius: 0;
-
-        .el-range-separator {
-          line-height: 32px;
-          height: 32px;
-        }
-
-      }
-
-
     }
     .box {
       margin: 0 20px 20px 20px;

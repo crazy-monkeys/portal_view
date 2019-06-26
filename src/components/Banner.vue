@@ -92,7 +92,7 @@ export default {
   name: "Banner",
   data() {
     return {
-      loginName:"adminadminadminadminadminadminadminadminadmin",
+      loginName:"admin",
       userId:'',
       shopId:'',
       shopName:'管理员',
