@@ -1,0 +1,20 @@
+@font-face {  
+    font-family: 'zt1';  
+    src: url('/src/common/font/zt1.ttf');  
+    font-weight: normal;  
+    font-style: normal;  
+}  
+/* REGULE */
+/* MEDIUM */
+@font-face {  
+    font-family: 'zt2';  
+    src: url('/src/common/font/zt2.ttf');  
+    font-weight: normal;  
+    font-style: bold;  
+}  
+@font-face {  
+    font-family: 'zt3';  
+    src: url('/src/common/font/zt3.ttf');  
+    font-weight: normal;  
+    font-style: normal;  
+}  
