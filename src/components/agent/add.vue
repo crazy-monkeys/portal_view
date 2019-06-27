@@ -179,18 +179,6 @@
     name: "AddSell",
     data() {
       return {
-        v1: '001',
-        v2: '测试客户A',
-        v3: 'Test Customer A',
-        v4: 'Mass Market',
-        v5: '销售A',
-        v6: '阿米巴A',
-        v7: '10000000',
-        v8: '500',
-        v9: '2011-01-01',
-        v10: '021-00000000',
-        v11: '上海市静安区XXXXXXX',
-        v12: '上海市静安区XXXXXXX',
         form: {
           txt: ''
         },

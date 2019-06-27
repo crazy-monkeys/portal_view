@@ -74,7 +74,7 @@
             <el-table-column show-overflow-tooltip prop="6" label="报备状态">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
-              <template scope-slot='scope'>
+              <template slot-scope='scope'>
                 <el-button type='primary' size='mini' @click='add'>明细</el-button>
               </template>
             </el-table-column>

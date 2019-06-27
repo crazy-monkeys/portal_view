@@ -3,87 +3,87 @@
   <div class="add">
     <div class="head clear">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item to="/home/sell">客户管理</el-breadcrumb-item>
-        <el-breadcrumb-item to="/home/sell/sellIndex">客户查询</el-breadcrumb-item>
-        <el-breadcrumb-item>明细</el-breadcrumb-item>
+        <el-breadcrumb-item to="/home/order/list">订单管理</el-breadcrumb-item>
+        <el-breadcrumb-item>订单填报</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="content">
       <div class="selBox">
         <el-form ref="form" :model="form" class="form" label-position='top' :inline='true'>
-          <el-form-item label="客户号">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v1'></el-input>
+          <el-form-item label="甲方单位（章）">
+            <el-select v-model="value" size="small" filterable placeholder="公司A">
+            </el-select>
           </el-form-item>
-          <el-form-item label="客户名称">
+          <el-form-item label="授权委托代表人">
             <el-input size='small' placeholder="" :readonly="true" v-model='v2'></el-input>
           </el-form-item>
-          <el-form-item label="英文名">
+          <el-form-item label="业务联系人">
             <el-input size='small' placeholder="" :readonly="true" v-model='v3'></el-input>
           </el-form-item>
-          <el-form-item label="客户类型">
+          <el-form-item label="电话">
             <el-input size='small' placeholder="" :readonly="true" v-model='v4'></el-input>
           </el-form-item>
-          <el-form-item label="销售">
+          <el-form-item label="传真">
             <el-input size='small' placeholder="" :readonly="true" v-model='v5'></el-input>
           </el-form-item>
-          <el-form-item label="阿米巴">
+          <el-form-item label="SwiftCode">
             <el-input size='small' placeholder="" :readonly="true" v-model='v6'></el-input>
           </el-form-item>
-          <el-form-item label="公司资产">
+          <el-form-item label="开户银行">
             <el-input size='small' placeholder="" :readonly="true" v-model='v7'></el-input>
           </el-form-item>
-          <el-form-item label="员工人数">
+          <el-form-item label="账号">
             <el-input size='small' placeholder="" :readonly="true" v-model='v8'></el-input>
           </el-form-item>
-          <el-form-item label="注册日期">
+          <el-form-item label="开票地址">
             <el-input size='small' placeholder="" :readonly="true" v-model='v9'></el-input>
           </el-form-item>
-          <el-form-item label="公司总机">
+          <el-form-item label="付款方式">
             <el-input size='small' placeholder="" :readonly="true" v-model='v10'></el-input>
           </el-form-item>
-          <el-form-item label="办公地址">
+          <el-form-item label="交货地址">
             <el-input size='small' placeholder="" :readonly="true" v-model='v11'></el-input>
           </el-form-item>
-          <el-form-item label="注册地址">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v12'></el-input>
+          <el-form-item label="发票种类">
+            <el-select v-model="value" size="small" filterable placeholder="出口发票">
+            </el-select>
           </el-form-item>
-          <el-form-item label="业务介绍">
-            <el-input type='textarea' v-model='form.txt' :rows="2" placeholder="" resize='none' :readonly="true"></el-input>
+          <el-form-item label="发票传递">
+            <el-checkbox v-model="checked">随货</el-checkbox>
+            <el-checkbox v-model="checked">办公地址或</el-checkbox>
+            <el-input size='small' placeholder="" :readonly="true" v-model='v11'></el-input>
           </el-form-item>
         </el-form>
       </div>
       <div class="tab">
         <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="主要开户行信息" name="first">
+          <el-tab-pane label="订单信息" name="first">
             <div class="tabBox">
               <el-table :data="tableData" style="width: 100%" height="300">
                 <el-table-column prop="" label="ID" v-if="false">
                 </el-table-column>
-                <el-table-column prop="t1" label="银行名称" show-overflow-tooltip>
+                <el-table-column prop="t1" label="客户属性" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t2" label="银行地址" show-overflow-tooltip>
+                <el-table-column prop="t2" label="订单类型" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-upload
+                      class="upload-demo"
+                      action=''
+                      >
+                      <el-select v-model="value" size="small" filterable placeholder="专货订单">
+                      </el-select>
+                    </el-upload>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="t3" label="账号" show-overflow-tooltip>
+                <el-table-column prop="t3" label="规格型号" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t4" label="银行识别码" show-overflow-tooltip>
+                <el-table-column prop="t4" label="单位" show-overflow-tooltip>
                 </el-table-column>
-                <div slot="empty">
-                  无数据
-                </div>
-              </el-table>
-              <!-- <div class="block">
-                <el-pagination :current-page="currentPage" :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next"
-                  :total="total">
-                </el-pagination>
-              </div> -->
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="股权结构" name="second">
-            <div class="tabBox">
-              <el-table :data="tableData1" style="width: 100%" height="300">
-                <el-table-column prop="t11" label="股东" show-overflow-tooltip>
+                <el-table-column prop="t5" label="单位（USD）" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t12" label="占比" show-overflow-tooltip>
+                <el-table-column prop="t6" label="数量" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t7" label="交货日期" show-overflow-tooltip>
                 </el-table-column>
                 <div slot="empty">
                   无数据
@@ -96,77 +96,7 @@
               </div> -->
             </div>
           </el-tab-pane>
-          <el-tab-pane label="管理层及主要联系人" name="third">
-            <div class="tabBox">
-              <el-table :data="tableData2" style="width: 100%" height="300">
-                <el-table-column prop="t21" label="部门" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t22" label="姓名" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t23" label="职位" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t24" label="电话号码" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t25" label="电子邮件" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t26" label="备注" show-overflow-tooltip>
-                </el-table-column>
-
-                <div slot="empty">
-                  无数据
-                </div>
-              </el-table>
-              <!-- <div class="block">
-                <el-pagination :current-page="currentPage" :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next"
-                  :total="total">
-                </el-pagination>
-              </div> -->
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="业务往来信息" name="fourth">
-            <div class="tabBox">
-              <el-table :data="tableData3" style="width: 100%" height="300">
-                <el-table-column type="index" label="编号" width="150">
-                </el-table-column>
-                <el-table-column prop="t31" label="ID" v-if="false">
-                </el-table-column>
-                <el-table-column prop="t32" label="主题名称" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t33" show-overflow-tooltip label="创建时间">
-                </el-table-column>
-                <div slot="empty">
-                  无数据
-                </div>
-              </el-table>
-              <!-- <div class="block">
-                <el-pagination :current-page="currentPage" :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next"
-                  :total="total">
-                </el-pagination>
-              </div> -->
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="代理商拜访记录" name="fifth">
-            <div class="tabBox">
-              <el-table :data="tableData4" style="width: 100%" height="300">
-                <el-table-column prop="t41" label="客户名" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t42" label="项目地址" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t43" label="备注" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t44" label="附件" show-overflow-tooltip>
-                </el-table-column>
-                <div slot="empty">
-                  无数据
-                </div>
-              </el-table>
-              <!-- <div class="block">
-                <el-pagination :current-page="currentPage" :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next"
-                  :total="total">
-                </el-pagination>
-              </div> -->
-            </div>
-          </el-tab-pane>
+          
         </el-tabs>
       </div>
     </div>
@@ -179,18 +109,6 @@
     name: "AddSell",
     data() {
       return {
-        v1: '001',
-        v2: '测试客户A',
-        v3: 'Test Customer A',
-        v4: 'Mass Market',
-        v5: '销售A',
-        v6: '阿米巴A',
-        v7: '10000000',
-        v8: '500',
-        v9: '2011-01-01',
-        v10: '021-00000000',
-        v11: '上海市静安区XXXXXXX',
-        v12: '上海市静安区XXXXXXX',
         form: {
           txt: ''
         },
@@ -198,58 +116,12 @@
         tableData: [
           {
             t1: '中国建设银行',
-            t2: '上海市静安区XXXXXXX',
-            t3: 'test0000001',
-            t4: 'xxxxxxx'
+            t3: 'AF',
+            t4: 'AF-001',
+            t5: '87',
+            t6: '100',
+            t7: '2019-06-23',
           }
-        ],
-        tableData1: [
-          {
-            t11: '股东A',
-            t12: '10%'
-          }, {
-            t11: '股东B',
-            t12: '20%'
-          }
-        ],
-        tableData2: [
-          {
-            t21: '财务部',
-            t22: '测试',
-            t23: '财务',
-            t24: '15200000000',
-            t25: 'test@qq.com',
-            t26: 'test'
-          }, {
-            t21: '人事部',
-            t22: '测试',
-            t23: '财务',
-            t24: '15200000000',
-            t25: 'test@qq.com',
-            t26: 'test'
-          }
-        ],
-        tableData3: [
-          {
-            t32: '测试',
-            t33: '2019-01-01'
-          }, {
-            t32: '测试2',
-            t33: '2019-01-01'
-          }
-        ],
-        tableData4: [
-          {
-            t41: '测试客户A',
-            t42: '上海市静安区XXXXXXX',
-            t43: '测试',
-            t44: '20190101测试拜访记录'
-          }, {
-            t41: '测试客户B',
-            t42: '上海市静安区XXXXXXX',
-            t43: '测试',
-            t44: '20190101测试拜访记录'
-          },
         ],
         currentPage: 1,
         pageSize: 10,

@@ -70,12 +70,6 @@ export default new Router({
           component: resolve => require(['@/components/order/list'], resolve),
           // meta: {keepAlive: true}
         },
-        {
-          path: 'order/detail',
-          name: 'orderDetail',
-          component: resolve => require(['@/components/order/detail'], resolve),
-          // meta: {keepAlive: true}
-        },
         //价格查询
         {
           path: 'price/list',
