@@ -45,7 +45,7 @@
               v-model="d1">
             </el-date-picker>
           </el-form-item>
-          <el-form-item :label="checkedCities.length==0 ?'' : ' '" class="btns">
+          <el-form-item :label="checkedCities.length==0 ?'' : ' '">
             <el-button size='small' type='primary' plain>搜索</el-button>
             <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
             <el-button class="add" @click='create' size='small' type='primary'>新建</el-button>

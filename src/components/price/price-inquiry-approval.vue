@@ -35,7 +35,7 @@
               v-model="d1">
             </el-date-picker>
           </el-form-item>
-          <el-form-item :label="checkedCities.length==0 ?'' : ' '" class="btns">
+          <el-form-item :label="checkedCities.length==0 ?'' : ' '">
             <el-button size='small' type='primary' plain>查询</el-button>
             <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
               <el-button size='small' type='primary' @click='create' plain>审批</el-button>

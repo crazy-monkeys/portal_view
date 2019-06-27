@@ -32,10 +32,10 @@
               v-model="d1">
             </el-date-picker>
           </el-form-item>
-          <el-form-item :label="checkedCities.length==0 ?'' : ' '" class="btns">
+          <el-form-item :label="checkedCities.length==0 ?'' : ' '" >
             <el-button size='small' type='primary' plain>查询</el-button>
             <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
-            <el-button size='small' type='primary' @click='create' plain>新建</el-button>
+           
           </el-form-item>
         </el-form>
         <!-- </transition-group> -->
@@ -44,6 +44,9 @@
 
       <!-- </transition-group> -->
       <div class="box">
+         <div class="btns clear">
+           <el-button size='small' class='add' type='primary' @click='create' plain>新建</el-button>
+        </div>
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" height="700">
             <el-table-column prop="" width='30' show-overflow-tooltip label="">
@@ -275,6 +278,8 @@
       position: relative;
 
       .btns {
+
+
         .add {
           margin: 12px 0 12px 30px;
         }

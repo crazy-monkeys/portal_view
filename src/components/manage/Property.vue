@@ -23,15 +23,15 @@
           <el-form-item label="英文名称">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="客户号">
+          <el-form-item label="客户编号">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="代理商">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="客户类型">
-            <el-select v-model="value" size="small" filterable placeholder="请选择">
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+            <el-select v-model="value3" size="small" filterable placeholder="请选择">
+              <el-option v-for="item in options3" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
@@ -59,11 +59,11 @@
             </el-table-column>
             <el-table-column type="index" width='100' label="编号" :index='q'>
             </el-table-column>
-            <el-table-column prop="t1" show-overflow-tooltip label="客户中文名">
+            <el-table-column prop="t1" show-overflow-tooltip label="客户名称">
             </el-table-column>
             <el-table-column prop="t2" label="客户英文名" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="t3" label="客户号" show-overflow-tooltip>
+            <el-table-column prop="t3" label="客户编号" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="t4" show-overflow-tooltip label="代理商">
             </el-table-column>
@@ -115,13 +115,13 @@
         <el-table :data="tableData1" style="width: 100%">
           <el-table-column type="index" width='100' label="编号" :index='q'>
           </el-table-column>
-          <el-table-column prop="t11" show-overflow-tooltip label="客户中文名">
+          <el-table-column prop="t11" show-overflow-tooltip label="客户名称">
           </el-table-column>
-          <el-table-column prop="t12" label="活动名称" show-overflow-tooltip>
+          <el-table-column prop="t12" label="客户编号" show-overflow-tooltip>
           </el-table-column>
-          <el-table-column prop="t13" label="人群名称" show-overflow-tooltip>
+          <el-table-column prop="t13" label="客户类型" show-overflow-tooltip>
           </el-table-column>
-          <el-table-column prop="t14" show-overflow-tooltip label="发送时间">
+          <el-table-column prop="t14" show-overflow-tooltip label="代理商">
           </el-table-column>
           <div slot="empty">
 
@@ -131,8 +131,9 @@
       </div>
     </el-dialog>
     <el-dialog title="类型变更" :visible.sync="dialogVisible1" width="30%">
-      <el-select v-model="value" size='small' filterable placeholder="请选择" class="changeType">
-        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+      <el-select v-model="value3" size='small' filterable placeholder="请选择" class="changeType">
+        <el-option v-for="item in options3" :key="item.value" :label="item.label" :value="item.value">
+          <op
         </el-option>
       </el-select>
       <span slot="footer" class="dialog-footer">
@@ -167,6 +168,15 @@
         }],
         value1: '',
 
+        options3: [{
+          value: '选项1',
+          label: 'Account Market'
+        }, {
+          value: '选项2',
+          label: 'Mass Market'
+        }],
+        value3: '',
+
         txt: '',
         form: {},
         options: [],
@@ -177,14 +187,14 @@
         tableData: [
           {
             t1: '测试客户A',
-            t2: 'Test CustomerB',
+            t2: 'Test CustomerA',
             t3: '001',
             t4: '代理商A',
             t5: 'Mass Market'
 
           },
           {
-            t1: '审批中',
+            t1: '测试客户B',
             t2: 'Test CustomerB',
             t3: '002',
             t4: '',
@@ -193,7 +203,12 @@
           }
         ],
         tableData1: [
-          {}
+          {
+            t11: '测试客户A',
+            t12: '001',
+            t13: 'Mass Market',
+            t14: '代理商A'
+          }
         ],
         //第几页
         currentPage: 1,

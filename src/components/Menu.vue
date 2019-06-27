@@ -164,7 +164,7 @@
                 ]
               },{
                 resourceId: '33',
-                resourceName: '询价单',
+                resourceName: '询价申请',
                 resourceUrl: '/home/price/inquiry',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
@@ -172,7 +172,7 @@
                 ]
               },{
                 resourceId: '34',
-                resourceName: '询价单审批',
+                resourceName: '询价申请审批',
                 resourceUrl: '/home/price/inquiry/approval',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
