@@ -10,9 +10,9 @@
     </div>
     <div class="content">
       <div class="selBox">
-        <el-form ref="form" :model="form" class="form" label-position='top' :inline='true'> 
+        <el-form ref="form" :model="form" class="form" label-position='top' :inline='true'>
           <el-form-item label="客户号">
-            <el-input size='small'  placeholder="" :readonly="true" v-model='v1'></el-input>
+            <el-input size='small' placeholder="" :readonly="true" v-model='v1'></el-input>
           </el-form-item>
           <el-form-item label="客户名称">
             <el-input size='small' placeholder="" :readonly="true" v-model='v2'></el-input>
@@ -47,7 +47,7 @@
           <el-form-item label="注册地址">
             <el-input size='small' placeholder="" :readonly="true" v-model='v12'></el-input>
           </el-form-item>
-          <el-form-item label="业务介绍" >
+          <el-form-item label="业务介绍">
             <el-input type='textarea' v-model='form.txt' :rows="2" placeholder="" resize='none' :readonly="true"></el-input>
           </el-form-item>
         </el-form>
@@ -56,7 +56,7 @@
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="主要开户行信息" name="first">
             <div class="tabBox">
-              <el-table :data="tableData" style="width: 100%" height="">
+              <el-table :data="tableData" style="width: 100%" height="300">
                 <el-table-column prop="" label="ID" v-if="false">
                 </el-table-column>
                 <el-table-column prop="t1" label="银行名称" show-overflow-tooltip>
@@ -71,16 +71,16 @@
                   无数据
                 </div>
               </el-table>
-              <div class="block">
+              <!-- <div class="block">
                 <el-pagination :current-page="currentPage" :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next"
                   :total="total">
                 </el-pagination>
-              </div>
+              </div> -->
             </div>
           </el-tab-pane>
           <el-tab-pane label="股权结构" name="second">
             <div class="tabBox">
-              <el-table :data="tableData1" style="width: 100%" height="">
+              <el-table :data="tableData1" style="width: 100%" height="300">
                 <el-table-column prop="t11" label="股东" show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column prop="t12" label="占比" show-overflow-tooltip>
@@ -89,16 +89,16 @@
                   无数据
                 </div>
               </el-table>
-              <div class="block">
+              <!-- <div class="block">
                 <el-pagination :current-page="currentPage" :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next"
                   :total="total">
                 </el-pagination>
-              </div>
+              </div> -->
             </div>
           </el-tab-pane>
           <el-tab-pane label="管理层及主要联系人" name="third">
             <div class="tabBox">
-              <el-table :data="tableData2" style="width: 100%" height="">
+              <el-table :data="tableData2" style="width: 100%" height="300">
                 <el-table-column prop="t21" label="部门" show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column prop="t22" label="姓名" show-overflow-tooltip>
@@ -111,21 +111,21 @@
                 </el-table-column>
                 <el-table-column prop="t26" label="备注" show-overflow-tooltip>
                 </el-table-column>
-                
+
                 <div slot="empty">
                   无数据
                 </div>
               </el-table>
-              <div class="block">
+              <!-- <div class="block">
                 <el-pagination :current-page="currentPage" :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next"
                   :total="total">
                 </el-pagination>
-              </div>
+              </div> -->
             </div>
           </el-tab-pane>
           <el-tab-pane label="业务往来信息" name="fourth">
             <div class="tabBox">
-              <el-table :data="tableData3" style="width: 100%" height="">
+              <el-table :data="tableData3" style="width: 100%" height="300">
                 <el-table-column type="index" label="编号" width="150">
                 </el-table-column>
                 <el-table-column prop="t31" label="ID" v-if="false">
@@ -138,33 +138,33 @@
                   无数据
                 </div>
               </el-table>
-              <div class="block">
+              <!-- <div class="block">
                 <el-pagination :current-page="currentPage" :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next"
                   :total="total">
                 </el-pagination>
-              </div>
+              </div> -->
             </div>
           </el-tab-pane>
           <el-tab-pane label="代理商拜访记录" name="fifth">
             <div class="tabBox">
-              <el-table :data="tableData4" style="width: 100%" height="">
-                  <el-table-column prop="t41" label="客户名" show-overflow-tooltip>
-                  </el-table-column>
-                  <el-table-column prop="t42" label="项目地址" show-overflow-tooltip>
-                  </el-table-column>
-                  <el-table-column prop="t43" label="备注" show-overflow-tooltip>
-                  </el-table-column>
-                  <el-table-column prop="t44" label="附件" show-overflow-tooltip>
-                  </el-table-column>
+              <el-table :data="tableData4" style="width: 100%" height="300">
+                <el-table-column prop="t41" label="客户名" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t42" label="项目地址" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t43" label="备注" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t44" label="附件" show-overflow-tooltip>
+                </el-table-column>
                 <div slot="empty">
                   无数据
                 </div>
               </el-table>
-              <div class="block">
+              <!-- <div class="block">
                 <el-pagination :current-page="currentPage" :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next"
                   :total="total">
                 </el-pagination>
-              </div>
+              </div> -->
             </div>
           </el-tab-pane>
         </el-tabs>
@@ -179,77 +179,77 @@
     name: "AddSell",
     data() {
       return {
-        v1:'001',
-        v2:'测试客户A',
-        v3:'Test Customer A',
-        v4:'Mass Market',
-        v5:'销售A',
-        v6:'阿米巴A',
-        v7:'10000000',
-        v8:'500',
-        v9:'2011-01-01',
-        v10:'021-00000000',
-        v11:'上海市静安区XXXXXXX',
-        v12:'上海市静安区XXXXXXX',
-        form:{
-          txt:''
+        v1: '001',
+        v2: '测试客户A',
+        v3: 'Test Customer A',
+        v4: 'Mass Market',
+        v5: '销售A',
+        v6: '阿米巴A',
+        v7: '10000000',
+        v8: '500',
+        v9: '2011-01-01',
+        v10: '021-00000000',
+        v11: '上海市静安区XXXXXXX',
+        v12: '上海市静安区XXXXXXX',
+        form: {
+          txt: ''
         },
         activeName: 'first',
         tableData: [
           {
-            t1:'中国建设银行',
-            t2:'上海市静安区XXXXXXX',
-            t3:'test0000001',
-            t4:'xxxxxxx'
+            t1: '中国建设银行',
+            t2: '上海市静安区XXXXXXX',
+            t3: 'test0000001',
+            t4: 'xxxxxxx'
           }
         ],
-        tableData1:[
-            {
-              t11:'股东A',
-              t12:'10%'
-            },{
-              t11:'股东B',
-              t12:'20%'
-            }
+        tableData1: [
+          {
+            t11: '股东A',
+            t12: '10%'
+          }, {
+            t11: '股东B',
+            t12: '20%'
+          }
         ],
-        tableData2:[
-            {
-              t21:'财务部',
-              t22:'测试',
-              t23:'财务',
-              t24:'15200000000',
-              t25:'test@qq.com',
-              t26:'test'
-            },{
-              t21:'人事部',
-              t22:'测试',
-              t23:'财务',
-              t24:'15200000000',
-              t25:'test@qq.com',
-              t26:'test'
-            }
+        tableData2: [
+          {
+            t21: '财务部',
+            t22: '测试',
+            t23: '财务',
+            t24: '15200000000',
+            t25: 'test@qq.com',
+            t26: 'test'
+          }, {
+            t21: '人事部',
+            t22: '测试',
+            t23: '财务',
+            t24: '15200000000',
+            t25: 'test@qq.com',
+            t26: 'test'
+          }
         ],
-        tableData3:[
-            {
-              t32:'测试',
-              t33:'2019-01-01'
-            },{
-              t32:'测试2',
-              t33:'2019-01-01'
-            }
+        tableData3: [
+          {
+            t32: '测试',
+            t33: '2019-01-01'
+          }, {
+            t32: '测试2',
+            t33: '2019-01-01'
+          }
         ],
-        tableData4:[
-            {
-              t41:'测试客户A',
-              t42:'上海市静安区XXXXXXX',
-              t43:'测试',
-              t44:'20190101测试拜访记录'
-            },{
-              t41:'测试客户B',
-              t42:'上海市静安区XXXXXXX',
-              t43:'测试',
-              t44:'20190101测试拜访记录'
-            },
+        tableData4: [
+          {
+            t41: '测试客户A',
+            t42: '上海市静安区XXXXXXX',
+            t43: '测试',
+            t44: '20190101测试拜访记录'
+          }, {
+            t41: '测试客户B',
+            t42: '上海市静安区XXXXXXX',
+            t43: '测试',
+            t44: '20190101测试拜访记录'
+          },
         ],
         currentPage: 1,
         pageSize: 10,
@@ -365,20 +365,25 @@
         display: flex;
         justify-content: space-between;
         background: #fff;
-        .form{
-          max-width:1300px;
+
+        .form {
+          max-width: 1300px;
+
           .el-form-item {
             margin-bottom: 0;
             width: 200px;
-            .el-form-item__label{
+
+            .el-form-item__label {
               height: 30px;
             }
           }
-          .el-form-item:last-child{
-            width:100%;
-            .el-textarea__inner{
+
+          .el-form-item:last-child {
+            width: 100%;
+
+            .el-textarea__inner {
               width: 414px;
-              margin-top:2px;
+              margin-top: 2px;
             }
           }
         }

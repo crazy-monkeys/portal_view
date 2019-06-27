@@ -70,65 +70,6 @@ export default new Router({
             },
           ]
         },
-        /////////客户关怀
-        //客户关怀的增删改查
-        {
-          path: 'carelessDetails/:id/:type',
-          name: 'CarelessDetails',
-          component: resolve => require(['@/components/careless/carelessDetails'], resolve),
-        },
-        {
-          path: 'carelessAdd/:type',
-          name: 'CarelessAdd',
-          component: resolve => require(['@/components/careless/carelessAdd'], resolve),
-        },
-        {
-          path: 'carelessEdit/:type/:id',
-          name: 'CarelessEdit',
-          component: resolve => require(['@/components/careless/carelessEdit'], resolve),
-        },
-        {
-          path: 'carelessReport/:id/:type',
-          name: 'CarelessReport',
-          component: resolve => require(['@/components/careless/carelessReport'], resolve),
-        },
-        //
-        {
-          path: 'care/orderUrge',
-          name: 'orderUrge',
-          component: resolve => require(['@/components/careless/OrderUrge'], resolve),
-        },
-        {
-          path: 'care/returnGoodsReminder',
-          name: 'returnGoodsReminder',
-          component: resolve => require(['@/components/careless/ReturnGoods'], resolve),
-        },
-        {
-          path: 'care/productRepurchaseReminder',
-          name: 'productRepurchaseReminder',
-          component: resolve => require(['@/components/careless/ProductRepurchaseReminder'], resolve),
-        },
-        {
-          path: 'care/paymentThank',
-          name: 'paymentThank',
-          component: resolve => require(['@/components/careless/PaymentThank'], resolve),
-        },
-        {
-          path: 'care/deliveryReminder',
-          name: 'deliveryReminder',
-          component: resolve => require(['@/components/careless/DeliveryReminder'], resolve),
-        },
-        {
-          path: 'care/advabceReminder',
-          name: 'advabceReminder',
-          component: resolve => require(['@/components/careless/AdvabceReminder'], resolve),
-        },
-        {
-          path: 'care/signReminder',
-          name: 'signReminder',
-          component: resolve => require(['@/components/careless/SignReminder'], resolve),
-        },
-        
         //资源设置
         {
           path: '/home/source',
@@ -145,8 +86,8 @@ export default new Router({
           name: 'resource',
           component: resolve => require(['@/components/system/Resource'], resolve),
         },
-        
-        
+
+
         {
           path: 'manage/black',
           name: 'black',
@@ -161,14 +102,14 @@ export default new Router({
           // meta: {keepAlive: true}
 
         },
-      
+
         {
           path: 'group/manage',
           name: 'group',
           component: resolve => require(['@/components/manage/Group'], resolve),
           // meta: {keepAlive: true}
         },
-      
+
         {
           path: 'account/settings',
           name: 'account',

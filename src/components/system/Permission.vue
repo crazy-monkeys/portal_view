@@ -33,9 +33,7 @@
                 </template>
               </el-table-column>
               <div slot="empty">
-                <div>
-                  <img src="../../assets/img/none.png" alt="" width="140" height="140" />
-                </div>
+
                 <p>无角色信息</p>
               </div>
             </el-table>

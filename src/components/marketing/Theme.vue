@@ -8,67 +8,58 @@
         </el-breadcrumb>
         <!-- <h1>客户查询</h1> -->
       </div>
-     
-        <div class="sels clear" >
-          <div class="lineBox">
-            <i class="el-icon-arrow-down" v-if='!dialogVisible' @click='change'> 展开</i>
 
-            <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
+      <div class="sels clear">
+        <div class="lineBox">
+          <i class="el-icon-arrow-down" v-if='!dialogVisible' @click='change'> 展开</i>
 
-            <!-- <div class="line"></div> -->
-          </div>
-          <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
-          <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible' >
-            <el-form-item label="客户名称" >
-              <el-input size='small' placeholder="请输入"></el-input>
-            </el-form-item>
-            <el-form-item label="英文名称" >
-              <el-input size='small' placeholder="请输入"></el-input>
-            </el-form-item>
-            <el-form-item label="客户号" >
-              <el-input size='small' placeholder="请输入"></el-input>
-            </el-form-item>
-            <el-form-item label="销售" >
-              <el-input size='small' placeholder="请输入"></el-input>
-            </el-form-item>
-            <el-form-item label="客户类型" >
-              <el-select v-model="value" size="small" filterable placeholder="请选择">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="审批状态" >
-              <el-select v-model="value1" size="small" filterable placeholder="请选择">
-                <el-option
-                  v-for="item in options1"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="报备日期" class="date">
-                <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期"
-                  end-placeholder="结束日期">
-                </el-date-picker>
-              </el-form-item>
-            <el-form-item :label="checkedCities.length==0 ?'' : ' '">
-              <el-button size='small' type='primary' plain>搜索</el-button>
-              <el-button @click='dialogVisible = true'  size='small' type='primary' plain>重置</el-button>
-            </el-form-item>
-          </el-form>
-      <!-- </transition-group> -->
+          <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
 
+          <!-- <div class="line"></div> -->
         </div>
+        <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
+        <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
+          <el-form-item label="客户名称">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="英文名称">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="客户号">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="销售">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="客户类型">
+            <el-select v-model="value" size="small" filterable placeholder="请选择">
+              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="审批状态">
+            <el-select v-model="value1" size="small" filterable placeholder="请选择">
+              <el-option v-for="item in options1" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="报备日期" class="date">
+            <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item :label="checkedCities.length==0 ?'' : ' '">
+            <el-button size='small' type='primary' plain>搜索</el-button>
+            <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
+          </el-form-item>
+        </el-form>
+        <!-- </transition-group> -->
+
+      </div>
 
       <!-- </transition-group> -->
       <div class="box">
         <div class="tab">
-          <el-table :data="tableData" style="width: 100%" height="700" >
+          <el-table :data="tableData" style="width: 100%" height="700">
             <el-table-column prop="" width='30' show-overflow-tooltip label="">
             </el-table-column>
             <el-table-column type="index" width='100' label="编号" :index='q'>
@@ -89,17 +80,13 @@
               </template>
             </el-table-column>
             <div slot="empty">
-              <div>
-                <img src="../../assets/img/none.png" alt="" width="140" height="140" />
-              </div>
               <p>未查询到客户信息</p>
             </div>
           </el-table>
         </div>
         <div class="block">
-          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-            :current-page="currentPage" :page-sizes="[10, 100]" :page-size="10"
-            layout="sizes,total, jumper, prev, pager, next" :total="total">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+            :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
           </el-pagination>
         </div>
       </div>
@@ -122,7 +109,7 @@
   import formTest from '../../assets/js/formTest'
   export default {
     name: 'SellIndex',
-    
+
     data() {
       return {
         options: [{
@@ -151,52 +138,52 @@
 
         checkAll: false,
         checkedCities: [
-          1,2
+          1, 2
         ],
         conditions: [
-        {
-            label:'客户名称',
-            value:1
+          {
+            label: '客户名称',
+            value: 1
           },
           {
-            label:'英文名称',
-            value:2
+            label: '英文名称',
+            value: 2
           },
           {
-            label:'客户号',
-            value:3
+            label: '客户号',
+            value: 3
           },
           {
-            label:'代理商',
-            value:4
+            label: '代理商',
+            value: 4
           },
           {
-            label:'客户类别',
-            value:5
+            label: '客户类别',
+            value: 5
           },
           {
-            label:'报备日期',
-            value:6
+            label: '报备日期',
+            value: 6
           }
         ],
         isIndeterminate: false,
         dialogVisible: false,
         tableData: [
           {
-            1:'审批通过',
-            2:'Test CustomerB',
-            3:'001',
-            4:'代理商A',
-            5:'Mass Market'
-            
+            1: '审批通过',
+            2: 'Test CustomerB',
+            3: '001',
+            4: '代理商A',
+            5: 'Mass Market'
+
           },
           {
-            1:'审批中',
-            2:'Test CustomerB',
-            3:'002',
-            4:'',
-            5:'Account Market'
-            
+            1: '审批中',
+            2: 'Test CustomerB',
+            3: '002',
+            4: '',
+            5: 'Account Market'
+
           }
         ],
         //第几页
@@ -215,12 +202,12 @@
     watch: {
     },
     methods: {
-      change(){
-        this.dialogVisible =!this.dialogVisible
+      change() {
+        this.dialogVisible = !this.dialogVisible
       },
       handleCheckAllChange(val) {
         console.log(val)
-        this.checkedCities = val ? [1,2,3,4,5,6] : [];
+        this.checkedCities = val ? [1, 2, 3, 4, 5, 6] : [];
         this.isIndeterminate = false;
       },
       handleCheckedCitiesChange(value) {
@@ -229,16 +216,16 @@
         this.checkAll = checkedCount === this.conditions.length;
         this.isIndeterminate = checkedCount > 0 && checkedCount < this.conditions.length;
       },
-      sure(){
+      sure() {
         this.dialogVisible = false
       },
       handleClose(done) {
-                this.$confirm('确认关闭？')
-                .then(_ => {
-                    done();
-                })
-                .catch(_ => {});
-            },
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => { });
+      },
       q(index) {
         return this.pageSize * (this.currentPage - 1) + index + 1
       },
@@ -265,6 +252,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
   $sc:12;
+
   .sell {
     .head {
       h1 {
@@ -285,44 +273,54 @@
         font-size: 14px;
       }
     }
+
     .sels {
       background: #fff;
       padding: 10px 30px;
       margin: 0 20px 10px 20px;
+
       .form {
+
         /* max-width: 1000px; */
         .el-form-item__label {
           height: 30px;
         }
+
         .el-form-item {
           width: 200px;
           margin-bottom: 0;
         }
-        .date{
+
+        .date {
           width: 414px;
-          .el-date-editor{
+
+          .el-date-editor {
             width: 414px;
           }
         }
-        
+
       }
     }
+
     .box {
       margin: 0 20px 20px 20px;
       background: #FFFFFF;
       box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
       border-radius: 2px;
       position: relative;
+
       .btns {
         .add {
           margin: 12px 0 12px 30px;
         }
       }
+
       .tab {
         .el-table {
           td {
             height: 64px;
             line-height: 64px;
+
             .cell {
               font-size: 12px;
               color: #333333;
@@ -332,8 +330,10 @@
           }
         }
       }
+
       .block {
         padding: 10px;
+
         .el-pagination {
           width: 100%;
           text-align: center;

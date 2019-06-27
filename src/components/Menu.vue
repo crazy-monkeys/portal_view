@@ -2,11 +2,14 @@
   <div class="menu">
     <transition-group enter-active-class="animated slideInLeft" leave-active-class="animated slideOutLeft">
       <div class="logo" :key='1'>
-        <img src="../../static/logo.png" alt="">
-        <div class="msg" v-if="!isCollapse">紫光展锐</div>
+        <img class="lglogo" src="../../static/logostr.png" alt="" v-if="!isCollapse">
+        <img class="smalllogo" src="../../static/logo.png" alt="" v-if="isCollapse">
+        <!-- <div class="msg" v-if="!isCollapse">紫光展锐</div> -->
       </div>
-      <el-menu  :key='2' text-color='#800080'  class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse"
-        :unique-opened="true" :router='true' :default-active='$route.path'>
+    </transition-group>
+    <transition-group enter-active-class="animated slideInLeft" leave-active-class="animated slideOutLeft">
+      <el-menu :key='2' text-color='#800080' class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
+        :collapse="isCollapse" :unique-opened="true" :router='true' :default-active='$route.path'>
         <template v-for="item1 in list">
           <template v-if="item1.children.length !=0">
             <el-submenu :index="item1.resourceUrl" :key="item1.resourceId">
@@ -64,6 +67,7 @@
     name: 'Menu',
     data() {
       return {
+        form: {},
         isCollapse: false,
         list: [
           {
@@ -474,22 +478,30 @@
 
       height: 84%;
       border: none;
+
       // background: rgba(167,97,214,0.5);
       // background: purple;
-      i{
+      i {
         color: #800080
       }
 
     }
 
     .logo {
-      height: 120px;
+      height: 80px;
       text-align: center;
-      img {
-        margin-top: 20px;
+
+      .smalllogo {
         width: 44px;
-        height: 44px;
+        margin-top: 20px;
       }
+
+      .lglogo {
+        margin-top: 10px;
+        width: 200px;
+        /* height: 44px; */
+      }
+
       .msg {
         width: 240px;
         font-size: 24px;

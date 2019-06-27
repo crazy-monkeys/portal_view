@@ -7,7 +7,7 @@ import router from './router'
 import VCharts from 'v-charts'
 import echarts from "echarts"
 Vue.prototype.$echarts = echarts;
-import  './axios/http'
+import './axios/http'
 //解决urlsearchparams  的兼容问题
 import 'url-search-params-polyfill'
 //解决ie不支持 ES6 问题
@@ -27,8 +27,6 @@ import './assets/css/common.css'
 import './assets/css/animate.css'
 import './assets/iconfont/iconfont.css'
 import './assets/css/el.css'
-import './styles/common.scss'
-import './assets/unex-iconfont/iconfont.css'
 
 /* eslint-disable no-new */
 new Vue({
