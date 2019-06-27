@@ -1,20 +1,22 @@
 <template>
 <div class="login">
-
+<!-- <button v-print="'#app'">打印</button> -->
       <el-form status-icon class="login-box">
         <div class="login-box-login">
-      <h1><img src="../assets/img/logo.png" alt=""><span>欢迎使用 SHOPCAT</span> </h1>
-          <el-form-item  label-width="100" label="登录名">
+          <h1><img src="../../static/logostr.png" alt=""> </h1>
+          <el-form-item  label-width="100" label="">
             <el-input
               type="text"
+              prefix-icon="el-icon-user"
               v-model="loginMsg"
               autocomplete="true"
               :autofocus="true"
             ></el-input>
           </el-form-item>
-          <el-form-item label-width="100" label="密码">
+          <el-form-item label-width="100" label="">
             <el-input
               type="password"
+              prefix-icon="el-icon-lock"
               v-model="loginPass"
               autocomplete="off"
               @keyup.enter.native="login"
@@ -23,173 +25,178 @@
           </el-form-item>
         </div>
         <el-form-item class="loginBtns">
-          <el-button  @click="login">登 录 →</el-button>
+          <el-button  @click="login">登 录 </el-button>
         </el-form-item>
       </el-form>
-      <div class="logo">
-      <img src="../../static/logostr.png" alt="">
-    </div>
+      <!-- <div class="logo">
+      <img src="../../static/bg.jpg" alt="">
+      </div> -->
   </div>
 </template>
 
 <script>
 //引入加密
-import CryptoJS from 'crypto-js'
+import CryptoJS from "crypto-js";
 
 export default {
-  name: 'login',
-  data () {
-    return{
-      doing:false,
-      value:'',
-      dialogVisible:false,
-      loginMsg:'',
-      loginPass:'',
-    }
+  name: "login",
+  data() {
+    return {
+      doing: false,
+      value: "",
+      dialogVisible: false,
+      loginMsg: "",
+      loginPass: ""
+    };
   },
-  created(){
-  },
+  created() {},
   methods: {
-      login() {
-        this.$router.push({
-          name:'Sell'
-        })
-      },
-      forget(){}
+    login() {
+      this.$router.push({
+        name: "Sell"
+      });
+    },
+    forget() {}
   }
-
-  }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" >
-$sc:12;
-.login .login-box .el-form-item{
-    margin-bottom: 50px
+$sc: 12;
+.login .login-box .el-form-item {
+  margin-bottom: 50 / $sc + rem;
 }
 
-.login .login-box .el-form-item__content{
-    border: none;
-    width: 280px;
-    height: 48px;
-    outline: none;
-    line-height: 48px;
+.login .login-box .el-form-item__content {
+  border: none;
+  width: 280 / $sc + rem;
+  height: 48 / $sc + rem;
+  outline: none;
+  line-height: 48 / $sc + rem;
 }
-.login .login-box .el-input__inner{
-    border: none;
-    background: #262A39;
-    border-bottom:1px solid rgba(255,255,255,0.5);
-    border-radius: 0;
-    color: #fff
-}
-
-.login .login-box .el-button{
-    border:none;
-    font-family: zt3;
-    font-size: 16px;
-    color: #FFFFFF;
-    letter-spacing: 0;
-    text-align: center;
-    line-height: 14px;
-    background: #3366FF ;
-    width: 280px;
-    height: 48px;
+.login .login-box .el-input__inner {
+  border: none;
+  background: transparent;
+  border-bottom: 1 / $sc + rem solid #fff;
+  border-radius: 0;
+  color: #fff;
 }
 
-.login .login-box .el-form-item__label{
-    opacity: 0.5;
-    font-family: zt2;
-    font-size: 14px;
-    color: #FFFFFF;
-    letter-spacing: 0.32px;
-    line-height: 16px;
+.login .login-box .el-button {
+  border: none;
+  font-size: 16 / $sc + rem;
+  color: #ffffff;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 14 / $sc + rem;
+  background: rgba(172, 7, 142, 0.5);
+  width: 280 / $sc + rem;
+  height: 48 / $sc + rem;
 }
-.login{
-  width:100%;
+
+.login .login-box .el-form-item__label {
+  font-size: 14 / $sc + rem;
+  color: #fff;
+  line-height: 16 / $sc + rem;
+  font-weight: bold;
+}
+.login {
+  .el-input__prefix {
+    color: #fff;
+    i {
+      font-size: 20 / $sc + rem;
+    }
+  }
+  background: url("../../static/bg.jpg") center no-repeat;
+  background-size: cover;
+
+  width: 100%;
   height: 100%;
   // overflow: hidden;
-  margin: 0 auto;
-  .logo{
+  // margin: 0 auto;
+  .logo {
     position: relative;
     overflow: hidden;
-    margin-right: 280px;
+    // margin-right: 280 / $sc + rem;
     height: 100%;
     text-align: center;
-    background: #41589b;
-    img{
+    background: #fff;
+    img {
       position: absolute;
-      /* height: 100%; */
-      width:500px;
-      left:20%;
-      top:20%;
-      /* right:0; */
-      /* top:0; */
-      margin:auto;
+      height: 100%;
+      // width: 500 / $sc + rem;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
     }
   }
 
-  .login-box{
-    float: right;
+  .login-box {
+    position: absolute;
+    height: 500/$sc+rem;
+    // width: 500 / $sc + rem;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    // float: right;
     box-sizing: border-box;
     overflow: hidden;
-    width:400px;
-    padding: 0 60px;
-    background: #262A39;
-    height: 100%;
-  .login-box-login{
-    margin-top: 160px;
-    h1{
-      margin-bottom: 50px;
-      font-family: zt2;
-      font-size: 22px;
-      color: #FFFFFF;
-      letter-spacing: 0.64px;
-      line-height: 36px;
-      height: 36px;
-      span{
-        position: relative;
-        top: -10px
-      }
-    img{
-      width:36px;
-      height: 36px;
-      // background: red;
-      margin-right: 20px;
-    }
+    width: 400 / $sc + rem;
+    padding: 60 / $sc + rem;
+    // background: #fff;
 
-    }
-    .forget{
-      font-size: 14px;
-      position: absolute;
-      right:0;
-      top:10px;
-      cursor: pointer;
-      color: rgba(255,255,255,0.5);
-    }
-    .forget:hover{
-      color: #FFFFFF
-    }
-
-  }
-  .loginBtns{
-
-  .el-button{
-    border-radius: 2px;
-    span{
-        font-family: zt3;
-        font-size: 16px;
-        color: #FFFFFF;
-        letter-spacing: 0;
+    .login-box-login {
+      h1 {
+        width: 100%;
         text-align: center;
-        line-height: 14px;
-        font-weight: bold
+        // margin-bottom: 50 / $sc + rem;
+        font-size: 22 / $sc + rem;
+        color: #920784;
+        // letter-spacing: 0.64 / $sc + rem;
+        // line-height: 36 / $sc + rem;
+        // height: 36 / $sc + rem;
+        // span {
+        //   position: relative;
+        //   top: -10 / $sc + rem;
+        // }
+        img {
+          width: 240 / $sc + rem;
+          // height: 36 / $sc + rem;
+          // background: red;
+          margin-bottom: 20 / $sc + rem;
+        }
+      }
+      .forget {
+        font-size: 14 / $sc + rem;
+        position: absolute;
+        right: 0;
+        top: 0;
+        cursor: pointer;
+        color: #fff;
+      }
+      .forget:hover {
+        color: #fff;
+      }
+    }
+    .loginBtns {
+      .el-button {
+        border-radius: 2 / $sc + rem;
+        span {
+          font-family: zt3;
+          font-size: 16 / $sc + rem;
+          color: #ffffff;
+          letter-spacing: 0;
+          text-align: center;
+          line-height: 14 / $sc + rem;
+          font-weight: bold;
+        }
+      }
     }
   }
 }
-  }
-
-
-}
-
-
 </style>

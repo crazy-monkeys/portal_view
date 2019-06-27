@@ -20,7 +20,7 @@ Vue.use(echarts)
 Vue.use(VCharts)
 
 Vue.config.productionTip = false
-//引入仓库
+    //引入仓库
 import store from './store'
 //默认样式
 import './assets/css/common.css'
@@ -28,12 +28,17 @@ import './assets/css/animate.css'
 import './assets/iconfont/iconfont.css'
 import './assets/css/el.css'
 
+import Print from 'vue-print-nb'
+
+Vue.use(Print); //注册
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>',
-  store,
-  render: h => h(App)
+    el: '#app',
+    router,
+    components: {
+        App
+    },
+    template: '<App/>',
+    store,
+    render: h => h(App)
 })
