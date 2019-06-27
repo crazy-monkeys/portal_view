@@ -173,8 +173,8 @@
             children: [
               {
                 resourceId: '41',
-                resourceName: '样品申请',
-                resourceUrl: '',
+                resourceName: '样品查询',
+                resourceUrl: '/home/sample/list',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
 
@@ -182,8 +182,8 @@
               },
               {
                 resourceId: '42',
-                resourceName: '样品查询',
-                resourceUrl: '',
+                resourceName: '样品申请',
+                resourceUrl: '/home/sample/apply',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
 
