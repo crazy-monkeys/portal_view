@@ -87,6 +87,16 @@ export default new Router({
           component: resolve => require(['@/components/price/price-actual'], resolve),
         },
         {
+          path: 'price/inquiry',
+          name: 'ActualPrice',
+          component: resolve => require(['@/components/price/price-inquiry'], resolve),
+        },
+        {
+          path: 'price/inquiry/approval',
+          name: 'ActualPrice',
+          component: resolve => require(['@/components/price/price-inquiry-approval'], resolve),
+        },
+        {
           path: 'sample/list',
           name: 'SampleList',
           component: resolve => require(['@/components/sample/sample-list'], resolve),

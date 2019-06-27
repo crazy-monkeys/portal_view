@@ -162,6 +162,22 @@
                 children: [
 
                 ]
+              },{
+                resourceId: '33',
+                resourceName: '询价单',
+                resourceUrl: '/home/price/inquiry',
+                resourceIconClass: 'el-icon-s-promotion',
+                children: [
+
+                ]
+              },{
+                resourceId: '34',
+                resourceName: '询价单审批',
+                resourceUrl: '/home/price/inquiry/approval',
+                resourceIconClass: 'el-icon-s-promotion',
+                children: [
+
+                ]
               }
             ]
           },
