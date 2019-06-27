@@ -46,6 +46,100 @@ export default new Router({
                     component: resolve => require(['@/components/marketing/Theme'], resolve),
                     // meta: {keepAlive: true},
                 },
+                {
+                    path: 'agent/index',
+                    name: 'agentIndex',
+                    component: resolve => require(['@/components/agent/index'], resolve),
+                    // meta: {keepAlive: true}
+                },
+                {
+                    path: 'agent/add',
+                    name: 'agentAdd',
+                    component: resolve => require(['@/components/agent/add'], resolve),
+                    // meta: {keepAlive: true}
+                },
+                {
+                    path: 'order/add',
+                    name: 'orderAdd',
+                    component: resolve => require(['@/components/order/add'], resolve),
+                    // meta: {keepAlive: true}
+                },
+                {
+                    path: 'order/list',
+                    name: 'orderList',
+                    component: resolve => require(['@/components/order/list'], resolve),
+                    // meta: {keepAlive: true}
+                },
+                //授信额度
+                {
+                    path: 'credit/list',
+                    name: 'CreditList',
+                    component: resolve => require(['@/components/credit/credit-list'], resolve),
+                },
+
+                //价格管理
+                {
+                    path: 'price/list',
+                    name: 'PriceList',
+                    component: resolve => require(['@/components/price/price-list'], resolve),
+                },
+                {
+                    path: 'price/actual',
+                    name: 'PriceActual',
+                    component: resolve => require(['@/components/price/price-actual'], resolve),
+                },
+                {
+                    path: 'price/inquiry',
+                    name: 'PriceInquiry',
+                    component: resolve => require(['@/components/price/price-inquiry'], resolve),
+                },
+                {
+                    path: 'price/inquiry/approval',
+                    name: 'PriceInquiryApproval',
+                    component: resolve => require(['@/components/price/price-inquiry-approval'], resolve),
+                },
+                {
+                    path: 'sample/list',
+                    name: 'SampleList',
+                    component: resolve => require(['@/components/sample/sample-list'], resolve),
+                },
+                {
+                    path: 'sample/apply',
+                    name: 'SampleApply',
+                    component: resolve => require(['@/components/sample/sample-apply'], resolve),
+                },
+                //销售管理
+                {
+                    path: 'sales/forcast-index',
+                    name: 'SalesList',
+                    component: resolve => require(['@/components/sales/forcast-index'], resolve),
+                },
+                {
+                    path: 'sales/forcast-upload',
+                    name: 'SalesList',
+                    component: resolve => require(['@/components/sales/forcast-upload'], resolve),
+                },
+                {
+                    path: 'sales/sales-index',
+                    name: 'SalesList',
+                    component: resolve => require(['@/components/sales/sales-index'], resolve),
+                },
+                {
+                    path: 'sales/sales-upload',
+                    name: 'SalesList',
+                    component: resolve => require(['@/components/sales/sales-upload'], resolve),
+                },
+                {
+                    path: 'sales/shipment-index',
+                    name: 'SalesList',
+                    component: resolve => require(['@/components/sales/shipment-index'], resolve),
+                },
+                {
+                    path: 'sales/shipment-upload',
+                    name: 'SalesList',
+                    component: resolve => require(['@/components/sales/shipment-upload'], resolve),
+                },
+                //样本管理
                 //短信营销
                 {
                     path: 'sell',
@@ -140,7 +234,7 @@ export default new Router({
         {
             path: '/login',
             name: 'Login',
-            component: resolve => require(['@/components/Login'], resolve),
+            component: resolve => require(['@/components/Login1'], resolve),
         },
         {
             path: '/',
@@ -150,6 +244,7 @@ export default new Router({
             path: '/pwd',
             name: 'Pwd',
             component: resolve => require(['@/components/Pwd'], resolve),
-        }
+        },
+
     ]
 })

@@ -121,8 +121,8 @@ export default {
           children: [
             {
               resourceId: "21",
-              resourceName: "授信额度申请",
-              resourceUrl: "/home/catalog/black",
+              resourceName: "授信额度申请列表",
+              resourceUrl: "/home/credit/list",
               resourceIconClass: "el-icon-s-promotion",
               children: []
             }
@@ -136,43 +136,29 @@ export default {
           children: [
             {
               resourceId: "31",
-              resourceName: "价格查询(内部)",
-              resourceUrl: "",
+              resourceName: "价格查询",
+              resourceUrl: "/home/price/list",
               resourceIconClass: "el-icon-s-promotion",
               children: []
             },
             {
               resourceId: "32",
-              resourceName: "询价申请",
-              resourceUrl: "",
+              resourceName: "客户实际价格查询",
+              resourceUrl: "/home/price/actual",
               resourceIconClass: "el-icon-s-promotion",
               children: []
             },
             {
               resourceId: "33",
-              resourceName: "询价单审批",
-              resourceUrl: "",
+              resourceName: "询价单",
+              resourceUrl: "/home/price/inquiry",
               resourceIconClass: "el-icon-s-promotion",
               children: []
             },
             {
               resourceId: "34",
-              resourceName: "订单价申请",
-              resourceUrl: "",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "35",
-              resourceName: "代理费率维护",
-              resourceUrl: "",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "36",
-              resourceName: "代理费率查询",
-              resourceUrl: "",
+              resourceName: "询价单审批",
+              resourceUrl: "/home/price/inquiry/approval",
               resourceIconClass: "el-icon-s-promotion",
               children: []
             }
@@ -186,15 +172,15 @@ export default {
           children: [
             {
               resourceId: "41",
-              resourceName: "样品申请",
-              resourceUrl: "",
+              resourceName: "样品查询",
+              resourceUrl: "/home/sample/list",
               resourceIconClass: "el-icon-s-promotion",
               children: []
             },
             {
               resourceId: "42",
-              resourceName: "样品查询",
-              resourceUrl: "",
+              resourceName: "样品申请",
+              resourceUrl: "/home/sample/apply",
               resourceIconClass: "el-icon-s-promotion",
               children: []
             }
@@ -209,14 +195,14 @@ export default {
             {
               resourceId: "51",
               resourceName: "订单填报",
-              resourceUrl: "/home/external/customer",
+              resourceUrl: "/home/order/add",
               resourceIconClass: "el-icon-s-promotion",
               children: []
             },
             {
               resourceId: "52",
               resourceName: "订单查询",
-              resourceUrl: "/home/photoCondition",
+              resourceUrl: "/home/order/list",
               resourceIconClass: "el-icon-s-promotion",
               children: []
             }
@@ -231,14 +217,14 @@ export default {
             {
               resourceId: "61",
               resourceName: "代理商引入",
-              resourceUrl: "/home/group/manage",
+              resourceUrl: "/home/agent/add",
               resourceIconClass: "el-icon-s-promotion",
               children: []
             },
             {
               resourceId: "62",
               resourceName: "代理商查询",
-              resourceUrl: "",
+              resourceUrl: "/home/agent/index",
               resourceIconClass: "el-icon-s-promotion",
               children: []
             }
@@ -253,42 +239,42 @@ export default {
             {
               resourceId: "71",
               resourceName: "销售预测查询",
-              resourceUrl: "",
+              resourceUrl: "/home/sales/forcast-index",
               resourceIconClass: "el-icon-s-promotion",
               children: []
             },
             {
               resourceId: "72",
               resourceName: "销售预测上传",
-              resourceUrl: "",
+              resourceUrl: "/home/sales/forcast-upload",
               resourceIconClass: "el-icon-s-promotion",
               children: []
             },
             {
               resourceId: "73",
               resourceName: "销售数据查询",
-              resourceUrl: "",
+              resourceUrl: "/home/sales/sales-index",
               resourceIconClass: "el-icon-s-promotion",
               children: []
             },
             {
               resourceId: "74",
               resourceName: "销售数据上传",
-              resourceUrl: "",
+              resourceUrl: "/home/sales/sales-upload",
               resourceIconClass: "el-icon-s-promotion",
               children: []
             },
             {
               resourceId: "75",
               resourceName: "出货数据查询",
-              resourceUrl: "",
+              resourceUrl: "/home/sales/shipment-index",
               resourceIconClass: "el-icon-s-promotion",
               children: []
             },
             {
               resourceId: "76",
               resourceName: "出货数据上传",
-              resourceUrl: "",
+              resourceUrl: "/home/sales/shipment-upload",
               resourceIconClass: "el-icon-s-promotion",
               children: []
             }
@@ -334,9 +320,6 @@ export default {
     };
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
     }
@@ -413,44 +396,33 @@ $sc: 12;
   height: 100%;
   // background: purple;
   // background: rgba(167,97,214,0.5);
-  overflow-y: auto;
+  // background: purple;
+  i {
+    color: #800080;
+  }
+}
 
-  .el-menu {
-    height: 84%;
-    border: none;
-    .el-submenu__title {
-      // font-size: 16px;
-      font-weight: bold;
-    }
-    // background: rgba(167,97,214,0.5);
-    // background: purple;
-    i {
-      color: #800080;
-    }
+.logo {
+  height: 80px;
+  text-align: center;
+  .smalllogo {
+    width: 44px;
+    margin-top: 20px;
   }
 
-  .logo {
-    height: 80px;
-    text-align: center;
-    .smalllogo {
-      width: 44px;
-      margin-top: 20px;
-    }
+  .lglogo {
+    margin-top: 10px;
+    width: 200px;
+    /* height: 44px; */
+  }
 
-    .lglogo {
-      margin-top: 10px;
-      width: 200px;
-      /* height: 44px; */
-    }
-
-    .msg {
-      width: 240px;
-      font-size: 24px;
-      color: #800080;
-      letter-spacing: 1px;
-      font-style: italic;
-      font-weight: bold;
-    }
+  .msg {
+    width: 240px;
+    font-size: 24px;
+    color: #800080;
+    letter-spacing: 1px;
+    font-style: italic;
+    font-weight: bold;
   }
 }
 </style>
