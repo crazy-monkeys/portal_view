@@ -8,8 +8,13 @@
         </el-breadcrumb>
       </div>
       <div class="sels clear" >
-          <el-button @click='change'  size='small' type='primary' plain>{{!dialogVisible3 ? '展开筛选条件' :'收起筛选条件'}}
-          </el-button>
+            <div class="lineBox">
+              <i class="el-icon-arrow-down" v-if='!dialogVisible' @click='change'> 展开</i>
+
+              <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
+
+            <!-- <div class="line"></div> -->
+            </div>
           <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
           <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible3' >
             <el-form-item label="客户名称" >
@@ -315,12 +320,6 @@
           border-left: 1px solid #ccc;
           padding: 0 20px
         }
-
-        i {
-          font-weight: bold;
-          margin-right: 20px;
-          cursor: pointer;
-        }
       }
 
       .el-breadcrumb {
@@ -334,6 +333,17 @@
       background: #fff;
       padding: 10px 30px;
       margin: 0 20px 10px 20px;
+      .lineBox{
+        i{
+          color:#800080;
+          font-weight:bold;
+        }
+      }
+      .line{
+        height:12px;
+        background:#800080;
+        margin-left:20px;
+      }
 
       .form {
         max-width: 1300px;
@@ -341,6 +351,7 @@
           height: 30px;
         }
         .el-form-item {
+          width:200px;
           margin-bottom: 0;
           .el-select{
             width:200px

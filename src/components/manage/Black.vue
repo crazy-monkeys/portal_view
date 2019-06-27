@@ -72,25 +72,25 @@
               </el-date-picker>
             </el-form-item>
           <el-form-item label="注册地址" class="address">
-              <el-select v-model="value3" size="small" filterable placeholder="省">
+              <el-select v-model="value4" size="small" filterable placeholder="省">
                   <el-option
-                    v-for="item in options3"
+                    v-for="item in options4"
                     :key="item.value"
                     :label="item.label"
                     :value="item.value">
                   </el-option>
                 </el-select>
-                <el-select v-model="value3" size="small" filterable placeholder="市">
+                <el-select v-model="value5" size="small" filterable placeholder="市">
                     <el-option
-                      v-for="item in options3"
+                      v-for="item in options5"
                       :key="item.value"
                       :label="item.label"
                       :value="item.value">
                     </el-option>
                   </el-select>
-                  <el-select v-model="value3" size="small" filterable placeholder="区">
+                  <el-select v-model="value6" size="small" filterable placeholder="区">
                       <el-option
-                        v-for="item in options3"
+                        v-for="item in options6"
                         :key="item.value"
                         :label="item.label"
                         :value="item.value">
@@ -301,6 +301,31 @@
           label: '阿米巴B'
         }],
         value3: '',
+
+         options4: [{
+          value: '选项1',
+          label: '上海'
+        }, {
+          value: '选项2',
+          label: '北京'
+        }],
+        value4: '',
+options5: [{
+value: '选项1',
+label: '上海'
+}, {
+value: '选项2',
+label: '北京'
+}],
+value5: '',
+options6: [{
+value: '选项1',
+label: '静安'
+}, {
+value: '选项2',
+label: '王府井'
+}],
+value6: '',
 
         form: {},
         activeName: 'first',

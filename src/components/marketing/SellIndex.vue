@@ -10,8 +10,15 @@
       </div>
      
         <div class="sels clear" >
-          <el-button @click='change'  size='small' type='primary' plain>{{!dialogVisible ? '展开筛选条件' :'收起筛选条件'}}
-          </el-button>
+          <!-- <el-button @click='change'  size='small' type='primary' plain>{{!dialogVisible ? '展开筛选条件' :'收起筛选条件'}}
+          </el-button> -->
+          <div class="lineBox">
+            <i class="el-icon-arrow-down" v-if='!dialogVisible' @click='change'> 展开</i>
+
+            <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
+
+            <!-- <div class="line"></div> -->
+          </div>
           <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
           <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible' >
             <el-form-item label="客户名称" >
@@ -38,7 +45,7 @@
             </el-form-item>
             <el-form-item label="报备日期" class="date">
                 <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期"
-                  end-placeholder="结束日期">
+                  end-placeholder="结束日期" v-model="d1">
                 </el-date-picker>
               </el-form-item>
             <el-form-item :label="checkedCities.length==0 ?'' : ' '">
@@ -111,6 +118,7 @@
     name: 'SellIndex',
     data() {
       return {
+        d1:[],
         options: [{
           value: '选项1',
           label: 'Mass Market'
@@ -243,6 +251,17 @@
       background: #fff;
       padding: 10px 30px;
       margin: 0 20px 10px 20px;
+      .lineBox{
+        i{
+          color:#800080;
+          font-weight:bold;
+        }
+      }
+      .line{
+        height:12px;
+        background:#800080;
+        margin-left:20px;
+      }
       .form {
         /* max-width: 1000px; */
         .el-form-item__label {

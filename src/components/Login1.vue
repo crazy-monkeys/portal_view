@@ -7,7 +7,7 @@
     <el-form  class="form"   label-position='right' label-width='100px'>
         <h1><img src="../../static/logostr.png" alt=""> </h1>
         <el-form-item  label="">
-          <i class="el-icon-s-custom"></i> <el-input type="text" v-model="loginMsg" placeholder="登录名" autocomplete="true" :autofocus="true"></el-input>
+          <i class="el-icon-s-custom"></i> <el-input type="text" v-model="loginMsg" placeholder="登录名" :autofocus="true"></el-input>
         </el-form-item>
         <el-form-item  label="">
             <i class="el-icon-lock"></i> <el-input type="password" v-model="loginPass" placeholder="密码" autocomplete="off" @keyup.enter.native="login"></el-input>

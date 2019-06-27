@@ -161,46 +161,14 @@ export default new Router({
           // meta: {keepAlive: true}
 
         },
-        {
-          path: 'catalog/black',
-          name: 'catalog',
-          component: resolve => require(['@/components/manage/Catalog'], resolve),
-          // meta: {keepAlive: true}
-
-        },
+      
         {
           path: 'group/manage',
           name: 'group',
           component: resolve => require(['@/components/manage/Group'], resolve),
           // meta: {keepAlive: true}
         },
-        {
-          path: 'addGroup',
-          name: 'AddGroup',
-          component: resolve => require(['@/components/manage/AddGroup'], resolve),
-        },
-        {
-          path: 'editGroup/:id',
-          name: 'EditGroup',
-          component: resolve => require(['@/components/manage/EditGroup'], resolve),
-        },
-        {
-          path: 'snapshot',
-          name: 'photo',
-          component: resolve => require(['@/components/manage/Photo'], resolve),
-          // meta: {keepAlive: true}
-        },
-        {
-          path: 'photoCondition',
-          name: 'photoCondition',
-          component: resolve => require(['@/components/manage/PhotoCondition'], resolve),
-        },
-        {
-          path: 'external/customer',
-          name: 'outCustom',
-          component: resolve => require(['@/components/manage/OutCustom'], resolve),
-          // meta: {keepAlive: true}
-        },
+      
         {
           path: 'account/settings',
           name: 'account',

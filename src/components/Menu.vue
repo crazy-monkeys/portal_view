@@ -127,17 +127,8 @@
             children: [
               {
                 resourceId: '21',
-                resourceName: '授信额度申请(代理商)',
+                resourceName: '授信额度申请',
                 resourceUrl: '/home/catalog/black',
-                resourceIconClass: 'el-icon-s-promotion',
-                children: [
-
-                ]
-              },
-              {
-                resourceId: '22',
-                resourceName: '授信额度申请(CS)',
-                resourceUrl: '/home/snapshot',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
 
@@ -162,7 +153,7 @@
               },
               {
                 resourceId: '32',
-                resourceName: '询价单',
+                resourceName: '询价申请',
                 resourceUrl: '',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
@@ -180,7 +171,7 @@
               },
               {
                 resourceId: '34',
-                resourceName: '下价单申请',
+                resourceName: '订单价申请',
                 resourceUrl: '',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
