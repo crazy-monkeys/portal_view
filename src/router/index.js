@@ -45,6 +45,36 @@ export default new Router({
           component: resolve => require(['@/components/marketing/Theme'], resolve),
           // meta: {keepAlive: true},
         },
+        {
+          path: 'agent/index',
+          name: 'agentIndex',
+          component: resolve => require(['@/components/agent/index'], resolve),
+          // meta: {keepAlive: true}
+        },
+        {
+          path: 'agent/add',
+          name: 'agentAdd',
+          component: resolve => require(['@/components/agent/add'], resolve),
+          // meta: {keepAlive: true}
+        },
+        {
+          path: 'order/add',
+          name: 'orderAdd',
+          component: resolve => require(['@/components/order/add'], resolve),
+          // meta: {keepAlive: true}
+        },
+        {
+          path: 'order/list',
+          name: 'orderList',
+          component: resolve => require(['@/components/order/list'], resolve),
+          // meta: {keepAlive: true}
+        },
+        {
+          path: 'order/detail',
+          name: 'orderDetail',
+          component: resolve => require(['@/components/order/detail'], resolve),
+          // meta: {keepAlive: true}
+        },
         //价格管理
         {
           path: 'price/list',
