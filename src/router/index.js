@@ -75,6 +75,12 @@ export default new Router({
           component: resolve => require(['@/components/order/detail'], resolve),
           // meta: {keepAlive: true}
         },
+        //授信额度
+        {
+          path: 'credit/list',
+          name: 'CreditList',
+          component: resolve => require(['@/components/credit/credit-list'], resolve),
+        },
         //价格管理
         {
           path: 'price/list',

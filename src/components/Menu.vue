@@ -131,8 +131,8 @@
             children: [
               {
                 resourceId: '21',
-                resourceName: '授信额度申请',
-                resourceUrl: '/home/xxIndex',
+                resourceName: '授信额度申请列表',
+                resourceUrl: '/home/credit/list',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
 
