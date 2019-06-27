@@ -148,53 +148,8 @@
             children: [
               {
                 resourceId: '31',
-                resourceName: '价格查询(内部)',
-                resourceUrl: '',
-                resourceIconClass: 'el-icon-s-promotion',
-                children: [
-
-                ]
-              },
-              {
-                resourceId: '32',
-                resourceName: '询价申请',
-                resourceUrl: '',
-                resourceIconClass: 'el-icon-s-promotion',
-                children: [
-
-                ]
-              },
-              {
-                resourceId: '33',
-                resourceName: '询价单审批',
-                resourceUrl: '',
-                resourceIconClass: 'el-icon-s-promotion',
-                children: [
-
-                ]
-              },
-              {
-                resourceId: '34',
-                resourceName: '订单价申请',
-                resourceUrl: '',
-                resourceIconClass: 'el-icon-s-promotion',
-                children: [
-
-                ]
-              },
-              {
-                resourceId: '35',
-                resourceName: '代理费率维护',
-                resourceUrl: '',
-                resourceIconClass: 'el-icon-s-promotion',
-                children: [
-
-                ]
-              },
-              {
-                resourceId: '36',
-                resourceName: '代理费率查询',
-                resourceUrl: '',
+                resourceName: '价格查询',
+                resourceUrl: '/home/price/query',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
 
@@ -467,7 +422,7 @@
   //    .el-menu--vertical .el-menu-item,.el-menu--vertical .el-submenu__title{
   //     background: #262A39;
   //     color: rgba(255,255,255,0.6);
-  //    } 
+  //    }
   .menu {
     height: 100%;
     // background: purple;

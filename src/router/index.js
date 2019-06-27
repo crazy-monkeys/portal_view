@@ -45,6 +45,12 @@ export default new Router({
           component: resolve => require(['@/components/marketing/Theme'], resolve),
           // meta: {keepAlive: true},
         },
+        //价格查询
+        {
+          path: 'price/query',
+          name: 'PriceQuery',
+          component: resolve => require(['@/components/price/price-query'], resolve),
+        },
         //短信营销
         {
           path: 'sell',
@@ -150,6 +156,7 @@ export default new Router({
       path: '/pwd',
       name: 'Pwd',
       component: resolve => require(['@/components/Pwd'], resolve),
-    }
+    },
+
   ]
 })
