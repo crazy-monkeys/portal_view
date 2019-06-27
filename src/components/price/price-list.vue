@@ -1,11 +1,12 @@
 <template>
-  <div class="index">
+  <div class="price-list">
     <div>
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to='/home/sell'>代理商管理</el-breadcrumb-item>
-          <el-breadcrumb-item>代理商维护</el-breadcrumb-item>
+          <el-breadcrumb-item to='/home/price/list'>价格管理</el-breadcrumb-item>
+          <el-breadcrumb-item>价格查询</el-breadcrumb-item>
         </el-breadcrumb>
+        <!-- <h1>客户查询</h1> -->
       </div>
 
       <div class="sels clear">
@@ -20,19 +21,41 @@
         </div>
         <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
-          <el-form-item label="代理商名称">
+          <el-form-item label="BU">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="代理商Code">
+          <el-form-item label="PDT">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="引入时间" class="date">
+          <el-form-item label="产品类型">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="平台">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="产品状态">
+            <el-select v-model="value" size="small" filterable placeholder="请选择">
+              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="产品归属">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="产品型号">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="限制客户">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="生效时间" class="date">
             <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
               v-model="d1">
             </el-date-picker>
           </el-form-item>
-          <el-form-item :label="checkedCities.length==0 ?'' : ' '">
-            <el-button size='small' type='primary' plain>查询</el-button>
+          <el-form-item :label="checkedCities.length==0 ?'' : ' '" class="btns">
+            <el-button size='small' type='primary' plain>搜索</el-button>
+            <el-button size='small' type='primary' plain>生成报价单</el-button>
             <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
           </el-form-item>
         </el-form>
@@ -44,27 +67,48 @@
       <div class="box">
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" height="700">
-            <el-table-column prop="" width='30' show-overflow-tooltip label=""></el-table-column>
-            <el-table-column prop="0" width='100' label="代理商名称" :index='q'></el-table-column>
-            <el-table-column prop="1" label="代理商Code" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="2" label="英文名" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="3" label="简称" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="4" label="类别" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="5" label="级别" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="6" label="产品线" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="7" label="区域" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="8" label="授信额度" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="9" label="考核分数" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="10" label="引入时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="11" label="引入人" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="状态" show-overflow-tooltip></el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
-              <template scope-slot='scope'>
-                <el-button type='primary' size='mini' @click='add'>明细</el-button>
-                <el-button type='primary' size='mini' @click='add'>维护</el-button>
-              </template>
+            <el-table-column prop="" width='30' show-overflow-tooltip label="">
+            </el-table-column>
+            <el-table-column type="index" width='100' label="编号" :index='q'>
+            </el-table-column>
+            <el-table-column prop="1" show-overflow-tooltip label="BU">
+            </el-table-column>
+            <el-table-column prop="2" label="PDT" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="3" label="产品类型" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="4" show-overflow-tooltip label="平台">
+            </el-table-column>
+            <el-table-column prop="5" label="产品状态" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="7" label="产品归属">
+            </el-table-column>
+             <el-table-column show-overflow-tooltip prop="8" label="产品型号">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="9" label="数量上限">
+            </el-table-column>
+
+
+            <el-table-column show-overflow-tooltip prop="6" label="数量下限">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="6" label="标准价">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="6" label="权限价">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="6" label="底线价">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="6" label="成本价">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="6" label="增值后成本">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="6" label="生效时间">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="6" label="失效时间">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="6" label="更新时间">
             </el-table-column>
             <div slot="empty">
+
               <p>未查询到客户信息</p>
             </div>
           </el-table>
@@ -93,18 +137,15 @@
 <script>
   import formTest from '../../assets/js/formTest'
   export default {
-    name: 'index',
+    name: 'PriceQuery',
     data() {
       return {
         form: {},
         total: 0,
         d1: [],
         options: [{
-          value: '选项1',
-          label: 'Mass Market'
-        }, {
-          value: '选项2',
-          label: 'Account Market'
+          value: '1',
+          label: '---'
         }],
         value: '',
         checkAll: false,
@@ -124,21 +165,7 @@
         isIndeterminate: false,
         dialogVisible: false,
         tableData: [
-          {
-            0: '代理商A',
-            1: 'AF0001',
-            2: 'free',
-            3: 'A',
-            4: '科技',
-            5: '一级',
-            6: '科技',
-            7: '亚太地区',
-            8: '1000000',
-            9: '100',
-            10: '2019-01-01',
-            11: '章三',
-            12: '正常'
-          },
+
         ],
         //第几页
         currentPage: 1,
@@ -186,7 +213,7 @@
       add() {
         this.$router.push(
           {
-            name: 'AddSell'
+            name: 'Addprice-query'
           }
         )
       },
@@ -207,7 +234,7 @@
 <style lang='scss'>
   $sc:12;
 
-  .index {
+  .price-list {
     .head {
       h1 {
         opacity: 0.87;
@@ -257,7 +284,9 @@
           width: 200px;
           margin-bottom: 0;
         }
-
+        .btns{
+          width: 100%;
+        }
         .date {
           width: 414px;
 

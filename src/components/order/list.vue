@@ -1,10 +1,10 @@
 <template>
-  <div class="index">
+  <div class="list">
     <div>
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to='/home/sell'>代理商管理</el-breadcrumb-item>
-          <el-breadcrumb-item>代理商维护</el-breadcrumb-item>
+          <el-breadcrumb-item to='/home/order/list'>订单管理</el-breadcrumb-item>
+          <el-breadcrumb-item>订单查询</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
 
@@ -20,13 +20,24 @@
         </div>
         <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
-          <el-form-item label="代理商名称">
+          <el-form-item label="订单号">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="代理商Code">
+          <el-form-item label="下单人">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="引入时间" class="date">
+          <el-form-item label="订单状态">
+            <el-select v-model="value" size="small" filterable placeholder="专货订单">
+              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="下单日期" class="date">
+            <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
+              v-model="d1">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="交货日期" class="date">
             <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
               v-model="d1">
             </el-date-picker>
@@ -44,27 +55,43 @@
       <div class="box">
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" height="700">
-            <el-table-column prop="" width='30' show-overflow-tooltip label=""></el-table-column>
-            <el-table-column prop="0" width='100' label="代理商名称" :index='q'></el-table-column>
-            <el-table-column prop="1" label="代理商Code" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="2" label="英文名" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="3" label="简称" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="4" label="类别" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="5" label="级别" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="6" label="产品线" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="7" label="区域" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="8" label="授信额度" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="9" label="考核分数" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="10" label="引入时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="11" label="引入人" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="状态" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='30' show-overflow-tooltip label="">
+            </el-table-column>
+            <el-table-column type="index" width='100' label="订单号" :index='q'>
+            </el-table-column>
+            <el-table-column prop="1" show-overflow-tooltip label="状态">
+            </el-table-column>
+            <el-table-column prop="2" label="下单人" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="3" label="总金额" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="4" show-overflow-tooltip label="开户银行">
+            </el-table-column>
+            <el-table-column prop="5" label="付款方式" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="6" label="发票种类">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="6" label="委托代表人">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="6" label="业务联系人">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="6" label="电话">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="6" label="传真">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="6" label="swiftcode">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="6" label="下单日期">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="6" label="交货日期">
+            </el-table-column>
             <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
               <template scope-slot='scope'>
                 <el-button type='primary' size='mini' @click='add'>明细</el-button>
-                <el-button type='primary' size='mini' @click='add'>维护</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
+
               <p>未查询到客户信息</p>
             </div>
           </el-table>
@@ -93,7 +120,7 @@
 <script>
   import formTest from '../../assets/js/formTest'
   export default {
-    name: 'index',
+    name: 'list',
     data() {
       return {
         form: {},
@@ -125,20 +152,106 @@
         dialogVisible: false,
         tableData: [
           {
-            0: '代理商A',
-            1: 'AF0001',
-            2: 'free',
-            3: 'A',
-            4: '科技',
-            5: '一级',
-            6: '科技',
-            7: '亚太地区',
-            8: '1000000',
-            9: '100',
-            10: '2019-01-01',
-            11: '章三',
-            12: '正常'
+            1: '测试客户A',
+            2: 'Test CustomerB',
+            3: '001',
+            4: '代理商A',
+            5: 'Mass Market',
+            6: '报备客户'
+          }, {
+            1: '测试客户A',
+            2: 'Test CustomerB',
+            3: '001',
+            4: '代理商A',
+            5: 'Mass Market',
+            6: '报备客户'
+          }, {
+            1: '测试客户A',
+            2: 'Test CustomerB',
+            3: '001',
+            4: '代理商A',
+            5: 'Mass Market',
+            6: '报备客户'
           },
+          {
+            1: '测试客户A',
+            2: 'Test CustomerB',
+            3: '001',
+            4: '代理商A',
+            5: 'Mass Market',
+            6: '报备客户'
+          }, {
+            1: '测试客户A',
+            2: 'Test CustomerB',
+            3: '001',
+            4: '代理商A',
+            5: 'Mass Market',
+            6: '报备客户'
+          }, {
+            1: '测试客户A',
+            2: 'Test CustomerB',
+            3: '001',
+            4: '代理商A',
+            5: 'Mass Market',
+            6: '报备客户'
+          }, {
+            1: '测试客户A',
+            2: 'Test CustomerB',
+            3: '001',
+            4: '代理商A',
+            5: 'Mass Market',
+            6: '报备客户'
+          }, {
+            1: '测试客户A',
+            2: 'Test CustomerB',
+            3: '001',
+            4: '代理商A',
+            5: 'Mass Market',
+            6: '报备客户'
+          }, {
+            1: '测试客户A',
+            2: 'Test CustomerB',
+            3: '001',
+            4: '代理商A',
+            5: 'Mass Market',
+            6: '报备客户'
+          }, {
+            1: '测试客户A',
+            2: 'Test CustomerB',
+            3: '001',
+            4: '代理商A',
+            5: 'Mass Market',
+            6: '报备客户'
+          }, {
+            1: '测试客户A',
+            2: 'Test CustomerB',
+            3: '001',
+            4: '代理商A',
+            5: 'Mass Market',
+            6: '报备客户'
+          }, {
+            1: '测试客户A',
+            2: 'Test CustomerB',
+            3: '001',
+            4: '代理商A',
+            5: 'Mass Market',
+            6: '报备客户'
+          }, {
+            1: '测试客户A',
+            2: 'Test CustomerB',
+            3: '001',
+            4: '代理商A',
+            5: 'Mass Market',
+            6: '报备客户'
+          },
+          {
+            1: '测试客户B',
+            2: 'Test CustomerB',
+            3: '002',
+            4: '',
+            5: 'Account Market',
+            6: '未报备客户'
+          }
         ],
         //第几页
         currentPage: 1,
@@ -207,7 +320,7 @@
 <style lang='scss'>
   $sc:12;
 
-  .index {
+  .list {
     .head {
       h1 {
         opacity: 0.87;

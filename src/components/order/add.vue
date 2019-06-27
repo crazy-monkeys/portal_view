@@ -1,6 +1,6 @@
 <template>
   <!-- 添加新增控件 -->
-  <div class="addAct">
+  <div class="add">
     <div class="head clear">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item to="/home/sell">客户管理</el-breadcrumb-item>
@@ -323,7 +323,7 @@
 <style lang='scss'>
   $sc: 12;
 
-  .addAct {
+  .add {
     .head {
       h1 {
         opacity: 0.87;
