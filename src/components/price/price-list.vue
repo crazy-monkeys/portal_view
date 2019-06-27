@@ -55,7 +55,6 @@
           </el-form-item>
           <el-form-item :label="checkedCities.length==0 ?'' : ' '" class="btns">
             <el-button size='small' type='primary' plain>搜索</el-button>
-            <el-button size='small' type='primary' plain>生成报价单</el-button>
             <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
           </el-form-item>
         </el-form>
@@ -65,47 +64,50 @@
 
       <!-- </transition-group> -->
       <div class="box">
+        <div class="btns clear">
+          <el-button class="add" @click='create' size='small' type='primary'>生成报价单</el-button>
+        </div>
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" height="700">
-            <el-table-column prop="" width='30' show-overflow-tooltip label="">
+            <el-table-column prop="" type="selection" width='30' show-overflow-tooltip label="">
             </el-table-column>
             <el-table-column type="index" width='100' label="编号" :index='q'>
             </el-table-column>
-            <el-table-column prop="1" show-overflow-tooltip label="BU">
+            <el-table-column prop="t1" show-overflow-tooltip label="BU">
             </el-table-column>
-            <el-table-column prop="2" label="PDT" show-overflow-tooltip>
+            <el-table-column prop="t2" label="PDT" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="3" label="产品类型" show-overflow-tooltip>
+            <el-table-column prop="t3" label="Product Type" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="4" show-overflow-tooltip label="平台">
+            <el-table-column prop="t4" show-overflow-tooltip label="平台">
             </el-table-column>
-            <el-table-column prop="5" label="产品状态" show-overflow-tooltip>
+            <el-table-column prop="t5" label="产品状态" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="7" label="产品归属">
+            <el-table-column show-overflow-tooltip prop="t7" label="产品归属">
             </el-table-column>
-             <el-table-column show-overflow-tooltip prop="8" label="产品型号">
+             <el-table-column show-overflow-tooltip prop="t8" label="产品型号">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="9" label="数量上限">
+            <el-table-column show-overflow-tooltip prop="t9" label="数量上限">
             </el-table-column>
 
 
-            <el-table-column show-overflow-tooltip prop="6" label="数量下限">
+            <el-table-column show-overflow-tooltip prop="t10" label="数量下限">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="标准价">
+            <el-table-column show-overflow-tooltip prop="t11" label="标准价">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="权限价">
+            <el-table-column show-overflow-tooltip prop="t12" label="权限价">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="底线价">
+            <el-table-column show-overflow-tooltip prop="t13" label="底线价">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="成本价">
+            <el-table-column show-overflow-tooltip prop="t14" label="成本价">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="增值后成本">
+            <el-table-column show-overflow-tooltip prop="t15" label="增值后成本">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="生效时间">
+            <el-table-column show-overflow-tooltip prop="t16" label="生效时间">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="失效时间">
+            <el-table-column show-overflow-tooltip prop="t17" label="失效时间">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="更新时间">
+            <el-table-column show-overflow-tooltip prop="t18" label="更新时间">
             </el-table-column>
             <div slot="empty">
 
@@ -143,10 +145,24 @@
         form: {},
         total: 0,
         d1: [],
-        options: [{
-          value: '1',
-          label: '---'
-        }],
+        options: [
+          {
+            value: '1',
+            label: '新产品'
+          },
+          {
+            value: '1',
+            label: '主流在售'
+          },
+          {
+            value: '1',
+            label: '衰退期'
+          },
+          {
+            value: '1',
+            label: '以退市'
+          },
+        ],
         value: '',
         checkAll: false,
         checkedCities: [
@@ -165,7 +181,27 @@
         isIndeterminate: false,
         dialogVisible: false,
         tableData: [
-
+            {
+              t1:'Connectivity Device',
+              t2:'WCN',
+              t3:'WIFI',
+              t4:'',
+              t5:'新产品',
+              t6:'BU',
+              t7:'BL0908',
+              t8:'',
+              t9:'',
+              t10:'0.0908',
+              t11:'0.7800',
+              t12:'0.5750',
+              t13:'0.4569',
+              t14:'',
+              t15:'',
+              t16:'2019/5/1',
+              t17:'2019/5/1',
+              t18:'2020/5/1',
+              t1:''
+            }
         ],
         //第几页
         currentPage: 1,
