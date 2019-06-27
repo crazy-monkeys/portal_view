@@ -157,6 +157,7 @@
             <el-button class="add" size='small' type='primary' @click='dialogCreate = false'>提交</el-button>
             <el-button class="add" size='small' type='primary' plain @click='dialogCreate = false'>取消</el-button>
           </el-form-item>
+        </el-form>
       </div>
     </el-dialog>
   </div>
