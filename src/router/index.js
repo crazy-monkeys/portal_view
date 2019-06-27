@@ -45,6 +45,18 @@ export default new Router({
           component: resolve => require(['@/components/marketing/Theme'], resolve),
           // meta: {keepAlive: true},
         },
+        {
+          path: 'agent/index',
+          name: 'agentIndex',
+          component: resolve => require(['@/components/agent/index'], resolve),
+          // meta: {keepAlive: true}
+        },
+        {
+          path: 'agent/add',
+          name: 'agentAdd',
+          component: resolve => require(['@/components/agent/add'], resolve),
+          // meta: {keepAlive: true}
+        },
         //短信营销
         {
           path: 'sell',

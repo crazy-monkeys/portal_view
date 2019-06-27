@@ -132,7 +132,7 @@
               {
                 resourceId: '21',
                 resourceName: '授信额度申请',
-                resourceUrl: '/home/catalog/black',
+                resourceUrl: '/home/xxIndex',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
 
@@ -263,7 +263,7 @@
               {
                 resourceId: '61',
                 resourceName: '代理商引入',
-                resourceUrl: '/home/group/manage',
+                resourceUrl: '/home/agent/add',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
 
@@ -272,7 +272,7 @@
               {
                 resourceId: '62',
                 resourceName: '代理商查询',
-                resourceUrl: '',
+                resourceUrl: '/home/agent/index',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
 
