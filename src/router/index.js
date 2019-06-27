@@ -70,6 +70,20 @@ export default new Router({
                     component: resolve => require(['@/components/order/list'], resolve),
                     // meta: {keepAlive: true}
                 },
+                //公告管理
+                {
+                  path: 'system/announcement',
+                  name: 'announcementList',
+                  component: resolve => require(['@/components/system/announcement'], resolve),
+                  // meta: {keepAlive: true}
+                },
+                //文档管理
+                {
+                  path: 'system/document',
+                  name: 'documentList',
+                  component: resolve => require(['@/components/system/document'], resolve),
+                  // meta: {keepAlive: true}
+                },
                 //授信额度
                 {
                     path: 'credit/list',
