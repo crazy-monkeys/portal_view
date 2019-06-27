@@ -47,9 +47,14 @@ export default new Router({
         },
         //价格查询
         {
-          path: 'price/query',
-          name: 'PriceQuery',
-          component: resolve => require(['@/components/price/price-query'], resolve),
+          path: 'price/list',
+          name: 'PriceList',
+          component: resolve => require(['@/components/price/price-list'], resolve),
+        },
+        {
+          path: 'price/actual',
+          name: 'ActualPrice',
+          component: resolve => require(['@/components/price/price-actual'], resolve),
         },
         //短信营销
         {

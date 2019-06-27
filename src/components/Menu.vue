@@ -149,7 +149,15 @@
               {
                 resourceId: '31',
                 resourceName: '价格查询',
-                resourceUrl: '/home/price/query',
+                resourceUrl: '/home/price/list',
+                resourceIconClass: 'el-icon-s-promotion',
+                children: [
+
+                ]
+              },{
+                resourceId: '32',
+                resourceName: '客户实际价格查询',
+                resourceUrl: '/home/price/actual',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
 
