@@ -252,7 +252,7 @@
               {
                 resourceId: '71',
                 resourceName: '销售预测查询',
-                resourceUrl: '',
+                resourceUrl: '/home/sales/forcast-index',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
 
@@ -261,7 +261,7 @@
               {
                 resourceId: '72',
                 resourceName: '销售预测上传',
-                resourceUrl: '',
+                resourceUrl: '/home/sales/forcast-upload',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
 
@@ -270,7 +270,7 @@
               {
                 resourceId: '73',
                 resourceName: '销售数据查询',
-                resourceUrl: '',
+                resourceUrl: '/home/sales/sales-index',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
 
@@ -279,7 +279,7 @@
               {
                 resourceId: '74',
                 resourceName: '销售数据上传',
-                resourceUrl: '',
+                resourceUrl: '/home/sales/sales-upload',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
 
@@ -288,7 +288,7 @@
               {
                 resourceId: '75',
                 resourceName: '出货数据查询',
-                resourceUrl: '',
+                resourceUrl: '/home/sales/shipment-index',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
 
@@ -297,7 +297,7 @@
               {
                 resourceId: '76',
                 resourceName: '出货数据上传',
-                resourceUrl: '',
+                resourceUrl: '/home/sales/shipment-upload',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
 

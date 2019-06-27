@@ -96,6 +96,37 @@ export default new Router({
           name: 'SampleApply',
           component: resolve => require(['@/components/sample/sample-apply'], resolve),
         },
+        //销售管理
+        {
+          path: 'sales/forcast-index',
+          name: 'SalesList',
+          component: resolve => require(['@/components/sales/forcast-index'], resolve),
+        },
+        {
+          path: 'sales/forcast-upload',
+          name: 'SalesList',
+          component: resolve => require(['@/components/sales/forcast-upload'], resolve),
+        },
+        {
+          path: 'sales/sales-index',
+          name: 'SalesList',
+          component: resolve => require(['@/components/sales/sales-index'], resolve),
+        },
+        {
+          path: 'sales/sales-upload',
+          name: 'SalesList',
+          component: resolve => require(['@/components/sales/sales-upload'], resolve),
+        },
+        {
+          path: 'sales/shipment-index',
+          name: 'SalesList',
+          component: resolve => require(['@/components/sales/shipment-index'], resolve),
+        },
+        {
+          path: 'sales/shipment-upload',
+          name: 'SalesList',
+          component: resolve => require(['@/components/sales/shipment-upload'], resolve),
+        },
         //样本管理
         //短信营销
         {
