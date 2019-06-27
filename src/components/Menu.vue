@@ -347,8 +347,8 @@
               },
               {
                 resourceId: '83',
-                resourceName: '公告',
-                resourceUrl: '',
+                resourceName: '公告管理',
+                resourceUrl: '/home/system/announcement',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
 
@@ -356,8 +356,8 @@
               },
               {
                 resourceId: '84',
-                resourceName: '文档',
-                resourceUrl: '',
+                resourceName: '文档管理',
+                resourceUrl: '/home/system/document',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
 
