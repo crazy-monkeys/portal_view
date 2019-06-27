@@ -69,18 +69,13 @@ export default new Router({
           component: resolve => require(['@/components/order/list'], resolve),
           // meta: {keepAlive: true}
         },
-        {
-          path: 'order/detail',
-          name: 'orderDetail',
-          component: resolve => require(['@/components/order/detail'], resolve),
-          // meta: {keepAlive: true}
-        },
         //授信额度
         {
           path: 'credit/list',
           name: 'CreditList',
           component: resolve => require(['@/components/credit/credit-list'], resolve),
         },
+
         //价格管理
         {
           path: 'price/list',
@@ -89,17 +84,17 @@ export default new Router({
         },
         {
           path: 'price/actual',
-          name: 'ActualPrice',
+          name: 'PriceActual',
           component: resolve => require(['@/components/price/price-actual'], resolve),
         },
         {
           path: 'price/inquiry',
-          name: 'ActualPrice',
+          name: 'PriceInquiry',
           component: resolve => require(['@/components/price/price-inquiry'], resolve),
         },
         {
           path: 'price/inquiry/approval',
-          name: 'ActualPrice',
+          name: 'PriceInquiryApproval',
           component: resolve => require(['@/components/price/price-inquiry-approval'], resolve),
         },
         {
