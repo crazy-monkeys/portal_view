@@ -59,7 +59,7 @@
           <el-table :data="tableData" style="width: 100%" height="700">
             <el-table-column prop="" width='30' show-overflow-tooltip label="">
             </el-table-column>
-            <el-table-column type="index" width='100' label="编号" :index='q'>
+            <el-table-column type="index" width='' label="编号" :index='q'>
             </el-table-column>
             <el-table-column prop="1" show-overflow-tooltip label="客户中文名">
             </el-table-column>
@@ -153,92 +153,6 @@
             4: '代理商A',
             5: 'Mass Market',
             6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          },
-          {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          },
-          {
-            1: '测试客户B',
-            2: 'Test CustomerB',
-            3: '002',
-            4: '',
-            5: 'Account Market',
-            6: '未报备客户'
           }
         ],
         //第几页
@@ -247,166 +161,152 @@
         pageSize: 10,
       }
     },
-    computed: {
-      shopId() {
-        return this.$store.state.shopId.shopId
-      }
+    handleCheckAllChange(val) {
+      console.log(val);
+      this.checkedCities = val ? [1, 2, 3, 4, 5, 6] : [];
+      this.isIndeterminate = false;
     },
-    created() {
+    handleCheckedCitiesChange(value) {
+      console.log(value);
+      let checkedCount = value.length;
+      this.checkAll = checkedCount === this.conditions.length;
+      this.isIndeterminate =
+        checkedCount > 0 && checkedCount < this.conditions.length;
     },
-    watch: {
+    sure() {
+      this.dialogVisible = false;
     },
-    methods: {
-      change() {
-        this.dialogVisible = !this.dialogVisible
-      },
-      handleCheckAllChange(val) {
-        console.log(val)
-        this.checkedCities = val ? [1, 2, 3, 4, 5, 6] : [];
-        this.isIndeterminate = false;
-      },
-      handleCheckedCitiesChange(value) {
-        console.log(value)
-        let checkedCount = value.length;
-        this.checkAll = checkedCount === this.conditions.length;
-        this.isIndeterminate = checkedCount > 0 && checkedCount < this.conditions.length;
-      },
-      sure() {
-        this.dialogVisible = false
-      },
-      handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => { });
-      },
-      q(index) {
-        return this.pageSize * (this.currentPage - 1) + index + 1
-      },
-      add() {
-        this.$router.push(
-          {
-            name: 'AddSell'
-          }
-        )
-      },
-      // 分页
-      handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-        this.pageSize = val;
-      },
-      handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
-        this.currentPage = val;
-      },
+    handleClose(done) {
+      this.$confirm("确认关闭？")
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
+    },
+    q(index) {
+      return this.pageSize * (this.currentPage - 1) + index + 1;
+    },
+    add() {
+      this.$router.push({
+        name: "AddSell"
+      });
+    },
+    // 分页
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.pageSize = val;
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.currentPage = val;
     }
-  }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
-  $sc:12;
+$sc: 12;
 
-  .sell {
-    .head {
-      h1 {
-        opacity: 0.87;
-        font-size: 18px;
-        color: #000;
-        letter-spacing: 0;
-        line-height: 42px;
-        height: 42px;
-        /* font-weight: bold; */
-        padding: 0 50px;
-      }
+.sell {
+  // height: 100%;
+  // overflow-x: hidden;
+  // overflow-y: auto;
+  .head {
+    h1 {
+      opacity: 0.87;
+      font-size: 18px;
+      color: #000;
+      letter-spacing: 0;
+      line-height: 42px;
+      height: 42px;
+      /* font-weight: bold; */
+      padding: 0 50px;
+    }
 
-      .el-breadcrumb {
-        line-height: 30px;
-        margin-left: 50px;
-        margin-right: 20px;
-        font-size: 14px;
+    .el-breadcrumb {
+      line-height: 30px;
+      margin-left: 50px;
+      margin-right: 20px;
+      font-size: 14px;
+    }
+  }
+
+  .sels {
+    background: #fff;
+    padding: 10px 30px;
+    margin: 0 20px 10px 20px;
+
+    .lineBox {
+      i {
+        color: #800080;
+        font-weight: bold;
       }
     }
 
-    .sels {
-      background: #fff;
-      padding: 10px 30px;
-      margin: 0 20px 10px 20px;
+    .line {
+      height: 12px;
+      background: #800080;
+      margin-left: 20px;
+    }
 
-      .lineBox {
-        i {
-          color: #800080;
-          font-weight: bold;
-        }
+    .form {
+      /* max-width: 1000px; */
+      .el-form-item__label {
+        height: 30px;
       }
 
-      .line {
-        height: 12px;
-        background: #800080;
-        margin-left: 20px;
+      .el-form-item {
+        width: 200px;
+        margin-bottom: 0;
       }
 
-      .form {
+      .date {
+        width: 414px;
 
-        /* max-width: 1000px; */
-        .el-form-item__label {
-          height: 30px;
-        }
-
-        .el-form-item {
-          width: 200px;
-          margin-bottom: 0;
-        }
-
-        .date {
+        .el-date-editor {
           width: 414px;
-
-          .el-date-editor {
-            width: 414px;
-          }
-        }
-
-      }
-    }
-
-    .box {
-      margin: 0 20px 20px 20px;
-      background: #FFFFFF;
-      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
-      border-radius: 2px;
-      position: relative;
-
-      .btns {
-        .add {
-          margin: 12px 0 12px 30px;
-        }
-      }
-
-      .tab {
-        .el-table {
-          td {
-            height: 64px;
-            line-height: 64px;
-
-            .cell {
-              font-size: 12px;
-              color: #333333;
-              letter-spacing: 0;
-              line-height: 18px;
-            }
-          }
-        }
-      }
-
-      .block {
-        padding: 10px;
-
-        .el-pagination {
-          width: 100%;
-          text-align: center;
         }
       }
     }
   }
+
+  .box {
+    margin: 0 20px 20px 20px;
+    background: #ffffff;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
+    border-radius: 2px;
+    position: relative;
+
+    .btns {
+      .add {
+        margin: 12px 0 12px 30px;
+      }
+    }
+
+    .tab {
+      .el-table {
+        td {
+          height: 64px;
+          line-height: 64px;
+
+          .cell {
+            font-size: 12px;
+            color: #333333;
+            letter-spacing: 0;
+            line-height: 18px;
+          }
+        }
+      }
+    }
+
+    .block {
+      padding: 10px;
+
+      .el-pagination {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+}
 </style>

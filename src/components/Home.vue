@@ -11,49 +11,49 @@
 </template>
 
 <script>
-  import Menu from '../components/Menu'
-  import Job from '../components/Job'
- import Banner from '../components/Banner'
+import Menu from "../components/Menu";
+import Job from "../components/Job";
+import Banner from "../components/Banner";
 
 export default {
-  name: 'Home',
-  components:{
-    Menu,Job,Banner
+  name: "Home",
+  components: {
+    Menu,
+    Job,
+    Banner
   },
-  data () {
-    return {
-
-    }
+  data() {
+    return {};
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss"  >
-$sc:12;
+$sc: 12;
 
-
-.home{
+.home {
   width: 100%;
   height: 100%;
-  .jobBox{
+  .jobBox {
     /* min-width: 500px; */
     // height: 100%;
     // background: pink;
     height: 100%;
-    background: #F5F5F5;
+    background: #f5f5f5;
+    // overflow-y: auto;
     overflow-y: auto;
     overflow-x: hidden;
-     .job{
+    .job {
       height: 100%;
-      background: #F5F5F5;
+      background: #f5f5f5;
       overflow-y: auto;
       overflow-x: hidden;
     }
   }
 
- .menu{
+  .menu {
     float: left;
- }
+  }
 }
 </style>

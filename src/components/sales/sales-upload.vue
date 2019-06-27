@@ -1,94 +1,47 @@
 <template>
-  <div class="sample-list">
+  <div class="index">
     <div>
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to='/home/sample/list'>样品管理</el-breadcrumb-item>
-          <el-breadcrumb-item>样品查询</el-breadcrumb-item>
+          <el-breadcrumb-item to='/home/sell'>销售管理</el-breadcrumb-item>
+          <el-breadcrumb-item>销售数据查询</el-breadcrumb-item>
         </el-breadcrumb>
-        <!-- <h1>客户查询</h1> -->
-      </div>
-
-      <div class="sels clear">
-        <!-- <el-button @click='change'  size='small' type='primary' plain>{{!dialogVisible ? '展开筛选条件' :'收起筛选条件'}}
-          </el-button> -->
-        <div class="lineBox">
-          <i class="el-icon-arrow-down" v-if='!dialogVisible' @click='change'> 展开</i>
-
-          <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
-
-          <!-- <div class="line"></div> -->
-        </div>
-        <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
-        <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
-          <el-form-item label="申请人">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="客户名称">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="样品料号">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="版本">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="项目名称">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="申请" class="date">
-            <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
-              v-model="d1">
-            </el-date-picker>
-          </el-form-item>
-          <el-form-item :label="checkedCities.length==0 ?'' : ' '">
-            <el-button size='small' type='primary' plain>查询</el-button>
-            <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
-             <el-button size='small' type='primary' plain>发货信息</el-button>
-          </el-form-item>
-        </el-form>
-        <!-- </transition-group> -->
-
       </div>
 
       <!-- </transition-group> -->
       <div class="box">
+        <div class="btns clear">
+          <el-button class="add" @click='open' size='small' type='primary'>下载模版</el-button>
+          <el-button class="add" @click='remove' size='small' type='primary'>上传</el-button>
+          <el-button class="add" @click='changeType' size='small' type='primary'>验证</el-button>
+          <el-button class="add" @click='open' size='small' type='primary'>保存</el-button>
+          <el-button class="add" @click='remove' size='small' type='primary'>提交</el-button>
+          <el-button class="add" @click='changeType' size='small' type='primary'>删除</el-button>
+        </div>
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" height="700">
-            <el-table-column prop="" width='30' show-overflow-tooltip label="">
+            <el-table-column prop="" type="selection" width='30' show-overflow-tooltip label="">
             </el-table-column>
-            <el-table-column type="index" width='100' label="编号" :index='q'>
-            </el-table-column>
-            <el-table-column prop="1" show-overflow-tooltip label="申请人">
-            </el-table-column>
-            <el-table-column prop="2" label="销售" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="3" label="客户名称" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="4" show-overflow-tooltip label="客户编码">
-            </el-table-column>
-            <el-table-column prop="5" label="申请时间" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="7" label="料号">
-            </el-table-column>
-             <el-table-column show-overflow-tooltip prop="8" label="版本">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="9" label="项目名称">
-            </el-table-column>
-
-
-            <el-table-column show-overflow-tooltip prop="6" label="数量">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="用途说明">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="客户地址">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="联系人">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="电话">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="物流单号">
-            </el-table-column>
+            <el-table-column prop="0" width='100' label="错误信息" :index='q'></el-table-column>
+            <el-table-column prop="1" label="上传日期" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="2" label="客户名称" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="3" label="客户编号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="4" label="销售" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="5" label="类别一（类型）" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="6" label="类别二（子类）" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="7" label="类别三（平台）" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="8" label="产品型号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="9" label="出货日期" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="10" label="数量" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="11" label="Sales price" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="12" label="PO Price" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="12" label="Marge" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="12" label="币种" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="12" label="订单号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="12" label="出货类型" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="12" label="订单月份" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="12" label="发货公司" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="12" label="备注" show-overflow-tooltip></el-table-column>
             <div slot="empty">
               <p>未查询到客户信息</p>
             </div>
@@ -101,21 +54,35 @@
         </div>
       </div>
     </div>
+    <!-- <el-dialog
+        title="筛选条件选取"
+        :visible.sync="dialogVisible"
+        width="600px"
+        >
+        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+          <div style="margin: 15px 0;"></div>
+          <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+            <el-checkbox v-for="con in conditions" :label="con.value" :key="con.value">{{con.label}}</el-checkbox>
+        </el-checkbox-group>
+    </el-dialog> -->
   </div>
 </template>
 
 <script>
   import formTest from '../../assets/js/formTest'
   export default {
-    name: 'PriceQuery',
+    name: 'index',
     data() {
       return {
         form: {},
         total: 0,
         d1: [],
         options: [{
-          value: '1',
-          label: '---'
+          value: '选项1',
+          label: 'Mass Market'
+        }, {
+          value: '选项2',
+          label: 'Account Market'
         }],
         value: '',
         checkAll: false,
@@ -135,7 +102,7 @@
         isIndeterminate: false,
         dialogVisible: false,
         tableData: [
-
+        
         ],
         //第几页
         currentPage: 1,
@@ -183,7 +150,7 @@
       add() {
         this.$router.push(
           {
-            name: 'Addprice-query'
+            name: 'AddSell'
           }
         )
       },
@@ -204,7 +171,7 @@
 <style lang='scss'>
   $sc:12;
 
-  .sample-list {
+  .index {
     .head {
       h1 {
         opacity: 0.87;
@@ -244,6 +211,7 @@
       }
 
       .form {
+
         /* max-width: 1000px; */
         .el-form-item__label {
           height: 30px;
@@ -254,9 +222,6 @@
           margin-bottom: 0;
         }
 
-        .btns{
-          width: 100%;
-        }
         .date {
           width: 414px;
 
@@ -264,6 +229,7 @@
             width: 414px;
           }
         }
+
       }
     }
 

@@ -667,15 +667,6 @@
               line-height: 18px;
 
             }
-
-            .el-button {
-              font-family: 'zt1';
-              font-size: 12px;
-              color: #3366FF;
-              letter-spacing: 0;
-              line-height: 12px;
-
-            }
           }
         }
       }

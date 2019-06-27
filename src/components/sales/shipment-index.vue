@@ -1,12 +1,11 @@
 <template>
-  <div class="price-list">
+  <div class="index">
     <div>
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to='/home/price/list'>价格管理</el-breadcrumb-item>
-          <el-breadcrumb-item>价格查询</el-breadcrumb-item>
+          <el-breadcrumb-item to='/home/sell'>销售管理</el-breadcrumb-item>
+          <el-breadcrumb-item>收货数据查询</el-breadcrumb-item>
         </el-breadcrumb>
-        <!-- <h1>客户查询</h1> -->
       </div>
 
       <div class="sels clear">
@@ -21,40 +20,30 @@
         </div>
         <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
-          <el-form-item label="BU">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="PDT">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="产品类型">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="平台">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="产品状态">
-            <el-select v-model="value" size="small" filterable placeholder="请选择">
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="产品归属">
+          <el-form-item label="代理商">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="产品型号">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="限制客户">
+          <el-form-item label="发票号">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="生效时间" class="date">
+           <el-form-item label="仓储地">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="上传日期" class="date">
+            <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
+              v-model="d1">
+            </el-date-picker>
+          </el-form-item>
+           <el-form-item label="提货日期" class="date">
             <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
               v-model="d1">
             </el-date-picker>
           </el-form-item>
           <el-form-item :label="checkedCities.length==0 ?'' : ' '">
-            <el-button size='small' type='primary' plain>搜索</el-button>
+            <el-button size='small' type='primary' plain>查询</el-button>
             <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
           </el-form-item>
         </el-form>
@@ -64,53 +53,24 @@
 
       <!-- </transition-group> -->
       <div class="box">
-        <div class="btns clear">
-          <el-button class="add" @click='create' size='small' type='primary'>生成报价单</el-button>
-        </div>
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" height="700">
-            <el-table-column prop="" type="selection" width='30' show-overflow-tooltip label="">
-            </el-table-column>
-            <el-table-column type="index" width='100' label="编号" :index='q'>
-            </el-table-column>
-            <el-table-column prop="t1" show-overflow-tooltip label="BU">
-            </el-table-column>
-            <el-table-column prop="t2" label="PDT" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="t3" label="Product Type" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="t4" show-overflow-tooltip label="平台">
-            </el-table-column>
-            <el-table-column prop="t5" label="产品状态" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t7" label="产品归属">
-            </el-table-column>
-             <el-table-column show-overflow-tooltip prop="t8" label="产品型号">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t9" label="数量上限">
-            </el-table-column>
-
-
-            <el-table-column show-overflow-tooltip prop="t10" label="数量下限">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t11" label="标准价">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t12" label="权限价">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t13" label="底线价">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t14" label="成本价">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t15" label="增值后成本">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t16" label="生效时间">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t17" label="失效时间">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t18" label="更新时间">
-            </el-table-column>
+            <el-table-column prop="" width='30' show-overflow-tooltip label=""></el-table-column>
+            <el-table-column prop="0" width='100' label="代理商" :index='q'></el-table-column>
+            <el-table-column prop="1" label="上传日期" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="2" label="年月" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="3" label="库存类别" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="4" label="发货公司" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="5" label="仓储地" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="6" label="产品型号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="7" label="提货时间" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="8" label="提货数量" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="12" label="PO Price" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="12" label="金额" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="12" label="发票号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="12" label="BU" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="12" label="备注" show-overflow-tooltip></el-table-column>
             <div slot="empty">
-
               <p>未查询到客户信息</p>
             </div>
           </el-table>
@@ -139,30 +99,19 @@
 <script>
   import formTest from '../../assets/js/formTest'
   export default {
-    name: 'PriceQuery',
+    name: 'index',
     data() {
       return {
         form: {},
         total: 0,
         d1: [],
-        options: [
-          {
-            value: '1',
-            label: '新产品'
-          },
-          {
-            value: '1',
-            label: '主流在售'
-          },
-          {
-            value: '1',
-            label: '衰退期'
-          },
-          {
-            value: '1',
-            label: '以退市'
-          },
-        ],
+        options: [{
+          value: '选项1',
+          label: 'Mass Market'
+        }, {
+          value: '选项2',
+          label: 'Account Market'
+        }],
         value: '',
         checkAll: false,
         checkedCities: [
@@ -181,27 +130,7 @@
         isIndeterminate: false,
         dialogVisible: false,
         tableData: [
-            {
-              t1:'Connectivity Device',
-              t2:'WCN',
-              t3:'WIFI',
-              t4:'',
-              t5:'新产品',
-              t6:'BU',
-              t7:'BL0908',
-              t8:'',
-              t9:'',
-              t10:'0.0908',
-              t11:'0.7800',
-              t12:'0.5750',
-              t13:'0.4569',
-              t14:'',
-              t15:'',
-              t16:'2019/5/1',
-              t17:'2019/5/1',
-              t18:'2020/5/1',
-              t1:''
-            }
+        
         ],
         //第几页
         currentPage: 1,
@@ -249,7 +178,7 @@
       add() {
         this.$router.push(
           {
-            name: 'Addprice-query'
+            name: 'AddSell'
           }
         )
       },
@@ -270,7 +199,7 @@
 <style lang='scss'>
   $sc:12;
 
-  .price-list {
+  .index {
     .head {
       h1 {
         opacity: 0.87;
@@ -320,9 +249,7 @@
           width: 200px;
           margin-bottom: 0;
         }
-        .btns{
-          width: 100%;
-        }
+
         .date {
           width: 414px;
 
