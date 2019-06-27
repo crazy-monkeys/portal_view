@@ -57,7 +57,6 @@ export default new Router({
           component: resolve => require(['@/components/agent/add'], resolve),
           // meta: {keepAlive: true}
         },
-        //价格管理
         {
           path: 'order/add',
           name: 'orderAdd',
@@ -70,7 +69,7 @@ export default new Router({
           component: resolve => require(['@/components/order/list'], resolve),
           // meta: {keepAlive: true}
         },
-        //价格查询
+        //价格管理
         {
           path: 'price/list',
           name: 'PriceList',
@@ -81,6 +80,27 @@ export default new Router({
           name: 'ActualPrice',
           component: resolve => require(['@/components/price/price-actual'], resolve),
         },
+        {
+          path: 'price/inquiry',
+          name: 'ActualPrice',
+          component: resolve => require(['@/components/price/price-inquiry'], resolve),
+        },
+        {
+          path: 'price/inquiry/approval',
+          name: 'ActualPrice',
+          component: resolve => require(['@/components/price/price-inquiry-approval'], resolve),
+        },
+        {
+          path: 'sample/list',
+          name: 'SampleList',
+          component: resolve => require(['@/components/sample/sample-list'], resolve),
+        },
+        {
+          path: 'sample/apply',
+          name: 'SampleApply',
+          component: resolve => require(['@/components/sample/sample-apply'], resolve),
+        },
+        //样本管理
         //短信营销
         {
           path: 'sell',

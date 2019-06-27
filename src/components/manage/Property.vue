@@ -110,8 +110,6 @@
             <el-button class="add" size='small' type='primary' @click='dialogVisible = false'>提交</el-button>
           </el-form-item>
         </el-form>
-
-        </el-form>
       </div>
       <div class="tab">
         <el-table :data="tableData1" style="width: 100%">
