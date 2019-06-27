@@ -131,8 +131,8 @@
             children: [
               {
                 resourceId: '21',
-                resourceName: '授信额度申请',
-                resourceUrl: '/home/xxIndex',
+                resourceName: '授信额度申请列表',
+                resourceUrl: '/home/credit/list',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
 
@@ -158,6 +158,22 @@
                 resourceId: '32',
                 resourceName: '客户实际价格查询',
                 resourceUrl: '/home/price/actual',
+                resourceIconClass: 'el-icon-s-promotion',
+                children: [
+
+                ]
+              },{
+                resourceId: '33',
+                resourceName: '询价单',
+                resourceUrl: '/home/price/inquiry',
+                resourceIconClass: 'el-icon-s-promotion',
+                children: [
+
+                ]
+              },{
+                resourceId: '34',
+                resourceName: '询价单审批',
+                resourceUrl: '/home/price/inquiry/approval',
                 resourceIconClass: 'el-icon-s-promotion',
                 children: [
 

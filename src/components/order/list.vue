@@ -71,23 +71,23 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="6" label="发票种类">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="委托代表人">
+            <el-table-column show-overflow-tooltip prop="7" label="委托代表人">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="业务联系人">
+            <el-table-column show-overflow-tooltip prop="8" label="业务联系人">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="电话">
+            <el-table-column show-overflow-tooltip prop="9" label="电话">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="传真">
+            <el-table-column show-overflow-tooltip prop="10" label="传真">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="swiftcode">
+            <el-table-column show-overflow-tooltip prop="11" label="swiftcode">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="下单日期">
+            <el-table-column show-overflow-tooltip prop="12" label="下单日期">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="交货日期">
+            <el-table-column show-overflow-tooltip prop="13" label="交货日期">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
-              <template scope-slot='scope'>
-                <el-button type='primary' size='mini' @click='add'>明细</el-button>
+              <template slot-scope='scope'>
+                <el-button type='' size='mini' @click='detail'>明细</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -103,17 +103,45 @@
         </div>
       </div>
     </div>
-    <!-- <el-dialog
-        title="筛选条件选取"
-        :visible.sync="dialogVisible"
-        width="600px"
-        >
-        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
-          <div style="margin: 15px 0;"></div>
-          <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
-            <el-checkbox v-for="con in conditions" :label="con.value" :key="con.value">{{con.label}}</el-checkbox>
-        </el-checkbox-group>
-    </el-dialog> -->
+    <el-dialog title="订单详情" :visible.sync="dialogVisible1" width="60%">
+      <div class="tab">
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tab-pane label="订单信息" name="first">
+            <div class="tabBox">
+              <el-table :data="tableData" style="width: 100%" height="300">
+                <el-table-column prop="" label="ID" v-if="false">
+                </el-table-column>
+                <el-table-column prop="t1" label="客户属性" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t2" label="订单类型" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t3" label="规格型号" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t4" label="单位" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t5" label="单位（USD）" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t6" label="数量" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t7" label="交货日期" show-overflow-tooltip>
+                </el-table-column>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="出货信息" >
+            <div class="tabBox">
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="发票">
+            <div class="tabBox">
+            </div>
+          </el-tab-pane>
+      </el-tabs>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -128,10 +156,10 @@
         d1: [],
         options: [{
           value: '选项1',
-          label: 'Mass Market'
+          label: '正常'
         }, {
           value: '选项2',
-          label: 'Account Market'
+          label: '退货'
         }],
         value: '',
         checkAll: false,
@@ -150,107 +178,82 @@
         ],
         isIndeterminate: false,
         dialogVisible: false,
+        dialogVisible1: false,
         tableData: [
           {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
+            1: 'A001',
+            2: '正常',
+            3: '章三',
+            4: '399.00',
+            5: '工商银行',
+            6: '网银',
+            7: '网银',
+            8: '无',
+            9: '无',
+            10: '无',
+            11: '无',
+            12: '无',
+            13: '2019-07-09',
           },
           {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
-          }, {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '代理商A',
-            5: 'Mass Market',
-            6: '报备客户'
+            1: 'A001',
+            2: '正常',
+            3: '章三',
+            4: '399.00',
+            5: '工商银行',
+            6: '网银',
+            7: '网银',
+            8: '无',
+            9: '无',
+            10: '无',
+            11: '无',
+            12: '无',
+            13: '2019-07-09',
           },
           {
-            1: '测试客户B',
-            2: 'Test CustomerB',
-            3: '002',
-            4: '',
-            5: 'Account Market',
-            6: '未报备客户'
+            1: 'A001',
+            2: '正常',
+            3: '章三',
+            4: '399.00',
+            5: '工商银行',
+            6: '网银',
+            7: '网银',
+            8: '无',
+            9: '无',
+            10: '无',
+            11: '无',
+            12: '无',
+            13: '2019-07-09',
+          },
+          {
+            1: 'A001',
+            2: '正常',
+            3: '章三',
+            4: '399.00',
+            5: '工商银行',
+            6: '网银',
+            7: '网银',
+            8: '无',
+            9: '无',
+            10: '无',
+            11: '无',
+            12: '无',
+            13: '2019-07-09',
+          },
+          {
+            1: 'A003',
+            2: '正常',
+            3: '章三',
+            4: '399.00',
+            5: '工商银行',
+            6: '网银',
+            7: '网银',
+            8: '无',
+            9: '无',
+            10: '无',
+            11: '无',
+            12: '无',
+            13: '2019-07-09',
           }
         ],
         //第几页
@@ -296,12 +299,8 @@
       q(index) {
         return this.pageSize * (this.currentPage - 1) + index + 1
       },
-      add() {
-        this.$router.push(
-          {
-            name: 'AddSell'
-          }
-        )
+      detail() {
+        this.dialogVisible1 = true
       },
       // 分页
       handleSizeChange(val) {
@@ -311,7 +310,8 @@
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
         this.currentPage = val;
-      },
+      }
+      
     }
   }
 </script>
