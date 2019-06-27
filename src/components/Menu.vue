@@ -394,11 +394,16 @@ $sc: 12;
 //    }
 .menu {
   height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
   // background: purple;
   // background: rgba(167,97,214,0.5);
   // background: purple;
   i {
     color: #800080;
+  }
+  .el-submenu__title {
+    font-weight: bold;
   }
 }
 

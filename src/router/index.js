@@ -234,7 +234,7 @@ export default new Router({
         {
             path: '/login',
             name: 'Login',
-            component: resolve => require(['@/components/Login1'], resolve),
+            component: resolve => require(['@/components/Login'], resolve),
         },
         {
             path: '/',
