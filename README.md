@@ -1,5 +1,4 @@
 # newpro
-1122
 
 > A Vue.js project
 
