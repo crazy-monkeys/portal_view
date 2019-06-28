@@ -69,7 +69,7 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
               <template scope-slot='scope'>
-                <el-button type='text' size='small' @click='add'>上传拜访记录</el-button>
+                <el-button type='primary' size='small' @click='add'>上传拜访记录</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -84,17 +84,6 @@
         </div>
       </div>
     </div>
-    <!-- <el-dialog
-          title="筛选条件选取"
-          :visible.sync="dialogVisible"
-          width="600px"
-          >
-          <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
-            <div style="margin: 15px 0;"></div>
-            <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
-              <el-checkbox v-for="con in conditions" :label="con.value" :key="con.value">{{con.label}}</el-checkbox>
-          </el-checkbox-group>
-      </el-dialog> -->
   </div>
 </template>
 

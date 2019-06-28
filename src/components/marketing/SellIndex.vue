@@ -142,103 +142,7 @@ export default {
       tableData: [
         {
           1: "测试客户A",
-          2: "Test CustomerB",
-          3: "001",
-          4: "代理商A",
-          5: "Mass Market",
-          6: "报备客户"
-        },
-        {
-          1: "测试客户A",
-          2: "Test CustomerB",
-          3: "001",
-          4: "代理商A",
-          5: "Mass Market",
-          6: "报备客户"
-        },
-        {
-          1: "测试客户A",
-          2: "Test CustomerB",
-          3: "001",
-          4: "代理商A",
-          5: "Mass Market",
-          6: "报备客户"
-        },
-        {
-          1: "测试客户A",
-          2: "Test CustomerB",
-          3: "001",
-          4: "代理商A",
-          5: "Mass Market",
-          6: "报备客户"
-        },
-        {
-          1: "测试客户A",
-          2: "Test CustomerB",
-          3: "001",
-          4: "代理商A",
-          5: "Mass Market",
-          6: "报备客户"
-        },
-        {
-          1: "测试客户A",
-          2: "Test CustomerB",
-          3: "001",
-          4: "代理商A",
-          5: "Mass Market",
-          6: "报备客户"
-        },
-        {
-          1: "测试客户A",
-          2: "Test CustomerB",
-          3: "001",
-          4: "代理商A",
-          5: "Mass Market",
-          6: "报备客户"
-        },
-        {
-          1: "测试客户A",
-          2: "Test CustomerB",
-          3: "001",
-          4: "代理商A",
-          5: "Mass Market",
-          6: "报备客户"
-        },
-        {
-          1: "测试客户A",
-          2: "Test CustomerB",
-          3: "001",
-          4: "代理商A",
-          5: "Mass Market",
-          6: "报备客户"
-        },
-        {
-          1: "测试客户A",
-          2: "Test CustomerB",
-          3: "001",
-          4: "代理商A",
-          5: "Mass Market",
-          6: "报备客户"
-        },
-        {
-          1: "测试客户A",
-          2: "Test CustomerB",
-          3: "001",
-          4: "代理商A",
-          5: "Mass Market",
-          6: "报备客户"
-        },
-        {
-          1: "测试客户A",
-          2: "Test CustomerB",
-          3: "001",
-          4: "代理商A",
-          5: "Mass Market",
-          6: "报备客户"
-        },
-        {
-          1: "测试客户A",
-          2: "Test CustomerB",
+          2: "Test CustomerA",
           3: "001",
           4: "代理商A",
           5: "Mass Market",
@@ -248,9 +152,9 @@ export default {
           1: "测试客户B",
           2: "Test CustomerB",
           3: "002",
-          4: "",
+          4: "代理商A",
           5: "Account Market",
-          6: "未报备客户"
+          6: "报备客户"
         }
       ],
       //第几页

@@ -44,7 +44,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="报备日期" class="date">
-            <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+            <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" v-model="d1">
             </el-date-picker>
           </el-form-item>
           <el-form-item :label="checkedCities.length==0 ?'' : ' '">
@@ -76,7 +76,7 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
               <template scope-slot='scope'>
-                <el-button type='text' size='small' @click='add'>明细</el-button>
+                <el-button type='primary' size='small' @click='add'>明细</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -112,6 +112,7 @@
 
     data() {
       return {
+        d1: [],
         options: [{
           value: '选项1',
           label: 'Mass Market'

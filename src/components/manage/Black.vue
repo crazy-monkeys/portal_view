@@ -100,25 +100,25 @@
           </el-form-item>
           
           <el-form-item label="办公地址" class="address">
-              <el-select v-model="value3" size="small" filterable placeholder="省">
+              <el-select v-model="value4" size="small" filterable placeholder="省">
                   <el-option
-                    v-for="item in options3"
+                    v-for="item in options4"
                     :key="item.value"
                     :label="item.label"
                     :value="item.value">
                   </el-option>
                 </el-select>
-                <el-select v-model="value3" size="small" filterable placeholder="市">
+                <el-select v-model="value4" size="small" filterable placeholder="市">
                     <el-option
-                      v-for="item in options3"
+                      v-for="item in options4"
                       :key="item.value"
                       :label="item.label"
                       :value="item.value">
                     </el-option>
                   </el-select>
-                  <el-select v-model="value3" size="small" filterable placeholder="区">
+                  <el-select v-model="value4" size="small" filterable placeholder="区">
                       <el-option
-                        v-for="item in options3"
+                        v-for="item in options4"
                         :key="item.value"
                         :label="item.label"
                         :value="item.value">
