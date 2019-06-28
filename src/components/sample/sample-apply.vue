@@ -104,7 +104,7 @@
   <el-dialog title="新建样品申请单" :visible.sync="dialogCreate" width="70%">
       <div class="sels clear">
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true'>
-          <el-form-item label="代理商">
+          <el-form-item label="料号">
             <el-input size="small" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="版本">
