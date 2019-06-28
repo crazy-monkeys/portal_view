@@ -73,7 +73,7 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" label="操作" width="80">
               <template scope-slot='scope'>
-                <el-button type='text' size='small'>修改</el-button>
+                <el-button type='primary' size='mini' >修改</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -146,308 +146,295 @@
 </template>
 
 <script>
-  import formTest from '../../assets/js/formTest'
-  export default {
-    name: 'Theme',
-    data() {
-      return {
-        options2: [{
-          value: '选项1',
-          label: '销售A'
-        }, {
-          value: '选项2',
-          label: '销售B'
-        }],
-        value2: '',
+import formTest from "../../assets/js/formTest";
+export default {
+  name: "Theme",
+  data() {
+    return {
+      options2: [
+        {
+          value: "选项1",
+          label: "销售A"
+        },
+        {
+          value: "选项2",
+          label: "销售B"
+        }
+      ],
+      value2: "",
 
-        options1: [{
-          value: '选项1',
-          label: '代理商A'
-        }, {
-          value: '选项2',
-          label: '代理商B'
-        }],
-        value1: '',
+      options1: [
+        {
+          value: "选项1",
+          label: "代理商A"
+        },
+        {
+          value: "选项2",
+          label: "代理商B"
+        }
+      ],
+      value1: "",
 
-        txt: '',
-        form: {},
-        options: [],
-        value: '',
-        dialogVisible: false,
-        dialogVisible3: false,
-        dialogVisible1: false,
-        tableData: [
-          {
-            t1: '测试客户A',
-            t2: 'Test CustomerB',
-            t3: '001',
-            t4: '代理商A',
-            t5: 'Mass Market'
-
-          },
-          {
-            t1: '审批中',
-            t2: 'Test CustomerB',
-            t3: '002',
-            t4: '',
-            t5: 'Account Market'
-
-          }
-        ],
-        tableData1: [
-          {}
-        ],
-        //第几页
-        currentPage: 1,
-        //每页的容量
-        pageSize: 10,
-        total: 0,
-      }
+      txt: "",
+      form: {},
+      options: [],
+      value: "",
+      dialogVisible: false,
+      dialogVisible3: false,
+      dialogVisible1: false,
+      tableData: [
+        {
+          t1: "测试客户A",
+          t2: "Test CustomerB",
+          t3: "001",
+          t4: "代理商A",
+          t5: "Mass Market"
+        },
+        {
+          t1: "审批中",
+          t2: "Test CustomerB",
+          t3: "002",
+          t4: "",
+          t5: "Account Market"
+        }
+      ],
+      tableData1: [{}],
+      //第几页
+      currentPage: 1,
+      //每页的容量
+      pageSize: 10,
+      total: 0
+    };
+  },
+  methods: {
+    change() {
+      this.dialogVisible3 = !this.dialogVisible3;
     },
-    methods: {
-      change() {
-        this.dialogVisible3 = !this.dialogVisible3
-      },
-      changeType() {
-        this.dialogVisible1 = true
-      },
-      open() {
-        this.$confirm('确定要释放吗?', '释放', {
-          distinguishCancelAndClose: true,
-          confirmButtonText: '确定',
-          cancelButtonText: '取消'
-        }).then(() => {
+    changeType() {
+      this.dialogVisible1 = true;
+    },
+    open() {
+      this.$confirm("确定要释放吗?", "释放", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      })
+        .then(() => {
           this.$message({
-            type: 'success',
-            message: '释放成功'
-          })
-        }).catch(action => {
+            type: "success",
+            message: "释放成功"
+          });
+        })
+        .catch(action => {
           this.$message({
-            type: 'fail',
-            message: '已取消操作'
-          })
+            type: "fail",
+            message: "已取消操作"
+          });
         });
-      },
-      remove() {
-        this.dialogVisible = true
-      },
-      q(index) {
-        return this.pageSize * (this.currentPage - 1) + index + 1
-      },
-      //点击新增营销活动
-      add() {
-        this.$router.push(
-          {
-            name: 'AddSell'
-          }
-        )
-      },
+    },
+    remove() {
+      this.dialogVisible = true;
+    },
+    q(index) {
+      return this.pageSize * (this.currentPage - 1) + index + 1;
+    },
+    //点击新增营销活动
+    add() {
+      this.$router.push({
+        name: "AddSell"
+      });
+    },
 
-      // 分页
-      handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-        this.pageSize = val;
-      },
-      handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
-        this.currentPage = val;
-      },
+    // 分页
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.pageSize = val;
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.currentPage = val;
     }
   }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
-  $sc:12;
+$sc: 12;
 
-  .theme {
-    .empty {
-      p {
-        margin-top: 23px;
-      }
-    }
-
-    .el-dialog {
-      margin: 0 auto;
-
-      .sels {
-        padding: 0;
-        margin: 0 0 20px 0
-      }
-
-      .changeType {
-        width: 100%;
-      }
-    }
-
-    .head {
-      h1 {
-        opacity: 0.87;
-        font-size: 18px;
-        color: #000;
-        letter-spacing: 0;
-        line-height: 42px;
-        height: 42px;
-        font-weight: bold;
-        padding: 0 50px;
-
-        span {
-          border-left: 1px solid #ccc;
-          padding: 0 20px
-        }
-      }
-
-      .el-breadcrumb {
-        line-height: 30px;
-        margin-left: 50px;
-        margin-right: 20px;
-        font-size: 14px;
-      }
-    }
-
-    .sels {
-      background: #fff;
-      padding: 10px 30px;
-      margin: 0 20px 10px 20px;
-
-      .lineBox {
-        i {
-          color: #800080;
-          font-weight: bold;
-        }
-      }
-
-      .line {
-        height: 12px;
-        background: #800080;
-        margin-left: 20px;
-      }
-
-      .form {
-        max-width: 1300px;
-
-        .el-form-item__label {
-          height: 30px;
-        }
-
-        .el-form-item {
-          width: 200px;
-          margin-bottom: 0;
-
-          .el-select {
-            width: 200px
-          }
-        }
-
-        .date {
-          width: 414px;
-
-          .el-date-editor {
-            width: 414px;
-          }
-        }
-      }
-
-      .drop {
-        width: 286px;
-        height: 32px;
-        line-height: 30px;
-        margin: 12px 0 12px 20px;
-        border: 1px solid #ccc;
-        box-sizing: border-box;
-
-        .sel {
-          width: 180px;
-
-          .el-input__inner {
-            border: none;
-            height: 28px;
-            ;
-          }
-        }
-
-        .el-dropdown {
-
-          border-right: 1px solid #ccc;
-          padding: 0 10px;
-
-          span {
-            font-size: 14px
-          }
-
-          .el-dropdown-menu__item {
-            width: 100px
-          }
-        }
-
-      }
-    }
-
-    .box {
-      margin: 0 20px 20px 20px;
-      background: #FFFFFF;
-      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
-      border-radius: 2px;
-      position: relative;
-
-
-
-      .btns {
-
-        .add {
-          margin: 12px 0 12px 30px;
-        }
-
-
-      }
-
-      .tab {
-
-        .el-table {
-
-          td {
-            height: 64px;
-            line-height: 64px;
-
-            .cell {
-              // overflow: hidden;
-              // text-overflow:ellipsis;
-              // display: -webkit-box;
-              // -webkit-line-clamp: 2;
-              // -webkit-box-orient: vertical;
-              // width:100px;
-              font-size: 12px;
-              color: #333333;
-              letter-spacing: 0;
-              line-height: 18px;
-
-            }
-
-          }
-        }
-
-      }
-
-      .block {
-        // position: absolute;
-        bottom: 26px;
-        padding: 10px;
-
-        .el-pagination {
-          width: 100%;
-          text-align: center
-        }
-
-      }
-
-    }
-
-    .bottom {
-      text-align: center;
-      font-size: 12px;
-      color: #999999;
-      letter-spacing: 0;
-      line-height: 16px;
+.theme {
+  .empty {
+    p {
+      margin-top: 23px;
     }
   }
+
+  .el-dialog {
+    margin: 0 auto;
+
+    .sels {
+      padding: 0;
+      margin: 0 0 20px 0;
+    }
+
+    .changeType {
+      width: 100%;
+    }
+  }
+
+  .head {
+    h1 {
+      opacity: 0.87;
+      font-size: 18px;
+      color: #000;
+      letter-spacing: 0;
+      line-height: 42px;
+      height: 42px;
+      font-weight: bold;
+      padding: 0 50px;
+
+      span {
+        border-left: 1px solid #ccc;
+        padding: 0 20px;
+      }
+    }
+
+    .el-breadcrumb {
+      line-height: 30px;
+      margin-left: 50px;
+      margin-right: 20px;
+      font-size: 14px;
+    }
+  }
+
+  .sels {
+    background: #fff;
+    padding: 10px 30px;
+    margin: 0 20px 10px 20px;
+
+    .lineBox {
+      i {
+        color: #800080;
+        font-weight: bold;
+      }
+    }
+
+    .line {
+      height: 12px;
+      background: #800080;
+      margin-left: 20px;
+    }
+
+    .form {
+      max-width: 1300px;
+
+      .el-form-item__label {
+        height: 30px;
+      }
+
+      .el-form-item {
+        width: 200px;
+        margin-bottom: 0;
+
+        .el-select {
+          width: 200px;
+        }
+      }
+
+      .date {
+        width: 414px;
+
+        .el-date-editor {
+          width: 414px;
+        }
+      }
+    }
+
+    .drop {
+      width: 286px;
+      height: 32px;
+      line-height: 30px;
+      margin: 12px 0 12px 20px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+
+      .sel {
+        width: 180px;
+
+        .el-input__inner {
+          border: none;
+          height: 28px;
+        }
+      }
+
+      .el-dropdown {
+        border-right: 1px solid #ccc;
+        padding: 0 10px;
+
+        span {
+          font-size: 14px;
+        }
+
+        .el-dropdown-menu__item {
+          width: 100px;
+        }
+      }
+    }
+  }
+
+  .box {
+    margin: 0 20px 20px 20px;
+    background: #ffffff;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
+    border-radius: 2px;
+    position: relative;
+
+    .btns {
+      .add {
+        margin: 12px 0 12px 30px;
+      }
+    }
+
+    .tab {
+      .el-table {
+        td {
+          height: 64px;
+          line-height: 64px;
+
+          .cell {
+            // overflow: hidden;
+            // text-overflow:ellipsis;
+            // display: -webkit-box;
+            // -webkit-line-clamp: 2;
+            // -webkit-box-orient: vertical;
+            // width:100px;
+            font-size: 12px;
+            color: #333333;
+            letter-spacing: 0;
+            line-height: 18px;
+          }
+        }
+      }
+    }
+
+    .block {
+      // position: absolute;
+      bottom: 26px;
+      padding: 10px;
+
+      .el-pagination {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+
+  .bottom {
+    text-align: center;
+    font-size: 12px;
+    color: #999999;
+    letter-spacing: 0;
+    line-height: 16px;
+  }
+}
 </style>

@@ -136,7 +136,7 @@ $sc: 12;
 
   .login-box {
     position: absolute;
-    height: 500/$sc+rem;
+    height: 500 / $sc + rem;
     // width: 500 / $sc + rem;
     left: 0;
     top: 0;
