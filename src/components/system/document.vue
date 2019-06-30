@@ -15,7 +15,6 @@
             <el-select v-model="value" size="small" filterable placeholder="稽核报告">
             </el-select>
         <el-button  type="primary" size="small" plain @click="search">搜索</el-button>
-        <el-button  size="small" plain @click="search">发布</el-button>
       </div>
       <div class="tab">
         <el-table :data="tableData" style="width: 100%" height="700" @row-click='rowClick'>
@@ -35,12 +34,7 @@
           </el-table-column>
           <el-table-column prop="5" show-overflow-tooltip label="状态">
           </el-table-column>
-          <el-table-column label="操作" width="200" fixed='right'>
-            <template slot-scope="scope">
-              <el-button size='mini'>修改</el-button>
-              <el-button size='mini'>撤销</el-button>
-            </template>
-          </el-table-column>
+          
           <div slot="empty">
             <p>无账户信息</p>
           </div>

@@ -1,11 +1,12 @@
 <template>
-  <div class="list">
+  <div class="sell">
     <div>
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to='/home/order/list'>订单管理</el-breadcrumb-item>
-          <el-breadcrumb-item>订单查询</el-breadcrumb-item>
+          <el-breadcrumb-item to='/home/sell'>价格管理</el-breadcrumb-item>
+          <el-breadcrumb-item>订单价申请</el-breadcrumb-item>
         </el-breadcrumb>
+        <!-- <h1>客户查询</h1> -->
       </div>
 
       <div class="sels clear">
@@ -20,30 +21,36 @@
         </div>
         <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
-          <el-form-item label="订单号">
+          <el-form-item label="BU">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="下单人">
+          <el-form-item label="PDT">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="订单状态">
-            <el-select v-model="value" size="small" filterable placeholder="专货订单">
+          <el-form-item label="产品型号">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="产品归属">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="审批状态">
+            <el-select v-model="value" size="small" filterable placeholder="请选择">
               <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下单日期" class="date">
+          <el-form-item label="申请日期" class="date">
             <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
               v-model="d1">
             </el-date-picker>
           </el-form-item>
-          <el-form-item label="交货日期" class="date">
+          <el-form-item label="生效日期" class="date">
             <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
               v-model="d1">
             </el-date-picker>
           </el-form-item>
           <el-form-item :label="checkedCities.length==0 ?'' : ' '">
-            <el-button size='small' type='primary' plain>查询</el-button>
+            <el-button size='small' type='primary' plain>搜索</el-button>
             <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
           </el-form-item>
         </el-form>
@@ -53,43 +60,40 @@
 
       <!-- </transition-group> -->
       <div class="box">
+         <div class="btns clear">
+          <el-button class="add" @click='open' size='small' type='primary'>新建</el-button>
+        </div>
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" height="700">
             <el-table-column prop="" width='30' show-overflow-tooltip label="">
             </el-table-column>
-            <el-table-column type="index" width='100' label="订单号" :index='q'>
+            <el-table-column type="index" width='100' label="编号" :index='q'>
             </el-table-column>
-            <el-table-column prop="1" show-overflow-tooltip label="状态">
+            <el-table-column prop="1" show-overflow-tooltip label="申请日期">
             </el-table-column>
-            <el-table-column prop="2" label="下单人" show-overflow-tooltip>
+            <el-table-column prop="2" label="审批状态" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="3" label="总金额" show-overflow-tooltip>
+            <el-table-column prop="3" label="审批意见" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="4" show-overflow-tooltip label="开户银行">
+            <el-table-column prop="4" show-overflow-tooltip label="BU">
             </el-table-column>
-            <el-table-column prop="5" label="付款方式" show-overflow-tooltip>
+            <el-table-column prop="5" label="PDT" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="发票种类">
+            <el-table-column show-overflow-tooltip prop="6" label="产品状态">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="7" label="委托代表人">
+            <el-table-column show-overflow-tooltip prop="6" label="产品归属">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="8" label="业务联系人">
+            <el-table-column show-overflow-tooltip prop="6" label="数量下限">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="9" label="电话">
+            <el-table-column show-overflow-tooltip prop="6" label="数量上限">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="10" label="传真">
+            <el-table-column show-overflow-tooltip prop="6" label="订单价">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="11" label="swiftcode">
+            <el-table-column show-overflow-tooltip prop="6" label="生效时间">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="12" label="下单日期">
+            <el-table-column show-overflow-tooltip prop="6" label="失效时间">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="13" label="交货日期">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
-              <template slot-scope='scope'>
-                <el-button type='primary' size='mini' @click='detail'>明细</el-button>
-              </template>
-            </el-table-column>
+
             <div slot="empty">
 
               <p>未查询到客户信息</p>
@@ -103,52 +107,24 @@
         </div>
       </div>
     </div>
-    <el-dialog title="订单详情" :visible.sync="dialogVisible1" width="60%">
-      <div class="tab">
-      <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="订单信息" name="first">
-            <div class="tabBox">
-              <el-table :data="tableData" style="width: 100%" height="300">
-                <el-table-column prop="" label="ID" v-if="false">
-                </el-table-column>
-                <el-table-column prop="t1" label="客户属性" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t2" label="订单类型" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t3" label="规格型号" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t4" label="单位" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t5" label="单位（USD）" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t6" label="数量" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t7" label="交货日期" show-overflow-tooltip>
-                </el-table-column>
-                <div slot="empty">
-                  无数据
-                </div>
-              </el-table>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="出货信息" >
-            <div class="tabBox">
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="发票">
-            <div class="tabBox">
-            </div>
-          </el-tab-pane>
-      </el-tabs>
-      </div>
-    </el-dialog>
+    <!-- <el-dialog
+        title="筛选条件选取"
+        :visible.sync="dialogVisible"
+        width="600px"
+        >
+        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+          <div style="margin: 15px 0;"></div>
+          <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+            <el-checkbox v-for="con in conditions" :label="con.value" :key="con.value">{{con.label}}</el-checkbox>
+        </el-checkbox-group>
+    </el-dialog> -->
   </div>
 </template>
 
 <script>
 import formTest from "../../assets/js/formTest";
 export default {
-  name: "list",
+  name: "SellIndex",
   data() {
     return {
       form: {},
@@ -157,11 +133,16 @@ export default {
       options: [
         {
           value: "选项1",
-          label: "正常"
+          label: "审批通过"
         },
         {
           value: "选项2",
-          label: "退货"
+          label: "审批驳回"
+        }
+        ,
+        {
+          value: "选项2",
+          label: "草稿"
         }
       ],
       value: "",
@@ -179,82 +160,20 @@ export default {
       ],
       isIndeterminate: false,
       dialogVisible: false,
-      dialogVisible1: false,
       tableData: [
         {
-          1: "A001",
-          2: "正常",
-          3: "章三",
-          4: "399.00",
-          5: "工商银行",
-          6: "网银",
-          7: "网银",
-          8: "无",
-          9: "无",
-          10: "无",
-          11: "无",
-          12: "无",
-          13: "2019-07-09"
-        },
-        {
-          1: "A001",
-          2: "正常",
-          3: "章三",
-          4: "399.00",
-          5: "工商银行",
-          6: "网银",
-          7: "网银",
-          8: "无",
-          9: "无",
-          10: "无",
-          11: "无",
-          12: "无",
-          13: "2019-07-09"
-        },
-        {
-          1: "A001",
-          2: "正常",
-          3: "章三",
-          4: "399.00",
-          5: "工商银行",
-          6: "网银",
-          7: "网银",
-          8: "无",
-          9: "无",
-          10: "无",
-          11: "无",
-          12: "无",
-          13: "2019-07-09"
-        },
-        {
-          1: "A001",
-          2: "正常",
-          3: "章三",
-          4: "399.00",
-          5: "工商银行",
-          6: "网银",
-          7: "网银",
-          8: "无",
-          9: "无",
-          10: "无",
-          11: "无",
-          12: "无",
-          13: "2019-07-09"
-        },
-        {
-          1: "A003",
-          2: "正常",
-          3: "章三",
-          4: "399.00",
-          5: "工商银行",
-          6: "网银",
-          7: "网银",
-          8: "无",
-          9: "无",
-          10: "无",
-          11: "无",
-          12: "无",
-          13: "2019-07-09"
+          1: "2018-01-01",
+          2: "审批通过",
+          3: "通过",
+          4: "",
+          5: "",
+          6: "新产品",
+          7:'',
+          8:'',
+          9:'10000',
+          10:'0.029',
+          11:'2018-09-09',
+          12:'2019-09-09'
         }
       ],
       //第几页
@@ -299,8 +218,10 @@ export default {
     q(index) {
       return this.pageSize * (this.currentPage - 1) + index + 1;
     },
-    detail() {
-      this.dialogVisible1 = true;
+    add() {
+      this.$router.push({
+        name: "AddSell"
+      });
     },
     // 分页
     handleSizeChange(val) {
@@ -319,7 +240,10 @@ export default {
 <style lang='scss'>
 $sc: 12;
 
-.list {
+.sell {
+  // height: 100%;
+  // overflow-x: hidden;
+  // overflow-y: auto;
   .head {
     h1 {
       opacity: 0.87;

@@ -149,6 +149,13 @@ export default {
               children: []
             },
             {
+              resourceId: "36",
+              resourceName: "订单价申请",
+              resourceUrl: "/home/price/price-sales-actual",
+              resourceIconClass: "el-icon-s-promotion",
+              children: []
+            },
+            {
               resourceId: "33",
               resourceName: "询价申请",
               resourceUrl: "/home/price/inquiry",

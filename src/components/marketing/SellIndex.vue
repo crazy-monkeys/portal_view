@@ -59,7 +59,7 @@
           <el-table :data="tableData" style="width: 100%" height="700">
             <el-table-column prop="" width='30' show-overflow-tooltip label="">
             </el-table-column>
-            <el-table-column type="index" width='' label="编号" :index='q'>
+            <el-table-column type="index" width='100' label="编号" :index='q'>
             </el-table-column>
             <el-table-column prop="1" show-overflow-tooltip label="客户中文名">
             </el-table-column>

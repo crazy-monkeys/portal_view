@@ -18,9 +18,11 @@
               v-model="d1">
             </el-date-picker>
         <el-button  type="primary" size="small" plain @click="search">查询</el-button>
-        <el-button  size="small" plain @click="search">发布</el-button>
       </div>
       <div class="tab">
+        <div class="btns clear">
+          <el-button class="add" @click='open' size='small' type='primary'>新建</el-button>
+        </div>
         <el-table :data="tableData" style="width: 100%" height="700" @row-click='rowClick'>
           <el-table-column type="index" label="编号" v-if="false" width="80">
           </el-table-column>
@@ -39,13 +41,6 @@
           <el-table-column prop="4" show-overflow-tooltip label="发布人">
           </el-table-column>
           <el-table-column prop="5" show-overflow-tooltip label="状态">
-          </el-table-column>
-          <el-table-column label="操作" width="300" fixed='right'>
-            <template slot-scope="scope">
-              <el-button size='mini'>修改</el-button>
-              <el-button size='mini'>撤销</el-button>
-              <el-button size='mini'>预览</el-button>
-            </template>
           </el-table-column>
           <div slot="empty">
             <p>无账户信息</p>
@@ -84,10 +79,10 @@
           
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false" size="small">预览</el-button>
-          <el-button @click="dialogVisible = false" size="small">保存</el-button>
+          <el-button type="primary" @click="dialogVisible = false" size="small">预览</el-button>
+          <el-button type="primary" @click="dialogVisible = false" size="small">保存</el-button>
           <el-button type="primary" @click="dialogVisible = false" size="small">发布</el-button>
-          <el-button @click="dialogVisible = false" size="small">取消</el-button>
+          <el-button type="primary" @click="dialogVisible = false" size="small">取消</el-button>
         </span>
       
     </el-dialog>
@@ -275,7 +270,7 @@
         }
       },
       //搜索功能
-      search() {
+      open() {
         this.dialogVisible = true;
       },
       //清空表单数据

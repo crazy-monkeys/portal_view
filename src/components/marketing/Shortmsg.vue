@@ -69,7 +69,7 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
               <template scope-slot='scope'>
-                <el-button type='primary' size='small' @click='add'>上传拜访记录</el-button>
+                <el-button type='primary' size='mini' @click='add'>上传拜访记录</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -84,206 +84,285 @@
         </div>
       </div>
     </div>
+    <el-dialog title="新建样品申请单" :visible.sync="dialogCreate" width="70%">
+      <div class="sels clear">
+        <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true'>
+          <el-form-item label="代理商">
+            <el-input size="small" placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="版本">
+             <el-input size="small" placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="数量">
+             <el-input size="small" placeholder="请输入"></el-input>
+          </el-form-item>
+
+           <el-form-item label="项目名称">
+             <el-input size="small" placeholder="请输入"></el-input>
+          </el-form-item>
+           <el-form-item label="客户名称">
+             <el-input size="small" placeholder="请输入"></el-input>
+          </el-form-item>
+           <el-form-item label="电话">
+             <el-input size="small" placeholder="请输入"></el-input>
+          </el-form-item>
+          <div class="tabBox">
+              <el-table :data="tableData3" style="width: 100%" height="300">
+                <el-table-column prop="h1" label="文件类型" show-overflow-tooltip>
+                  
+                </el-table-column>
+                <el-table-column prop="" label="" >
+                  <template slot-scope="scope">
+                    <el-upload
+                      class="upload-demo"
+                      action=''
+                      >
+                      <el-button size="mini" type="">上传文件</el-button>
+                    </el-upload>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="h3" label="文件名" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="h4" label="文件说明" show-overflow-tooltip>
+                </el-table-column>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+              <!-- <div class="block">
+                <el-pagination :current-page="currentPage" :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next"
+                  :total="total">
+                </el-pagination>
+              </div> -->
+            </div>
+          <el-form-item label=" ">
+            <el-button class="add" size='small' type='primary' @click='dialogCreate = false'>提交</el-button>
+            <el-button class="add" size='small' type='primary' plain @click='dialogCreate = false'>取消</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </el-dialog>
+    
+  </div>
+    <!-- <el-dialog
+          title="筛选条件选取"
+          :visible.sync="dialogVisible"
+          width="600px"
+          >
+          <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+            <div style="margin: 15px 0;"></div>
+            <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+              <el-checkbox v-for="con in conditions" :label="con.value" :key="con.value">{{con.label}}</el-checkbox>
+          </el-checkbox-group>
+      </el-dialog> -->
+      
   </div>
 </template>
 
 <script>
-  import formTest from '../../assets/js/formTest'
-  export default {
-    name: 'SellIndex',
-    data() {
-      return {
-        options: [{
-          value: '选项1',
-          label: 'Mass Market'
-        }, {
-          value: '选项2',
-          label: 'Account Market'
-        }],
-        value: '',
-        checkAll: false,
-        checkedCities: [
-          1, 2
-        ],
-        conditions: [
-          {
-            label: '客户名称',
-            value: 1
-          },
-          {
-            label: '英文名称',
-            value: 2
-          }
-        ],
-        isIndeterminate: false,
-        dialogVisible: false,
-        tableData: [
-          {
-            1: '测试客户A',
-            2: 'Test CustomerB',
-            3: '001',
-            4: '销售A',
-            5: 'Mass Market',
-            6: '报备客户'
-          },
-          {
-            1: '测试客户B',
-            2: 'Test CustomerB',
-            3: '002',
-            4: '',
-            5: 'Account Market',
-            6: '未报备客户'
-          }
-        ],
-        //第几页
-        currentPage: 1,
-        //每页的容量
-        pageSize: 10,
-      }
+import formTest from "../../assets/js/formTest";
+export default {
+  name: "SellIndex",
+  data() {
+    return {
+      dialogCreate: false,
+      options: [
+        {
+          value: "选项1",
+          label: "Mass Market"
+        },
+        {
+          value: "选项2",
+          label: "Account Market"
+        }
+      ],
+      value: "",
+      checkAll: false,
+      checkedCities: [1, 2],
+      conditions: [
+        {
+          label: "客户名称",
+          value: 1
+        },
+        {
+          label: "英文名称",
+          value: 2
+        }
+      ],
+      tableData3: [
+        {
+          h1: "类型1",
+          h2: "类型1",
+          h3: "文件1",
+          h4: "说明1"
+        }
+      ],
+      isIndeterminate: false,
+      dialogVisible: false,
+      tableData: [
+        {
+          1: "测试客户A",
+          2: "Test CustomerB",
+          3: "001",
+          4: "销售A",
+          5: "Mass Market",
+          6: "报备客户"
+        },
+        {
+          1: "测试客户B",
+          2: "Test CustomerB",
+          3: "002",
+          4: "",
+          5: "Account Market",
+          6: "未报备客户"
+        }
+      ],
+      //第几页
+      currentPage: 1,
+      //每页的容量
+      pageSize: 10
+    };
+  },
+  computed: {
+    shopId() {
+      return this.$store.state.shopId.shopId;
+    }
+  },
+  created() {},
+  watch: {},
+  methods: {
+    change() {
+      this.dialogVisible = !this.dialogVisible;
     },
-    computed: {
-      shopId() {
-        return this.$store.state.shopId.shopId
-      }
+    handleCheckAllChange(val) {
+      console.log(val);
+      this.checkedCities = val ? [1, 2, 3, 4, 5, 6] : [];
+      this.isIndeterminate = false;
     },
-    created() {
+    handleCheckedCitiesChange(value) {
+      console.log(value);
+      let checkedCount = value.length;
+      this.checkAll = checkedCount === this.conditions.length;
+      this.isIndeterminate =
+        checkedCount > 0 && checkedCount < this.conditions.length;
     },
-    watch: {
+    sure() {
+      this.dialogVisible = false;
     },
-    methods: {
-      change() {
-        this.dialogVisible = !this.dialogVisible
-      },
-      handleCheckAllChange(val) {
-        console.log(val)
-        this.checkedCities = val ? [1, 2, 3, 4, 5, 6] : [];
-        this.isIndeterminate = false;
-      },
-      handleCheckedCitiesChange(value) {
-        console.log(value)
-        let checkedCount = value.length;
-        this.checkAll = checkedCount === this.conditions.length;
-        this.isIndeterminate = checkedCount > 0 && checkedCount < this.conditions.length;
-      },
-      sure() {
-        this.dialogVisible = false
-      },
-      handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => { });
-      },
-      q(index) {
-        return this.pageSize * (this.currentPage - 1) + index + 1
-      },
-      add() {
-
-      },
-      // 分页
-      handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-        this.pageSize = val;
-      },
-      handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
-        this.currentPage = val;
-      },
+    handleClose(done) {
+      this.$confirm("确认关闭？")
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
+    },
+    q(index) {
+      return this.pageSize * (this.currentPage - 1) + index + 1;
+    },
+    add() {
+      this.dialogCreate = true;
+    },
+    // 分页
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.pageSize = val;
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.currentPage = val;
     }
   }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
-  $sc:12;
+$sc: 12;
 
-  .sell {
-    .head {
-      h1 {
-        opacity: 0.87;
-        font-size: 18px;
-        color: #000;
-        letter-spacing: 0;
-        line-height: 42px;
-        height: 42px;
-        /* font-weight: bold; */
-        padding: 0 50px;
-      }
-
-      .el-breadcrumb {
-        line-height: 30px;
-        margin-left: 50px;
-        margin-right: 20px;
-        font-size: 14px;
-      }
+.sell {
+  .head {
+    h1 {
+      opacity: 0.87;
+      font-size: 18px;
+      color: #000;
+      letter-spacing: 0;
+      line-height: 42px;
+      height: 42px;
+      /* font-weight: bold; */
+      padding: 0 50px;
     }
 
-    .sels {
-      background: #fff;
-      padding: 10px 30px;
-      margin: 0 20px 10px 20px;
+    .el-breadcrumb {
+      line-height: 30px;
+      margin-left: 50px;
+      margin-right: 20px;
+      font-size: 14px;
+    }
+  }
 
-      .form {
+  .sels {
+    background: #fff;
+    padding: 10px 30px;
+    margin: 0 20px 10px 20px;
 
-        /* max-width: 1000px; */
-        .el-form-item__label {
-          height: 30px;
-        }
+    .form {
+      /* max-width: 1000px; */
+      .el-form-item__label {
+        height: 30px;
+      }
 
-        .el-form-item {
-          width: 200px;
-          margin-bottom: 0;
-        }
+      .el-form-item {
+        width: 200px;
+        margin-bottom: 0;
+      }
 
-        .date {
+      .date {
+        width: 414px;
+
+        .el-date-editor {
           width: 414px;
-
-          .el-date-editor {
-            width: 414px;
-          }
-        }
-
-      }
-    }
-
-    .box {
-      margin: 0 20px 20px 20px;
-      background: #FFFFFF;
-      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
-      border-radius: 2px;
-      position: relative;
-
-      .btns {
-        .add {
-          margin: 12px 0 12px 30px;
-        }
-      }
-
-      .tab {
-        .el-table {
-          td {
-            height: 64px;
-            line-height: 64px;
-
-            .cell {
-              font-size: 12px;
-              color: #333333;
-              letter-spacing: 0;
-              line-height: 18px;
-            }
-          }
-        }
-      }
-
-      .block {
-        padding: 10px;
-
-        .el-pagination {
-          width: 100%;
-          text-align: center;
         }
       }
     }
   }
+
+  .box {
+    margin: 0 20px 20px 20px;
+    background: #ffffff;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
+    border-radius: 2px;
+    position: relative;
+
+    .btns {
+      .add {
+        margin: 12px 0 12px 30px;
+      }
+    }
+
+    .tab {
+      .el-table {
+        td {
+          height: 64px;
+          line-height: 64px;
+
+          .cell {
+            font-size: 12px;
+            color: #333333;
+            letter-spacing: 0;
+            line-height: 18px;
+          }
+        }
+      }
+    }
+
+    .block {
+      padding: 10px;
+
+      .el-pagination {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+}
 </style>
