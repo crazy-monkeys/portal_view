@@ -114,64 +114,6 @@ export default {
           ]
         },
         {
-          resourceId: "2",
-          resourceName: "授信额度",
-          resourceUrl: "#2",
-          resourceIconClass: "el-icon-collection-tag",
-          children: [
-            {
-              resourceId: "21",
-              resourceName: "授信额度申请列表",
-              resourceUrl: "/home/credit/list",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            }
-          ]
-        },
-        {
-          resourceId: "3",
-          resourceName: "价格管理",
-          resourceUrl: "#3",
-          resourceIconClass: "el-icon-s-data",
-          children: [
-            {
-              resourceId: "31",
-              resourceName: "价格查询",
-              resourceUrl: "/home/price/list",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "32",
-              resourceName: "客户实际价格查询",
-              resourceUrl: "/home/price/actual",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "36",
-              resourceName: "订单价申请",
-              resourceUrl: "/home/price/price-sales-actual",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "33",
-              resourceName: "询价申请",
-              resourceUrl: "/home/price/inquiry",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "34",
-              resourceName: "询价申请审批",
-              resourceUrl: "/home/price/inquiry/approval",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            }
-          ]
-        },
-        {
           resourceId: "4",
           resourceName: "样品管理",
           resourceUrl: "#4",
@@ -188,6 +130,71 @@ export default {
               resourceId: "42",
               resourceName: "样品申请",
               resourceUrl: "/home/sample/apply",
+              resourceIconClass: "el-icon-s-promotion",
+              children: []
+            }
+          ]
+        },
+        {
+              resourceId: "71",
+              resourceName: "预测管理",
+              resourceUrl: "#71",
+              resourceIconClass: "el-icon-s-shop",
+              children: [
+                {
+              resourceId: "711",
+              resourceName: "销售预测查询",
+              resourceUrl: "/home/sales/forcast-index",
+              resourceIconClass: "el-icon-s-promotion",
+              children: []
+            },
+            {
+              resourceId: "712",
+              resourceName: "销售预测上传",
+              resourceUrl: "/home/sales/forcast-upload",
+              resourceIconClass: "el-icon-s-promotion",
+              children: []
+            },
+          ]
+        },
+        {
+          resourceId: "3",
+          resourceName: "价格管理",
+          resourceUrl: "#3",
+          resourceIconClass: "el-icon-s-data",
+          children: [
+            {
+              resourceId: "31",
+              resourceName: "目录价格查询",
+              resourceUrl: "/home/price/list",
+              resourceIconClass: "el-icon-s-promotion",
+              children: []
+            },
+            {
+              resourceId: "32",
+              resourceName: "实际价格查询",
+              resourceUrl: "/home/price/actual",
+              resourceIconClass: "el-icon-s-promotion",
+              children: []
+            },
+            {
+              resourceId: "36",
+              resourceName: "代理商特价申请",
+              resourceUrl: "/home/price/price-sales-actual",
+              resourceIconClass: "el-icon-s-promotion",
+              children: []
+            },
+            {
+              resourceId: "33",
+              resourceName: "询价",
+              resourceUrl: "/home/price/inquiry",
+              resourceIconClass: "el-icon-s-promotion",
+              children: []
+            },
+            {
+              resourceId: "34",
+              resourceName: "询价审批",
+              resourceUrl: "/home/price/inquiry/approval",
               resourceIconClass: "el-icon-s-promotion",
               children: []
             }
@@ -216,47 +223,13 @@ export default {
           ]
         },
         {
-          resourceId: "6",
-          resourceName: "代理商管理",
-          resourceUrl: "#6",
-          resourceIconClass: "el-icon-bicycle",
-          children: [
-            {
-              resourceId: "61",
-              resourceName: "代理商引入",
-              resourceUrl: "/home/agent/add",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "62",
-              resourceName: "代理商查询",
-              resourceUrl: "/home/agent/index",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            }
-          ]
-        },
-        {
           resourceId: "7",
-          resourceName: "销售管理",
+          resourceName: "交付管理",
           resourceUrl: "#7",
           resourceIconClass: "el-icon-s-shop",
           children: [
-            {
-              resourceId: "71",
-              resourceName: "销售预测查询",
-              resourceUrl: "/home/sales/forcast-index",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "72",
-              resourceName: "销售预测上传",
-              resourceUrl: "/home/sales/forcast-upload",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
+            
+            
             {
               resourceId: "73",
               resourceName: "销售数据查询",
@@ -287,6 +260,71 @@ export default {
             }
           ]
         },
+        {
+          resourceId: "1001",
+          resourceName: "商务管理",
+          resourceUrl: "#1001",
+          resourceIconClass: "el-icon-s-shop",
+          children: [
+            {
+              resourceId: "73",
+              resourceName: "客户Rebate",
+              resourceUrl: "/home/sales/sales-index",
+              resourceIconClass: "el-icon-s-promotion",
+              children: []
+            },
+          ]
+        },
+        {
+          resourceId: "6",
+          resourceName: "代理商管理",
+          resourceUrl: "#6",
+          resourceIconClass: "el-icon-bicycle",
+          children: [
+            {
+              resourceId: "61",
+              resourceName: "代理商引入",
+              resourceUrl: "/home/agent/add",
+              resourceIconClass: "el-icon-s-promotion",
+              children: []
+            },
+            {
+              resourceId: "62",
+              resourceName: "代理商查询",
+              resourceUrl: "/home/agent/index",
+              resourceIconClass: "el-icon-s-promotion",
+              children: []
+            },
+            {
+              resourceId: "63",
+              resourceName: "数据信息管理(报表)",
+              resourceUrl: "/home/agent/index",
+              resourceIconClass: "el-icon-s-promotion",
+              children: []
+            }
+          ]
+        },
+        {
+          resourceId: "2",
+          resourceName: "授信额度",
+          resourceUrl: "#2",
+          resourceIconClass: "el-icon-collection-tag",
+          children: [
+            {
+              resourceId: "21",
+              resourceName: "授信额度申请列表",
+              resourceUrl: "/home/credit/list",
+              resourceIconClass: "el-icon-s-promotion",
+              children: []
+            }
+          ]
+        },
+        
+        
+        
+        
+
+        
         {
           resourceId: "8",
           resourceName: "系统管理",
@@ -348,7 +386,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
 $sc: 12;
-
+.el-submenu__title{
+  color: #B54FBE;
+}
 // .el-submenu .el-menu-item, .el-submenu .el-submenu__title{
 //     font-size: 14px;
 //     color: rgba(255,255,255,0.6);
@@ -406,21 +446,23 @@ $sc: 12;
   height: 100%;
   // background: purple;
   // background: rgba(167,97,214,0.5);
-  overflow-y: auto;
 
   .el-menu {
-    height: 84%;
+    // max-height: calc(100%-80px);
+    height: 90%;
+    overflow: hidden;
     border: none;
+  overflow-y: auto;
 
     // background: rgba(167,97,214,0.5);
     // background: purple;
     i {
-      color: #800080;
+      color: #B54FBE;
     }
   }
 
   .logo {
-    height: 80px;
+    height: 10%;
     text-align: center;
 
     .smalllogo {
@@ -429,7 +471,7 @@ $sc: 12;
     }
 
     .lglogo {
-      margin-top: 10px;
+      // margin-top: 10px;
       width: 200px;
       /* height: 44px; */
     }

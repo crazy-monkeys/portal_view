@@ -11,7 +11,7 @@
       <div class="selBox">
         <el-form ref="form" :model="form" class="form" label-position='top' :inline='true'>
           <el-form-item label="甲方单位（章）">
-            <el-select v-model="value" size="small" filterable placeholder="公司A">
+            <el-select v-model="value1" size="small" filterable placeholder="公司A">
             </el-select>
           </el-form-item>
           <el-form-item label="授权委托代表人">
@@ -45,7 +45,7 @@
             <el-input size='small' placeholder="" :readonly="true" v-model='v11'></el-input>
           </el-form-item>
           <el-form-item label="发票种类">
-            <el-select v-model="value" size="small" filterable placeholder="出口发票">
+            <el-select v-model="value1" size="small" filterable placeholder="出口发票">
             </el-select>
           </el-form-item>
           <el-form-item label="发票传递">
@@ -66,15 +66,10 @@
                 <el-table-column prop="t1" label="客户属性" show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column prop="t2" label="订单类型" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                    <el-upload
-                      class="upload-demo"
-                      action=''
-                      >
-                      <el-select v-model="value" size="small" filterable placeholder="专货订单">
-                      </el-select>
-                    </el-upload>
-                  </template>
+                    <el-select v-model="value" size="small" filterable placeholder="请选择">
+                      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                      </el-option>
+                    </el-select>
                 </el-table-column>
                 <el-table-column prop="t3" label="规格型号" show-overflow-tooltip>
                 </el-table-column>
@@ -110,6 +105,19 @@ export default {
   name: "AddSell",
   data() {
     return {
+     options: [
+        {
+          value: "选项1",
+          label: "转货订单"
+        },
+        {
+          value: "选项2",
+          label: "Buffer 订单"
+        }
+      ],
+      value: "", 
+      value1:"",
+
       radio: "1",
       form: {
         txt: ""

@@ -19,5 +19,9 @@
     white-space: nowrap;
 }
 
+.el-submenu__title {
+    color: #B54FBE
+}
+
 
 /* 背景 */

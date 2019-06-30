@@ -5,7 +5,10 @@
     <!-- <Job></Job> -->
     <div class="jobBox">
       <Banner></Banner>
+      <div class="boxbox">
       <router-view></router-view>
+
+      </div>
     </div>
   </div>
 </template>
@@ -41,12 +44,17 @@ $sc: 12;
     // background: pink;
     height: 100%;
     background: #f5f5f5;
-    // overflow-y: auto;
     overflow-y: auto;
     overflow-x: hidden;
-    .job {
-      height: 100%;
-      background: #f5f5f5;
+    // overflow: hidden;
+    // margin-left: 240px;
+    // .job {
+    //   height: 100%;
+    //   background: #f5f5f5;
+    //   overflow-y: auto;
+    //   overflow-x: hidden;
+    // }
+    .boxbox{
       overflow-y: auto;
       overflow-x: hidden;
     }

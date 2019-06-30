@@ -72,17 +72,17 @@ export default new Router({
                 },
                 //公告管理
                 {
-                  path: 'system/announcement',
-                  name: 'announcementList',
-                  component: resolve => require(['@/components/system/announcement'], resolve),
-                  // meta: {keepAlive: true}
+                    path: 'system/announcement',
+                    name: 'announcementList',
+                    component: resolve => require(['@/components/system/announcement'], resolve),
+                    // meta: {keepAlive: true}
                 },
                 //文档管理
                 {
-                  path: 'system/document',
-                  name: 'documentList',
-                  component: resolve => require(['@/components/system/document'], resolve),
-                  // meta: {keepAlive: true}
+                    path: 'system/document',
+                    name: 'documentList',
+                    component: resolve => require(['@/components/system/document'], resolve),
+                    // meta: {keepAlive: true}
                 },
                 //授信额度
                 {
@@ -253,7 +253,7 @@ export default new Router({
         {
             path: '/login',
             name: 'Login',
-            component: resolve => require(['@/components/Login'], resolve),
+            component: resolve => require(['@/components/Login2'], resolve),
         },
         {
             path: '/',

@@ -56,7 +56,7 @@
       <!-- </transition-group> -->
       <div class="box">
         <div class="tab">
-          <el-table :data="tableData" style="width: 100%" height="700">
+          <el-table :data="tableData" style="width:100%"  height="700">
             <el-table-column prop="" width='30' show-overflow-tooltip label="">
             </el-table-column>
             <el-table-column type="index" width='100' label="编号" :index='q'>
@@ -86,7 +86,7 @@
         </div>
         <div class="block">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-            :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+            :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
           </el-pagination>
         </div>
       </div>

@@ -335,7 +335,7 @@ $sc: 12;
   min-width: 500px;
   color: #fff;
   height: 64px;
-  background: #920784;
+  background: #B54FBE;
   .el-dialog {
     .form {
       .el-form-item {
@@ -441,7 +441,7 @@ $sc: 12;
     div {
       height: 18px;
       width: 18px;
-      background: purple;
+      background: #B54FBE;
       border-radius: 9px;
       position: absolute;
       top: 8px;
@@ -545,7 +545,7 @@ $sc: 12;
     color: #fff;
     letter-spacing: 0;
     float: right;
-    background: #920784;
+    background: #B54FBE;
     display: flex;
     justify-content: center;
     align-items: center;

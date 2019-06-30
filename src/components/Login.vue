@@ -31,6 +31,9 @@
       <!-- <div class="logo">
       <img src="../../static/bg.jpg" alt="">
       </div> -->
+      <div class="txt">
+使用中有任何技术问题，请发送邮件到 <a  href="mailto:ITServiceDesk@unisoc.com">ITServiceDesk@unisoc.com</a> ，我们会尽快回复。
+      </div>
   </div>
 </template>
 
@@ -78,9 +81,9 @@ $sc: 12;
 .login .login-box .el-input__inner {
   border: none;
   background: transparent;
-  border-bottom: 1 / $sc + rem solid #fff;
+  border-bottom: 1 / $sc + rem solid rgb(146,7,132);
   border-radius: 0;
-  color: #fff;
+  color: rgb(146,7,132);
 }
 
 .login .login-box .el-button {
@@ -90,7 +93,7 @@ $sc: 12;
   letter-spacing: 0;
   text-align: center;
   line-height: 14 / $sc + rem;
-  background: rgba(172, 7, 142, 0.5);
+  background: rgb(146, 7, 132);
   width: 280 / $sc + rem;
   height: 48 / $sc + rem;
 }
@@ -102,13 +105,30 @@ $sc: 12;
   font-weight: bold;
 }
 .login {
+  .txt{
+    a{
+      color: rgb(146,7,132);
+      font-weight: bold;
+      font-style: italic
+    }
+    font-size: 16/$sc+rem;
+    color: #000;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    bottom:20/$sc+rem;
+  }
   .el-input__prefix {
-    color: #fff;
+    color: rgb(146,7,132);
     i {
       font-size: 20 / $sc + rem;
     }
   }
-  background: url("../../static/bg.jpg") center no-repeat;
+  background: linear-gradient(top , #b7a2dd, #7148bc);/*渐变从左上角到右下角*/
+        background: -ms-linear-gradient(top , #b7a2dd,#7148bc );
+        background: -webkit-linear-gradient(top , #b7a2dd, #7148bc);
+        background: -moz-linear-gradient(top , #b7a2dd, #7148bc);
+  background: url("../../static/login6.jpg") center no-repeat;
   background-size: cover;
 
   width: 100%;
@@ -135,6 +155,7 @@ $sc: 12;
   }
 
   .login-box {
+    background: rgba(255,255,255,0.8);
     position: absolute;
     height: 500 / $sc + rem;
     // width: 500 / $sc + rem;
@@ -177,10 +198,10 @@ $sc: 12;
         right: 0;
         top: 0;
         cursor: pointer;
-        color: #fff;
+        color: rgba(146,7,132,1);
       }
       .forget:hover {
-        color: #fff;
+        color: rgba(146,7,132,0.5);
       }
     }
     .loginBtns {
