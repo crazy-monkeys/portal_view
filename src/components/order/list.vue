@@ -154,6 +154,7 @@ export default {
       form: {},
       total: 0,
       d1: [],
+      activeName:"first",
       options: [
         {
           value: "选项1",

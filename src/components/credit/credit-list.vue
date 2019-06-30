@@ -82,22 +82,96 @@
         </div>
       </div>
     </div>
-<el-dialog title="授信额度申请" :visible.sync="dialogCreate" width="50%">
+    <el-dialog title="授信额度申请" :visible.sync="dialogCreate" width="70%" center="true">
       <div class="sels clear">
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true'>
-          <el-form-item label="产品型号">
-            <el-input size="small" placeholder="请输入"></el-input>
-          </el-form-item>
-
-          <el-form-item label="申请说明" class="last">
-             <el-input type='textarea' v-model='form.txt' :rows="2" placeholder="" resize='none'></el-input>
-          </el-form-item>
+        <div class="tab">
+          <el-tabs v-model="activeName" @tab-click="handleClick">
+              <el-tab-pane label="订单信息" name="first">
+                  <el-form-item label="负责人">
+                    <el-input size="small" placeholder="请输入"></el-input>
+                  </el-form-item>
+                  <el-form-item label="电话">
+                    <el-input size="small" placeholder="请输入"></el-input>
+                  </el-form-item>
+                  <br/>
+                  <el-form-item label="地址" class="address">
+                      <el-select size="small" filterable placeholder="省">
+                          <el-option
+                            v-for="item in options3"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                          </el-option>
+                        </el-select>
+                        <el-select size="small" filterable placeholder="市">
+                            <el-option
+                              v-for="item in options3"
+                              :key="item.value"
+                              :label="item.label"
+                              :value="item.value">
+                            </el-option>
+                          </el-select>
+                          <el-select size="small" filterable placeholder="区">
+                              <el-option
+                                v-for="item in options3"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                              </el-option>
+                            </el-select>
+                            <el-input size='small' class="width150" placeholder="详细地址"></el-input>
+                  </el-form-item>
+                  <el-form-item label="交易年月">
+                    <el-input size="small" placeholder="请输入"></el-input>
+                  </el-form-item>
+                  <el-form-item label="出货量">
+                    <el-input size="small" placeholder="请输入"></el-input>
+                  </el-form-item>
+                  <el-form-item label="预测销售额">
+                    <el-input size="small" placeholder="请输入"></el-input>
+                  </el-form-item>
+                
+              </el-tab-pane>
+              <el-tab-pane label="拟申请的信用政策" >
+                <div class="tabBox">
+                  <el-form-item label="币种">
+                    <el-select v-model="value" size="small" filterable placeholder="USD">
+                      
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="     ">
+                    当前RMB-USD汇率：6.6
+                  </el-form-item>
+                  <el-form-item label="现额度">
+                    <el-input size="small" placeholder="请输入"></el-input>
+                  </el-form-item>
+                  <el-form-item label="原付款期限">
+                    <el-input size="small" placeholder="请输入"></el-input>
+                  </el-form-item>
+                  <el-form-item label="申请额度">
+                    <el-input size="small" placeholder="请输入"></el-input>
+                  </el-form-item>
+                  <el-form-item label="申请付款期限">
+                    <el-input size="small" placeholder="请输入"></el-input>
+                  </el-form-item>
+                  <el-form-item label="其他说明">
+                    <el-input type='textarea' class="width150" v-model='form.txt' :rows="2" placeholder="" resize='none' :readonly="true"></el-input>
+                  </el-form-item>
+                </div>
+              </el-tab-pane>
+          </el-tabs>
+          </div>
+        
           <el-form-item label=" ">
-            <el-button class="add" size='small' type='primary' @click='dialogCreate = false'>提交</el-button>
-            <el-button class="add" size='small' type='primary' plain @click='dialogCreate = false'>取消</el-button>
+           
           </el-form-item>
-        </el-form>
+          </el-form>
       </div>
+      <span slot="footer" class="dialog-footer">
+           <el-button class="add" size='small' type='primary' @click='dialogCreate = false'>提交</el-button>
+            <el-button class="add" size='small' type='primary' plain @click='dialogCreate = false'>保存</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>
@@ -111,6 +185,7 @@ export default {
       form: {},
       total: 0,
       d1: [],
+      activeName:'first',
       options: [
         {
           value: "1",
@@ -199,6 +274,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
+
 $sc: 12;
 
 .credit-list {
@@ -260,6 +336,17 @@ $sc: 12;
         .el-date-editor {
           width: 414px;
         }
+        .address {
+          width:100%;
+          .el-select,.el-input{
+            width: 200px;
+            margin-right:10px
+          }
+        }
+        .width150{
+          width:620px;
+        }
+
       }
     }
   }
