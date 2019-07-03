@@ -11,13 +11,14 @@
     color: #000;
 }
 
-.el-table thead th .cell {
+
+/* .el-table thead th .cell {
     font-weight: normal;
     min-width: 100px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
+} */
 
 .el-submenu__title {
     color: #B54FBE
