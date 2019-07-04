@@ -252,14 +252,14 @@ $sc: 12;
 
     .lineBox {
       i {
-        color: #800080;
+        color: #B161BF;
         font-weight: bold;
       }
     }
 
     .line {
       height: 12px;
-      background: #800080;
+      background: #B161BF;
       margin-left: 20px;
     }
 

@@ -8,7 +8,7 @@
       </div>
     </transition-group>
     <transition-group enter-active-class="animated slideInLeft" leave-active-class="animated slideOutLeft">
-      <el-menu :key='2' text-color='#800080' class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
+      <el-menu :key='2' text-color='#B161BF' class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
         :collapse="isCollapse" :unique-opened="true" :router='true' :default-active='$route.path'>
         <template v-for="item1 in list">
           <template v-if="item1.children.length !=0">
@@ -387,7 +387,7 @@ export default {
 <style lang='scss'>
 $sc: 12;
 .el-submenu__title{
-  color: #B54FBE;
+  color: #B161BF;
 }
 // .el-submenu .el-menu-item, .el-submenu .el-submenu__title{
 //     font-size: 14px;
@@ -457,29 +457,26 @@ $sc: 12;
     // background: rgba(167,97,214,0.5);
     // background: purple;
     i {
-      color: #B54FBE;
+      color: #B161BF;
     }
   }
 
   .logo {
     height: 10%;
     text-align: center;
-
     .smalllogo {
       width: 44px;
       margin-top: 20px;
     }
 
     .lglogo {
-      // margin-top: 10px;
-      width: 200px;
-      /* height: 44px; */
+      width: 180px;
     }
 
     .msg {
-      width: 240px;
+      width: 220px;
       font-size: 24px;
-      color: #800080;
+      color: #B161BF;
       letter-spacing: 1px;
       font-style: italic;
       font-weight: bold;
