@@ -93,7 +93,7 @@
 
   #app {
     /* font-family: Arial, Helvetica, sans-serif; */
-    font-family: Microsoft Yahei;
+    font-family: 'sy';
     /* font-family: 'zt2'; */
     /* font-weight: bold; */
     height: 100%;
