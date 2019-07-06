@@ -35,7 +35,6 @@
               </el-option>
             </el-select>
           </el-form-item>
-          </el-form-item>
           <el-form-item label="开通日期" class="date">
             <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
             </el-date-picker>
@@ -95,7 +94,10 @@
       <div class="sels clear">
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true'>
           <el-form-item label="代理商">
-            
+            <el-select v-model="value2" size='small' filterable placeholder="请选择">
+              <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="销售">
             <el-select v-model="value2" size='small' filterable placeholder="请选择">
@@ -106,8 +108,6 @@
           <el-form-item label=" ">
             <el-button class="add" size='small' type='primary' @click='dialogVisible = false'>提交</el-button>
           </el-form-item>
-        </el-form>
-
         </el-form>
       </div>
       <div class="tab">
@@ -228,7 +228,7 @@ export default {
             message: "释放成功"
           });
         })
-        .catch(action => {
+        .catch(() => {
           this.$message({
             type: "fail",
             message: "已取消操作"

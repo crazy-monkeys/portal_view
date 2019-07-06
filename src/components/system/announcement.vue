@@ -7,17 +7,34 @@
       </el-breadcrumb>
     </div>
     <div class="box">
-      <div class="btns">
-          &nbsp;
-          标题：<el-input size='small' v-model="accountName"></el-input>
-          类型：
-            <el-select v-model="value" size="small" filterable placeholder="稽核报告">
-            </el-select>
-          发布日期：
-            <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
-              v-model="d1">
-            </el-date-picker>
-        <el-button  type="primary" size="small" plain @click="search">查询</el-button>
+      <div class="sels clear">
+        <!-- <el-button @click='change'  size='small' type='primary' plain>{{!dialogVisible ? '展开筛选条件' :'收起筛选条件'}}
+          </el-button> -->
+        <div class="lineBox">
+          <i class="el-icon-arrow-down" v-if='!dialogVisible1' @click='change'> 展开</i>
+
+          <i class="el-icon-arrow-up" v-if='dialogVisible1' @click='change'> 收起</i>
+
+          <!-- <div class="line"></div> -->
+        </div>
+        <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
+        <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible1'>
+          <el-form-item label="标题">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="类型">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="发布日期">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item :label="' '">
+            <el-button size='small' type='primary' plain>搜索</el-button>
+            <el-button @click='dialogVisible1 = true' size='small' type='primary' plain>重置</el-button>
+          </el-form-item>
+        </el-form>
+        <!-- </transition-group> -->
+
       </div>
       <div class="tab">
         <div class="btns clear">
@@ -97,12 +114,14 @@
     name: 'account',
     data() {
       return {
+        form:{},
         rowData: {},
         defaultProps: {
           children: 'children',
           label: 'userGroupName'
         },
         dialogVisible: false,
+        dialogVisible1: false,
         tableData: [
           {
             "1":"最新公告",
@@ -145,6 +164,9 @@
       }
     },
     methods: {
+      change() {
+        this.dialogVisible1 = !this.dialogVisible1;
+      },
       rowClick(row) {
         console.log(row)
         this.rowData = row
@@ -539,7 +561,7 @@
     width: 150px;
   }
   .div-round{
-    birder:1px solid #ccc;
+    border:1px solid #ccc;
   }
   .account {
     .dis {
@@ -612,7 +634,44 @@
         margin-right: 20px
       }
     }
+    .sels {
+    background: #fff;
+    padding: 10px ;
+    margin: 0 20px 10px 20px;
 
+    .lineBox {
+      i {
+        color: #B161BF;
+        font-weight: bold;
+      }
+    }
+
+    .line {
+      height: 12px;
+      background: #B161BF;
+      margin-left: 20px;
+    }
+
+    .form {
+      /* max-width: 1000px; */
+      .el-form-item__label {
+        height: 30px;
+      }
+
+      .el-form-item {
+        width: 200px;
+        margin-bottom: 0;
+      }
+
+      .date {
+        width: 414px;
+
+        .el-date-editor {
+          width: 414px;
+        }
+      }
+    }
+  }
     .box {
       position: relative;
       margin: 0 20px 20px 20px;

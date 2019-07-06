@@ -3,12 +3,12 @@
 <!-- <button v-print="'#app'">打印</button> -->
       <el-form status-icon class="login-box">
         <div class="login-box-login">
-          <h1><img src="../../static/logostr.png" alt=""> </h1>
+          <h1><img src="../assets/img/logostr.png" alt=""> </h1>
           <el-form-item  label-width="100" label="">
             <el-input
               type="text"
               prefix-icon="el-icon-user"
-              v-model="loginMsg"
+              v-model="loginName"
               autocomplete="true"
               :autofocus="true"
             ></el-input>
@@ -17,15 +17,15 @@
             <el-input
               type="password"
               prefix-icon="el-icon-lock"
-              v-model="loginPass"
+              v-model="loginPwd"
               autocomplete="off"
-              @keyup.enter.native="login"
+              @keyup.enter.native="sub"
             ></el-input>
             <span class="forget" @click="forget">忘记密码？</span>
           </el-form-item>
         </div>
         <el-form-item class="loginBtns">
-          <el-button  @click="login">登 录 </el-button>
+          <el-button  @click="sub">登 录 </el-button>
         </el-form-item>
       </el-form>
       <!-- <div class="logo">
@@ -38,27 +38,88 @@
 </template>
 
 <script>
-//引入加密
-import CryptoJS from "crypto-js";
 
 export default {
   name: "login",
   data() {
     return {
-      doing: false,
-      value: "",
-      dialogVisible: false,
-      loginMsg: "",
-      loginPass: ""
+      loginName: "",
+      loginPwd: "",
     };
   },
   created() {},
   methods: {
-    login() {
-      this.$router.push({
-        name: "Sell"
-      });
-    },
+    sub() {
+        var data ={
+          'loginName':this.loginName,
+          'password':this.loginPwd
+        }
+        if (!this.loginName) {
+          this.$message({
+            type: "error",
+            message: "请输入用户名"
+          });
+        } else {
+          if (!this.loginPwd) {
+            this.$message({
+              type: "error",
+              message: "请输入密码"
+            });
+          } else {
+            this.$http({
+              method : 'post',
+              url : 'https://result.eolinker.com/zClHbPQ1b2ab5ed3ffb38c435e1c4f71e0b2b62da68e2f7?uri=/user/login',
+              data:data
+            }) .then(res => {
+                console.log("登陆信息", res);
+                if (res.data.code===1) {
+                    this.$store.commit('getMenu',res.data.data);
+                    // this.$store.commit('getLoginInfo',res.data.data.basic_info);
+                    // this.getShopList()
+                    // console.log(this.shopId)
+                    var ses = window.sessionStorage;
+                    var d = JSON.stringify(res.data);
+                    ses.setItem("data", d);
+                    this.$router.push("/home/tb");
+                }
+                // if (res.data.code===10001) {
+                //    this.$message({
+                //      type:'error',
+                //      message :res.data.msg
+                //    })
+                // }
+                // if (res.data.code===10002) {
+                //    this.$message({
+                //      type:'error',
+                //      message :res.data.msg
+                //    })
+                // }
+                // if (res.data.code===10003) {
+                //    this.$message({
+                //      type:'error',
+                //      message :res.data.msg
+                //    })
+                // }
+                // if (res.data.code===10004) {
+                //    this.$message({
+                //      type:'error',
+                //      message :res.data.msg
+                //    })
+                // }
+                // if (res.data.code===10005) {
+                //    this.$message({
+                //      type:'error',
+                //      message :res.data.msg
+                //    })
+                // }
+              })
+              .catch(error => {
+                console.log(error);
+                alert("登入失败");
+              });
+          }
+        }
+      },   
     forget() {}
   }
 };
@@ -128,7 +189,7 @@ $sc: 12;
         background: -ms-linear-gradient(top , #b7a2dd,#7148bc );
         background: -webkit-linear-gradient(top , #b7a2dd, #7148bc);
         background: -moz-linear-gradient(top , #b7a2dd, #7148bc);
-  background: url("../../static/login6.jpg") center no-repeat;
+  background: url("../assets/img/login6.jpg") center no-repeat;
   background-size: cover;
 
   width: 100%;

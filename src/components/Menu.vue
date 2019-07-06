@@ -2,8 +2,8 @@
   <div class="menu">
     <transition-group enter-active-class="animated slideInLeft" leave-active-class="animated slideOutLeft">
       <div class="logo" :key='1'>
-        <img class="lglogo" src="../../static/logostr.png" alt="" v-if="!isCollapse">
-        <img class="smalllogo" src="../../static/logo.png" alt="" v-if="isCollapse">
+        <img class="lglogo" src="../assets/img/logostr.png" alt="" v-if="!isCollapse">
+        <img class="smalllogo" src="../assets/img/logo.png" alt="" v-if="isCollapse">
         <!-- <div class="msg" v-if="!isCollapse">紫光展锐</div> -->
       </div>
     </transition-group>
@@ -13,7 +13,7 @@
         <template v-for="item1 in list">
           <template v-if="item1.children.length !=0">
             <el-submenu :index="item1.resourceUrl" :key="item1.resourceId">
-              <template slot="title"><i :class="item1.resourceIconClass"></i><span>{{item1.resourceName}}</span></template>
+              <template slot="title"><i :class="item1.iconClass"></i><span>{{item1.resourceName}}</span></template>
 
               <template v-for="item2 in item1.children">
 
@@ -47,7 +47,7 @@
           </template>
           <template v-else>
             <el-menu-item :index="item1.resourceUrl" :key="item1.resourceId">
-              <i :class="item1.resourceIconClass" style="margin-right:0"></i> <span>{{ item1.resourceName}}</span>
+              <i :class="item1.iconClass" style="margin-right:0"></i> <span>{{ item1.resourceName}}</span>
             </el-menu-item>
           </template>
 
@@ -69,299 +69,299 @@ export default {
     return {
       form: {},
       isCollapse: false,
-      list: [
-        {
-          resourceId: "1",
-          resourceName: "客户管理",
-          resourceUrl: "#1",
-          resourceIconClass: "el-icon-s-custom",
-          children: [
-            {
-              resourceId: "11",
-              resourceName: "客户查询",
-              resourceUrl: "/home/sell/sellIndex",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "12",
-              resourceName: "报备查询",
-              resourceUrl: "/home/theme",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "13",
-              resourceName: "拜访记录上传",
-              resourceUrl: "/home/shortmsg",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "14",
-              resourceName: "客户维护",
-              resourceUrl: "/home/custom/manage/property",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "15",
-              resourceName: "客户报备",
-              resourceUrl: "/home/manage/black",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            }
-          ]
-        },
-        {
-          resourceId: "4",
-          resourceName: "样品管理",
-          resourceUrl: "#4",
-          resourceIconClass: "el-icon-s-promotion",
-          children: [
-            {
-              resourceId: "41",
-              resourceName: "样品查询",
-              resourceUrl: "/home/sample/list",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "42",
-              resourceName: "样品申请",
-              resourceUrl: "/home/sample/apply",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            }
-          ]
-        },
-        {
-              resourceId: "71",
-              resourceName: "预测管理",
-              resourceUrl: "#71",
-              resourceIconClass: "el-icon-s-shop",
-              children: [
-                {
-              resourceId: "711",
-              resourceName: "销售预测查询",
-              resourceUrl: "/home/sales/forcast-index",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "712",
-              resourceName: "销售预测上传",
-              resourceUrl: "/home/sales/forcast-upload",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-          ]
-        },
-        {
-          resourceId: "3",
-          resourceName: "价格管理",
-          resourceUrl: "#3",
-          resourceIconClass: "el-icon-s-data",
-          children: [
-            {
-              resourceId: "31",
-              resourceName: "目录价格查询",
-              resourceUrl: "/home/price/list",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "32",
-              resourceName: "实际价格查询",
-              resourceUrl: "/home/price/actual",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "36",
-              resourceName: "代理商特价申请",
-              resourceUrl: "/home/price/price-sales-actual",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "33",
-              resourceName: "询价",
-              resourceUrl: "/home/price/inquiry",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "34",
-              resourceName: "询价审批",
-              resourceUrl: "/home/price/inquiry/approval",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            }
-          ]
-        },
-        {
-          resourceId: "5",
-          resourceName: "订单管理",
-          resourceUrl: "#5",
-          resourceIconClass: "el-icon-s-order",
-          children: [
-            {
-              resourceId: "51",
-              resourceName: "订单填报",
-              resourceUrl: "/home/order/add",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "52",
-              resourceName: "订单查询",
-              resourceUrl: "/home/order/list",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            }
-          ]
-        },
-        {
-          resourceId: "7",
-          resourceName: "交付管理",
-          resourceUrl: "#7",
-          resourceIconClass: "el-icon-s-shop",
-          children: [
+      // list: [
+      //   {
+      //     resourceId: "1",
+      //     resourceName: "客户管理",
+      //     resourceUrl: "#1",
+      //     iconClass: "el-icon-s-custom",
+      //     children: [
+      //       {
+      //         resourceId: "11",
+      //         resourceName: "客户查询",
+      //         resourceUrl: "/home/sell/sellIndex",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //       {
+      //         resourceId: "12",
+      //         resourceName: "报备查询",
+      //         resourceUrl: "/home/theme",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //       {
+      //         resourceId: "13",
+      //         resourceName: "拜访记录上传",
+      //         resourceUrl: "/home/shortmsg",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //       {
+      //         resourceId: "14",
+      //         resourceName: "客户维护",
+      //         resourceUrl: "/home/custom/manage/property",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //       {
+      //         resourceId: "15",
+      //         resourceName: "客户报备",
+      //         resourceUrl: "/home/manage/black",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     resourceId: "4",
+      //     resourceName: "样品管理",
+      //     resourceUrl: "#4",
+      //     iconClass: "el-icon-s-promotion",
+      //     children: [
+      //       {
+      //         resourceId: "41",
+      //         resourceName: "样品查询",
+      //         resourceUrl: "/home/sample/list",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //       {
+      //         resourceId: "42",
+      //         resourceName: "样品申请",
+      //         resourceUrl: "/home/sample/apply",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       }
+      //     ]
+      //   },
+      //   {
+      //         resourceId: "71",
+      //         resourceName: "预测管理",
+      //         resourceUrl: "#71",
+      //         iconClass: "el-icon-s-shop",
+      //         children: [
+      //           {
+      //         resourceId: "711",
+      //         resourceName: "销售预测查询",
+      //         resourceUrl: "/home/sales/forcast-index",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //       {
+      //         resourceId: "712",
+      //         resourceName: "销售预测上传",
+      //         resourceUrl: "/home/sales/forcast-upload",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //     ]
+      //   },
+      //   {
+      //     resourceId: "3",
+      //     resourceName: "价格管理",
+      //     resourceUrl: "#3",
+      //     iconClass: "el-icon-s-data",
+      //     children: [
+      //       {
+      //         resourceId: "31",
+      //         resourceName: "目录价格查询",
+      //         resourceUrl: "/home/price/list",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //       {
+      //         resourceId: "32",
+      //         resourceName: "实际价格查询",
+      //         resourceUrl: "/home/price/actual",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //       {
+      //         resourceId: "36",
+      //         resourceName: "代理商特价申请",
+      //         resourceUrl: "/home/price/price-sales-actual",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //       {
+      //         resourceId: "33",
+      //         resourceName: "询价",
+      //         resourceUrl: "/home/price/inquiry",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //       {
+      //         resourceId: "34",
+      //         resourceName: "询价审批",
+      //         resourceUrl: "/home/price/inquiry/approval",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     resourceId: "5",
+      //     resourceName: "订单管理",
+      //     resourceUrl: "#5",
+      //     iconClass: "el-icon-s-order",
+      //     children: [
+      //       {
+      //         resourceId: "51",
+      //         resourceName: "订单填报",
+      //         resourceUrl: "/home/order/add",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //       {
+      //         resourceId: "52",
+      //         resourceName: "订单查询",
+      //         resourceUrl: "/home/order/list",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     resourceId: "7",
+      //     resourceName: "交付管理",
+      //     resourceUrl: "#7",
+      //     iconClass: "el-icon-s-shop",
+      //     children: [
             
             
-            {
-              resourceId: "73",
-              resourceName: "销售数据查询",
-              resourceUrl: "/home/sales/sales-index",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "74",
-              resourceName: "销售数据上传",
-              resourceUrl: "/home/sales/sales-upload",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "75",
-              resourceName: "出货数据查询",
-              resourceUrl: "/home/sales/shipment-index",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "76",
-              resourceName: "出货数据上传",
-              resourceUrl: "/home/sales/shipment-upload",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            }
-          ]
-        },
-        {
-          resourceId: "1001",
-          resourceName: "商务管理",
-          resourceUrl: "#1001",
-          resourceIconClass: "el-icon-s-shop",
-          children: [
-            {
-              resourceId: "73",
-              resourceName: "客户Rebate",
-              resourceUrl: "/home/sales/sales-index",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-          ]
-        },
-        {
-          resourceId: "6",
-          resourceName: "代理商管理",
-          resourceUrl: "#6",
-          resourceIconClass: "el-icon-bicycle",
-          children: [
-            {
-              resourceId: "61",
-              resourceName: "代理商引入",
-              resourceUrl: "/home/agent/add",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "62",
-              resourceName: "代理商查询",
-              resourceUrl: "/home/agent/index",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "63",
-              resourceName: "数据信息管理(报表)",
-              resourceUrl: "/home/agent/index",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            }
-          ]
-        },
-        {
-          resourceId: "2",
-          resourceName: "授信额度",
-          resourceUrl: "#2",
-          resourceIconClass: "el-icon-collection-tag",
-          children: [
-            {
-              resourceId: "21",
-              resourceName: "授信额度申请列表",
-              resourceUrl: "/home/credit/list",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            }
-          ]
-        },
+      //       {
+      //         resourceId: "73",
+      //         resourceName: "销售数据查询",
+      //         resourceUrl: "/home/sales/sales-index",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //       {
+      //         resourceId: "74",
+      //         resourceName: "销售数据上传",
+      //         resourceUrl: "/home/sales/sales-upload",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //       {
+      //         resourceId: "75",
+      //         resourceName: "出货数据查询",
+      //         resourceUrl: "/home/sales/shipment-index",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //       {
+      //         resourceId: "76",
+      //         resourceName: "出货数据上传",
+      //         resourceUrl: "/home/sales/shipment-upload",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     resourceId: "1001",
+      //     resourceName: "商务管理",
+      //     resourceUrl: "#1001",
+      //     iconClass: "el-icon-s-shop",
+      //     children: [
+      //       {
+      //         resourceId: "73",
+      //         resourceName: "客户Rebate",
+      //         resourceUrl: "/home/sales/sales-index",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //     ]
+      //   },
+      //   {
+      //     resourceId: "6",
+      //     resourceName: "代理商管理",
+      //     resourceUrl: "#6",
+      //     iconClass: "el-icon-bicycle",
+      //     children: [
+      //       {
+      //         resourceId: "61",
+      //         resourceName: "代理商引入",
+      //         resourceUrl: "/home/agent/add",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //       {
+      //         resourceId: "62",
+      //         resourceName: "代理商查询",
+      //         resourceUrl: "/home/agent/index",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //       {
+      //         resourceId: "63",
+      //         resourceName: "数据信息管理(报表)",
+      //         resourceUrl: "/home/agent/index",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     resourceId: "2",
+      //     resourceName: "授信额度",
+      //     resourceUrl: "#2",
+      //     iconClass: "el-icon-collection-tag",
+      //     children: [
+      //       {
+      //         resourceId: "21",
+      //         resourceName: "授信额度申请列表",
+      //         resourceUrl: "/home/credit/list",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       }
+      //     ]
+      //   },
         
         
         
         
 
         
-        {
-          resourceId: "8",
-          resourceName: "系统管理",
-          resourceUrl: "#8",
-          resourceIconClass: "el-icon-setting",
-          children: [
-            {
-              resourceId: "81",
-              resourceName: "用户管理",
-              resourceUrl: "/home/account/settings",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "82",
-              resourceName: "权限管理",
-              resourceUrl: "/home/permission/settings",
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "83",
-              resourceName: '公告管理',
-              resourceUrl: '/home/system/announcement',
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "84",
-              resourceName: '文档管理',
-              resourceUrl: '/home/system/document',
-              resourceIconClass: "el-icon-s-promotion",
-              children: []
-            }
-          ]
-        }
-      ]
+      //   {
+      //     resourceId: "8",
+      //     resourceName: "系统管理",
+      //     resourceUrl: "#8",
+      //     iconClass: "el-icon-setting",
+      //     children: [
+      //       {
+      //         resourceId: "81",
+      //         resourceName: "用户管理",
+      //         resourceUrl: "/home/account/settings",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //       {
+      //         resourceId: "82",
+      //         resourceName: "权限管理",
+      //         resourceUrl: "/home/permission/settings",
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //       {
+      //         resourceId: "83",
+      //         resourceName: '公告管理',
+      //         resourceUrl: '/home/system/announcement',
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       },
+      //       {
+      //         resourceId: "84",
+      //         resourceName: '文档管理',
+      //         resourceUrl: '/home/system/document',
+      //         iconClass: "el-icon-s-promotion",
+      //         children: []
+      //       }
+      //     ]
+      //   }
+      // ]
     };
   },
   methods: {
@@ -372,8 +372,14 @@ export default {
       console.log(key, keyPath);
     }
   },
-  created() {},
-  computed: {},
+  created() {
+    console.log(this.list)
+  },
+  computed: {
+    list(){
+      return this.$store.state.menu.list
+    }
+  },
   mounted() {
     Bus.$on("data", res => {
       console.log(res);
@@ -389,73 +395,13 @@ $sc: 12;
 .el-submenu__title{
   color: #B161BF;
 }
-// .el-submenu .el-menu-item, .el-submenu .el-submenu__title{
-//     font-size: 14px;
-//     color: rgba(255,255,255,0.6);
-//     letter-spacing: 0;
-//     height: 48px;
-//     line-height: 48px;
-// }
-// .el-menu-item{
-//     font-size: 14px;
-//     color: rgba(255,255,255,0.6);
-//     letter-spacing: 0;
-//     height: 48px;
-//     line-height: 48px;
-// }
-// .el-menu-item i{
-//     color: rgba(255,255,255,0.5);
-// }
-// /* hover,focus样式 */
-//    .el-submenu__title:hover,.el-submenu__title:focus{
-//     background: rgba(0,0,0,0.25);
-
-//    }
-// /* 收起宽度 */
-//    .el-menu--collapse{
-//        width: 56px
-//    }
-//    .el-menu--collapse .el-submenu .el-submenu__title{
-//        display: flex;
-//        justify-content: center;
-//        align-items: center
-//    }
-//    .el-submenu .el-menu-item:hover,.el-submenu .el-menu-item.is-active,.el-submenu .el-menu-item:focus{
-//     background: rgba(0,0,0,0.25);
-//     color: #FFFFFF;
-//     opacity: 1;
-//    }
-
-//    .el-menu-item:hover,.el-menu-item.is-active,.el-menu-item:focus{
-//     background: rgba(0,0,0,0.25);
-//     color: rgba(255,255,255,0.6);
-//     opacity: 1;
-
-//    }
-//  /* 收起的hover focus 样式 */
-//    .el-menu--vertical .el-menu-item:hover,.el-menu--vertical .el-menu-item:focus,.el-menu--vertical .el-submenu__title:hover,.el-menu--vertical .el-submenu__title:focus,.el-menu--vertical .el-menu-item.is-active{
-//     background: #000;
-//     color: #FFFFFF;
-//     opacity: 1;
-//    }
-//    .el-menu--vertical .el-menu-item,.el-menu--vertical .el-submenu__title{
-//     background: #262A39;
-//     color: rgba(255,255,255,0.6);
-//    }
 .menu {
   height: 100%;
-  // background: purple;
-  // background: rgba(167,97,214,0.5);
-
   .el-menu {
-    // max-height: calc(100%-80px);
     height: 90%;
     overflow: hidden;
     border: none;
   overflow-y: auto;
-
-    // background: rgba(167,97,214,0.5);
-    // background: purple;
     i {
       color: #B161BF;
     }

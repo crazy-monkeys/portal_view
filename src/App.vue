@@ -89,11 +89,11 @@
 </script>
 
 <style lang='scss'>
-  @import './common/font/font.css';
+  // @import './common/font/font.css';
 
   #app {
     /* font-family: Arial, Helvetica, sans-serif; */
-    font-family: 'sy';
+    // font-family: 'sy';
     /* font-family: 'zt2'; */
     /* font-weight: bold; */
     height: 100%;
