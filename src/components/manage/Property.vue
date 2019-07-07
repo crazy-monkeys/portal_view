@@ -71,8 +71,9 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="t6" label="客户状态">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="操作" width="80">
+            <el-table-column show-overflow-tooltip prop="" label="操作" width="200">
               <template scope-slot='scope'>
+                <el-button type='primary' size='mini' >明细</el-button>
                 <el-button type='primary' size='mini' >修改</el-button>
               </template>
             </el-table-column>

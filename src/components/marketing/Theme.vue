@@ -77,6 +77,8 @@
             <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
               <template scope-slot='scope'>
                 <el-button type='primary' size='mini' @click='add'>明细</el-button>
+                <el-button type='primary' size='mini' @click='add'>重新报备</el-button>
+                <el-button type='primary' size='mini' @click='add'>删除</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
