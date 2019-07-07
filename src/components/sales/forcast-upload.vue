@@ -10,16 +10,34 @@
       <!-- </transition-group> -->
       <div class="box">
         <div class="btns clear">
-          <el-button class="add" @click='open' size='small' type='primary'>下载模版</el-button>
-          <el-button class="add" @click='remove' size='small' type='primary'>上传</el-button>
-          <el-button class="add" @click='changeType' size='small' type='primary'>验证</el-button>
-          <el-button class="add" @click='open' size='small' type='primary'>保存</el-button>
-          <el-button class="add" @click='remove' size='small' type='primary'>提交</el-button>
-          <el-button class="add" @click='changeType' size='small' type='primary'>删除</el-button>
+          <el-button   size='small' type='primary'>下载模版</el-button>
+          <el-button   size='small' type='primary'>上传</el-button>
         </div>
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" height="700">
-            <el-table-column prop="" type="selection" width='30' show-overflow-tooltip label="">
+            <el-table-column  width='20' label="" ></el-table-column>
+            <el-table-column   label="">
+              <template slot="header" >
+                <el-dropdown :hide-on-click='false' placement='bottom-start' trigger="click">
+                  <span class="el-dropdown-link">
+                    <i class="el-icon-arrow-down el-icon--right"></i>
+                  </span>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item><el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox></el-dropdown-item>
+                    <el-dropdown-item divided>批量删除</el-dropdown-item>
+                    <el-dropdown-item>批量验证</el-dropdown-item>
+                    <el-dropdown-item >批量保存</el-dropdown-item>
+                    <el-dropdown-item >批量提交</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+              </template>
+              <template >
+                <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+                  <!-- <el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox> -->
+                  <el-checkbox label=""></el-checkbox>
+                </el-checkbox-group>
+              </template>
+                
             </el-table-column>
             <el-table-column prop="0" width='100' label="错误信息" :index='q'></el-table-column>
             <el-table-column prop="1" label="上传日期" show-overflow-tooltip></el-table-column>
@@ -106,17 +124,6 @@
         </div>
       </div>
     </div>
-    <!-- <el-dialog
-        title="筛选条件选取"
-        :visible.sync="dialogVisible"
-        width="600px"
-        >
-        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
-          <div style="margin: 15px 0;"></div>
-          <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
-            <el-checkbox v-for="con in conditions" :label="con.value" :key="con.value">{{con.label}}</el-checkbox>
-        </el-checkbox-group>
-    </el-dialog> -->
   </div>
 </template>
 
@@ -126,55 +133,33 @@
     name: 'index',
     data() {
       return {
-        form: {},
-        total: 0,
-        d1: [],
-        options: [{
-          value: '选项1',
-          label: 'Mass Market'
-        }, {
-          value: '选项2',
-          label: 'Account Market'
-        }],
         value: '',
         checkAll: false,
         checkedCities: [
-          1, 2
         ],
         conditions: [
-          {
-            label: '客户名称',
-            value: 1
-          },
-          {
-            label: '英文名称',
-            value: 2
-          }
         ],
         isIndeterminate: false,
-        dialogVisible: false,
+        //表格数据
         tableData: [
-        
+          
         ],
         //第几页
         currentPage: 1,
         //每页的容量
         pageSize: 10,
+        //总量
+        total: 0,
       }
     },
     computed: {
-      shopId() {
-        return this.$store.state.shopId.shopId
-      }
+     
     },
     created() {
     },
     watch: {
     },
     methods: {
-      change() {
-        this.dialogVisible = !this.dialogVisible
-      },
       handleCheckAllChange(val) {
         console.log(val)
         this.checkedCities = val ? [1, 2, 3, 4, 5, 6] : [];
@@ -186,25 +171,8 @@
         this.checkAll = checkedCount === this.conditions.length;
         this.isIndeterminate = checkedCount > 0 && checkedCount < this.conditions.length;
       },
-      sure() {
-        this.dialogVisible = false
-      },
-      handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => { });
-      },
       q(index) {
         return this.pageSize * (this.currentPage - 1) + index + 1
-      },
-      add() {
-        this.$router.push(
-          {
-            name: 'AddSell'
-          }
-        )
       },
       // 分页
       handleSizeChange(val) {
@@ -243,48 +211,6 @@
         font-size: 14px;
       }
     }
-
-    .sels {
-      background: #fff;
-      padding: 10px 30px;
-      margin: 0 20px 10px 20px;
-
-      .lineBox {
-        i {
-          color: #800080;
-          font-weight: bold;
-        }
-      }
-
-      .line {
-        height: 12px;
-        background: #800080;
-        margin-left: 20px;
-      }
-
-      .form {
-
-        /* max-width: 1000px; */
-        .el-form-item__label {
-          height: 30px;
-        }
-
-        .el-form-item {
-          width: 200px;
-          margin-bottom: 0;
-        }
-
-        .date {
-          width: 414px;
-
-          .el-date-editor {
-            width: 414px;
-          }
-        }
-
-      }
-    }
-
     .box {
       margin: 0 20px 20px 20px;
       background: #FFFFFF;
@@ -293,9 +219,7 @@
       position: relative;
 
       .btns {
-        .add {
-          margin: 12px 0 12px 30px;
-        }
+          padding: 12px 0 12px 30px;
       }
 
       .tab {

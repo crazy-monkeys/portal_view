@@ -418,15 +418,6 @@ $sc: 12;
     .lglogo {
       width: 180px;
     }
-
-    .msg {
-      width: 220px;
-      font-size: 24px;
-      color: #B161BF;
-      letter-spacing: 1px;
-      font-style: italic;
-      font-weight: bold;
-    }
   }
 }
 </style>

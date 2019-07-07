@@ -130,6 +130,11 @@
             <el-table-column prop="12" label="阿米巴队长备注" show-overflow-tooltip></el-table-column>
             <el-table-column prop="12" label="首代调整" show-overflow-tooltip></el-table-column>
             <el-table-column prop="12" label="首代备注" show-overflow-tooltip></el-table-column>
+            <el-table-column  label="操作" width="100"  v-if="s==1" fixed="right" >
+              <template>
+                <el-button size="small" type="primary" @click="adjust">预测调整</el-button>
+              </template>
+            </el-table-column>
             <div slot="empty">
               <p>未查询到客户信息</p>
             </div>
@@ -142,17 +147,29 @@
         </div>
       </div>
     </div>
-    <!-- <el-dialog
-        title="筛选条件选取"
-        :visible.sync="dialogVisible"
-        width="600px"
+    <el-dialog
+        title="预测调整"
+        :visible.sync="dialogVisible1"
+        width="80%"
         >
-        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
-          <div style="margin: 15px 0;"></div>
-          <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
-            <el-checkbox v-for="con in conditions" :label="con.value" :key="con.value">{{con.label}}</el-checkbox>
-        </el-checkbox-group>
-    </el-dialog> -->
+        <el-table :data="tableData1" style="width: 100%" >
+            <el-table-column  label="月份" show-overflow-tooltip></el-table-column>
+            <el-table-column  label="原预测值" show-overflow-tooltip></el-table-column>
+            <el-table-column  label="调整值" show-overflow-tooltip>
+                <el-input size="small"></el-input>
+            </el-table-column>
+            <el-table-column  label="备注"   show-overflow-tooltip>
+              <template>
+                <el-input  size="small" :rows="1" type="textarea"></el-input>
+              </template>
+            </el-table-column>
+            
+          </el-table>
+          <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible1 = false" size="small">取 消</el-button>
+          <el-button type="primary" @click="dialogVisible1 = false" size="small">提 交</el-button>
+        </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -162,6 +179,7 @@
     name: 'index',
     data() {
       return {
+        s:1,
         form: {},
         total: 0,
         d1: [],
@@ -189,8 +207,12 @@
         ],
         isIndeterminate: false,
         dialogVisible: false,
+        dialogVisible1: false,
         tableData: [
-        
+          {}
+        ],
+        tableData1: [
+          {}
         ],
         //第几页
         currentPage: 1,
@@ -208,8 +230,12 @@
     watch: {
     },
     methods: {
-      change() {
+      adjust() {
+        this.dialogVisible1 = true
+      },
+      change(){
         this.dialogVisible = !this.dialogVisible
+
       },
       handleCheckAllChange(val) {
         console.log(val)
@@ -260,6 +286,20 @@
   $sc:12;
 
   .index {
+    .el-dialog{
+      .all{
+        .box{
+          .lbox{
+            width: 50%;
+            float: left;
+          }
+          .rbox{
+            width: 50%;
+            float: left;
+          }
+        }
+      }
+    }
     .head {
       h1 {
         opacity: 0.87;

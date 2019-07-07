@@ -78,40 +78,16 @@ export default {
                     // this.getShopList()
                     // console.log(this.shopId)
                     var ses = window.sessionStorage;
-                    var d = JSON.stringify(res.data);
+                    var d = JSON.stringify(res.data.data);
                     ses.setItem("data", d);
                     this.$router.push("/home/tb");
+                }else{
+                  this.$message({
+                    type:'error',
+                    message:res.data.msg
+                  })
                 }
-                // if (res.data.code===10001) {
-                //    this.$message({
-                //      type:'error',
-                //      message :res.data.msg
-                //    })
-                // }
-                // if (res.data.code===10002) {
-                //    this.$message({
-                //      type:'error',
-                //      message :res.data.msg
-                //    })
-                // }
-                // if (res.data.code===10003) {
-                //    this.$message({
-                //      type:'error',
-                //      message :res.data.msg
-                //    })
-                // }
-                // if (res.data.code===10004) {
-                //    this.$message({
-                //      type:'error',
-                //      message :res.data.msg
-                //    })
-                // }
-                // if (res.data.code===10005) {
-                //    this.$message({
-                //      type:'error',
-                //      message :res.data.msg
-                //    })
-                // }
+              
               })
               .catch(error => {
                 console.log(error);

@@ -185,23 +185,6 @@ export default new Router({
                 },
                 //资源设置
                 {
-                    path: '/home/source',
-                    name: 'way',
-                    component: resolve => require(['@/components/system/Way'], resolve),
-                },
-                {
-                    path: '/home/sourceShop',
-                    name: 'wayShop',
-                    component: resolve => require(['@/components/system/WayShop'], resolve),
-                },
-                {
-                    path: '/resource/management',
-                    name: 'resource',
-                    component: resolve => require(['@/components/system/Resource'], resolve),
-                },
-
-
-                {
                     path: 'manage/black',
                     name: 'black',
                     component: resolve => require(['@/components/manage/Black'], resolve),
@@ -227,16 +210,6 @@ export default new Router({
                     path: 'account/settings',
                     name: 'account',
                     component: resolve => require(['@/components/system/Account'], resolve),
-                },
-                {
-                    path: '/home/module/notification',
-                    name: 'moduleNotification',
-                    component: resolve => require(['@/components/system/ModuleNotification'], resolve),
-                },
-                {
-                    path: '/home/system/organization',
-                    name: 'organization',
-                    component: resolve => require(['@/components/system/Organization'], resolve),
                 },
                 {
                     path: 'account/add',

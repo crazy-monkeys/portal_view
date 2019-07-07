@@ -6,15 +6,6 @@
     <div class="zk" v-if="statu" @click="zk">
       <i class="el-icon-s-unfold"></i>
     </div>
-    <!-- <div class="proName">Portal</div> -->
-    <!-- <div class="shopName" @click="fnToggle">
-      <div class="top">{{loginName}}</div>
-      <div class="down">{{shopName}}</div>
-      <div class="more" v-if="toggle">
-        <div class="count" @click='changePwd'>账号管理</div>
-        <div class="quit" @click="quit">退出登录</div>
-      </div>
-    </div> -->
     <el-dropdown class="drop" trigger="click" @command='a'>
       <span class="el-dropdown-link">
         <p>admin</p>
@@ -172,6 +163,7 @@ export default {
   name: "Banner",
   data() {
     return {
+      tableData:[],
       loginName: "admin",
       userId: "",
       shopId: "",
@@ -254,6 +246,12 @@ export default {
         ]
       },
       value: "",
+      value4:'',
+      value5:'',
+      value6:'',
+      options4:[],
+      options5:[],
+      options6:[],
       dialogVisible: false,
       dialogVisible1: false,
       isCollapse: true,
