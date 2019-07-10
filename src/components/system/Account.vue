@@ -18,30 +18,30 @@
         <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible3'>
           <el-form-item label="客户名称">
-            <el-input size='small' placeholder="请输入"></el-input>
+            <el-input size='small' v-model="form.realName" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="登录名">
-            <el-input size='small' placeholder="请输入"></el-input>
+            <el-input size='small' v-model="form.loginName"  placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="角色">
-            <el-select v-model="value2" size='small' filterable placeholder="请选择">
+          <!-- <el-form-item label="角色">
+            <el-select v-model="form.role" size='small' filterable placeholder="请选择">
               <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="用户类型">
-            <el-select v-model="value1" size='small' filterable placeholder="请选择">
+            <el-select v-model="form.userType" size='small' filterable placeholder="请选择">
               <el-option v-for="item in options1" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="开通日期" class="date">
-            <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+            <el-date-picker size='small' v-model="form.date" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
             </el-date-picker>
           </el-form-item>
           <el-form-item label=" ">
-            <el-button size='small' type='primary' plain>搜索</el-button>
-            <el-button @click='dialogVisible3 = true' size='small' type='primary' plain>重置</el-button>
+            <el-button size='small' type='primary' plain @click="search">搜索</el-button>
+            <el-button  size='small' type='primary' plain @click="reset">重置</el-button>
           </el-form-item>
         </el-form>
         <!-- </transition-group> -->
@@ -49,31 +49,55 @@
       </div>
       <div class="box">
         <div class="btns clear">
-          <el-button class="add" @click='open' size='small' type='primary'>授权</el-button>
-          <el-button class="add" @click='remove' size='small' type='primary'>维护</el-button>
-          <el-button class="add" @click='changeType' size='small' type='primary'>冻结</el-button>
+          <!-- <el-button class="add" @click='open' size='small' type='primary'>授权</el-button> -->
+          <!-- <el-button class="add" @click='remove' size='small' type='primary'>维护</el-button> -->
+          <!-- <el-button class="add" @click='changeType' size='small' type='primary'>冻结</el-button> -->
         </div>
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" height="700">
-            <el-table-column prop="" type="selection" width='30' show-overflow-tooltip label="">
+            <!-- <el-table-column prop="" type="selection" width='30' show-overflow-tooltip label="">
+            </el-table-column> -->
+            <el-table-column   width='30' label="" >
             </el-table-column>
-            <el-table-column type="index" width='100' label="编号" :index='q'>
+            <el-table-column type="index"  label="编号" :index='q'>
             </el-table-column>
-            <el-table-column prop="t1" show-overflow-tooltip label="用户名">
+            <el-table-column prop="realName" show-overflow-tooltip label="客户名称">
             </el-table-column>
-            <el-table-column prop="t2" label="登录名" show-overflow-tooltip>
+            <el-table-column prop="loginName" label="登录名" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="t3" label="用户类型" show-overflow-tooltip>
+            <el-table-column prop="" label="用户类型" show-overflow-tooltip>
+              <template slot-scope="scope">
+              <span>
+                {{tableData[scope.$index].userType=='1' ?'代理商' :tableData[scope.$index].userType=='2' ?'直供客户':'销售客户'}}
+              </span>
+            </template>  
             </el-table-column>
-            <el-table-column prop="t4" show-overflow-tooltip label="角色">
+            <el-table-column prop="" show-overflow-tooltip label="角色">
+              <template slot-scope="scope">
+              <span v-for="role in tableData[scope.$index].roles" :key="role.roleName">
+                {{role.roleName}}
+              </span>
+              </template>
             </el-table-column>
-            <el-table-column prop="t5" label="手机号" show-overflow-tooltip>
+            <el-table-column prop="phone" label="手机号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t6" label="邮箱">
+            <el-table-column show-overflow-tooltip prop="email" label="邮箱">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t7" label="注册时间">
+            <el-table-column show-overflow-tooltip prop="regTime" label="注册时间">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t8" label="状态">
+            <el-table-column show-overflow-tooltip prop="" label="状态">
+              <template slot-scope="scope">
+              <span v-for="role in tableData[scope.$index].roles" :key="role.roleName">
+                {{tableData[scope.$index].userStatus=='0' ?'冻结' :tableData[scope.$index].userStatus=='1' ?'正常':'失效'}}
+              </span>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" width="250" fixed="right">
+              <template slot-scope="scope">
+                <el-button size="small" type="primary">授权</el-button>
+                <el-button size="small" type="primary">维护</el-button>
+                <el-button size="small" type="danger">冻结</el-button>
+              </template>
             </el-table-column>
             <div slot="empty">
               <p>未查询到客户信息</p>
@@ -148,6 +172,13 @@ export default {
   name: "Theme",
   data() {
     return {
+      form:{
+        realName:'',
+        loginName:'',
+        date:[],
+        userType:'',
+        role:''
+      },
       options2: [
         {
           value: "选项1",
@@ -162,44 +193,26 @@ export default {
 
       options1: [
         {
-          value: "选项1",
-          label: "授权"
+          value: 1,
+          label: "代理商"
         },
         {
-          value: "选项2",
-          label: "冻结"
+          value: 2,
+          label: "直供客户"
+        },
+        {
+          value: 3,
+          label: "销售客户"
         }
       ],
       value1: "",
-
       txt: "",
-      form: {},
       options: [],
       value: "",
       dialogVisible: false,
       dialogVisible3: false,
       dialogVisible1: false,
       tableData: [
-        {
-          t1: "测试用户A",
-          t2: "Test",
-          t3: "销售",
-          t4: "首代",
-          t5: "1520000000",
-          t6: "test@qq.com",
-          t7: "2018-08-01",
-          t8: "授权"
-        },
-        {
-          t1: "测试用户B",
-          t2: "TestB",
-          t3: "代理商",
-          t4: "代理商",
-          t5: "1520000000",
-          t6: "test@qq.com",
-          t7: "2018-08-01",
-          t8: "冻结"
-        }
       ],
       tableData1: [{}],
       //第几页
@@ -209,7 +222,59 @@ export default {
       total: 0
     };
   },
+  created(){
+    this.getList()
+  },
   methods: {
+    search(){
+      this.getList()
+    },
+    reset(){
+      this.clearForm()
+      this.getList()
+    },
+    clearForm(){
+      this.form.date=[];
+      this.form.userType='';
+      this.form.role='';
+      this.form.realName='';
+      this.form.loginName='';
+    },
+    getList(){
+      var data = {
+        regStartTime :this.form.date.length==0 ? '' : this.form.data[0],	
+        endStartTime:this.form.date.length==0 ? '' :this.form.data[1],
+        realName:this.form.realName,
+        loginName:this.form.loginName,
+        userType:this.form.userType,
+        pageNum:this.currentPage,
+        pageSize:this.pageSize,
+      }
+       this.$http({
+              method : 'post',
+              url :  process.env.API_ROOT+ '/user/list',
+              data:data,
+              headers:{
+                Authorization:sessionStorage.getItem('data')
+              }
+            }) .then(res => {
+                console.log("用户列表", res);
+                if (res.data.code===1) {
+                   this.tableData = res.data.data.list
+                   this.total = res.data.data.total
+                }else{
+                  this.$message({
+                    type:'error',
+                    message:res.data.msg
+                  })
+                }
+              
+              })
+              .catch(error => {
+                console.log(error);
+                alert("登入失败");
+              });
+    },
     change() {
       this.dialogVisible3 = !this.dialogVisible3;
     },
@@ -252,10 +317,12 @@ export default {
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageSize = val;
+      this.getList()
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.currentPage = val;
+      this.getList()
     }
   }
 };

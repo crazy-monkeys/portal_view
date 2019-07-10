@@ -6,15 +6,15 @@
     <div class="zk" v-if="statu" @click="zk">
       <i class="el-icon-s-unfold"></i>
     </div>
-    <el-dropdown class="drop" trigger="click" @command='a'>
+    <el-dropdown class="drop" trigger="click" @command="a">
       <span class="el-dropdown-link">
-        <p>admin</p>
-        <p>管理员</p>
+        <p>{{loginName}}</p>
+        <p>{{userType}}</p>
       </span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item :command='1'>账户管理</el-dropdown-item>
-        <el-dropdown-item :command='2'>修改密码</el-dropdown-item>
-        <el-dropdown-item :command='3'>退出登录</el-dropdown-item>
+        <el-dropdown-item :command="1">账户管理</el-dropdown-item>
+        <el-dropdown-item :command="2">修改密码</el-dropdown-item>
+        <el-dropdown-item :command="3">退出登录</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
     <div class="ts" @click="ts">
@@ -28,11 +28,14 @@
       </el-tooltip>
     </div>
 
-
     <el-dialog title="切换店铺" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
       <el-select v-model="value" placeholder="请选择" @change="chooseShop">
-        <el-option v-for="item in shopList" :key="item.shop_info_id" :label="item.shop_name" :value="item.shop_info_id">
-        </el-option>
+        <el-option
+          v-for="item in shopList"
+          :key="item.shop_info_id"
+          :label="item.shop_name"
+          :value="item.shop_info_id"
+        ></el-option>
       </el-select>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleClose">取 消</el-button>
@@ -40,117 +43,117 @@
       </span>
     </el-dialog>
 
-
-    <el-dialog title="账号管理" :visible.sync="dialogVisible1" width="80%" top='5vh' :close-on-click-modal="false" :show-close='false'>
-      <el-form :model="form" :rules="rules" ref="form" label-position="top" class="form" :inline='true'>
+    <el-dialog
+      title="账号管理"
+      :visible.sync="dialogVisible1"
+      width="80%"
+      top="5vh"
+      :close-on-click-modal="false"
+      :show-close="false"
+      :modal='false'
+    >
+      <el-form
+        :model="form"
+        :rules="rules"
+        ref="form"
+        label-position="top"
+        class="form"
+        :inline="true"
+      >
         <el-tabs type="border-card">
           <el-tab-pane label="基本信息">
             <el-form-item label="中文名">
-             <el-input type='text' size='small'></el-input>
+              <el-input type="text" size="small"></el-input>
             </el-form-item>
             <el-form-item label="英文名">
-             <el-input type='text' size='small'></el-input>
-              
+              <el-input type="text" size="small"></el-input>
             </el-form-item>
             <el-form-item label="简称">
-             <el-input type='text' size='small'></el-input>
-              
+              <el-input type="text" size="small"></el-input>
             </el-form-item>
             <el-form-item label="授信额度">
-             <el-input type='text' size='small'></el-input>
-             
+              <el-input type="text" size="small"></el-input>
             </el-form-item>
           </el-tab-pane>
-          <el-tab-pane label="联系人信息">
-          <el-form-item label="业务联系人">
-            <el-input size='small'></el-input>
-          </el-form-item>
-          <el-form-item label="电话">
-            <el-input size='small'></el-input>
-          </el-form-item>
-          <el-form-item label="传真">
-            <el-input size='small'></el-input>
-          </el-form-item>
-          <el-form-item label="邮箱">
-            <el-input size='small'></el-input>
-          </el-form-item>
-          <el-form-item label="swift code">
-            <el-input size='small'></el-input>
-          </el-form-item>
-          <div>
-          <el-form-item label="地址" >
-              <el-select v-model="value4" size="small" filterable placeholder="省">
+          <!-- <el-tab-pane label="联系人信息">
+            <el-form-item label="业务联系人">
+              <el-input size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="电话">
+              <el-input size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="传真">
+              <el-input size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="邮箱">
+              <el-input size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="swift code">
+              <el-input size="small"></el-input>
+            </el-form-item>
+            <div>
+              <el-form-item label="地址">
+                <el-select v-model="value4" size="small" filterable placeholder="省">
                   <el-option
                     v-for="item in options4"
                     :key="item.value"
                     :label="item.label"
-                    :value="item.value">
-                  </el-option>
+                    :value="item.value"
+                  ></el-option>
                 </el-select>
-          </el-form-item>
-          <el-form-item label=" " >
+              </el-form-item>
+              <el-form-item label=" ">
                 <el-select v-model="value5" size="small" filterable placeholder="市">
-                    <el-option
-                      v-for="item in options5"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value">
-                    </el-option>
-                  </el-select>
-
-          </el-form-item>
-          <el-form-item label=" " >
-              
-               
-                  <el-select v-model="value6" size="small" filterable placeholder="区">
-                      <el-option
-                        v-for="item in options6"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
-                      </el-option>
-                    </el-select>
-          </el-form-item>
-          <el-form-item label=" " >
-              
-               <el-input type="text" size="small" placeholder="详细地址"></el-input> 
-          </el-form-item>
-          </div>
-          </el-tab-pane>
+                  <el-option
+                    v-for="item in options5"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label=" ">
+                <el-select v-model="value6" size="small" filterable placeholder="区">
+                  <el-option
+                    v-for="item in options6"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label=" ">
+                <el-input type="text" size="small" placeholder="详细地址"></el-input>
+              </el-form-item>
+            </div>
+          </el-tab-pane> -->
           <el-tab-pane label="子账号信息">
             <div class="tab">
-          <el-table :data="tableData" style="width: 100%" height="300">
-            
-            <el-table-column prop="1" show-overflow-tooltip label="用户名">
-            </el-table-column>
-            <el-table-column prop="2" label="登录名" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="3" label="角色" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="4" show-overflow-tooltip label="邮箱">
-            </el-table-column>
-            <el-table-column prop="5" label="开通时间" show-overflow-tooltip>
-            </el-table-column>
-            
-            <el-table-column show-overflow-tooltip prop="" label="" fixed='right'>
-              <template slot="header" slot-scope="scope">
-                <el-button size='small' type='primary'>新增</el-button>
-              </template>
-              <!-- <template scope-slot='scope'>
-                <el-button type='primary' size='mini' >维护</el-button>
-              </template> -->
-            </el-table-column>
-            <div slot="empty">
+              <el-table :data="tableData" style="width: 100%" height="300">
+                <el-table-column prop="1" show-overflow-tooltip label="用户名"></el-table-column>
+                <el-table-column prop="2" label="登录名" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="3" label="角色" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="4" show-overflow-tooltip label="邮箱"></el-table-column>
+                <el-table-column prop="5" label="开通时间" show-overflow-tooltip></el-table-column>
 
-              <p>未查询到子账户信息</p>
+                <el-table-column show-overflow-tooltip prop label fixed="right">
+                  <template slot="header" slot-scope="scope">
+                    <el-button size="small" type="primary">新增</el-button>
+                  </template>
+                  <!-- <template scope-slot='scope'>
+                <el-button type='primary' size='mini' >维护</el-button>
+                  </template>-->
+                </el-table-column>
+                <div slot="empty">
+                  <p>未查询到子账户信息</p>
+                </div>
+              </el-table>
             </div>
-          </el-table>
-        </div>
           </el-tab-pane>
         </el-tabs>
         <el-form-item class="sub">
-          <el-button @click="close" size='small'>取消</el-button>
-          <el-button type="primary" size='small' @click="submitForm('form')">提交</el-button>
+          <el-button @click="close" size="small">取消</el-button>
+          <el-button type="primary" size="small" @click="submitForm('form')">提交</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -163,11 +166,9 @@ export default {
   name: "Banner",
   data() {
     return {
-      tableData:[],
-      loginName: "admin",
+      tableData: [],
       userId: "",
       shopId: "",
-      shopName: "管理员",
       form: {
         count: "",
         email: "",
@@ -246,12 +247,12 @@ export default {
         ]
       },
       value: "",
-      value4:'',
-      value5:'',
-      value6:'',
-      options4:[],
-      options5:[],
-      options6:[],
+      value4: "",
+      value5: "",
+      value6: "",
+      options4: [],
+      options5: [],
+      options6: [],
       dialogVisible: false,
       dialogVisible1: false,
       isCollapse: true,
@@ -264,7 +265,14 @@ export default {
       ]
     };
   },
-  computed: {},
+  computed: {
+    loginName() {
+      return this.$store.state.loginUser.loginInfo.loginName;
+    },
+    userType() {
+      return this.$store.state.loginUser.loginInfo.userType;
+    }
+  },
   created() {},
   methods: {
     a(command) {
@@ -310,7 +318,22 @@ export default {
       // console.log(e);
     },
     quit() {
-      this.$router.push("/login");
+      this.$http({
+        method: "post",
+        url: process.env.API_ROOT + "/logout",
+        headers: {
+          authorization: sessionStorage.getItem("data")
+        }
+      })
+        .then(res => {
+          console.log("退出登陆", res);
+          sessionStorage.removeItem("data");
+          this.$router.push("/login");
+        })
+        .catch(error => {
+          console.log(error);
+          alert("系统异常");
+        });
     },
     tb() {
       this.$router.push("/home/tb");
@@ -330,10 +353,14 @@ export default {
 $sc: 12;
 
 .banner {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
   min-width: 500px;
   color: #fff;
   height: 64px;
-  background: #B161BF;
+  background: #b161bf;
   .el-dialog {
     .form {
       .el-form-item {
@@ -439,7 +466,7 @@ $sc: 12;
     div {
       height: 18px;
       width: 18px;
-      background: #B161BF;
+      background: #b161bf;
       border-radius: 9px;
       position: absolute;
       top: 8px;
@@ -543,7 +570,7 @@ $sc: 12;
     color: #fff;
     letter-spacing: 0;
     float: right;
-    background: #B161BF;
+    background: #b161bf;
     display: flex;
     justify-content: center;
     align-items: center;

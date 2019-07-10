@@ -6,8 +6,6 @@
         <el-breadcrumb-item to='/home/account/settings'>系统管理</el-breadcrumb-item>
         <el-breadcrumb-item>权限管理</el-breadcrumb-item>
       </el-breadcrumb>
-      <h1>权限管理</h1>
-
     </div>
     <div class="box clear">
       <div class="l-box">
@@ -16,8 +14,8 @@
         </div>
         <div class="l-b-box">
           <div class="tab">
-            <el-table :data="roles" style="width: 100%;height:calc(100%-56px)" highlight-current-row ref='tab'>
-              <el-table-column prop='roleId' label="ID" v-if="false" width="80">
+            <el-table :data="roles"  highlight-current-row ref='tab'>
+              <el-table-column prop='id' label="ID" v-if="false" width="80">
               </el-table-column>
               <el-table-column label="" width="30">
               </el-table-column>
@@ -27,7 +25,7 @@
               </el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button type="text">
+                  <el-button type="text" size="small">
                     修改角色信息
                   </el-button>
                 </template>
@@ -38,13 +36,16 @@
               </div>
             </el-table>
           </div>
+          <div class="block">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+            :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
+          </el-pagination>
+        </div>
         </div>
       </div>
-      <div class="r-box">
+      <!-- <div class="r-box">
         <div class="r-t-box">
           <h2>权限配置</h2>
-          <!-- :check-strictly='true'	 -->
-
           <div class="groupBox">
             <el-tree :data="groups" show-checkbox node-key="resourceId" :props="defaultProps" :filter-node-method="filterNode"
               :default-checked-keys="form.groups" ref="tree" :check-strictly='true'>
@@ -54,14 +55,14 @@
             <el-button type='primary'> 修改权限配置</el-button>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
 
 
 
     <el-dialog :title="edit? '修改角色' :'新建角色'" top='20vh' :visible.sync="dialogVisible" width="30%" :before-close="close"
       :close-on-click-modal="false">
-      <el-form label-position="top" label-width="auto" :model="roleForm" :rules='rules' ref='roleForm' class="roleForm">
+      <el-form label-position="top" label-width="auto" :model="roleForm" :rules='rules' size="small" ref='roleForm' class="roleForm">
         <el-form-item label="角色名称" prop='name'>
           <el-input v-model="roleForm.name" maxlength='10' :disabled='edit'></el-input>
         </el-form-item>
@@ -70,8 +71,8 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary">提交</el-button>
+        <el-button @click="close" size="small">取消</el-button>
+        <el-button type="primary" @click='submit("roleForm")' size="small">提交</el-button>
       </span>
     </el-dialog>
   </div>
@@ -224,10 +225,138 @@ export default {
         name: "",
         desc: "",
         groups: []
-      }
+      },
+      pageSize:10,
+      currentPage:1,
+      total:0,
     };
   },
-  methods: {}
+  created(){
+    this.getRoles()
+  },
+  computed:{
+    loginName() {
+      return this.$store.state.loginUser.loginInfo.loginName;
+    },
+  },
+  methods: {
+     //修改表单提交
+    submit(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.addRole()
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    //重置表单
+    resetForm(formName) {
+      if (this.$refs[formName]) {
+        if (this.$refs[formName] !== undefined) {
+          this.$refs[formName].resetFields();
+        } else {
+          this.$nextTick(() => {
+            this.$refs[formName].resetFields();
+          });
+        }
+      }
+    },
+    //把对象转成query值
+    cleanArray(actual) {
+      var newArray = [];
+        for (let i = 0; i < actual.length; i++) {
+          if (actual[i]) {
+            newArray.push(actual[i]);
+          }
+        }
+      return newArray;
+    },
+    toQueryString(obj) {
+      if (!obj) return "";
+        return this.cleanArray(
+        Object.keys(obj).map(key => {
+          if (obj[key] === undefined) return "";
+            return encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]);
+          })
+        ).join("&");
+    },
+    close(){
+      this.dialogVisible = false;
+      this.resetForm('roleForm')
+    },
+     // 分页
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.pageSize = val;
+      this.getRoles()
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.currentPage = val;
+      this.getRoles()
+    },
+    getRoles(){
+      var data = {
+        // roleName :this.loginName,	
+        pageNum:this.currentPage,
+        pageSize:this.pageSize,
+      }
+       this.$http({
+              method : 'get',
+              url :  process.env.API_ROOT+ '/permission/roleInfo?'+ this.toQueryString(data),
+              headers:{
+                Authorization:sessionStorage.getItem('data')
+              }
+            }) .then(res => {
+                console.log("角色列表", res);
+                if (res.data.code===1) {
+                   this.roles = res.data.data.list
+                   this.total = res.data.data.total
+                }else{
+                  this.$message({
+                    type:'error',
+                    message:res.data.msg
+                  })
+                }
+              
+              })
+              .catch(error => {
+                console.log(error);
+                alert("登入失败");
+              });
+    },
+    addRole(){
+      var data = {
+        roleName:this.roleForm.name,
+        roleDesc:this.roleForm.desc,
+      }
+       this.$http({
+              method : 'post',
+              url :  process.env.API_ROOT+ '/permission/saveRole',
+              data:data,
+              headers:{
+                Authorization:sessionStorage.getItem('data')
+              }
+            }) .then(res => {
+                console.log("新增角色", res);
+                if (res.data.code===1) {
+                  this.getRoles()
+                  this.close()
+                }else{
+                  this.$message({
+                    type:'error',
+                    message:res.data.msg
+                  })
+                }
+              })
+              .catch(error => {
+                console.log(error);
+                alert("网络异常");
+              });
+    },
+  }
 };
 </script>
 
@@ -240,7 +369,6 @@ $sc: 12;
     display: none;
   }
 
-  height: calc(100% - 64px);
 
   .head {
     background: #fafafa;
@@ -301,6 +429,13 @@ $sc: 12;
 
       .l-b-box {
         padding-bottom: 20px;
+        .block {
+          padding: 10px;
+          .el-pagination {
+            width: 100%;
+            text-align: center;
+          }
+        }
       }
     }
 

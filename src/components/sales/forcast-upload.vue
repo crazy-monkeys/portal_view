@@ -15,15 +15,18 @@
         </div>
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" height="700">
-            <el-table-column  width='20' label="" ></el-table-column>
-            <el-table-column   label="">
+            <el-table-column  width='30' label="" ></el-table-column>
+            <el-table-column   label="" width="60">
               <template slot="header" >
                 <el-dropdown :hide-on-click='false' placement='bottom-start' trigger="click">
                   <span class="el-dropdown-link">
                     <i class="el-icon-arrow-down el-icon--right"></i>
                   </span>
                   <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item><el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox></el-dropdown-item>
+                    <el-dropdown-item>
+                      <!-- <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">
+                        全选</el-checkbox> -->
+                        </el-dropdown-item>
                     <el-dropdown-item divided>批量删除</el-dropdown-item>
                     <el-dropdown-item>批量验证</el-dropdown-item>
                     <el-dropdown-item >批量保存</el-dropdown-item>
@@ -32,14 +35,15 @@
                 </el-dropdown>
               </template>
               <template >
+                 <!-- <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">
+                        全选</el-checkbox>
                 <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
-                  <!-- <el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox> -->
-                  <el-checkbox label=""></el-checkbox>
-                </el-checkbox-group>
+                  <el-checkbox v-for="city in cities" :label="city" :key="city"></el-checkbox>
+                </el-checkbox-group> -->
               </template>
                 
             </el-table-column>
-            <el-table-column prop="0" width='100' label="错误信息" :index='q'></el-table-column>
+            <el-table-column prop="0" width='100' label="错误信息" ></el-table-column>
             <el-table-column prop="1" label="上传日期" show-overflow-tooltip></el-table-column>
             <el-table-column prop="2" label="年月" show-overflow-tooltip></el-table-column>
             <el-table-column prop="3" label="客户名称" show-overflow-tooltip></el-table-column>
@@ -52,66 +56,15 @@
             <el-table-column prop="10" label="产品型号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="11" label="截止日期" show-overflow-tooltip></el-table-column>
             <el-table-column prop="12" label="未完成专货库存" show-overflow-tooltip></el-table-column>
-
-            <el-table-column prop="12" label="月份一" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="上次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="本次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="GAP" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="备注" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="阿米巴队长调整" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="阿米巴队长备注" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="首代调整" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="首代备注" show-overflow-tooltip></el-table-column>
-
-            <el-table-column prop="12" label="月份二" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="上次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="本次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="GAP" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="备注" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="阿米巴队长调整" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="阿米巴队长备注" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="首代调整" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="首代备注" show-overflow-tooltip></el-table-column>
-
-            <el-table-column prop="12" label="月份三" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="上次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="本次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="GAP" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="备注" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="阿米巴队长调整" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="阿米巴队长备注" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="首代调整" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="首代备注" show-overflow-tooltip></el-table-column>
-
-            <el-table-column prop="12" label="月份四" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="上次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="本次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="GAP" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="备注" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="阿米巴队长调整" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="阿米巴队长备注" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="首代调整" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="首代备注" show-overflow-tooltip></el-table-column>
-
-            <el-table-column prop="12" label="月份五" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="上次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="本次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="GAP" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="备注" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="阿米巴队长调整" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="阿米巴队长备注" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="首代调整" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="首代备注" show-overflow-tooltip></el-table-column>
-
-            <el-table-column prop="12" label="月份六" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="上次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="本次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="GAP" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="备注" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="阿米巴队长调整" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="阿米巴队长备注" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="首代调整" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="首代备注" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="13" label="月份" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="14" label="上次填写" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="15" label="本次填写" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="16" label="GAP" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="17" label="备注" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="18" label="阿米巴队长调整" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="19" label="阿米巴队长备注" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="20" label="首代调整" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="21" label="首代备注" show-overflow-tooltip></el-table-column>
             <div slot="empty">
               <p>未查询到客户信息</p>
             </div>
@@ -133,7 +86,7 @@
     name: 'index',
     data() {
       return {
-        value: '',
+        cities:['上海','北京','杭州'],
         checkAll: false,
         checkedCities: [
         ],
@@ -142,7 +95,30 @@
         isIndeterminate: false,
         //表格数据
         tableData: [
-          
+          {
+            0:1111,
+            1:214,
+            2:214,
+            3:214,
+            4:214,
+            5:214,
+            6:214,
+            7:214,
+            8:214,
+            9:214,
+            10:214,
+            11:214,
+            12:214,
+            13:214,
+            14:214,
+            15:214,
+            16:214,
+            17:214,
+            18:214,
+            19:214,
+            20:214,
+            21:214,
+          }
         ],
         //第几页
         currentPage: 1,
@@ -162,14 +138,15 @@
     methods: {
       handleCheckAllChange(val) {
         console.log(val)
-        this.checkedCities = val ? [1, 2, 3, 4, 5, 6] : [];
+        this.checkedCities = val ? this.cities : [];
         this.isIndeterminate = false;
       },
       handleCheckedCitiesChange(value) {
         console.log(value)
+        console.log(this.checkedCities)
         let checkedCount = value.length;
-        this.checkAll = checkedCount === this.conditions.length;
-        this.isIndeterminate = checkedCount > 0 && checkedCount < this.conditions.length;
+        this.checkAll = checkedCount === this.cities.length;
+        this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
       },
       q(index) {
         return this.pageSize * (this.currentPage - 1) + index + 1

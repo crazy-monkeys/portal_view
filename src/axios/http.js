@@ -1,11 +1,11 @@
 import Vue from 'vue'
 
-import qs from 'qs' 
+import qs from 'qs'
 
 import axios from 'axios';
 Vue.prototype.$http = axios;
 
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 
 // axios.interceptors.request.use(config => {
 //   if(config.method  === 'post'){
@@ -20,9 +20,9 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 // })
 
 
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = false;
 
-export default{
+export default {
     axios
 }
 

@@ -80,14 +80,14 @@
             </div>
           </el-table>
           <div class="block">
-            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-              :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
-            </el-pagination>
-          </div>
-        </div> 
-      </div>  
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+            :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+          </el-pagination>
+        </div>
+        </div>
+      </div> 
     </div>
-    <!-- <el-dialog
+    <el-dialog
         title="拜访记录上传"
         :visible.sync="dialogVisible1"
         width="80%"
@@ -110,18 +110,19 @@
           </el-form-item>
           
         </el-form>
+        <!-- 客户名称  客户所在地   项目名称  项目状态   项目所属展锐事业部 -->
           <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible1= false" size="small" type="primary" plain>取 消</el-button>
             <el-button type="primary" @click="dialogVisible1 = false" size="small">上 传</el-button>
           </span>
-    </el-dialog> -->
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import formTest from "../../assets/js/formTest";
 export default {
-  name: "theme",
+  name: "SellIndex",
   data() {
     return {
       form:{},
@@ -308,82 +309,95 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
 $sc: 12;
-.theme{
-  height: 100%;
+.theme {
   margin-left: 20px;
-  .sellBox{
     height: 100%;
+  .sellBox{
+    // margin: 0 20px;
+    height: 100%;
+    width: 100%;
+    // background: pink;
+    position: relative;
+  }
+  .dialog-footer{
     display: flex;
-    flex-direction: column;
-    .head{
-      padding: 10px 20px;
-      // background: red;
-    }
-    .sels{
-      // margin: 20px 0;
-      padding:10px 20px;
-      background: #fff;
-      margin-bottom: 10px;
-      .lineBox{
-        color: #b161bf;
-      }
-    }
-    .form {
-        .el-form-item__label {
-          height: 30px;
-        }
-        .el-form-item {
-          width: 200px;
-          margin-bottom: 0;
-        }
-        .date {
-          width: 414px;
-          .el-date-editor {
-            width: 414px;
-          }
-        }
-    }
-    .box{
-      height: 100%;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      background: #fff;
-      .btns{
-        padding: 10px 20px;
-        // background: pink;
-      }
-      .tab{
-        padding-bottom: 100px;
-        box-sizing: border-box;
-        height: 100%;
-        // background: orange;
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        .el-table{
-          height: 100%;
-          position: relative;
-          .el-table__body-wrapper{
-            // position: absolute;
-            // top: 0;
-            // height: 100%;
-          }
-        }
-        .block{
-          position: absolute;
-          bottom:0;
-          padding: 20x;
-          width: 100%;
-          // background: red;
-          height: 100px;
-          .el-pagination {
-            width: 100%;
-            text-align: center;
-          }
-        }
-      }
+    justify-content: center;
+  }
+  .head {
+    .el-breadcrumb {
+      line-height: 30px;
+      margin-left: 40px;
+      margin-right: 20px;
+      font-size: 14px;
     }
   }
+  .sels {
+    width: 100%;
+    background: #fff;
+    padding: 10px 40px;
+    margin-bottom: 10px;
+    // margin: 0 20px 10px 20px;
+    .lineBox{
+      color: #b161bf;
+    }
+  }
+  .form {
+      /* max-width: 1000px; */
+      .el-form-item__label {
+        height: 30px;
+      }
+      .el-form-item {
+        width: 200px;
+        margin-bottom: 0;
+      }
+      .date {
+        width: 414px;
+        .el-date-editor {
+          width: 414px;
+        }
+      }
+  }
+  .box {
+    // position: absolute;
+    // top: 77px;
+    // bottom:0;
+    width: 100%;
+    height: 100%;
+    background: orange;
+    background: #ffffff;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
+    border-radius: 2px;
+    .btns {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      padding: 0 40px;
+    }
+    .tab {
+      position: relative;
+      height: 100%;
+      // top: 56px;
+      // bottom:0;
+      width: 100%;
+      overflow: hidden;
+      .el-table {
+        // background: red;
+        position: absolute;
+        td {
+          height:10%;
+          // line-height: 1;
+          .cell {
+            font-size: 12px;
+            color: #333333;
+            letter-spacing: 0;
+            line-height: 18px;
+          }
+        }
+      }
+     
+    }
+    
+  }
+  
 }
 </style>

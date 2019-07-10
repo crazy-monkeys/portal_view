@@ -38,7 +38,7 @@
 </template>
 
 <script>
-
+// import loginServer from '../api/login.js'
 export default {
   name: "login",
   data() {
@@ -49,10 +49,17 @@ export default {
   },
   created() {},
   methods: {
+    // sub1(params){
+    //     loginServer.getTestData(params).then(res =>{
+    //             //处理数据
+    //     }).catch(err =>{
+    //             //提示错误
+    //     })
+    // },
     sub() {
         var data ={
           'loginName':this.loginName,
-          'password':this.loginPwd
+          'loginPwd':this.loginPwd
         }
         if (!this.loginName) {
           this.$message({
@@ -68,18 +75,17 @@ export default {
           } else {
             this.$http({
               method : 'post',
-              url : 'https://result.eolinker.com/zClHbPQ1b2ab5ed3ffb38c435e1c4f71e0b2b62da68e2f7?uri=/user/login',
+              url :  process.env.API_ROOT+ '/user/login',
               data:data
             }) .then(res => {
                 console.log("登陆信息", res);
                 if (res.data.code===1) {
-                    this.$store.commit('getMenu',res.data.data);
-                    // this.$store.commit('getLoginInfo',res.data.data.basic_info);
-                    // this.getShopList()
-                    // console.log(this.shopId)
+                    this.$store.commit('getMenu',res.data.data.permissions);
+                    this.$store.commit('getLoginInfo',res.data.data.user);
                     var ses = window.sessionStorage;
-                    var d = JSON.stringify(res.data.data);
-                    ses.setItem("data", d);
+                    var authorization=res.headers['authorization'];
+                    ses.setItem("data", authorization);
+                    ses.setItem("vuexData", JSON.stringify(res));
                     this.$router.push("/home/tb");
                 }else{
                   this.$message({

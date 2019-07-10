@@ -207,7 +207,7 @@ export default new Router({
                 },
 
                 {
-                    path: 'account/settings',
+                    path: '/home/system/users',
                     name: 'account',
                     component: resolve => require(['@/components/system/Account'], resolve),
                 },
@@ -217,7 +217,7 @@ export default new Router({
                     component: resolve => require(['@/components/system/AccountAdd'], resolve),
                 },
                 {
-                    path: '/home/permission/settings',
+                    path: '/home/system/permissions',
                     name: 'permission',
                     component: resolve => require(['@/components/system/Permission'], resolve),
                 },

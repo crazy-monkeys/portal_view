@@ -14,27 +14,23 @@
     name: "App",
     data() {
       return {
-        lastTime: null, //最后一次点击的时间
-        currentTime: null, //当前点击的时间
-        timeOut: 1 * 60 * 100 //设置超时时间： 10分钟
       }
     },
     created() {
-      this.lastTime = new Date().getTime();   //网页第一次打开时，记录当前时间
       //在页面加载时读取sessionStorage里的状态信息
-      if (sessionStorage.getItem("data")) {
+      if (sessionStorage.getItem("vuexData")) {
         this.$store.replaceState(
           Object.assign(
             {},
             this.$store.state,
-            JSON.parse(sessionStorage.getItem("data"))
+            JSON.parse(sessionStorage.getItem("vuexData"))
           )
         );
       }
 
       //在页面刷新时将vuex里的信息保存到sessionStorage里
       window.addEventListener("beforeunload", () => {
-        sessionStorage.setItem("data", JSON.stringify(this.$store.state));
+        sessionStorage.setItem("vuexData",JSON.stringify(this.$store.state));
       });
 
       // this.$http.interceptors.response.use(
@@ -67,24 +63,7 @@
       //   console.log(to,from,next)
       //   next()
       // })
-    },
-    methods: {
-      isDo() {
-        this.currentTime = new Date().getTime(); //记录这次点击的时间
-        if (this.currentTime - this.lastTime > this.timeOut) {  //判断上次最后一次点击的时间和这次点击的时间间隔是否大于10分钟
-          // 这里写状态已过期后执行的操作
-          router.replace({
-            path: "/"
-            // query: {redirect: router.currentRoute.fullPath}//登录成功后跳入浏览的当前页面
-          });
-          this.lastTime = new Date().getTime(); //如果在10分钟内点击，则把这次点击的时间记录覆盖掉之前存的最后一次点击的时间
-
-        } else {
-          this.lastTime = new Date().getTime(); //如果在10分钟内点击，则把这次点击的时间记录覆盖掉之前存的最后一次点击的时间
-        }
-      }
-    },
-
+    }
   };
 </script>
 
