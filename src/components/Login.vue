@@ -73,32 +73,32 @@ export default {
               message: "请输入密码"
             });
           } else {
-            this.$http({
-              method : 'post',
-              url :  process.env.API_ROOT+ '/user/login',
-              data:data
-            }) .then(res => {
-                console.log("登陆信息", res);
-                if (res.data.code===1) {
-                    this.$store.commit('getMenu',res.data.data.permissions);
-                    this.$store.commit('getLoginInfo',res.data.data.user);
-                    var ses = window.sessionStorage;
-                    var authorization=res.headers['authorization'];
-                    ses.setItem("data", authorization);
-                    ses.setItem("vuexData", JSON.stringify(res));
+            // this.$http({
+            //   method : 'post',
+            //   url :  process.env.API_ROOT+ '/user/login',
+            //   data:data
+            // }) .then(res => {
+            //     console.log("登陆信息", res);
+            //     if (res.data.code===1) {
+            //         this.$store.commit('getMenu',res.data.data.permissions);
+            //         this.$store.commit('getLoginInfo',res.data.data.user);
+            //         var ses = window.sessionStorage;
+            //         var authorization=res.headers['authorization'];
+            //         ses.setItem("data", authorization);
+            //         ses.setItem("vuexData", JSON.stringify(res));
                     this.$router.push("/home/tb");
-                }else{
-                  this.$message({
-                    type:'error',
-                    message:res.data.msg
-                  })
-                }
+            //     }else{
+            //       this.$message({
+            //         type:'error',
+            //         message:res.data.msg
+            //       })
+            //     }
               
-              })
-              .catch(error => {
-                console.log(error);
-                alert("登入失败");
-              });
+            //   })
+            //   .catch(error => {
+            //     console.log(error);
+            //     alert("登入失败");
+              // });
           }
         }
       },   

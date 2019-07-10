@@ -12,7 +12,8 @@
         <p>{{userType}}</p>
       </span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item :command="1">账户管理</el-dropdown-item>
+        <el-dropdown-item :command="1">基本信息</el-dropdown-item>
+        <el-dropdown-item :command="4">子账号管理</el-dropdown-item>
         <el-dropdown-item :command="2">修改密码</el-dropdown-item>
         <el-dropdown-item :command="3">退出登录</el-dropdown-item>
       </el-dropdown-menu>
@@ -43,38 +44,68 @@
       </span>
     </el-dialog>
 
+
+    <el-dialog title="新增子账号" :visible.sync="dialogVisible2" width="30%" :before-close="handleClose">
+      <el-form
+        :model="form"
+        :rules="rules"
+        ref="form"
+        label-position="top"
+        >
+            <el-form-item label="用户名">
+              <el-input size="small" ></el-input>
+            </el-form-item>
+            <el-form-item label="登录名">
+              <el-input size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="角色">
+              <el-input size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="邮箱">
+              <el-input size="small"></el-input>
+            </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible2 = false" size="small">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible2 = false" size="small">确 定</el-button>
+      </span>
+    </el-dialog>
+
+
     <el-dialog
-      title="账号管理"
+      title="子账号管理"
       :visible.sync="dialogVisible1"
-      width="80%"
-      top="5vh"
+      width="60%"
       :close-on-click-modal="false"
       :show-close="false"
-      :modal='false'
-    >
-      <el-form
+      >
+      <!-- <el-form
         :model="form"
         :rules="rules"
         ref="form"
         label-position="top"
         class="form"
         :inline="true"
-      >
-        <el-tabs type="border-card">
-          <el-tab-pane label="基本信息">
-            <el-form-item label="中文名">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="英文名">
+      > -->
+        <!-- <el-tabs type="border-card"> -->
+          <!-- <el-tab-pane label="基本信息">
+            <el-form-item label="名称">
               <el-input type="text" size="small"></el-input>
             </el-form-item>
             <el-form-item label="简称">
               <el-input type="text" size="small"></el-input>
             </el-form-item>
-            <el-form-item label="授信额度">
+            <el-form-item label="电话">
               <el-input type="text" size="small"></el-input>
             </el-form-item>
-          </el-tab-pane>
+            <el-form-item label="E-mail">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="网站">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+            
+          </el-tab-pane> -->
           <!-- <el-tab-pane label="联系人信息">
             <el-form-item label="业务联系人">
               <el-input size="small"></el-input>
@@ -127,7 +158,7 @@
               </el-form-item>
             </div>
           </el-tab-pane> -->
-          <el-tab-pane label="子账号信息">
+          <!-- <el-tab-pane label="子账号信息"> -->
             <div class="tab">
               <el-table :data="tableData" style="width: 100%" height="300">
                 <el-table-column prop="1" show-overflow-tooltip label="用户名"></el-table-column>
@@ -138,7 +169,7 @@
 
                 <el-table-column show-overflow-tooltip prop label fixed="right">
                   <template slot="header" slot-scope="scope">
-                    <el-button size="small" type="primary">新增</el-button>
+                    <el-button size="small" type="primary" @click="addChild">新增</el-button>
                   </template>
                   <!-- <template scope-slot='scope'>
                 <el-button type='primary' size='mini' >维护</el-button>
@@ -149,13 +180,17 @@
                 </div>
               </el-table>
             </div>
-          </el-tab-pane>
-        </el-tabs>
-        <el-form-item class="sub">
+            <span slot="footer" class="dialog-footer">
+              <!-- <el-button @click="dialogVisible1 = false" size="small">取 消</el-button> -->
+              <el-button type="primary" @click="dialogVisible1 = false" size="small">确 定</el-button>
+            </span>
+          <!-- </el-tab-pane> -->
+        <!-- </el-tabs> -->
+        <!-- <el-form-item class="sub">
           <el-button @click="close" size="small">取消</el-button>
           <el-button type="primary" size="small" @click="submitForm('form')">提交</el-button>
-        </el-form-item>
-      </el-form>
+        </el-form-item> -->
+      <!-- </el-form> -->
     </el-dialog>
   </div>
 </template>
@@ -166,7 +201,13 @@ export default {
   name: "Banner",
   data() {
     return {
-      tableData: [],
+      dialogVisible2:false,
+      tableData: [
+        {},
+        {},
+        {},
+        {},
+      ],
       userId: "",
       shopId: "",
       form: {
@@ -275,13 +316,19 @@ export default {
   },
   created() {},
   methods: {
+    addChild(){
+      this.dialogVisible2 = true
+    },
     a(command) {
       console.log(command);
       if (command == 3) {
         this.quit();
       }
+      if (command == 4) {
+        this.dialogVisible1 = true
+      }
       if (command == 1) {
-        this.changePwd();
+        this.$router.push('/home/agent/add');
       }
     },
 
@@ -356,7 +403,7 @@ $sc: 12;
   position: absolute;
   top: 0;
   width: 100%;
-  z-index: 1;
+  // z-index: 111111;
   min-width: 500px;
   color: #fff;
   height: 64px;

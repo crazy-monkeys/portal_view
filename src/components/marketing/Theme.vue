@@ -4,7 +4,7 @@
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item to='/home/sell'>客户管理</el-breadcrumb-item>
-          <el-breadcrumb-item to='/home/theme'>报备查询</el-breadcrumb-item>
+          <el-breadcrumb-item to='/home/theme'>客户报备</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="sels clear">
@@ -16,13 +16,10 @@
           <el-form-item label="客户名称">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="英文名称">
+          <el-form-item label="客户编号">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="客户号">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="销售">
+          <el-form-item label="客户简称">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="客户类型">
@@ -60,19 +57,21 @@
             </el-table-column>
             <el-table-column prop="1" show-overflow-tooltip label="审批状态">
             </el-table-column>
-            <el-table-column prop="2" label="客户中文名" show-overflow-tooltip>
+            <el-table-column prop="2" label="客户名称" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="3" label="客户英文名" show-overflow-tooltip>
+            <el-table-column prop="3" label="客户编号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="4" label="客户号" show-overflow-tooltip>
+            <el-table-column prop="4" label="客户简称" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="5" label="客户类型" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" width='300' label="操作" fixed='right'>
+            <el-table-column prop="5" label="报备时间" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="" width='180' label="操作" fixed='right'>
               <template scope-slot='scope'>
-                <el-button type='primary' size='mini' @click='add'>明细</el-button>
-                <el-button type='primary' size='mini' @click='report'>重新报备</el-button>
-                <el-button type='primary' size='mini' @click='del'>删除</el-button>
+                <el-button type='text'  @click='add'>明细</el-button>
+                <el-button type='text'  @click='report'>重新报备</el-button>
+                <el-button type='text'  @click='del'>删除</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -87,12 +86,13 @@
         </div> 
       </div>  
     </div>
-    <!-- <el-dialog
+    <el-dialog
         title="拜访记录上传"
         :visible.sync="dialogVisible1"
-        width="80%"
+        width="300px"
+        top="10vh"
         >
-        <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' >
+        <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top'  >
           <el-form-item label="客户名称">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
@@ -114,7 +114,7 @@
             <el-button @click="dialogVisible1= false" size="small" type="primary" plain>取 消</el-button>
             <el-button type="primary" @click="dialogVisible1 = false" size="small">上 传</el-button>
           </span>
-    </el-dialog> -->
+    </el-dialog>
   </div>
 </template>
 
@@ -311,6 +311,18 @@ $sc: 12;
 .theme{
   height: 100%;
   margin-left: 20px;
+  .el-dialog{
+    .form {
+        .el-form-item__label {
+          height: 30px;
+        }
+        .el-form-item {
+          .el-select{
+            width: 100%;
+          }
+        }
+    }
+  }
   .sellBox{
     height: 100%;
     display: flex;
@@ -335,6 +347,9 @@ $sc: 12;
         .el-form-item {
           width: 200px;
           margin-bottom: 0;
+          .el-select{
+            width: 100%;
+          }
         }
         .date {
           width: 414px;
@@ -354,7 +369,7 @@ $sc: 12;
         // background: pink;
       }
       .tab{
-        padding-bottom: 100px;
+        padding-bottom: 120px;
         box-sizing: border-box;
         height: 100%;
         // background: orange;
@@ -373,7 +388,7 @@ $sc: 12;
         .block{
           position: absolute;
           bottom:0;
-          padding: 20x;
+          padding: 10px;
           width: 100%;
           // background: red;
           height: 100px;

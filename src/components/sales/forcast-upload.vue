@@ -40,6 +40,7 @@
                 <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
                   <el-checkbox v-for="city in cities" :label="city" :key="city"></el-checkbox>
                 </el-checkbox-group> -->
+                <el-checkbox></el-checkbox>
               </template>
                 
             </el-table-column>
@@ -201,6 +202,14 @@
 
       .tab {
         .el-table {
+          th{
+            .el-dropdown{
+              padding: 0;
+              .el-icon--right{
+                margin: 0
+              }
+            }
+          }
           td {
             height: 64px;
             line-height: 64px;

@@ -85,71 +85,35 @@ export default {
             },
             {
               resourceId: "12",
-              resourceName: "报备查询",
+              resourceName: "客户报备",
               resourceUrl: "/home/theme",
               iconClass: "el-icon-s-promotion",
               children: []
             },
             {
-              resourceId: "13",
-              resourceName: "拜访记录上传",
-              resourceUrl: "/home/shortmsg",
-              iconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
               resourceId: "14",
-              resourceName: "客户维护",
+              resourceName: "报备审批",
               resourceUrl: "/home/custom/manage/property",
               iconClass: "el-icon-s-promotion",
               children: []
             },
-            // {
-            //   resourceId: "15",
-            //   resourceName: "客户报备",
-            //   resourceUrl: "/home/manage/black",
-            //   iconClass: "el-icon-s-promotion",
-            //   children: []
-            // }
           ]
         },
         {
-          resourceId: "4",
-          resourceName: "样品管理",
-          resourceUrl: "#4",
-          iconClass: "el-icon-s-promotion",
-          children: [
-            {
-              resourceId: "41",
-              resourceName: "样品查询",
-              resourceUrl: "/home/sample/list",
-              iconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "42",
-              resourceName: "样品申请",
-              resourceUrl: "/home/sample/apply",
-              iconClass: "el-icon-s-promotion",
-              children: []
-            }
-          ]
-        },
-        {
-              resourceId: "71",
+              resourceId: "2",
               resourceName: "预测管理",
-              resourceUrl: "#71",
+              resourceUrl: "#2",
               iconClass: "el-icon-s-shop",
               children: [
                 {
-              resourceId: "711",
+              resourceId: "21",
               resourceName: "销售预测查询",
               resourceUrl: "/home/sales/forcast-index",
               iconClass: "el-icon-s-promotion",
               children: []
             },
             {
-              resourceId: "712",
+              resourceId: "22",
               resourceName: "销售预测上传",
               resourceUrl: "/home/sales/forcast-upload",
               iconClass: "el-icon-s-promotion",
@@ -178,13 +142,6 @@ export default {
               children: []
             },
             {
-              resourceId: "36",
-              resourceName: "代理商特价申请",
-              resourceUrl: "/home/price/price-sales-actual",
-              iconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
               resourceId: "33",
               resourceName: "询价",
               resourceUrl: "/home/price/inquiry",
@@ -201,20 +158,20 @@ export default {
           ]
         },
         {
-          resourceId: "5",
+          resourceId: "4",
           resourceName: "订单管理",
-          resourceUrl: "#5",
+          resourceUrl: "#4",
           iconClass: "el-icon-s-order",
           children: [
             {
-              resourceId: "51",
-              resourceName: "订单填报",
+              resourceId: "41",
+              resourceName: "订单申请",
               resourceUrl: "/home/order/add",
               iconClass: "el-icon-s-promotion",
               children: []
             },
             {
-              resourceId: "52",
+              resourceId: "42",
               resourceName: "订单查询",
               resourceUrl: "/home/order/list",
               iconClass: "el-icon-s-promotion",
@@ -223,36 +180,49 @@ export default {
           ]
         },
         {
-          resourceId: "7",
+          resourceId: "5",
           resourceName: "交付管理",
-          resourceUrl: "#7",
+          resourceUrl: "#5",
           iconClass: "el-icon-s-shop",
           children: [
             
-            
             {
-              resourceId: "73",
+              resourceId: "51",
+              resourceName: "提货申请",
+              resourceUrl: "/home/sales/sales-index",
+              iconClass: "el-icon-s-promotion",
+              children: []
+            },
+            {
+              resourceId: "51",
+              resourceName: "提货查询",
+              resourceUrl: "/home/sales/sales-index",
+              iconClass: "el-icon-s-promotion",
+              children: []
+            },
+            {
+              resourceId: "53",
               resourceName: "销售数据查询",
               resourceUrl: "/home/sales/sales-index",
               iconClass: "el-icon-s-promotion",
               children: []
             },
             {
-              resourceId: "74",
+              resourceId: "54",
               resourceName: "销售数据上传",
               resourceUrl: "/home/sales/sales-upload",
               iconClass: "el-icon-s-promotion",
               children: []
             },
             {
-              resourceId: "75",
+              resourceId: "55",
               resourceName: "出货数据查询",
               resourceUrl: "/home/sales/shipment-index",
               iconClass: "el-icon-s-promotion",
               children: []
             },
             {
-              resourceId: "76",
+              resourceId: "56",
               resourceName: "出货数据上传",
               resourceUrl: "/home/sales/shipment-upload",
               iconClass: "el-icon-s-promotion",
@@ -261,13 +231,20 @@ export default {
           ]
         },
         {
-          resourceId: "1001",
+          resourceId: "6",
           resourceName: "商务管理",
-          resourceUrl: "#1001",
+          resourceUrl: "#6",
           iconClass: "el-icon-s-shop",
           children: [
             {
-              resourceId: "73",
+              resourceId: "61",
+              resourceName: "差价、报价、退换货申请",
+              resourceUrl: "/home/sales/sales-index",
+              iconClass: "el-icon-s-promotion",
+              children: []
+            },
+            {
+              resourceId: "62",
               resourceName: "客户Rebate",
               resourceUrl: "/home/sales/sales-index",
               iconClass: "el-icon-s-promotion",
@@ -276,85 +253,42 @@ export default {
           ]
         },
         {
-          resourceId: "6",
-          resourceName: "代理商管理",
-          resourceUrl: "#6",
-          iconClass: "el-icon-bicycle",
-          children: [
-            {
-              resourceId: "61",
-              resourceName: "代理商引入",
-              resourceUrl: "/home/agent/add",
-              iconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "62",
-              resourceName: "代理商查询",
-              resourceUrl: "/home/agent/index",
-              iconClass: "el-icon-s-promotion",
-              children: []
-            },
-            {
-              resourceId: "63",
-              resourceName: "数据信息管理(报表)",
-              resourceUrl: "/home/agent/index",
-              iconClass: "el-icon-s-promotion",
-              children: []
-            }
-          ]
-        },
-        {
-          resourceId: "2",
-          resourceName: "授信额度",
-          resourceUrl: "#2",
-          iconClass: "el-icon-collection-tag",
-          children: [
-            {
-              resourceId: "21",
-              resourceName: "授信额度申请列表",
-              resourceUrl: "/home/credit/list",
-              iconClass: "el-icon-s-promotion",
-              children: []
-            }
-          ]
-        },
-        
-        
-        
-        
-
-        
-        {
-          resourceId: "8",
+          resourceId: "7",
           resourceName: "系统管理",
-          resourceUrl: "#8",
+          resourceUrl: "#7",
           iconClass: "el-icon-setting",
           children: [
             {
-              resourceId: "81",
+              resourceId: "71",
               resourceName: "用户管理",
               resourceUrl: "/home/account/settings",
               iconClass: "el-icon-s-promotion",
               children: []
             },
             {
-              resourceId: "82",
+              resourceId: "72",
               resourceName: "权限管理",
               resourceUrl: "/home/permission/settings",
               iconClass: "el-icon-s-promotion",
               children: []
             },
             {
-              resourceId: "83",
+              resourceId: "73",
               resourceName: '公告管理',
               resourceUrl: '/home/system/announcement',
               iconClass: "el-icon-s-promotion",
               children: []
             },
             {
-              resourceId: "84",
+              resourceId: "74",
               resourceName: '文档管理',
+              resourceUrl: '/home/system/document',
+              iconClass: "el-icon-s-promotion",
+              children: []
+            },
+            {
+              resourceId: "75",
+              resourceName: '系统参数管理',
               resourceUrl: '/home/system/document',
               iconClass: "el-icon-s-promotion",
               children: []

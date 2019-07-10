@@ -4,9 +4,9 @@
     <div class="head clear">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item to="/home/sell">客户管理</el-breadcrumb-item>
-        <el-breadcrumb-item to="/home/theme">报备查询</el-breadcrumb-item>
+        <el-breadcrumb-item to="/home/theme">客户报备</el-breadcrumb-item>
 
-        <el-breadcrumb-item>客户报备</el-breadcrumb-item>
+        <el-breadcrumb-item>报备</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="content">
@@ -123,7 +123,7 @@
             </el-select>
             <el-input size="small" placeholder="详细地址"></el-input>
           </el-form-item>
-          <el-form-item label="业务介绍">
+          <el-form-item label="业务介绍" class="txt">
             <el-input type="textarea" v-model="form.txt" :rows="2" placeholder resize="none"></el-input>
           </el-form-item>
         </el-form>
@@ -405,6 +405,8 @@ export default {
 $sc: 12;
 
 .addAct {
+  height: 100%;
+  overflow-y: auto;
   .head {
     h1 {
       opacity: 0.87;
@@ -460,13 +462,16 @@ $sc: 12;
             height: 30px;
           }
         }
-        .el-form-item:last-child {
-          /* width:100%; */
-          .el-textarea__inner {
-            width: 414px;
-            margin-top: 2px;
-          }
+        .txt{
+          width: 100%;
         }
+        // .el-form-item:last-child {
+        //   /* width:100%; */
+        //   .el-textarea__inner {
+        //     width: 414px;
+        //     margin-top: 2px;
+        //   }
+        // }
         .date {
           width: 200px;
           .el-date-editor {
@@ -489,7 +494,6 @@ $sc: 12;
     .tab {
       background: #fff;
       padding: 20px;
-
       .block {
         background: #fff;
         padding: 10px;

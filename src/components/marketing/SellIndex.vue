@@ -1,6 +1,6 @@
 <template>
-  <div class="sell">
-    <div>
+  <div class="sellIndex">
+    <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item to='/home/sell'>客户管理</el-breadcrumb-item>
@@ -24,22 +24,30 @@
           <el-form-item label="客户名称">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="英文名称">
+          <el-form-item label="客户编号">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="客户号">
+          <el-form-item label="客户简称">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="代理商">
-            <el-input size='small' placeholder="请输入"></el-input>
+          <el-form-item label="是否License客户">
+            <el-select v-model="value" size="small"  placeholder="请选择">
+              <el-option  label="是" value="1"></el-option>
+              <el-option  label="否" value="0"></el-option>
+            </el-select>
           </el-form-item>
-          <el-form-item label="客户类型">
-            <el-select v-model="value" size="small" filterable placeholder="请选择">
+          <el-form-item label="业务类型">
+            <el-select v-model="value" size="small"  placeholder="请选择">
               <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="报备日期" class="date">
+            <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
+              v-model="d1">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="创建日期" class="date">
             <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
               v-model="d1">
             </el-date-picker>
@@ -56,26 +64,30 @@
       <!-- </transition-group> -->
       <div class="box">
         <div class="tab">
-          <el-table :data="tableData" style="width:100%"  height="700">
+          <el-table :data="tableData" style="width:100%"  height="100%">
             <el-table-column prop="" width='30' show-overflow-tooltip label="">
             </el-table-column>
             <el-table-column type="index" width='100' label="编号" :index='q'>
             </el-table-column>
-            <el-table-column prop="1" show-overflow-tooltip label="客户中文名">
+            <el-table-column prop="" show-overflow-tooltip label="客户名称">
             </el-table-column>
-            <el-table-column prop="2" label="客户英文名" show-overflow-tooltip>
+            <el-table-column prop="" label="客户编号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="3" label="客户号" show-overflow-tooltip>
+            <el-table-column prop="" label="客户简称" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="4" show-overflow-tooltip label="代理商">
+            <el-table-column prop="" show-overflow-tooltip label="License客户">
             </el-table-column>
-            <el-table-column prop="5" label="客户类型" show-overflow-tooltip>
+            <el-table-column prop="" show-overflow-tooltip label="信用状况">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="报备状态">
+            <el-table-column prop="" label="业务类型" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="报备日期">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="创建日期">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
               <template scope-slot='scope'>
-                <el-button type='primary' size='mini' @click='add'>明细</el-button>
+                <el-button type='text'  @click='add'>明细</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -83,12 +95,13 @@
               <p>未查询到客户信息</p>
             </div>
           </el-table>
-        </div>
-        <div class="block">
+          <div class="block">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
             :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
           </el-pagination>
         </div>
+        </div>
+        
       </div>
     </div>
     <!-- <el-dialog
@@ -217,108 +230,85 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
 $sc: 12;
-
-.sell {
-  // height: 100%;
-  // overflow-x: hidden;
-  // overflow-y: auto;
-  .head {
-    h1 {
-      opacity: 0.87;
-      font-size: 18px;
-      color: #000;
-      letter-spacing: 0;
-      line-height: 42px;
-      height: 42px;
-      /* font-weight: bold; */
-      padding: 0 50px;
+.sellIndex{
+  height: 100%;
+  .sellBox{
+  margin-left: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .head{
+      padding: 10px 20px;
+      // background: red;
     }
-
-    .el-breadcrumb {
-      line-height: 30px;
-      margin-left: 50px;
-      margin-right: 20px;
-      font-size: 14px;
-    }
-  }
-
-  .sels {
-    background: #fff;
-    padding: 10px 30px;
-    margin: 0 20px 10px 20px;
-
-    .lineBox {
-      i {
-        color: #B161BF;
-        font-weight: bold;
+    .sels{
+      // margin: 20px 0;
+      padding:10px 20px;
+      background: #fff;
+      margin-bottom: 10px;
+      .lineBox{
+        color: #b161bf;
       }
     }
-
-    .line {
-      height: 12px;
-      background: #B161BF;
-      margin-left: 20px;
-    }
-
     .form {
-      /* max-width: 1000px; */
-      .el-form-item__label {
-        height: 30px;
-      }
-
-      .el-form-item {
-        width: 200px;
-        margin-bottom: 0;
-      }
-
-      .date {
-        width: 414px;
-
-        .el-date-editor {
-          width: 414px;
+        .el-form-item__label {
+          height: 30px;
         }
-      }
-    }
-  }
-
-  .box {
-    margin: 0 20px 20px 20px;
-    background: #ffffff;
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
-    border-radius: 2px;
-    position: relative;
-
-    .btns {
-      .add {
-        margin: 12px 0 12px 30px;
-      }
-    }
-
-    .tab {
-      .el-table {
-        td {
-          height: 64px;
-          line-height: 64px;
-
-          .cell {
-            font-size: 12px;
-            color: #333333;
-            letter-spacing: 0;
-            line-height: 18px;
+        .el-form-item {
+          width: 200px;
+          margin-bottom: 0;
+          .el-select{
+            width: 100%;
           }
         }
-      }
+        .date {
+          width: 414px;
+          .el-date-editor {
+            width: 414px;
+          }
+        }
     }
-
-    .block {
-      padding: 10px;
-
-      .el-pagination {
-        width: 100%;
-        text-align: center;
+    .box{
+      height: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      .btns{
+        padding: 10px 20px;
+        // background: pink;
+      }
+      .tab{
+        padding-bottom: 120px;
+        box-sizing: border-box;
+        height: 100%;
+        // background: orange;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        .el-table{
+          height: 100%;
+          position: relative;
+          .el-table__body-wrapper{
+            // position: absolute;
+            // top: 0;
+            // height: 100%;
+          }
+        }
+        .block{
+          position: absolute;
+          bottom:0;
+          padding: 10px;
+          width: 100%;
+          // background: red;
+          height: 100px;
+          .el-pagination {
+            width: 100%;
+            text-align: center;
+          }
+        }
       }
     }
   }

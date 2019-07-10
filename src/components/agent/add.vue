@@ -2,69 +2,196 @@
   <!-- 添加新增控件 -->
   <div class="add">
     <div class="head clear">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item to="/home/agent/index">代理商管理</el-breadcrumb-item>
-        <el-breadcrumb-item >代理商引入</el-breadcrumb-item>
-      </el-breadcrumb>
+     <el-page-header @back="goBack" content="">
+    </el-page-header>
     </div>
+    
     <div class="content">
       <div class="selBox">
         <el-form ref="form" :model="form" class="form" label-position='top' :inline='true'>
-          <el-form-item label="代理商名称">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v1'></el-input>
-          </el-form-item>
-          <el-form-item label="英文名">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v3'></el-input>
-          </el-form-item>
-          <el-form-item label="代理商简称">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v4'></el-input>
-          </el-form-item>
-          <el-form-item label="关联公司">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v5'></el-input>
-          </el-form-item>
-          <el-form-item label="注册日期">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v6'></el-input>
-          </el-form-item>
-          <el-form-item label="注册地址">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v7'></el-input>
-          </el-form-item>
-          <el-form-item label="办公地址">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v8'></el-input>
-          </el-form-item>
-          <el-form-item label="公司资产">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v9'></el-input>
-          </el-form-item>
-          <el-form-item label="公司总机">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v10'></el-input>
-          </el-form-item>
-          <el-form-item label="传真">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v11'></el-input>
-          </el-form-item>
-          <el-form-item label="公司人数">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v12'></el-input>
-          </el-form-item>
-          <el-form-item label="委托代表人">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v12'></el-input>
-          </el-form-item>
-          <el-form-item label="业务介绍">
-            <el-input type='textarea' v-model='form.txt' :rows="2" placeholder="" resize='none' :readonly="true"></el-input>
-          </el-form-item>
+          <el-collapse v-model="activeName1" @change="handleChange">
+            <el-collapse-item name="1" >
+              <template slot="title">
+                <h3 style="padding:10px 0;color:purple">基本信息</h3>
+              </template>
+              <el-form-item label="名称">
+              <el-input type="text" size="small"></el-input>
+              </el-form-item>
+              <el-form-item label="简称">
+                <el-input type="text" size="small"></el-input>
+              </el-form-item>
+              <el-form-item label="电话">
+                <el-input type="text" size="small"></el-input>
+              </el-form-item>
+              <el-form-item label="E-mail">
+                <el-input type="text" size="small"></el-input>
+              </el-form-item>
+              <el-form-item label="网站">
+                <el-input type="text" size="small"></el-input>
+              </el-form-item>
+            </el-collapse-item>
+            <el-collapse-item name='2'>
+              <template slot="title">
+                <h3 style="padding:10px 0;color:purple">背景信息</h3>
+              </template>
+              <el-form-item label="公司资产">
+              <el-input type="text" size="small"></el-input>
+              </el-form-item>
+              <el-form-item label="注册日期">
+                <el-input type="text" size="small"></el-input>
+              </el-form-item>
+              <el-form-item label="公司人数">
+                <el-input type="text" size="small"></el-input>
+              </el-form-item>
+              <el-form-item label="上级公司">
+                <el-input type="text" size="small"></el-input>
+              </el-form-item>
+            </el-collapse-item>
+            <el-collapse-item name="3">
+              <template slot="title">
+                <h3 style="padding:10px 0;color:purple">开户行信息</h3>
+              </template>
+              <el-form-item label="银行名称">
+                <el-input type="text" size="small"></el-input>
+              </el-form-item>
+              <el-form-item label="银行地址">
+                <el-input type="text" size="small"></el-input>
+              </el-form-item>
+              <el-form-item label="账号">
+                <el-input type="text" size="small"></el-input>
+              </el-form-item>
+              <el-form-item label="银行识别码">
+                <el-input type="text" size="small"></el-input>
+              </el-form-item>
+            </el-collapse-item>
+            <el-collapse-item name="4">
+              <template slot="title">
+                <h3 style="padding:10px 0;color:purple">授信额度信息</h3>
+              </template>
+               <el-form-item label="授信额度初始值">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="授信额度占用值">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="授信额度剩余值">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+            </el-collapse-item>
+            <el-collapse-item name="5">
+              <template slot="title">
+                <h3 style="padding:10px 0;color:purple">介绍</h3>
+              </template>
+               <el-form-item class="txt" label="优势价值">
+              <el-input type="textarea" size="small" v-model="value" readonly rows='4'> </el-input>
+            </el-form-item>
+            <el-form-item  class="txt" label="优势介绍">
+              <el-input type="textarea" size="small" readonly rows='4'></el-input>
+            </el-form-item>
+            <el-form-item class="txt" label="业务介绍">
+              <el-input type="textarea" size="small" readonly rows='4'></el-input>
+            </el-form-item>
+            </el-collapse-item>
+          </el-collapse>
+          <!-- <div class="msg">
+            <h3 style="padding:10px 0;color:purple">基本信息</h3>
+            <el-form-item label="名称">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="简称">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="电话">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="E-mail">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="网站">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+          </div>
+          <div class="comMsg">
+            <h3 style="padding:10px 0;color:purple">背景信息</h3>
+            <el-form-item label="公司资产">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="注册日期">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="公司人数">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="上级公司">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+          </div>
+          <div class="comMsg">
+            <h3 style="padding:10px 0;color:purple">开户行信息</h3>
+            <el-form-item label="银行名称">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="银行地址">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="账号">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="银行识别码">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+          </div>
+          <div class="comMsg">
+            <h3 style="padding:10px 0;color:purple">授信额度信息</h3>
+            <el-form-item label="授信额度初始值">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="授信额度占用值">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+            <el-form-item label="授信额度剩余值">
+              <el-input type="text" size="small"></el-input>
+            </el-form-item>
+          </div>
+          <div class="comMsg">
+            <h3 style="padding:10px 0;color:purple">介绍</h3>
+            <el-form-item class="txt" label="优势价值">
+              <el-input type="textarea" size="small" v-model="value" readonly rows='4'> </el-input>
+            </el-form-item>
+            <el-form-item  class="txt" label="优势介绍">
+              <el-input type="textarea" size="small" readonly rows='4'></el-input>
+            </el-form-item>
+            <el-form-item class="txt" label="业务介绍">
+              <el-input type="textarea" size="small" readonly rows='4'></el-input>
+            </el-form-item>
+          </div> -->
+            
         </el-form>
       </div>
       <div class="tab">
         <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="主要开户行信息" name="first">
+          <el-tab-pane label="分类分级信息" name="first">
             <div class="tabBox">
               <el-table :data="tableData" style="width: 100%" height="300">
-                <el-table-column prop="" label="ID" v-if="false">
+                <el-table-column prop="t4" label="维度" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t1" label="银行名称" show-overflow-tooltip>
+                <el-table-column prop="t4" label="BU" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t2" label="银行地址" show-overflow-tooltip>
+                <el-table-column prop="t4" label="PDT" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t3" label="账号" show-overflow-tooltip>
+                <el-table-column prop="t4" label="产品型号" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t4" label="银行识别码" show-overflow-tooltip>
+                <el-table-column prop="t4" label="区域" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t4" label="性质" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t4" label="等级" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t4" label="是否白名单" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t4" label="开始日期" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t4" label="结束日期" show-overflow-tooltip>
                 </el-table-column>
                 <div slot="empty">
                   无数据
@@ -77,38 +204,14 @@
               </div> -->
             </div>
           </el-tab-pane>
-          <el-tab-pane label="股权结构" name="second">
+          <el-tab-pane label="层次结构" name="second">
             <div class="tabBox">
               <el-table :data="tableData1" style="width: 100%" height="300">
-                <el-table-column prop="t11" label="股东" show-overflow-tooltip>
+                <el-table-column prop="t11" label="名称" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t12" label="占比" show-overflow-tooltip>
+                <el-table-column prop="t12" label="主要联系人" show-overflow-tooltip>
                 </el-table-column>
-                <div slot="empty">
-                  无数据
-                </div>
-              </el-table>
-              <!-- <div class="block">
-                <el-pagination :current-page="currentPage" :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next"
-                  :total="total">
-                </el-pagination>
-              </div> -->
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="管理层及主要联系人" name="third">
-            <div class="tabBox">
-              <el-table :data="tableData2" style="width: 100%" height="300">
-                <el-table-column prop="t21" label="部门" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t22" label="姓名" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t23" label="职位" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t24" label="电话号码" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t25" label="电子邮件" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t26" label="资质备" show-overflow-tooltip>
+                <el-table-column prop="t12" label="地址" show-overflow-tooltip>
                 </el-table-column>
 
                 <div slot="empty">
@@ -122,39 +225,74 @@
               </div> -->
             </div>
           </el-tab-pane>
-          <el-tab-pane label="优势" name="good">
+          <el-tab-pane label="关系" name="gou">
             <div class="tabBox">
-               <el-checkbox v-model="checked">资金</el-checkbox>
-               <el-checkbox v-model="checked">仓储物流</el-checkbox>
-               <el-checkbox v-model="checked">研发</el-checkbox>
-               <el-checkbox v-model="checked">客户关系</el-checkbox>
-               <el-checkbox v-model="checked">客户开发</el-checkbox>
-               <el-checkbox v-model="checked">商务支持</el-checkbox>
-               <el-checkbox v-model="checked">信息支持</el-checkbox>
-               <el-checkbox v-model="checked">原厂配合</el-checkbox>
-               <el-checkbox v-model="checked">周边器件支持</el-checkbox>
-               <el-checkbox v-model="checked">CRM系统对接能力</el-checkbox>
+               <el-table :data="tableData2" style="width: 100%" height="300">
+                <el-table-column prop="t22" label="名称" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t24" label="关系类型" show-overflow-tooltip>
+                </el-table-column>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="附件信息" name="fourth">
+          <el-tab-pane label="联系人" name="third">
+            <div class="tabBox">
+              <el-table :data="tableData2" style="width: 100%" height="300">
+                <el-table-column prop="t22" label="姓名" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t24" label="电话" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t25" label="邮箱" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t21" label="部门" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t23" label="职位" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t26" label="是否关键决策人" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t26" label="股权占比" show-overflow-tooltip>
+                </el-table-column>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+              <!-- <div class="block">
+                <el-pagination :current-page="currentPage" :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next"
+                  :total="total">
+                </el-pagination>
+              </div> -->
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="开票信息" name="good">
+            <div class="tabBox">
+               <el-table :data="tableData2" style="width: 100%" height="300">
+                <el-table-column prop="t22" label="购货单位" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t24" label="收货地址" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t25" label="收获手机" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t21" label="纳税人登记号" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t23" label="币种" show-overflow-tooltip>
+                </el-table-column>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="附件" name="fourth">
             <div class="tabBox">
               <el-table :data="tableData3" style="width: 100%" height="300">
-                <el-table-column prop="h1" label="文件类型" show-overflow-tooltip>
-                  
+                <el-table-column prop="" label="附件类型" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="" label="" >
-                  <template slot-scope="scope">
-                    <el-upload
-                      class="upload-demo"
-                      action=''
-                      >
-                      <el-button size="mini" type="">上传文件</el-button>
-                    </el-upload>
-                  </template>
+                <el-table-column prop="" label="附件信息" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="h3" label="文件名" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="h4" label="文件说明" show-overflow-tooltip>
+                <el-table-column prop="" label="上传时间" show-overflow-tooltip>
                 </el-table-column>
                 <div slot="empty">
                   无数据
@@ -179,6 +317,8 @@
     name: "AddSell",
     data() {
       return {
+        activeName1:['1','2','3','4','5'],
+        value:'',
         form: {
           txt: ''
         },
@@ -193,99 +333,15 @@
           }
         ],
         tableData1: [
-          {
-            t11: '股东A',
-            t12: '10%'
-          }, {
-            t11: '股东B',
-            t12: '20%'
-          }
+        
         ],
         tableData2: [
-          {
-            t21: '财务部',
-            t22: '测试',
-            t23: '财务',
-            t24: '15200000000',
-            t25: 'test@qq.com',
-            t26: 'test'
-          }, {
-            t21: '人事部',
-            t22: '测试',
-            t23: '财务',
-            t24: '15200000000',
-            t25: 'test@qq.com',
-            t26: 'test'
-          }
+       
         ],
         tableData3: [
-          {
-            'h1': '营业执照',
-            'h2': '',
-            'h3': '营业执照.pdf',
-            'h4':''
-          },
-          {
-            'h1': '注册证明',
-            'h2': '',
-            'h3': '',
-            'h4':''
-          },
-          {
-            'h1': '税务登记证',
-            'h2': '',
-            'h3': '',
-            'h4':''
-          },
-          {
-            'h1': '银行证明',
-            'h2': '',
-            'h3': '',
-            'h4':''
-          },
-          {
-            'h1': '财务报表',
-            'h2': '',
-            'h3': '',
-            'h4':''
-          },
-          {
-            h1: '代理资格证明',
-            h2: '',
-            h3: '',
-            h4:''
-          },
-          {
-            h1: '风险评估',
-            h2: '',
-            h3: '',
-            h4:''
-          },
-          {
-            h1: '管理合规调查',
-            h2: '',
-            h3: '',
-            h4:''
-          },
-          {
-            h1: '主营业务',
-            h2: '',
-            h3: '',
-            h4:''
-          }
         ],
         tableData4: [
-          {
-            t41: '测试客户A',
-            t42: '上海市静安区XXXXXXX',
-            t43: '测试',
-            t44: '20190101测试拜访记录'
-          }, {
-            t41: '测试客户B',
-            t42: '上海市静安区XXXXXXX',
-            t43: '测试',
-            t44: '20190101测试拜访记录'
-          },
+         
         ],
         currentPage: 1,
         pageSize: 10,
@@ -293,6 +349,12 @@
       }
     },
     methods: {
+      handleChange(val){
+        console.log(val)
+      },
+      goBack(){
+        window.history.go(-1)
+      },
       handleClick(tab, event) {
         console.log(tab, event);
       },
@@ -360,36 +422,11 @@
   $sc: 12;
 
   .add {
+    overflow-y: auto;
+    height: 100%;
     .head {
-      h1 {
-        opacity: 0.87;
-        font-size: 18px;
-        color: #000;
-        letter-spacing: 0;
-        line-height: 42px;
-        height: 42px;
-        font-weight: bold;
-        padding: 0 50px;
-
-        span {
-          border-left: 1px solid #ccc;
-          padding: 0 20px;
-        }
-
-        i {
-          font-weight: bold;
-          margin-right: 20px;
-          cursor: pointer;
-        }
-      }
-
-      .el-breadcrumb {
-        line-height: 30px;
-        margin-left: 50px;
-        margin-right: 20px;
-      }
+      padding:10px 40px;
     }
-
     .content {
       height: 100%;
       // background: pink;
@@ -404,7 +441,8 @@
 
         .form {
           max-width: 1300px;
-
+          width: 100%;
+          
           .el-form-item {
             margin-bottom: 0;
             width: 200px;
@@ -413,15 +451,10 @@
               height: 30px;
             }
           }
-
-          .el-form-item:last-child {
+          .txt{
             width: 100%;
-
-            .el-textarea__inner {
-              width: 414px;
-              margin-top: 2px;
-            }
           }
+
         }
       }
 

@@ -31,8 +31,7 @@ export default new Router({
                     component: resolve => require(['@/components/Ts'], resolve)
                 },
 
-                //////////////客户营销
-                //定制短信
+                //客户管理
                 {
                     path: 'shortmsg',
                     name: 'shortmsg',
