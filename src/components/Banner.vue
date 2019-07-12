@@ -308,10 +308,12 @@ export default {
   },
   computed: {
     loginName() {
-      return this.$store.state.loginUser.loginInfo.loginName;
+      // return this.$store.state.loginUser.loginInfo.loginName;
+      return 'admin';
     },
     userType() {
-      return this.$store.state.loginUser.loginInfo.userType;
+      // return this.$store.state.loginUser.loginInfo.userType;
+      return '管理员';
     }
   },
   created() {},
