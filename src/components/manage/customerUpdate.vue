@@ -1,12 +1,12 @@
 <template>
   <!-- 添加新增控件 -->
-  <div class="black">
+  <div class="customerUpdate">
     <div class="head clear">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item to="/home/sell">客户管理</el-breadcrumb-item>
-        <el-breadcrumb-item to="/home/theme">客户报备</el-breadcrumb-item>
+        <el-breadcrumb-item to="/home/theme">客户查询</el-breadcrumb-item>
 
-        <el-breadcrumb-item>报备</el-breadcrumb-item>
+        <el-breadcrumb-item>客户信息修改</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="content">
@@ -268,8 +268,6 @@
       </div>
       <div class="sub">
         <el-button type="primary" size="small" plain>保存</el-button>
-        <el-button type="primary" size="small" plain>提交</el-button>
-        <el-button type="primary" size="small" plain>取消</el-button>
       </div>
     </div>
   </div>
@@ -278,7 +276,7 @@
 <script>
 import formTest from "../../assets/js/formTest";
 export default {
-  name: "black",
+  name: "customerUpdate",
   data() {
     return {
       tableData5:[
@@ -430,10 +428,10 @@ export default {
 <style lang='scss'>
 $sc: 12;
 
-.black {
+.customerUpdate {
   height: 100%;
   overflow-y: auto;
-  padding: 0 20px ;
+  padding: 0 20px;
   .head {
     h1 {
       opacity: 0.87;

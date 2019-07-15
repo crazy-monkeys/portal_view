@@ -19,17 +19,17 @@
 
                 <template v-if="item2.children.length !=0">
                   <el-submenu :index="item2.resourceUrl" :key="item2.resourceId">
-                    <template slot="title"><span>{{item2.resourceName}}</span></template>
+                    <template slot="title"><i :class="item1.iconClass"></i><span>{{item2.resourceName}}</span></template>
                     <template v-for="item3 in item2.children">
 
                       <template v-if="item3.children.length !=0">
                         <el-submenu :index="item3.resourceUrl" :key="item3.resourceId">
-                          <template slot="title"><span>{{item3.resourceName}}</span></template>
+                          <template slot="title"><i :class="item3.iconClass"></i><span>{{item3.resourceName}}</span></template>
                         </el-submenu>
                       </template>
                       <template v-else>
                         <el-menu-item :index="item3.resourceUrl" :key="item3.resourceId">
-                          <span>{{item3.resourceName}}</span>
+                          <i :class="item3.iconClass"></i><span>{{item3.resourceName}}</span>
                         </el-menu-item>
                       </template>
 
@@ -38,6 +38,7 @@
                 </template>
                 <template v-else>
                   <el-menu-item :index="item2.resourceUrl" :key="item2.resourceId">
+                    <i :class="item2.iconClass"></i>
                     {{ item2.resourceName}}
                   </el-menu-item>
                 </template>
@@ -79,22 +80,22 @@ export default {
             {
               resourceId: "11",
               resourceName: "客户查询",
-              resourceUrl: "/home/sell/sellIndex",
-              iconClass: "el-icon-s-promotion",
+              resourceUrl: "/home/sell",
+              iconClass: "el-icon-123",
               children: []
             },
             {
               resourceId: "12",
               resourceName: "客户报备",
               resourceUrl: "/home/theme",
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-123",
               children: []
             },
             {
               resourceId: "14",
               resourceName: "报备审批",
               resourceUrl: "/home/custom/manage/property",
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-123",
               children: []
             },
           ]
@@ -109,14 +110,14 @@ export default {
               resourceId: "21",
               resourceName: "销售预测查询",
               resourceUrl: "/home/sales/forcast-index",
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             },
             {
               resourceId: "22",
               resourceName: "销售预测上传",
               resourceUrl: "/home/sales/forcast-upload",
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             },
           ]
@@ -131,28 +132,28 @@ export default {
               resourceId: "31",
               resourceName: "目录价格查询",
               resourceUrl: "/home/price/list",
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             },
             {
               resourceId: "32",
               resourceName: "实际价格查询",
               resourceUrl: "/home/price/actual",
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             },
             {
               resourceId: "33",
               resourceName: "询价",
               resourceUrl: "/home/price/inquiry",
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             },
             {
               resourceId: "34",
               resourceName: "询价审批",
               resourceUrl: "/home/price/inquiry/approval",
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             }
           ]
@@ -167,14 +168,14 @@ export default {
               resourceId: "41",
               resourceName: "订单申请",
               resourceUrl: "/home/order/add",
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             },
             {
               resourceId: "42",
               resourceName: "订单查询",
               resourceUrl: "/home/order/list",
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             }
           ]
@@ -190,42 +191,42 @@ export default {
               resourceId: "51",
               resourceName: "提货申请",
               resourceUrl: "/home/sales/sales-index",
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             },
             {
-              resourceId: "51",
+              resourceId: "52",
               resourceName: "提货查询",
               resourceUrl: "/home/sales/sales-index",
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             },
             {
               resourceId: "53",
               resourceName: "销售数据查询",
               resourceUrl: "/home/sales/sales-index",
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             },
             {
               resourceId: "54",
               resourceName: "销售数据上传",
               resourceUrl: "/home/sales/sales-upload",
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             },
             {
               resourceId: "55",
               resourceName: "出货数据查询",
               resourceUrl: "/home/sales/shipment-index",
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             },
             {
               resourceId: "56",
               resourceName: "出货数据上传",
               resourceUrl: "/home/sales/shipment-upload",
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             }
           ]
@@ -240,14 +241,14 @@ export default {
               resourceId: "61",
               resourceName: "差价、报价、退换货申请",
               resourceUrl: "/home/sales/sales-index",
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             },
             {
               resourceId: "62",
               resourceName: "客户Rebate",
               resourceUrl: "/home/sales/sales-index",
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             },
           ]
@@ -262,35 +263,35 @@ export default {
               resourceId: "71",
               resourceName: "用户管理",
               resourceUrl: "/home/account/settings",
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             },
             {
               resourceId: "72",
               resourceName: "权限管理",
               resourceUrl: "/home/permission/settings",
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             },
             {
               resourceId: "73",
               resourceName: '公告管理',
               resourceUrl: '/home/system/announcement',
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             },
             {
               resourceId: "74",
               resourceName: '文档管理',
               resourceUrl: '/home/system/document',
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             },
             {
               resourceId: "75",
               resourceName: '系统参数管理',
               resourceUrl: '/home/system/document',
-              iconClass: "el-icon-s-promotion",
+              iconClass: "el-icon-s-123",
               children: []
             }
           ]

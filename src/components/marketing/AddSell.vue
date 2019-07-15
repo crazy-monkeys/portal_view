@@ -65,10 +65,10 @@
         </el-form>
       </div>
       <div class="tab">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tabs v-model="activeName"  @tab-click="handleClick">
           <el-tab-pane label="主要开户行信息" name="first">
             <div class="tabBox">
-              <el-table :data="tableData" style="width: 100%" height="300">
+              <el-table :data="tableData"   style="width: 100%" height="300">
                 <el-table-column prop="" label="ID" v-if="false">
                 </el-table-column>
                 <el-table-column prop="t1" label="银行名称" show-overflow-tooltip>
@@ -351,6 +351,7 @@
   .addAct {
     overflow-y: auto;
     height: 100%;
+  padding: 0 20px ;
     .head {
       h1 {
         opacity: 0.87;
@@ -376,7 +377,7 @@
 
       .el-breadcrumb {
         line-height: 30px;
-        margin-left: 50px;
+        margin-left: 20px;
         margin-right: 20px;
       }
     }
@@ -384,7 +385,7 @@
     .content {
       height: 100%;
       // background: pink;
-      padding: 0 30px 20px;
+      // padding: 0 30px 20px;
 
       .selBox {
         padding: 0 20px 10px 20px;

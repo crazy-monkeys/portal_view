@@ -6,20 +6,12 @@
           <el-breadcrumb-item to='/home/sell'>客户管理</el-breadcrumb-item>
           <el-breadcrumb-item>客户查询</el-breadcrumb-item>
         </el-breadcrumb>
-        <!-- <h1>客户查询</h1> -->
       </div>
-
       <div class="sels clear">
-        <!-- <el-button @click='change'  size='small' type='primary' plain>{{!dialogVisible ? '展开筛选条件' :'收起筛选条件'}}
-          </el-button> -->
         <div class="lineBox">
           <i class="el-icon-arrow-down" v-if='!dialogVisible' @click='change'> 展开</i>
-
           <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
-
-          <!-- <div class="line"></div> -->
         </div>
-        <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <el-form-item label="客户名称">
             <el-input size='small' placeholder="请输入"></el-input>
@@ -57,37 +49,32 @@
             <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
           </el-form-item>
         </el-form>
-        <!-- </transition-group> -->
-
       </div>
-
-      <!-- </transition-group> -->
       <div class="box">
         <div class="tab">
-          <el-table :data="tableData" style="width:100%"  height="100%">
-            <el-table-column prop="" width='30' show-overflow-tooltip label="">
+          <el-table :data="tableData"  style="width:100%" border height="100%">
+            <el-table-column type="index" width='80' label="编号" :index='q'  fixed="left" >
             </el-table-column>
-            <el-table-column type="index" width='100' label="编号" :index='q'>
-            </el-table-column>
-            <el-table-column prop="" show-overflow-tooltip label="客户名称">
+            <el-table-column prop="" show-overflow-tooltip label="客户名称" >
             </el-table-column>
             <el-table-column prop="" label="客户编号" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="" label="客户简称" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="" show-overflow-tooltip label="License客户">
+            <el-table-column prop="" show-overflow-tooltip label="License客户" >
             </el-table-column>
-            <el-table-column prop="" show-overflow-tooltip label="信用状况">
+            <el-table-column prop="" show-overflow-tooltip label="信用状况" sortable>
             </el-table-column>
             <el-table-column prop="" label="业务类型" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="报备日期">
+            <el-table-column show-overflow-tooltip prop="" label="报备日期" sortable> 
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="创建日期">
+            <el-table-column show-overflow-tooltip prop="" label="创建日期" sortable>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
+            <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right' width="120">
               <template scope-slot='scope'>
                 <el-button type='text'  @click='add'>明细</el-button>
+                <el-button type='text'  @click='mod'>修改</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -96,25 +83,14 @@
             </div>
           </el-table>
           <div class="block">
-          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-            :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
-          </el-pagination>
-        </div>
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+              :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
+            </el-pagination>
+          </div>
         </div>
         
       </div>
     </div>
-    <!-- <el-dialog
-        title="筛选条件选取"
-        :visible.sync="dialogVisible"
-        width="600px"
-        >
-        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
-          <div style="margin: 15px 0;"></div>
-          <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
-            <el-checkbox v-for="con in conditions" :label="con.value" :key="con.value">{{con.label}}</el-checkbox>
-        </el-checkbox-group>
-    </el-dialog> -->
   </div>
 </template>
 
@@ -153,22 +129,16 @@ export default {
       isIndeterminate: false,
       dialogVisible: false,
       tableData: [
-        {
-          1: "测试客户A",
-          2: "Test CustomerA",
-          3: "001",
-          4: "代理商A",
-          5: "Mass Market",
-          6: "报备客户"
-        },
-        {
-          1: "测试客户B",
-          2: "Test CustomerB",
-          3: "002",
-          4: "代理商A",
-          5: "Account Market",
-          6: "报备客户"
-        }
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
       ],
       //第几页
       currentPage: 1,
@@ -184,6 +154,11 @@ export default {
   created() {},
   watch: {},
   methods: {
+    mod(){
+      this.$router.push(
+        {name:'customerUpdate'}
+      )
+    },
     change() {
       this.dialogVisible = !this.dialogVisible;
     },
@@ -233,9 +208,22 @@ export default {
 <style lang='scss'>
 $sc: 12;
 .sellIndex{
+  box-sizing: border-box;
+  padding: 0 20px 20px;
   height: 100%;
+  .el-dialog{
+    .form {
+        .el-form-item__label {
+          height: 30px;
+        }
+        .el-form-item {
+          .el-select{
+            width: 100%;
+          }
+        }
+    }
+  }
   .sellBox{
-  margin-left: 20px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -281,7 +269,7 @@ $sc: 12;
         // background: pink;
       }
       .tab{
-        padding-bottom: 120px;
+        padding-bottom: 52px;
         box-sizing: border-box;
         height: 100%;
         // background: orange;
@@ -291,20 +279,14 @@ $sc: 12;
         .el-table{
           height: 100%;
           position: relative;
-          .el-table__body-wrapper{
-            // position: absolute;
-            // top: 0;
-            // height: 100%;
-          }
         }
         .block{
           position: absolute;
           bottom:0;
-          padding: 10px;
+          padding: 10px 0;
           width: 100%;
-          // background: red;
-          height: 100px;
           .el-pagination {
+          padding: 0;
             width: 100%;
             text-align: center;
           }

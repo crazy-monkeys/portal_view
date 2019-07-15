@@ -39,7 +39,7 @@
             </el-date-picker>
           </el-form-item>
           <el-form-item :label="checkedCities.length==0 ?'' : ' '">
-            <el-button size='small' type='primary' plain>搜索</el-button>
+            <el-button size='small' type='primary' plain @click="search">搜索</el-button>
             <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
           </el-form-item>
         </el-form>
@@ -47,12 +47,9 @@
       <div class="box">
         <div class="btns">
           <el-button type='primary' class="add" size='mini' @click="report">报备</el-button>
-          <el-button type='primary' class="add" size='mini' @click="upload">拜访记录上传</el-button>
         </div>
         <div class="tab">
-          <el-table :data="tableData" style="width: 100%" height="100%">
-            <el-table-column prop="" width='30' show-overflow-tooltip label="">
-            </el-table-column>
+          <el-table :data="tableData" border style="width: 100%" height="100%">
             <el-table-column type="index" width='100' label="编号" :index='q'>
             </el-table-column>
             <el-table-column prop="1" show-overflow-tooltip label="审批状态">
@@ -65,7 +62,11 @@
             </el-table-column>
             <el-table-column prop="5" label="客户类型" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="5" label="报备时间" show-overflow-tooltip>
+            <el-table-column prop="5" label="代理商" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="5" label="销售" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="5" label="报备时间" show-overflow-tooltip sortable="">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" width='180' label="操作" fixed='right'>
               <template scope-slot='scope'>
@@ -84,35 +85,19 @@
             </el-pagination>
           </div>
         </div> 
+        
       </div>  
     </div>
     <el-dialog
-        title="拜访记录上传"
-        :visible.sync="dialogVisible1"
+        title="搜索"
+        :visible.sync="dialogVisible2"
         width="300px"
         top="10vh"
         >
-        <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top'  >
-          <el-form-item label="客户名称">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="客户所在地">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="项目名称">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="项目状态">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="项目所属展锐事业部">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          
-        </el-form>
+        当前客户不存在，是否进行报备
           <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible1= false" size="small" type="primary" plain>取 消</el-button>
-            <el-button type="primary" @click="dialogVisible1 = false" size="small">上 传</el-button>
+            <el-button @click="dialogVisible2= false" size="small" type="primary" plain>取 消</el-button>
+            <el-button type="primary" @click="sure1"  size="small">确 定</el-button>
           </span>
     </el-dialog>
   </div>
@@ -124,9 +109,9 @@ export default {
   name: "theme",
   data() {
     return {
+      dialogVisible2:false,
       form:{},
       total:0,
-      dialogVisible1:false,
       options: [
         {
           value: "1",
@@ -191,31 +176,6 @@ export default {
         {},
         {},
         {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {
-          1: "审批通过",
-          2: "Test CustomerB",
-          3: "001",
-          4: "代理商A",
-          5: "Mass Market"
-        },
-        {
-          1: "审批中",
-          2: "Test CustomerB",
-          3: "002",
-          4: "",
-          5: "Account Market"
-        }
       ],
       //第几页
       currentPage: 1,
@@ -231,6 +191,15 @@ export default {
   created() {},
   watch: {},
   methods: {
+    search(){
+      this.dialogVisible2 = true ;
+    },
+    sure1(){
+      this.dialogVisible2 = false;
+      this.$router.push({
+        name:'black'
+      })
+    },
     del(){
       this.$confirm('是否删除该条报备信息', '删除', {
           distinguishCancelAndClose: true,
@@ -249,9 +218,6 @@ export default {
             message: '已取消操作'
           })
         });
-    },
-    upload(){
-      this.dialogVisible1 = true
     },
     report(){
       this.$router.push({
@@ -273,9 +239,6 @@ export default {
       this.checkAll = checkedCount === this.conditions.length;
       this.isIndeterminate =
         checkedCount > 0 && checkedCount < this.conditions.length;
-    },
-    sure() {
-      this.dialogVisible = false;
     },
     handleClose(done) {
       this.$confirm("确认关闭？")
@@ -310,7 +273,9 @@ export default {
 $sc: 12;
 .theme{
   height: 100%;
-  margin-left: 20px;
+  box-sizing: border-box;
+  padding: 0 20px 20px;
+
   .el-dialog{
     .form {
         .el-form-item__label {
@@ -369,7 +334,7 @@ $sc: 12;
         // background: pink;
       }
       .tab{
-        padding-bottom: 120px;
+        padding-bottom: 52px;
         box-sizing: border-box;
         height: 100%;
         // background: orange;
@@ -379,21 +344,15 @@ $sc: 12;
         .el-table{
           height: 100%;
           position: relative;
-          .el-table__body-wrapper{
-            // position: absolute;
-            // top: 0;
-            // height: 100%;
-          }
         }
         .block{
           position: absolute;
           bottom:0;
-          padding: 10px;
+          padding:  10px 0 ;
           width: 100%;
-          // background: red;
-          height: 100px;
           .el-pagination {
             width: 100%;
+            padding: 0;
             text-align: center;
           }
         }

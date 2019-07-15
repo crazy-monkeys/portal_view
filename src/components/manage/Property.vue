@@ -1,10 +1,10 @@
 <template>
-  <div class="theme">
+  <div class="pro">
     <div class="sellBox"> 
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item to='/home/sell'>客户管理</el-breadcrumb-item>
-          <el-breadcrumb-item to='/home/theme'>报备审批</el-breadcrumb-item>
+          <el-breadcrumb-item to=''>报备审批</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="sels clear">
@@ -50,10 +50,8 @@
           <el-button type='primary' class="add" size='mini' @click="upload">拜访记录上传</el-button>
         </div> -->
         <div class="tab">
-          <el-table :data="tableData" style="width: 100%" height="100%">
-            <el-table-column prop="" width='30' show-overflow-tooltip label="">
-            </el-table-column>
-            <el-table-column type="index" width='100' label="编号" :index='q'>
+          <el-table :data="tableData" border style="width: 100%" height="100%">
+            <el-table-column type="index" width='80' label="编号" :index='q'>
             </el-table-column>
             <!-- <el-table-column prop="1" show-overflow-tooltip label="审批状态">
             </el-table-column> -->
@@ -65,7 +63,7 @@
             </el-table-column>
             <el-table-column prop="5" label="客户类型" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="5" label="报备时间" show-overflow-tooltip>
+            <el-table-column prop="5" label="报备时间" show-overflow-tooltip sortable>
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" width='120' label="操作" fixed='right'>
               <template scope-slot='scope'>
@@ -91,7 +89,27 @@
         width="400px"
         top="10vh"
         >
-        <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top'  >
+        <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top'  >
+          <el-form-item label="代理商" v-if="title=='审批'">
+            <el-select v-model="value" placeholder="请选择" > 
+              <el-option
+                label="label1"
+                value="value1">
+              </el-option>
+              <el-option
+                label="label2"
+                value="value2">
+              </el-option>
+              <el-option
+                label="label3"
+                value="value3">
+              </el-option>
+              <el-option
+                label="label4"
+                value="value4">
+              </el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item :label="label">
             <el-input size='small' rows='4' resize="none" type="textarea" placeholder="请输入"></el-input>
           </el-form-item>
@@ -179,31 +197,6 @@ export default {
         {},
         {},
         {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {
-          1: "审批通过",
-          2: "Test CustomerB",
-          3: "001",
-          4: "代理商A",
-          5: "Mass Market"
-        },
-        {
-          1: "审批中",
-          2: "Test CustomerB",
-          3: "002",
-          4: "",
-          5: "Account Market"
-        }
       ],
       //第几页
       currentPage: 1,
@@ -301,9 +294,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
 $sc: 12;
-.theme{
+.pro{
   height: 100%;
-  margin-left: 20px;
+  box-sizing: border-box;
+  padding: 0 20px 20px;
   .el-dialog{
     .form {
         .el-form-item__label {
@@ -362,7 +356,7 @@ $sc: 12;
         // background: pink;
       }
       .tab{
-        padding-bottom: 120px;
+        padding-bottom: 52px;
         box-sizing: border-box;
         height: 100%;
         // background: orange;
@@ -372,20 +366,14 @@ $sc: 12;
         .el-table{
           height: 100%;
           position: relative;
-          .el-table__body-wrapper{
-            // position: absolute;
-            // top: 0;
-            // height: 100%;
-          }
         }
         .block{
           position: absolute;
           bottom:0;
-          padding: 10px;
+          padding: 10px 0;
           width: 100%;
-          // background: red;
-          height: 100px;
           .el-pagination {
+            padding: 0;
             width: 100%;
             text-align: center;
           }

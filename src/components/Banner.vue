@@ -408,7 +408,7 @@ $sc: 12;
   // z-index: 111111;
   min-width: 500px;
   color: #fff;
-  height: 64px;
+  height: 56px;
   background: #b161bf;
   .el-dialog {
     .form {
@@ -552,7 +552,7 @@ $sc: 12;
     .more {
       position: absolute;
       width: 200px;
-      top: 64px;
+      top: 56px;
       left: 0;
       background: #ffffff;
       box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);

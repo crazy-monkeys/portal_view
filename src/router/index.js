@@ -161,32 +161,28 @@ export default new Router({
                 //短信营销
                 {
                     path: 'sell',
-                    name: 'Sell',
-                    component: resolve => require(['@/components/marketing/Sell'], resolve),
-                    // meta: {keepAlive: true},
-                    redirect: {
-                        name: 'SellIndex'
-                    },
-
-                    children: [{
-                            path: 'sellIndex',
-                            name: 'SellIndex',
-                            component: resolve => require(['@/components/marketing/SellIndex'], resolve),
-                            // meta: {keepAlive: true}
-                        },
-                        {
-                            path: 'addSell',
-                            name: 'AddSell',
-                            component: resolve => require(['@/components/marketing/AddSell'], resolve),
-                            // meta: {keepAlive: true}
-                        },
-                    ]
+                    name: 'SellIndex',
+                    component: resolve => require(['@/components/marketing/SellIndex'], resolve),
+                    // meta: {keepAlive: true}
+                },
+                {
+                    path: 'addSell',
+                    name: 'AddSell',
+                    component: resolve => require(['@/components/marketing/AddSell'], resolve),
+                    // meta: {keepAlive: true}
                 },
                 //资源设置
                 {
                     path: 'manage/black',
                     name: 'black',
                     component: resolve => require(['@/components/manage/Black'], resolve),
+                    // meta: {keepAlive: true}
+
+                },
+                {
+                    path: 'customerUpdate',
+                    name: 'customerUpdate',
+                    component: resolve => require(['@/components/manage/customerUpdate'], resolve),
                     // meta: {keepAlive: true}
 
                 },
