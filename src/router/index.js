@@ -143,6 +143,16 @@ export default new Router({
                     component: resolve => require(['@/components/sales/sales-index'], resolve),
                 },
                 {
+                    path: 'sales/approve',
+                    name: 'SalesList',
+                    component: resolve => require(['@/components/sales/approve'], resolve),
+                },
+                {
+                    path: 'sales/reset',
+                    name: 'SalesList',
+                    component: resolve => require(['@/components/sales/reset'], resolve),
+                },
+                {
                     path: 'sales/sales-upload',
                     name: 'SalesList',
                     component: resolve => require(['@/components/sales/sales-upload'], resolve),
@@ -202,7 +212,7 @@ export default new Router({
                 },
 
                 {
-                    path: '/home/system/users',
+                    path: 'system/users',
                     name: 'account',
                     component: resolve => require(['@/components/system/Account'], resolve),
                 },
@@ -212,7 +222,7 @@ export default new Router({
                     component: resolve => require(['@/components/system/AccountAdd'], resolve),
                 },
                 {
-                    path: '/home/system/permissions',
+                    path: 'system/permissions',
                     name: 'permission',
                     component: resolve => require(['@/components/system/Permission'], resolve),
                 },

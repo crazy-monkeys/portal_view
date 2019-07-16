@@ -4,7 +4,7 @@
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item to='/home/sell'>销售管理</el-breadcrumb-item>
-          <el-breadcrumb-item>销售预测查询</el-breadcrumb-item>
+          <el-breadcrumb-item>销售预测调整</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
 
@@ -78,6 +78,11 @@
                   </el-table-column>
                   <el-table-column label="首代备注" prop='8' show-overflow-tooltip>
                   </el-table-column>
+                  <el-table-column  label="操作" width="100"   fixed="right" >
+                    <template>
+                      <el-button size="small" type="text" @click="adjust">预测调整</el-button>
+                    </template>
+                  </el-table-column>
                 </el-table>
               </template>
             </el-table-column>
@@ -95,11 +100,7 @@
             <el-table-column prop="10" label="产品型号" width="100" show-overflow-tooltip></el-table-column>
             <el-table-column prop="11" label="截止日期" width="100" show-overflow-tooltip></el-table-column>
             <el-table-column prop="12" label="未完成专货库存" width="180" show-overflow-tooltip></el-table-column>
-            <!-- <el-table-column  label="操作" width="100"  v-if="s==1" fixed="right" >
-              <template>
-                <el-button size="small" type="text" @click="adjust">预测调整</el-button>
-              </template>
-            </el-table-column> -->
+            
             <div slot="empty">
               <p>无数据</p>
             </div>
@@ -116,22 +117,27 @@
     <el-dialog
         title="预测调整"
         :visible.sync="dialogVisible1"
-        width="80%"
+        width="400px"
+        top="5vh"
         >
-        <el-table :data="tableData1" style="width: 100%" >
-            <el-table-column  label="月份" show-overflow-tooltip></el-table-column>
-            <el-table-column  label="原预测值" show-overflow-tooltip></el-table-column>
-            <el-table-column  label="调整值" show-overflow-tooltip>
-                <el-input size="small"></el-input>
-            </el-table-column>
-            <el-table-column  label="备注"   show-overflow-tooltip>
-              <template>
-                <el-input  size="small" :rows="1" type="textarea"></el-input>
-              </template>
-            </el-table-column>
-            
-          </el-table>
-          <span slot="footer" class="dialog-footer">
+        <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top'  >
+          <el-form-item label="月份">
+            <el-input size='small' placeholder="请输入" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="上次预测值">
+            <el-input size='small' placeholder="请输入" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="预测值">
+            <el-input size='small' placeholder="请输入" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="调整值">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+           <el-form-item label="备注">
+            <el-input type="textarea" size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible1 = false" size="small">取 消</el-button>
           <el-button type="primary" @click="dialogVisible1 = false" size="small">提 交</el-button>
         </span>

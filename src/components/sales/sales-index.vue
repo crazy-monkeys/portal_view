@@ -1,10 +1,10 @@
 <template>
-  <div class="index">
+  <div class="index1">
     <div>
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item to='/home/sell'>销售管理</el-breadcrumb-item>
-          <el-breadcrumb-item>销售数据查询</el-breadcrumb-item>
+          <el-breadcrumb-item>销售预测审批</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
 
@@ -206,7 +206,7 @@
 <style lang='scss'>
   $sc:12;
 
-  .index {
+  .index1 {
     .head {
       h1 {
         opacity: 0.87;

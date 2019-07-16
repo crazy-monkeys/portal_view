@@ -1,5 +1,6 @@
 <template>
   <div class="permission">
+    <div class="sellBox">
     <div class="head clear">
       <el-breadcrumb separator="/">
         <!-- <el-breadcrumb-item :to="{ path: '/home' }">客户营销</el-breadcrumb-item> -->
@@ -8,41 +9,42 @@
       </el-breadcrumb>
     </div>
     <div class="box clear">
-      <div class="l-box">
-        <div class="l-t-box">
-          <el-button type='primary' size='small' @click="dialogVisible=true">新建</el-button>
+        <div class="btns">
+          <el-button type='primary' size='small' @click="add">新建</el-button>
         </div>
-        <div class="l-b-box">
-          <div class="tab">
-            <el-table :data="roles"  highlight-current-row ref='tab'>
-              <el-table-column prop='id' label="ID" v-if="false" width="80">
-              </el-table-column>
-              <el-table-column label="" width="30">
-              </el-table-column>
-              <el-table-column prop="roleName" label="角色名称">
-              </el-table-column>
-              <el-table-column prop="roleDesc" label="职责描述" show-overflow-tooltip>
-              </el-table-column>
-              <el-table-column label="操作">
-                <template slot-scope="scope">
-                  <el-button type="text" size="small">
-                    修改角色信息
-                  </el-button>
-                </template>
-              </el-table-column>
-              <div slot="empty">
+        <div class="tab">
+          <el-table :data="roles"  highlight-current-row ref='tab'>
+            <el-table-column prop='id' label="ID" v-if="false" width="80">
+            </el-table-column>
+            <el-table-column prop="roleName" label="角色名称" width="200">
+            </el-table-column>
+            <el-table-column prop="roleName" label="父级角色" width="200">
+            </el-table-column>
+            <el-table-column prop="roleDesc" label="职责描述" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column label="操作" width="200">
+              <template slot-scope="scope">
+                <el-button type="text" size="small" @click="mod">
+                  修改
+                </el-button>
+                <el-button type="text" size="small" @click="permissionSet">
+                  权限配置
+                </el-button>
+              </template>
+            </el-table-column>
+            <div slot="empty">
 
-                <p>无角色信息</p>
-              </div>
-            </el-table>
-          </div>
+              <p>无角色信息</p>
+            </div>
+          </el-table>
           <div class="block">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
             :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
           </el-pagination>
         </div>
         </div>
-      </div>
+        
+    </div>
       <!-- <div class="r-box">
         <div class="r-t-box">
           <h2>权限配置</h2>
@@ -51,20 +53,19 @@
               :default-checked-keys="form.groups" ref="tree" :check-strictly='true'>
             </el-tree>
           </div>
-          <div class="btn">
-            <el-button type='primary'> 修改权限配置</el-button>
-          </div>
         </div>
       </div> -->
-    </div>
-
-
-
-    <el-dialog :title="edit? '修改角色' :'新建角色'" top='20vh' :visible.sync="dialogVisible" width="30%" :before-close="close"
+    <el-dialog :title="edit? '修改角色' :'新建角色'"  :visible.sync="dialogVisible" width="400px" :before-close="close"
       :close-on-click-modal="false">
       <el-form label-position="top" label-width="auto" :model="roleForm" :rules='rules' size="small" ref='roleForm' class="roleForm">
         <el-form-item label="角色名称" prop='name'>
           <el-input v-model="roleForm.name" maxlength='10' :disabled='edit'></el-input>
+        </el-form-item>
+         <el-form-item label="父级角色" prop=''>
+            <el-select v-model="form.role" size='small' filterable placeholder="请选择">
+              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
         </el-form-item>
         <el-form-item label="职责描述" prop='desc'>
           <el-input type='textarea' v-model="roleForm.desc" maxlength='50'></el-input>
@@ -72,9 +73,24 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="close" size="small">取消</el-button>
-        <el-button type="primary" @click='submit("roleForm")' size="small">提交</el-button>
+        <el-button type="primary" @click='close' size="small">提交</el-button>
       </span>
     </el-dialog>
+    <el-dialog title="权限配置"  :visible.sync="dialogVisible1" width="400px" :before-close="close"
+      :close-on-click-modal="false">
+      <el-form label-position="top" label-width="auto" :model="roleForm" :rules='rules' size="small" ref='roleForm' class="roleForm">
+        <el-form-item label="角色权限" prop=''>
+          <el-tree :data="groups" show-checkbox node-key="resourceId" :props="defaultProps" :filter-node-method="filterNode"
+              :default-checked-keys="form.groups" ref="tree" :check-strictly='true'>
+            </el-tree>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="close" size="small">取消</el-button>
+        <el-button type="primary" @click='close' size="small">提交</el-button>
+      </span>
+    </el-dialog>
+  </div>
   </div>
 </template>
 
@@ -85,6 +101,20 @@ export default {
   name: "permission",
   data() {
     return {
+      options:[
+        {
+          label:'父级角色1',
+          value:1
+        },
+        {
+          label:'父级角色2',
+          value:2
+        },
+        {
+          label:'父级角色3',
+          value:3
+        },
+      ],
       rowData: {},
       delArr: [],
       addArr: [],
@@ -95,6 +125,7 @@ export default {
         desc: ""
       },
       dialogVisible: false,
+      dialogVisible1: false,
       tableData: [],
       defaultCheckedKeys: [],
       type: "",
@@ -120,7 +151,7 @@ export default {
             {
               resourceId: 9067,
               parentId: 233,
-              resourceName: "添加测试API",
+              resourceName: "客户查询",
               resourceType: 2,
               resourceOrder: 210,
               children: []
@@ -128,7 +159,7 @@ export default {
             {
               resourceId: 9066,
               parentId: 233,
-              resourceName: "添加测试按钮",
+              resourceName: "客户报备",
               resourceType: 3,
               resourceOrder: 211,
               children: []
@@ -136,90 +167,52 @@ export default {
             {
               resourceId: 9065,
               parentId: 233,
-              resourceName: "添加测试API",
+              resourceName: "报备审批",
               resourceType: 2,
               resourceOrder: 212,
               children: []
             },
+          ]
+        },
+        {
+          resourceId: 233,
+          parentId: 0,
+          resourceName: "预测管理",
+          resourceType: 1,
+          resourceOrder: 208,
+          children: [
             {
-              resourceId: 9064,
+              resourceId: 9067,
               parentId: 233,
-              resourceName: "添加测试菜单",
-              resourceType: 1,
-              resourceOrder: 213,
+              resourceName: "销售预测查询",
+              resourceType: 2,
+              resourceOrder: 210,
               children: []
             },
             {
-              resourceId: 234,
+              resourceId: 9066,
               parentId: 233,
-              resourceName: "自定义属性",
-              resourceType: 1,
-              resourceOrder: 309,
-              children: [
-                {
-                  resourceId: 235,
-                  parentId: 234,
-                  resourceName: "自定义属性列表",
-                  resourceType: 3,
-                  resourceOrder: 316,
-                  children: []
-                },
-                {
-                  resourceId: 236,
-                  parentId: 234,
-                  resourceName: "新增自定义属性",
-                  resourceType: 3,
-                  resourceOrder: 317,
-                  children: []
-                },
-                {
-                  resourceId: 237,
-                  parentId: 234,
-                  resourceName: "新增自定义属性",
-                  resourceType: 3,
-                  resourceOrder: 318,
-                  children: []
-                },
-                {
-                  resourceId: 238,
-                  parentId: 234,
-                  resourceName: "修改自定义属性状态",
-                  resourceType: 3,
-                  resourceOrder: 319,
-                  children: []
-                },
-                {
-                  resourceId: 239,
-                  parentId: 234,
-                  resourceName: "删除自定义属性状态",
-                  resourceType: 3,
-                  resourceOrder: 320,
-                  children: []
-                },
-                {
-                  resourceId: 240,
-                  parentId: 234,
-                  resourceName: "获取单挑自定义属性",
-                  resourceType: 3,
-                  resourceOrder: 321,
-                  children: []
-                },
-                {
-                  resourceId: 241,
-                  parentId: 234,
-                  resourceName: "获取已启用自定义属性",
-                  resourceType: 3,
-                  resourceOrder: 322,
-                  children: []
-                }
-              ]
-            }
+              resourceName: "销售预测上传",
+              resourceType: 3,
+              resourceOrder: 211,
+              children: []
+            },
+            {
+              resourceId: 9065,
+              parentId: 233,
+              resourceName: "销售预测审批",
+              resourceType: 2,
+              resourceOrder: 212,
+              children: []
+            },
           ]
         }
       ],
 
       //角色列表
-      roles: [],
+      roles: [
+        {}
+      ],
       roleId: "",
       form: {
         name: "",
@@ -232,7 +225,7 @@ export default {
     };
   },
   created(){
-    this.getRoles()
+    // this.getRoles()
   },
   computed:{
     loginName() {
@@ -240,6 +233,17 @@ export default {
     },
   },
   methods: {
+    permissionSet(){
+      this.dialogVisible1 = true
+    },
+    mod(){
+      this.edit = true
+      this.dialogVisible = true;
+    },
+    add(){
+      this.edit = false
+      this.dialogVisible = true;
+    },
      //修改表单提交
     submit(formName) {
       this.$refs[formName].validate(valid => {
@@ -283,6 +287,7 @@ export default {
         ).join("&");
     },
     close(){
+      this.dialogVisible1 = false;
       this.dialogVisible = false;
       this.resetForm('roleForm')
     },
@@ -290,12 +295,12 @@ export default {
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageSize = val;
-      this.getRoles()
+      // this.getRoles()
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.currentPage = val;
-      this.getRoles()
+      // this.getRoles()
     },
     getRoles(){
       var data = {
@@ -363,115 +368,82 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
 $sc: 12;
+.permission{
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0 20px 20px;
 
-.permission {
-  .n {
-    display: none;
-  }
-
-
-  .head {
-    background: #fafafa;
-
-    h1 {
-      opacity: 0.87;
-      font-family: "zt2";
-      font-size: 18px;
-      color: #000;
-      letter-spacing: 0;
-      line-height: 36px;
-      height: 42px;
-      font-weight: bold;
-      padding: 0 50px;
-      // float: left;
-    }
-
-    .el-breadcrumb {
-      // float: right;
-      margin-left: 50px;
-      line-height: 30px;
-      margin-right: 20px;
+  .el-dialog{
+    .el-select{
+      width: 100%;
     }
   }
-
-  .box {
-    height: calc(100% - 72px);
-    position: relative;
-    padding: 0 20px 20px 20px;
-    background: #fafafa;
-    // box-shadow: 0 2px 8px 0 rgba(0,0,0,0.05);
-    border-radius: 2px;
-
-    h2 {
-      height: 60px;
-      line-height: 60px;
+  .sellBox{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .head{
+      padding: 10px 20px;
+      // background: red;
     }
-
-    .l-box {
-      width: 55%;
-      overflow: auto;
-      height: 100%;
+    .sels{
+      // margin: 20px 0;
+      padding:10px 20px;
       background: #fff;
-      float: left;
-      box-sizing: border-box;
-      box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.05);
-
-      .l-t-box,
-      .l-b-box {
-        background: #ffffff;
+      margin-bottom: 10px;
+      .lineBox{
+        color: #b161bf;
       }
-
-      .l-t-box {
-        height: 56px;
-        line-height: 56px;
-        padding: 0 30px;
+    }
+    .form {
+        .el-form-item__label {
+          height: 30px;
+        }
+        .el-form-item {
+          width: 200px;
+          margin-bottom: 0;
+          .el-select{
+            width: 100%;
+          }
+        }
+        .date {
+          width: 414px;
+          .el-date-editor {
+            width: 414px;
+          }
+        }
+    }
+    .box{
+      height: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      .btns{
+        padding: 10px 20px;
+        // background: pink;
       }
-
-      .l-b-box {
-        padding-bottom: 20px;
-        .block {
-          padding: 10px;
+      .tab{
+        padding-bottom: 52px;
+        box-sizing: border-box;
+        height: 100%;
+        // background: orange;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        .el-table{
+          height: 100%;
+          position: relative;
+        }
+        .block{
+          position: absolute;
+          bottom:0;
+          padding:  10px 0 ;
+          width: 100%;
           .el-pagination {
             width: 100%;
+            padding: 0;
             text-align: center;
-          }
-        }
-      }
-    }
-
-    .r-box {
-      height: 100%;
-      width: 45%;
-      box-sizing: border-box;
-      background: #fafafa;
-      float: left;
-
-      .r-t-box {
-        height: 100%;
-        background: #ffffff;
-        box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.05);
-        padding: 0 30px;
-        margin-left: 20px;
-
-        .groupBox {
-          border: 1px solid #ccc;
-          margin-top: 30px;
-          height: calc(100% - 200px);
-          overflow: auto;
-          padding: 20px;
-
-          .el-tree {
-            .el-tree-node__content {
-              margin: 5px;
-            }
-          }
-        }
-
-        .btn {
-          text-align: center;
-
-          .el-button {
-            margin: 15px auto;
           }
         }
       }

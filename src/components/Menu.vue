@@ -120,6 +120,20 @@ export default {
               iconClass: "el-icon-s-123",
               children: []
             },
+            {
+              resourceId: "23",
+              resourceName: "销售预测审批",
+              resourceUrl: "/home/sales/approve",
+              iconClass: "el-icon-s-123",
+              children: []
+            },
+            {
+              resourceId: "24",
+              resourceName: "销售预测调整",
+              resourceUrl: "/home/sales/reset",
+              iconClass: "el-icon-s-123",
+              children: []
+            },
           ]
         },
         {
@@ -262,14 +276,14 @@ export default {
             {
               resourceId: "71",
               resourceName: "用户管理",
-              resourceUrl: "/home/account/settings",
+              resourceUrl: "/home/system/users",
               iconClass: "el-icon-s-123",
               children: []
             },
             {
               resourceId: "72",
               resourceName: "权限管理",
-              resourceUrl: "/home/permission/settings",
+              resourceUrl: "/home/system/permissions",
               iconClass: "el-icon-s-123",
               children: []
             },
@@ -333,7 +347,7 @@ $sc: 12;
 .menu {
   height: 100%;
   .el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 200px;
+    width: 240px;
     min-height: 400px;
   }
   .el-menu {

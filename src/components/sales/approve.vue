@@ -4,7 +4,7 @@
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item to='/home/sell'>销售管理</el-breadcrumb-item>
-          <el-breadcrumb-item>销售预测查询</el-breadcrumb-item>
+          <el-breadcrumb-item>销售预测审批</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
 
@@ -54,12 +54,15 @@
 
       <!-- </transition-group> -->
       <div class="box">
+        <div class="btns">
+          <el-button size="small" type="primary" @click="add1(1)">通过</el-button>
+          <el-button size="small" type="primary" @click="add1(2)">驳回</el-button>
+        </div>
         <div class="tab">
           <el-table :data="tableData" border style="width: 100%" height="100%">
             <el-table-column type="expand">
               <template slot-scope="props">
                 <el-table size='small' :data="props.row.children" border style="width: 100%" height="100%">
-                  
                   <el-table-column label="月份" prop='0' show-overflow-tooltip> 
                   </el-table-column>
                   <el-table-column label="上次填写" prop='1' show-overflow-tooltip>
@@ -80,6 +83,10 @@
                   </el-table-column>
                 </el-table>
               </template>
+            </el-table-column>
+            <el-table-column
+              type="selection"
+              width="55">
             </el-table-column>
             <el-table-column prop="0" width='100' label="代理商" >
             </el-table-column>
@@ -136,6 +143,24 @@
           <el-button type="primary" @click="dialogVisible1 = false" size="small">提 交</el-button>
         </span>
     </el-dialog>
+
+
+    <el-dialog
+        :title="title"
+        :visible.sync="dialogVisible2"
+        width="400px"
+        top="10vh"
+        >
+        <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top'  >
+          <el-form-item :label="label">
+            <el-input size='small' rows='4' resize="none" type="textarea" placeholder="请输入"></el-input>
+          </el-form-item>
+        </el-form>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible2= false" size="small" type="primary" plain>取 消</el-button>
+            <el-button type="primary" @click="dialogVisible2= false" size="small">确 定</el-button>
+          </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -173,6 +198,7 @@
         ],
         isIndeterminate: false,
         dialogVisible: false,
+        dialogVisible2: false,
         dialogVisible1: false,
         tableData: [
           {
@@ -361,6 +387,16 @@
     watch: {
     },
     methods: {
+      add1(type) {
+        this.dialogVisible2 = true
+        if(type==1){
+          this.title = '审批'
+          this.label = '审批信息'
+        }else{
+          this.title = '驳回'
+          this.label = '驳回信息'
+        }
+      },
       adjust() {
         this.dialogVisible1 = true
       },
