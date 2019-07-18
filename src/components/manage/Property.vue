@@ -35,8 +35,7 @@
             </el-select>
           </el-form-item> -->
           <el-form-item label="报备日期" class="date">
-            <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
-            </el-date-picker>
+            <Daterange />
           </el-form-item>
           <el-form-item :label="checkedCities.length==0 ?'' : ' '">
             <el-button size='small' type='primary' plain>搜索</el-button>
@@ -123,9 +122,13 @@
 </template>
 
 <script>
+import Daterange from "../com/date";
 import formTest from "../../assets/js/formTest";
 export default {
   name: "theme",
+  components:{
+    Daterange
+  },
   data() {
     return {
       form:{},
@@ -340,9 +343,7 @@ $sc: 12;
         }
         .date {
           width: 414px;
-          .el-date-editor {
-            width: 414px;
-          }
+          
         }
     }
     .box{

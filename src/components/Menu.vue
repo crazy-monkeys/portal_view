@@ -98,6 +98,14 @@ export default {
               iconClass: "el-icon-123",
               children: []
             },
+            {
+              resourceId: "13",
+              resourceName: "拜访记录上传",
+              resourceUrl: "/home/user/visiteRecord",
+              iconClass: "el-icon-123",
+              children: []
+            },
+            
           ]
         },
         {
@@ -167,6 +175,21 @@ export default {
               resourceId: "34",
               resourceName: "询价审批",
               resourceUrl: "/home/price/inquiry/approval",
+              iconClass: "el-icon-s-123",
+              children: []
+            }
+          ]
+        },
+        {
+          resourceId: "8",
+          resourceName: "产品管理",
+          resourceUrl: "#8",
+          iconClass: "el-icon-s-data",
+          children: [
+            {
+              resourceId: "81",
+              resourceName: "产品查询",
+              resourceUrl: "/home/product/query",
               iconClass: "el-icon-s-123",
               children: []
             }

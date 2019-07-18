@@ -39,9 +39,7 @@
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="上传日期" class="date">
-            <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
-              v-model="d1">
-            </el-date-picker>
+            <Daterange />
           </el-form-item>
           <el-form-item :label="checkedCities.length==0 ?'' : ' '">
             <el-button size='small' type='primary' plain>查询</el-button>
@@ -140,8 +138,12 @@
 </template>
 
 <script>
+  import Daterange from "../com/date";
   import formTest from '../../assets/js/formTest'
   export default {
+    components:{
+      Daterange
+    },
     name: 'index',
     data() {
       return {
@@ -461,9 +463,6 @@
         }
         .date {
           width: 414px;
-          .el-date-editor {
-            width: 414px;
-          }
         }
     }
     .box{

@@ -34,15 +34,12 @@
               </el-option>
             </el-select>
           </el-form-item>
+          
           <el-form-item label="报备日期" class="date">
-            <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
-              v-model="d1">
-            </el-date-picker>
+            <Daterange />
           </el-form-item>
           <el-form-item label="创建日期" class="date">
-            <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
-              v-model="d1">
-            </el-date-picker>
+            <Daterange />
           </el-form-item>
           <el-form-item :label="checkedCities.length==0 ?'' : ' '">
             <el-button size='small' type='primary' plain>搜索</el-button>
@@ -96,8 +93,12 @@
 
 <script>
 import formTest from "../../assets/js/formTest";
+import Daterange from "../com/date";
 export default {
   name: "SellIndex",
+  components:{
+    Daterange
+  },
   data() {
     return {
       form: {},
@@ -253,9 +254,7 @@ $sc: 12;
         }
         .date {
           width: 414px;
-          .el-date-editor {
-            width: 414px;
-          }
+          box-sizing: border-box;
         }
     }
     .box{

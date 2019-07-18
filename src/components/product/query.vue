@@ -1,12 +1,11 @@
 <template>
-  <div class="price-actual">
+  <div class="index">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to='/home/price/actual'>价格管理</el-breadcrumb-item>
-          <el-breadcrumb-item>客户实际价格查询</el-breadcrumb-item>
+          <el-breadcrumb-item to='/home/sell'>产品管理</el-breadcrumb-item>
+          <el-breadcrumb-item>产品查询</el-breadcrumb-item>
         </el-breadcrumb>
-        <!-- <h1>客户查询</h1> -->
       </div>
 
       <div class="sels clear">
@@ -21,45 +20,38 @@
         </div>
         <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
+          <el-form-item label="产品型号">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
           <el-form-item label="BU">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="PDT">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="产品型号">
+           <el-form-item label="类别一(类型)">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="关联产品">
+           <el-form-item label="类别二(子类型)">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="关联公司">
+          <el-form-item label="类别三(平台)">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="核算类型">
-            <el-select v-model="value" size="small" filterable placeholder="请选择">
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item label="客户">
+          <el-form-item label="BU Head" >
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="状态">
-            <el-select v-model="value" size="small" filterable placeholder="请选择">
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="申请人">
+          <el-form-item label="副产总" >
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="生效时间" class="date">
+           <el-form-item label="SAP 物料号" >
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <!-- <el-form-item label="BU Head" class="date">
             <Daterange />
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item :label="checkedCities.length==0 ?'' : ' '">
-            <el-button size='small' type='primary' plain>搜索</el-button>
+            <el-button size='small' type='primary' plain>查询</el-button>
             <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
           </el-form-item>
         </el-form>
@@ -71,90 +63,98 @@
       <div class="box">
         <div class="tab">
           <el-table :data="tableData" border style="width: 100%" height="100%">
-            <el-table-column type="index" width='80' label="编号" :index='q'>
-            </el-table-column>
-            <el-table-column prop="1" width='100' show-overflow-tooltip label="BU">
-            </el-table-column>
-            <el-table-column prop="2" width='100' label="PDT" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="3" width='150' label="产品型号" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="4" width='150'  show-overflow-tooltip label="状态">
-            </el-table-column>
-            <el-table-column prop="5" width='150'  label="客户名称" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="7"  width='150' label="客户简称">
-            </el-table-column>
-             <el-table-column show-overflow-tooltip prop="8"  width='150' label="实际价格">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="9"  width='150' label="销售上限(k)">
-            </el-table-column>
-
-
-            <el-table-column show-overflow-tooltip prop="6"  width='150' label="销售下限(k)">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" width='150'  label="核算类型">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" width='150'  label="关联公司">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6"  width='150' label="关联产品">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" width='150'  label="申请人">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" width='150'  label="生效时间">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" width='150'  label="失效时间">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
-              <template scope-slot='scope'>
-                <el-button type='text' size='small' @click='create'>生成报价单</el-button>
+            <el-table-column type="expand">
+              <template slot-scope="props">
+                <el-table size='small' :data="props.row.children" border style="width: 100%" height="100%">
+                  <el-table-column label="子料号" prop='0' show-overflow-tooltip> 
+                  </el-table-column>
+                  <el-table-column label="数量" prop='1' show-overflow-tooltip>
+                  </el-table-column>
+                </el-table>
               </template>
             </el-table-column>
+            <el-table-column label="产品型号" prop='0' show-overflow-tooltip> 
+            </el-table-column>
+            <el-table-column label="BU" prop='1' show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column label="PDT" prop='2' show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column label="类别一(类型)" prop='3' show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column label="类别二(子类型)" prop='4' show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column label="类别三(平台)" prop='5' show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column label="BU Head" prop='6' show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column label="副产总" prop='7' show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column label="SAP 物料号" prop='8' show-overflow-tooltip>
+            </el-table-column>
+            <!-- <el-table-column  label="操作" width="100"  v-if="s==1" fixed="right" >
+              <template>
+                <el-button size="small" type="text" @click="adjust">预测调整</el-button>
+              </template>
+            </el-table-column> -->
             <div slot="empty">
-
-              <p>未查询到客户信息</p>
+              <p>无数据</p>
             </div>
           </el-table>
           <div class="block">
-            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-              :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
-            </el-pagination>
-          </div>
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+            :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+          </el-pagination>
         </div>
-       
+        </div>
+        
       </div>
     </div>
-    <!-- <el-dialog
-        title="筛选条件选取"
-        :visible.sync="dialogVisible"
-        width="600px"
+    <el-dialog
+        title="预测调整"
+        :visible.sync="dialogVisible1"
+        width="80%"
         >
-        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
-          <div style="margin: 15px 0;"></div>
-          <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
-            <el-checkbox v-for="con in conditions" :label="con.value" :key="con.value">{{con.label}}</el-checkbox>
-        </el-checkbox-group>
-    </el-dialog> -->
+        <el-table :data="tableData1" style="width: 100%" >
+            <el-table-column  label="月份" show-overflow-tooltip></el-table-column>
+            <el-table-column  label="原预测值" show-overflow-tooltip></el-table-column>
+            <el-table-column  label="调整值" show-overflow-tooltip>
+                <el-input size="small"></el-input>
+            </el-table-column>
+            <el-table-column  label="备注"   show-overflow-tooltip>
+              <template>
+                <el-input  size="small" :rows="1" type="textarea"></el-input>
+              </template>
+            </el-table-column>
+            
+          </el-table>
+          <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible1 = false" size="small">取 消</el-button>
+          <el-button type="primary" @click="dialogVisible1 = false" size="small">提 交</el-button>
+        </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-  import formTest from '../../assets/js/formTest'
   import Daterange from "../com/date";
-
+  import formTest from '../../assets/js/formTest'
   export default {
-    name: 'priceActual',
     components:{
       Daterange
     },
+    name: 'index',
     data() {
       return {
+        s:1,
         form: {},
         total: 0,
         d1: [],
         options: [{
-          value: '1',
-          label: '---'
+          value: '选项1',
+          label: 'Mass Market'
+        }, {
+          value: '选项2',
+          label: 'Account Market'
         }],
         value: '',
         checkAll: false,
@@ -173,8 +173,30 @@
         ],
         isIndeterminate: false,
         dialogVisible: false,
+        dialogVisible1: false,
         tableData: [
-
+                  
+// S2T305-XBN Intelligence Device BU TV TV TV SOC S2T305-XBN 吴迪 (David Wu) 王骞 (Benjamin Wang) 11030001439
+          {
+            0:'RDA8501-XBN',
+            1:'Intelligence Device BU',
+            2:'TV',
+            3:'TV',
+            4:'TV SOC',
+            5:'RDA8501-XBN',
+            6:'吴迪 (David Wu)',
+            7:'王骞 (Benjamin Wang)',
+            8:'11030001438',
+            children:[
+              {
+                0:'xxxx',
+                1:'100',
+              }
+            ]
+          }
+        ],
+        tableData1: [
+          {}
         ],
         //第几页
         currentPage: 1,
@@ -192,8 +214,12 @@
     watch: {
     },
     methods: {
-      change() {
+      adjust() {
+        this.dialogVisible1 = true
+      },
+      change(){
         this.dialogVisible = !this.dialogVisible
+
       },
       handleCheckAllChange(val) {
         console.log(val)
@@ -222,7 +248,7 @@
       add() {
         this.$router.push(
           {
-            name: 'Addprice-query'
+            name: 'AddSell'
           }
         )
       },
@@ -242,7 +268,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
   $sc:12;
-.price-actual{
+.index{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;
@@ -288,7 +314,6 @@
         }
         .date {
           width: 414px;
-          
         }
     }
     .box{

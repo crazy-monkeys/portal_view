@@ -64,6 +64,13 @@ export default new Router({
                     // meta: {keepAlive: true}
                 },
                 {
+                    path: 'product/query',
+                    name: 'productQuery',
+                    component: resolve => require(['@/components/product/query'], resolve),
+                    // meta: {keepAlive: true}
+                },
+
+                {
                     path: 'order/list',
                     name: 'orderList',
                     component: resolve => require(['@/components/order/list'], resolve),
@@ -137,6 +144,12 @@ export default new Router({
                     name: 'SalesList',
                     component: resolve => require(['@/components/sales/forcast-upload'], resolve),
                 },
+                {
+                    path: 'user/visiteRecord',
+                    name: 'visiteRecord',
+                    component: resolve => require(['@/components/marketing/visiteRecord'], resolve),
+                },
+
                 {
                     path: 'sales/sales-index',
                     name: 'SalesList',

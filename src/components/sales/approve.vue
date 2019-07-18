@@ -1,5 +1,5 @@
 <template>
-  <div class="index">
+  <div class="approve">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
@@ -39,9 +39,7 @@
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="上传日期" class="date">
-            <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
-              v-model="d1">
-            </el-date-picker>
+            <Daterange />
           </el-form-item>
           <el-form-item :label="checkedCities.length==0 ?'' : ' '">
             <el-button size='small' type='primary' plain>查询</el-button>
@@ -166,8 +164,13 @@
 
 <script>
   import formTest from '../../assets/js/formTest'
+  import Daterange from "../com/date";
+
   export default {
-    name: 'index',
+    name: 'approve',
+    components:{
+      Daterange
+    },
     data() {
       return {
         s:1,
@@ -451,7 +454,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
   $sc:12;
-.index{
+.approve{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;
@@ -497,9 +500,6 @@
         }
         .date {
           width: 414px;
-          .el-date-editor {
-            width: 414px;
-          }
         }
     }
     .box{

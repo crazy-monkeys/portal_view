@@ -36,8 +36,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="开通日期" class="date">
-            <el-date-picker size='small' v-model="form.date" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
-            </el-date-picker>
+            <Daterange />
           </el-form-item>
           <el-form-item label=" ">
             <el-button size='small' type='primary' plain @click="search">搜索</el-button>
@@ -92,7 +91,7 @@
               <template slot-scope="scope">
                 <el-button size="small" type="text" @click="authorize">授权</el-button>
                 <!-- <el-button size="small" type="primary">维护</el-button> -->
-                <el-button size="small" type="text" @click="freeze">冻结</el-button>
+                <!-- <el-button size="small" type="text" @click="freeze">冻结</el-button> -->
               </template>
             </el-table-column>
             <div slot="empty">
@@ -136,8 +135,13 @@
 
 <script>
 import formTest from "../../assets/js/formTest";
+import Daterange from "../com/date";
+
 export default {
-  name: "Theme",
+  name: "user",
+  components:{
+    Daterange
+  },
   data() {
     return {
       form:{
@@ -372,9 +376,6 @@ $sc: 12;
         }
         .date {
           width: 414px;
-          .el-date-editor {
-            width: 414px;
-          }
         }
     }
     .box{

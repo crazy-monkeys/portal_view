@@ -1,6 +1,6 @@
 <template>
   <div class="price-list">
-    <div>
+    <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item to='/home/price/list'>价格管理</el-breadcrumb-item>
@@ -49,9 +49,7 @@
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="生效时间" class="date">
-            <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
-              v-model="d1">
-            </el-date-picker>
+            <Daterange />
           </el-form-item>
           <el-form-item :label="checkedCities.length==0 ?'' : ' '">
             <el-button size='small' type='primary' plain>搜索</el-button>
@@ -64,62 +62,66 @@
 
       <!-- </transition-group> -->
       <div class="box">
-        <div class="btns clear">
+        <!-- <div class="btns clear">
           <el-button class="add" @click='create' size='small' type='primary'>生成报价单</el-button>
-        </div>
+        </div> -->
         <div class="tab">
-          <el-table :data="tableData" style="width: 100%" height="700">
-            <el-table-column prop="" type="selection" width='30' show-overflow-tooltip label="">
-            </el-table-column>
+          <el-table :data="tableData" border style="width: 100%" height="100%">
             <el-table-column type="index" width='100' label="编号" :index='q'>
             </el-table-column>
-            <el-table-column prop="t1" show-overflow-tooltip label="BU">
+            <el-table-column prop="t1" width='80' show-overflow-tooltip label="BU">
             </el-table-column>
-            <el-table-column prop="t2" label="PDT" show-overflow-tooltip>
+            <el-table-column prop="t2" width='80' label="PDT" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="t3" label="Product Type" show-overflow-tooltip>
+            <el-table-column prop="t3" width='150' label="Product Type" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="t4" show-overflow-tooltip label="平台">
+            <el-table-column prop="t4" width='100' show-overflow-tooltip label="平台">
             </el-table-column>
-            <el-table-column prop="t5" label="产品状态" show-overflow-tooltip>
+            <el-table-column prop="t5" width='150' label="产品状态" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t7" label="产品归属">
+            <el-table-column show-overflow-tooltip width='150' prop="t7" label="产品归属">
             </el-table-column>
-             <el-table-column show-overflow-tooltip prop="t8" label="产品型号">
+             <el-table-column show-overflow-tooltip width='150' prop="t8" label="产品型号">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t9" label="数量上限">
+            <el-table-column show-overflow-tooltip prop="t9" width='150' label="数量上限">
             </el-table-column>
 
 
-            <el-table-column show-overflow-tooltip prop="t10" label="数量下限">
+            <el-table-column show-overflow-tooltip prop="t10" width='150' label="数量下限">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t11" label="标准价">
+            <el-table-column show-overflow-tooltip prop="t11" width='150' label="标准价">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t12" label="权限价">
+            <el-table-column show-overflow-tooltip prop="t12" width='150' label="权限价">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t13" label="底线价">
+            <el-table-column show-overflow-tooltip prop="t13" width='150' label="底线价">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t14" label="成本价">
+            <el-table-column show-overflow-tooltip prop="t14" width='150' label="成本价">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t15" label="增值后成本">
+            <el-table-column show-overflow-tooltip prop="t15" width='150' label="增值后成本">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t16" label="生效时间">
+            <el-table-column show-overflow-tooltip prop="t16" width='150' label="生效时间">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t17" label="失效时间">
+            <el-table-column show-overflow-tooltip prop="t17" width='150' label="失效时间">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t18" label="更新时间">
+            <el-table-column show-overflow-tooltip prop="t18" width='150' label="更新时间">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
+              <template scope-slot='scope'>
+                <el-button type='text' size='small' @click='create'>生成报价单</el-button>
+              </template>
             </el-table-column>
             <div slot="empty">
 
               <p>未查询到客户信息</p>
             </div>
           </el-table>
+          <div class="block">
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+              :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+            </el-pagination>
+          </div>
         </div>
-        <div class="block">
-          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-            :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
-          </el-pagination>
-        </div>
+        
       </div>
     </div>
     <!-- <el-dialog
@@ -137,9 +139,13 @@
 </template>
 
 <script>
+  import Daterange from "../com/date";
   import formTest from '../../assets/js/formTest'
   export default {
     name: 'PriceQuery',
+    components:{
+      Daterange
+    },
     data() {
       return {
         form: {},
@@ -219,6 +225,7 @@
     watch: {
     },
     methods: {
+      
       change() {
         this.dialogVisible = !this.dialogVisible
       },
@@ -269,108 +276,91 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
   $sc:12;
-
-  .price-list {
-    .head {
-      h1 {
-        opacity: 0.87;
-        font-size: 18px;
-        color: #000;
-        letter-spacing: 0;
-        line-height: 42px;
-        height: 42px;
-        /* font-weight: bold; */
-        padding: 0 50px;
-      }
-
-      .el-breadcrumb {
-        line-height: 30px;
-        margin-left: 50px;
-        margin-right: 20px;
-        font-size: 14px;
-      }
-    }
-
-    .sels {
-      background: #fff;
-      padding: 10px 30px;
-      margin: 0 20px 10px 20px;
-
-      .lineBox {
-        i {
-          color: #800080;
-          font-weight: bold;
-        }
-      }
-
-      .line {
-        height: 12px;
-        background: #800080;
-        margin-left: 20px;
-      }
-
-      .form {
-
-        /* max-width: 1000px; */
+.price-list{
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0 20px 20px;
+  .el-dialog{
+    .form {
         .el-form-item__label {
           height: 30px;
         }
-
+        .el-form-item {
+          .el-select{
+            width: 100%;
+          }
+        }
+    }
+  }
+  .sellBox{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .head{
+      padding: 10px 20px;
+      // background: red;
+    }
+    .sels{
+      // margin: 20px 0;
+      padding:10px 20px;
+      background: #fff;
+      margin-bottom: 10px;
+      .lineBox{
+        color: #b161bf;
+      }
+    }
+    .form {
+        .el-form-item__label {
+          height: 30px;
+        }
         .el-form-item {
           width: 200px;
           margin-bottom: 0;
-        }
-        .btns{
-          width: 100%;
+          .el-select{
+            width: 100%;
+          }
         }
         .date {
           width: 414px;
-
-          .el-date-editor {
-            width: 414px;
-          }
+          
         }
-
-      }
     }
-
-    .box {
-      margin: 0 20px 20px 20px;
-      background: #FFFFFF;
-      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
-      border-radius: 2px;
+    .box{
+      height: 100%;
       position: relative;
-
-      .btns {
-        .add {
-          margin: 12px 0 12px 30px;
-        }
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      .btns{
+        padding: 10px 20px;
+        // background: pink;
       }
-
-      .tab {
-        .el-table {
-          td {
-            height: 64px;
-            line-height: 64px;
-
-            .cell {
-              font-size: 12px;
-              color: #333333;
-              letter-spacing: 0;
-              line-height: 18px;
-            }
-          }
+      .tab{
+        padding-bottom: 52px;
+        box-sizing: border-box;
+        height: 100%;
+        // background: orange;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        .el-table{
+          height: 100%;
+          position: relative;
         }
-      }
-
-      .block {
-        padding: 10px;
-
-        .el-pagination {
+        .block{
+          position: absolute;
+          bottom:0;
+          padding:  10px 0 ;
           width: 100%;
-          text-align: center;
+          .el-pagination {
+            width: 100%;
+            padding: 0;
+            text-align: center;
+          }
         }
       }
     }
   }
+}
+
 </style>

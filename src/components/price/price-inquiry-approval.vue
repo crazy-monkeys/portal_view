@@ -1,6 +1,6 @@
 <template>
   <div class="price-inquiry-approval">
-    <div>
+    <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item to='/home/price/inquiry-approval'>价格管理</el-breadcrumb-item>
@@ -31,9 +31,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="生效时间" class="date">
-            <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
-              v-model="d1">
-            </el-date-picker>
+            <Daterange />
           </el-form-item>
           <el-form-item :label="checkedCities.length==0 ?'' : ' '">
             <el-button size='small' type='primary' plain>查询</el-button>
@@ -47,86 +45,93 @@
       <!-- </transition-group> -->
       <div class="box">
         <div class="btns">
-              <el-button class="add" size='small' type='primary' @click='create' >审批</el-button>
+              <el-button class="add" size='small' type='primary' @click='add1(1)' >通过</el-button>
+              <el-button class="add" size='small' type='primary' @click='add1(2)' >驳回</el-button>
 
         </div>
         <div class="tab">
-          <el-table :data="tableData" style="width: 100%" height="700">
-            <el-table-column prop="" width='30' show-overflow-tooltip label="">
+          <el-table :data="tableData" border style="width: 100%" height="100%">
+            <el-table-column type="selection" width='40' label="" >
             </el-table-column>
             <el-table-column type="index" width='100' label="编号" :index='q'>
             </el-table-column>
-            <el-table-column prop="1" show-overflow-tooltip label="申请人">
+            <el-table-column prop="1" width='100' show-overflow-tooltip label="申请人">
             </el-table-column>
-            <el-table-column prop="2" label="申请说明" show-overflow-tooltip>
+            <el-table-column prop="2" width='150' label="申请说明" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="3" label="产品型号" show-overflow-tooltip>
+            <el-table-column prop="3" width='150' label="产品型号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="4" show-overflow-tooltip label="BU">
+            <el-table-column prop="4"  width='100' show-overflow-tooltip label="BU">
             </el-table-column>
-            <el-table-column prop="5" label="PDT" show-overflow-tooltip>
+            <el-table-column prop="5" width='100'  label="PDT" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="7" label="Product Type">
+            <el-table-column show-overflow-tooltip prop="7" width='150'  label="Product Type">
             </el-table-column>
-             <el-table-column show-overflow-tooltip prop="8" label="平台">
+             <el-table-column show-overflow-tooltip prop="8" width='150'  label="平台">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="9" label="产品状态">
+            <el-table-column show-overflow-tooltip prop="9" width='150'  label="产品状态">
             </el-table-column>
 
 
-            <el-table-column show-overflow-tooltip prop="6" label="产品归属">
+            <el-table-column show-overflow-tooltip prop="6" width='150'  label="产品归属">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="产品型号">
+            <el-table-column show-overflow-tooltip prop="6" width='150'  label="产品型号">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="数量上限">
+            <el-table-column show-overflow-tooltip prop="6" width='150' label="数量上限">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="数量下限">
+            <el-table-column show-overflow-tooltip prop="6" width='150' label="数量下限">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="标准价">
+            <el-table-column show-overflow-tooltip prop="6" width='150' label="标准价">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="生效时间">
+            <el-table-column show-overflow-tooltip prop="6" width='150' label="生效时间">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" label="失效时间">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
-              <template scope-slot='scope'>
-                <el-button type='text' size='small' @click='add'>审批</el-button>
-              </template>
+            <el-table-column show-overflow-tooltip prop="6" width='150' label="失效时间">
             </el-table-column>
             <div slot="empty">
               <p>未查询到客户信息</p>
             </div>
           </el-table>
-        </div>
-        <div class="block">
-          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-            :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
-          </el-pagination>
+          <div class="block">
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+              :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+            </el-pagination>
+          </div>
         </div>
       </div>
     </div>
-   <el-dialog title="审批" :visible.sync="dialogCreate" width="50%">
-      <div class="sels clear">
-        <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true'>
-          <el-form-item label="审批意见" class="last">
-             <el-input type='textarea' v-model='form.txt' :rows="2" placeholder="" resize='none'></el-input>
-          </el-form-item>
-          <el-form-item label=" ">
-            <el-button class="add" size='small' type='primary' @click='dialogCreate = false'>提交</el-button>
-            <el-button class="add" size='small' type='primary' plain @click='dialogCreate = false'>取消</el-button>
+    <el-dialog
+        :title="title"
+        :visible.sync="dialogCreate"
+        width="400px"
+        top="10vh"
+        >
+        <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top'  >
+          <el-form-item :label="label">
+            <el-input size='small' rows='4' resize="none" type="textarea" placeholder="请输入"></el-input>
           </el-form-item>
         </el-form>
-      </div>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogCreate= false" size="small" type="primary" plain>取 消</el-button>
+            <el-button type="primary" @click="dialogCreate= false" size="small">确 定</el-button>
+          </span>
     </el-dialog>
+   
   </div>
 </template>
 
 <script>
 import formTest from "../../assets/js/formTest";
+  import Daterange from "../com/date";
+
 export default {
-  name: "PriceQuery",
+  name: "PriceApproval",
+  components:{
+      Daterange
+    },
   data() {
     return {
+      title:'',
+      label:'',
       form: {},
       total: 0,
       d1: [],
@@ -167,6 +172,16 @@ export default {
   created() {},
   watch: {},
   methods: {
+    add1(type) {
+        this.dialogCreate = true
+        if(type==1){
+          this.title = '审批'
+          this.label = '审批信息'
+        }else{
+          this.title = '驳回'
+          this.label = '驳回信息'
+        }
+      },
     change() {
       this.dialogVisible = !this.dialogVisible;
     },
@@ -219,108 +234,99 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
 $sc: 12;
-
-.price-inquiry-approval {
-  .head {
-    h1 {
-      opacity: 0.87;
-      font-size: 18px;
-      color: #000;
-      letter-spacing: 0;
-      line-height: 42px;
-      height: 42px;
-      /* font-weight: bold; */
-      padding: 0 50px;
-    }
-
-    .el-breadcrumb {
-      line-height: 30px;
-      margin-left: 50px;
-      margin-right: 20px;
-      font-size: 14px;
-    }
-  }
-
-  .sels {
-    background: #fff;
-    padding: 10px 30px;
-    margin: 0 20px 10px 20px;
-
-    .lineBox {
-      i {
-        color: #800080;
-        font-weight: bold;
-      }
-    }
-
-    .line {
-      height: 12px;
-      background: #800080;
-      margin-left: 20px;
-    }
-
+.price-inquiry-approval{
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0 20px 20px;
+  .el-dialog{
     .form {
-      /* max-width: 1000px; */
-      .el-form-item__label {
-        height: 30px;
-      }
-
-      .el-form-item {
-        width: 200px;
-        margin-bottom: 0;
-      }
-      .btns {
-        width: 100%;
-      }
-      .date {
-        width: 414px;
-
-        .el-date-editor {
-          width: 414px;
+        .el-form-item__label {
+          height: 30px;
         }
-      }
-      .btns,
-      .last {
-        width: 100%;
-      }
-    }
-  }
-
-  .box {
-    margin: 0 20px 20px 20px;
-    background: #ffffff;
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
-    border-radius: 2px;
-    position: relative;
-
-    .btns {
-      .add {
-        margin: 12px 0 12px 30px;
-      }
-    }
-
-    .tab {
-      .el-table {
-        td {
-          height: 64px;
-          line-height: 64px;
-
-          .cell {
-            font-size: 12px;
-            color: #333333;
-            letter-spacing: 0;
-            line-height: 18px;
+        .el-form-item {
+          .el-select{
+            width: 100%;
           }
         }
+        .inp{
+          width: 100%;
+        }
+        .last{
+          width: 100%;
+        }
+        .sub{
+          width: 100%;
+          display: flex;
+          justify-content: center;
+        }
+    }
+  }
+  .sellBox{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .head{
+      padding: 10px 20px;
+      // background: red;
+    }
+    .sels{
+      // margin: 20px 0;
+      padding:10px 20px;
+      background: #fff;
+      margin-bottom: 10px;
+      .lineBox{
+        color: #b161bf;
       }
     }
-
-    .block {
-      padding: 10px;
-
-      .el-pagination {
-        width: 100%;
-        text-align: center;
+    .form {
+        .el-form-item__label {
+          height: 30px;
+        }
+        .el-form-item {
+          width: 200px;
+          margin-bottom: 0;
+          .el-select{
+            width: 100%;
+          }
+        }
+        .date {
+          width: 414px;
+          
+        }
+    }
+    .box{
+      height: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      .btns{
+        padding: 10px 20px;
+        // background: pink;
+      }
+      .tab{
+        padding-bottom: 52px;
+        box-sizing: border-box;
+        height: 100%;
+        // background: orange;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        .el-table{
+          height: 100%;
+          position: relative;
+        }
+        .block{
+          position: absolute;
+          bottom:0;
+          padding:  10px 0 ;
+          width: 100%;
+          .el-pagination {
+            width: 100%;
+            padding: 0;
+            text-align: center;
+          }
+        }
       }
     }
   }
