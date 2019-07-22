@@ -13,6 +13,7 @@
       </span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item :command="1">基本信息</el-dropdown-item>
+        <el-dropdown-item :command="5">修改基本信息</el-dropdown-item>
         <el-dropdown-item :command="4">子账号管理</el-dropdown-item>
         <el-dropdown-item :command="2">修改密码</el-dropdown-item>
         <el-dropdown-item :command="3">退出登录</el-dropdown-item>
@@ -331,6 +332,9 @@ export default {
       }
       if (command == 1) {
         this.$router.push('/home/agent/add');
+      }
+      if (command == 5) {
+        this.$router.push('/home/agent/updateUserInfo');
       }
     },
 

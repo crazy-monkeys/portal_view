@@ -1,61 +1,55 @@
 <template>
   <div class="menu">
-    <!-- <transition-group enter-active-class="animated slideInLeft" leave-active-class="animated slideOutLeft"> -->
       <div class="logo" :key='1'>
         <img class="lglogo" src="../assets/img/logostr.png" alt="" v-if="!isCollapse">
         <img class="smalllogo" src="../assets/img/logo.png" alt="" v-if="isCollapse">
-        <!-- <div class="msg" v-if="!isCollapse">紫光展锐</div> -->
       </div>
-    <!-- </transition-group> -->
-    <!-- <transition-group enter-active-class="animated slideInLeft" leave-active-class="animated slideOutLeft"> -->
-      <el-menu :key='2' text-color='#B161BF' class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
-        :collapse="isCollapse" :unique-opened="true" :router='true' :default-active='$route.path'>
-        <template v-for="item1 in list">
-          <template v-if="item1.children.length !=0">
-            <el-submenu :index="item1.resourceUrl" :key="item1.resourceId">
-              <template slot="title"><i :class="item1.iconClass"></i><span>{{item1.resourceName}}</span></template>
+        <el-menu :key='2' text-color='#B161BF' class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
+          :collapse="isCollapse" :unique-opened="true" :router='true' :default-active='$route.path'>
 
-              <template v-for="item2 in item1.children">
+          <template v-for="item1 in list">
+            <template v-if="item1.children.length !=0">
+              <el-submenu :index="item1.resourceUrl" :key="item1.resourceId">
+                <template slot="title"><i :class="item1.iconClass"></i><span>{{item1.resourceName}}</span></template>
 
-                <template v-if="item2.children.length !=0">
-                  <el-submenu :index="item2.resourceUrl" :key="item2.resourceId">
-                    <template slot="title"><i :class="item1.iconClass"></i><span>{{item2.resourceName}}</span></template>
-                    <template v-for="item3 in item2.children">
+                <template v-for="item2 in item1.children">
 
-                      <template v-if="item3.children.length !=0">
-                        <el-submenu :index="item3.resourceUrl" :key="item3.resourceId">
-                          <template slot="title"><i :class="item3.iconClass"></i><span>{{item3.resourceName}}</span></template>
-                        </el-submenu>
+                  <template v-if="item2.children.length !=0">
+                    <el-submenu :index="item2.resourceUrl" :key="item2.resourceId">
+                      <template slot="title"><i :class="item1.iconClass"></i><span>{{item2.resourceName}}</span></template>
+                      <template v-for="item3 in item2.children">
+
+                        <template v-if="item3.children.length !=0">
+                          <el-submenu :index="item3.resourceUrl" :key="item3.resourceId">
+                            <template slot="title"><i :class="item3.iconClass"></i><span>{{item3.resourceName}}</span></template>
+                          </el-submenu>
+                        </template>
+                        <template v-else>
+                          <el-menu-item :index="item3.resourceUrl" :key="item3.resourceId">
+                            <i :class="item3.iconClass"></i><span>{{item3.resourceName}}</span>
+                          </el-menu-item>
+                        </template>
+
                       </template>
-                      <template v-else>
-                        <el-menu-item :index="item3.resourceUrl" :key="item3.resourceId">
-                          <i :class="item3.iconClass"></i><span>{{item3.resourceName}}</span>
-                        </el-menu-item>
-                      </template>
+                    </el-submenu>
+                  </template>
+                  <template v-else>
+                    <el-menu-item :index="item2.resourceUrl" :key="item2.resourceId">
+                      <i :class="item2.iconClass"></i>
+                      {{ item2.resourceName}}
+                    </el-menu-item>
+                  </template>
 
-                    </template>
-                  </el-submenu>
                 </template>
-                <template v-else>
-                  <el-menu-item :index="item2.resourceUrl" :key="item2.resourceId">
-                    <i :class="item2.iconClass"></i>
-                    {{ item2.resourceName}}
-                  </el-menu-item>
-                </template>
-
-              </template>
-            </el-submenu>
+              </el-submenu>
+            </template>
+            <template v-else>
+              <el-menu-item :index="item1.resourceUrl" :key="item1.resourceId">
+                <i :class="item1.iconClass" style="margin-right:0"></i> <span>{{ item1.resourceName}}</span>
+              </el-menu-item>
+            </template>
           </template>
-          <template v-else>
-            <el-menu-item :index="item1.resourceUrl" :key="item1.resourceId">
-              <i :class="item1.iconClass" style="margin-right:0"></i> <span>{{ item1.resourceName}}</span>
-            </el-menu-item>
-          </template>
-
-        </template>
-      </el-menu>
-    <!-- </transition-group> -->
-    <!-- <router-view></router-view> -->
+        </el-menu>
   </div>
 
 
@@ -369,12 +363,13 @@ $sc: 12;
 }
 .menu {
   height: 100%;
+  padding-top: 56px;
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 240px;
     min-height: 400px;
   }
   .el-menu {
-    height: 90%;
+    height: 100%;
     overflow: hidden;
     border: none;
     overflow-y: auto;
@@ -384,7 +379,12 @@ $sc: 12;
   }
 
   .logo {
-    height: 10%;
+    display: flex;
+    height: 56px;
+    position: absolute;
+    top: 0;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     .smalllogo {
       width: 44px;

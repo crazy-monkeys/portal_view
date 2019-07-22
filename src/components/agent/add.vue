@@ -14,6 +14,9 @@
               <template slot="title">
                 <h3 style="padding:10px 0;color:purple">基本信息</h3>
               </template>
+              <el-form-item label="编码">
+              <el-input type="text" size="small"></el-input>
+              </el-form-item>
               <el-form-item label="名称">
               <el-input type="text" size="small"></el-input>
               </el-form-item>
@@ -93,139 +96,11 @@
             </el-form-item>
             </el-collapse-item>
           </el-collapse>
-          <!-- <div class="msg">
-            <h3 style="padding:10px 0;color:purple">基本信息</h3>
-            <el-form-item label="名称">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="简称">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="电话">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="E-mail">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="网站">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-          </div>
-          <div class="comMsg">
-            <h3 style="padding:10px 0;color:purple">背景信息</h3>
-            <el-form-item label="公司资产">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="注册日期">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="公司人数">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="上级公司">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-          </div>
-          <div class="comMsg">
-            <h3 style="padding:10px 0;color:purple">开户行信息</h3>
-            <el-form-item label="银行名称">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="银行地址">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="账号">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="银行识别码">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-          </div>
-          <div class="comMsg">
-            <h3 style="padding:10px 0;color:purple">授信额度信息</h3>
-            <el-form-item label="授信额度初始值">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="授信额度占用值">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="授信额度剩余值">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-          </div>
-          <div class="comMsg">
-            <h3 style="padding:10px 0;color:purple">介绍</h3>
-            <el-form-item class="txt" label="优势价值">
-              <el-input type="textarea" size="small" v-model="value" readonly rows='4'> </el-input>
-            </el-form-item>
-            <el-form-item  class="txt" label="优势介绍">
-              <el-input type="textarea" size="small" readonly rows='4'></el-input>
-            </el-form-item>
-            <el-form-item class="txt" label="业务介绍">
-              <el-input type="textarea" size="small" readonly rows='4'></el-input>
-            </el-form-item>
-          </div> -->
-            
         </el-form>
       </div>
       <div class="tab">
         <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="分类分级信息" name="first">
-            <div class="tabBox">
-              <el-table :data="tableData" style="width: 100%" height="300">
-                <el-table-column prop="t4" label="维度" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t4" label="BU" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t4" label="PDT" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t4" label="产品型号" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t4" label="区域" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t4" label="性质" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t4" label="等级" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t4" label="是否白名单" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t4" label="开始日期" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t4" label="结束日期" show-overflow-tooltip>
-                </el-table-column>
-                <div slot="empty">
-                  无数据
-                </div>
-              </el-table>
-              <!-- <div class="block">
-                <el-pagination :current-page="currentPage" :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next"
-                  :total="total">
-                </el-pagination>
-              </div> -->
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="层次结构" name="second">
-            <div class="tabBox">
-              <el-table :data="tableData1" style="width: 100%" height="300">
-                <el-table-column prop="t11" label="名称" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t12" label="主要联系人" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t12" label="地址" show-overflow-tooltip>
-                </el-table-column>
-
-                <div slot="empty">
-                  无数据
-                </div>
-              </el-table>
-              <!-- <div class="block">
-                <el-pagination :current-page="currentPage" :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next"
-                  :total="total">
-                </el-pagination>
-              </div> -->
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="关系" name="gou">
+          <el-tab-pane label="关系" name="first">
             <div class="tabBox">
                <el-table :data="tableData2" style="width: 100%" height="300">
                 <el-table-column prop="t22" label="名称" show-overflow-tooltip>
@@ -259,14 +134,9 @@
                   无数据
                 </div>
               </el-table>
-              <!-- <div class="block">
-                <el-pagination :current-page="currentPage" :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next"
-                  :total="total">
-                </el-pagination>
-              </div> -->
             </div>
           </el-tab-pane>
-          <el-tab-pane label="开票信息" name="good">
+          <el-tab-pane label="开票信息" name="second">
             <div class="tabBox">
                <el-table :data="tableData2" style="width: 100%" height="300">
                 <el-table-column prop="t22" label="购货单位" show-overflow-tooltip>
@@ -298,11 +168,6 @@
                   无数据
                 </div>
               </el-table>
-              <!-- <div class="block">
-                <el-pagination :current-page="currentPage" :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next"
-                  :total="total">
-                </el-pagination>
-              </div> -->
             </div>
           </el-tab-pane>
         </el-tabs>

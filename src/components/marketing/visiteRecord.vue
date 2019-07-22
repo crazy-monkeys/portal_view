@@ -8,16 +8,13 @@
         </el-breadcrumb>
       </div>
       <div class="sels clear">
-        <!-- <el-button @click='change'  size='small' type='primary' plain>{{!dialogVisible ? '展开筛选条件' :'收起筛选条件'}}
-          </el-button> -->
+       
         <div class="lineBox">
           <i class="el-icon-arrow-down" v-if='!dialogVisible' @click='change'> 展开</i>
 
           <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
 
-          <!-- <div class="line"></div> -->
         </div>
-        <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
         <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <el-form-item label="客户名称">
             <el-input  placeholder="请输入"></el-input>
@@ -36,15 +33,13 @@
             <el-button   type='primary' plain>重置</el-button>
           </el-form-item>
         </el-form>
-        <!-- </transition-group> -->
 
       </div>
-      <!-- </transition-group> -->
       <div class="box">
         <div class="btns clear">
           <el-button   size='small' type='primary'>下载模版</el-button>
           <el-button   size='small' type='primary'>上传</el-button>
-          <el-button   size='small' type='primary'>新建</el-button>
+          <!-- <el-button   size='small' type='primary'>新建</el-button> -->
         </div>
         <div class="tab">
           <el-table :data="tableData" border style="width: 100%" height="100%">
@@ -91,11 +86,6 @@
             <el-table-column prop="11" width='180'  label="参与人员:展锐" show-overflow-tooltip></el-table-column>
             <el-table-column prop="12" width='180'  label="参与人员:客户" show-overflow-tooltip></el-table-column>
             <el-table-column prop="13" width="180" label="参与人员:代理" show-overflow-tooltip></el-table-column>
-            <el-table-column  label="操作" width="100"  fixed="right" >
-              <template>
-                <el-button size="small" type="text" @click="del">删除</el-button>
-              </template>
-            </el-table-column>
             <div slot="empty">
               <p>未查询到客户信息</p>
             </div>

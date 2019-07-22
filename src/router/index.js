@@ -52,6 +52,13 @@ export default new Router({
                     // meta: {keepAlive: true}
                 },
                 {
+                    path: 'agent/updateUserInfo',
+                    name: 'agentIndex',
+                    component: resolve => require(['@/components/agent/updateUserInfo'], resolve),
+                    // meta: {keepAlive: true}
+                },
+
+                {
                     path: 'agent/add',
                     name: 'agentAdd',
                     component: resolve => require(['@/components/agent/add'], resolve),
