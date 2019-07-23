@@ -86,7 +86,7 @@ export default {
             //         var authorization=res.headers['authorization'];
             //         ses.setItem("data", authorization);
             //         ses.setItem("vuexData", JSON.stringify(res));
-                    this.$router.push("/home/tb");
+                    this.$router.push("/home/sell");
             //     }else{
             //       this.$message({
             //         type:'error',
