@@ -9,78 +9,64 @@
       </div>
       <div class="sels clear">
         <div class="lineBox">
-          <i class="el-icon-arrow-down" v-if='!dialogVisible' @click='change'> 展开</i>
-
-          <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
-
-          <!-- <div class="line"></div> -->
+          <i class="el-icon-arrow-down" v-if='!dialogVisible3' @click='change'> 展开</i>
+          <i class="el-icon-arrow-up" v-if='dialogVisible3' @click='change'> 收起</i>
         </div>
-        <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible3'>
           <el-form-item label="客户名称">
             <el-input size='small' v-model="form.realName" placeholder="请输入"></el-input>
           </el-form-item>
-          <!-- <el-form-item label="角色">
-            <el-input size='small' v-model="form.loginName"  placeholder="请输入"></el-input>
-          </el-form-item> -->
           <el-form-item label="角色">
-            <el-select v-model="form.role" size='small' filterable placeholder="请选择">
-              <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
+            <el-input v-model="form.roleName" size='small'  placeholder="请选择">
+            </el-input>
           </el-form-item>
           <el-form-item label="用户类型">
             <el-select v-model="form.userType" size='small' filterable placeholder="请选择">
-              <el-option v-for="item in options1" :key="item.value" :label="item.label" :value="item.value">
+              <el-option v-for="item in userTypes" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="开通日期" class="date">
-            <Daterange />
+            <Daterange @data='watchTime' :resetData='resetData' />
           </el-form-item>
           <el-form-item label=" ">
             <el-button size='small' type='primary' plain @click="search">搜索</el-button>
             <el-button  size='small' type='primary' plain @click="reset">重置</el-button>
           </el-form-item>
         </el-form>
-        <!-- </transition-group> -->
-
       </div>
       <div class="box">
-        <!-- <div class="btns clear">
-        
-        </div> -->
         <div class="tab">
-          <el-table :data="tableData" border style="width: 100%" height="100%">
+          <el-table :data="tableData" border style="width: 100%" height="100%" row-click="rowClick">
             <el-table-column type="index"  label="编号" :index='q' width="60">
             </el-table-column>
-            <el-table-column prop="realName" show-overflow-tooltip label="客户名称">
+            <el-table-column prop="realName" show-overflow-tooltip label="客户名称" width="150">
             </el-table-column>
-            <el-table-column prop="realName" show-overflow-tooltip label="客户简称">
+            <el-table-column prop="realName" show-overflow-tooltip label="客户简称" width="150">
             </el-table-column>
-            <el-table-column prop="loginName" label="登录名" show-overflow-tooltip>
+            <el-table-column prop="loginName" label="登录名" show-overflow-tooltip width="150">
             </el-table-column>
-            <el-table-column prop="" label="用户类型" show-overflow-tooltip>
+            <el-table-column prop="" label="用户类型" show-overflow-tooltip width="150">
               <template slot-scope="scope">
               <span>
-                {{tableData[scope.$index].userType=='1' ?'代理商' :tableData[scope.$index].userType=='2' ?'直供客户':'销售客户'}}
+                {{tableData[scope.$index].userType=='agent' ?'代理商' :tableData[scope.$index].userType=='subAgent' ?'子代理商':'内部客户'}}
               </span>
             </template>  
             </el-table-column>
-            <el-table-column prop="" show-overflow-tooltip label="角色">
+            <el-table-column prop="" show-overflow-tooltip label="角色" width="150">
               <template slot-scope="scope">
               <span v-for="role in tableData[scope.$index].roles" :key="role.roleName">
                 {{role.roleName}}
               </span>
               </template>
             </el-table-column>
-            <el-table-column prop="phone" label="手机号" show-overflow-tooltip>
+            <el-table-column prop="phone" label="手机号" show-overflow-tooltip width="150">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="email" label="邮箱">
+            <el-table-column show-overflow-tooltip prop="email" label="邮箱" width="150">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="regTime" label="注册时间">
+            <el-table-column show-overflow-tooltip prop="regTime" label="注册时间" width="180">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="状态">
+            <el-table-column show-overflow-tooltip prop="" label="状态" width="150">
               <template slot-scope="scope">
               <span v-for="role in tableData[scope.$index].roles" :key="role.roleName">
                 {{tableData[scope.$index].userStatus=='0' ?'冻结' :tableData[scope.$index].userStatus=='1' ?'正常':'失效'}}
@@ -88,10 +74,8 @@
               </template>
             </el-table-column>
             <el-table-column label="操作" width="100" fixed="right">
-              <template slot-scope="scope">
+              <template >
                 <el-button size="small" type="text" @click="authorize">授权</el-button>
-                <!-- <el-button size="small" type="primary">维护</el-button> -->
-                <!-- <el-button size="small" type="text" @click="freeze">冻结</el-button> -->
               </template>
             </el-table-column>
             <div slot="empty">
@@ -107,27 +91,21 @@
       </div>
     </div>
     <el-dialog title="授权" :visible.sync="dialogVisible" width="400px">
-      <el-select v-model="role" filterable placeholder="请选择">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
+      <el-form :model="roleForm" :rules='rules' ref='roleForm'>
+        <el-form-item label="角色设置" prop="role">
+          <el-select v-model="roleForm.role" size="small" filterable placeholder="请选择">
+            <el-option
+              v-for="item in roles"
+              :key="item.id"
+              :label="item.roleName"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false" size='small'>取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false" size='small'>授 权</el-button>
-      </span>
-    </el-dialog>
-    <el-dialog title="类型变更" :visible.sync="dialogVisible1" width="30%">
-      <el-select v-model="value" size='small' filterable placeholder="请选择" class="changeType">
-        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-        </el-option>
-      </el-select>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible1 = false" size='small'>取 消</el-button>
-        <el-button type="primary" @click="dialogVisible1 = false" size='small'>确 定</el-button>
+        <el-button @click="cancel" size='small'>取 消</el-button>
+        <el-button type="primary" @click="submitForm('roleForm')" size='small'>授 权</el-button>
       </span>
     </el-dialog>
   </div>
@@ -136,7 +114,7 @@
 <script>
 import formTest from "../../assets/js/formTest";
 import Daterange from "../com/date";
-
+import { getUserList ,getRoles,savePermission} from '@/api/system/user.js'
 export default {
   name: "user",
   components:{
@@ -144,14 +122,20 @@ export default {
   },
   data() {
     return {
+      resetData:false,
+      time:{},
+      rowData:{},
+      roleForm:{
+        role:''
+      },
       form:{
         realName:'',
-        loginName:'',
-        date:[],
+        roleName:'',
+        startTime:'',
+        endTime:'',
         userType:'',
         role:''
       },
-      role:'',
       options2: [
         {
           value: 1,
@@ -162,42 +146,35 @@ export default {
           label: "首代"
         }
       ],
-      value2: "",
-
-      options1: [
+      //验证规则
+      rules:{
+        role: [
+          { required: true, trigger: 'blur',message:'角色不能为空'}
+        ]
+      },
+      //客户类型选项
+      userTypes: [
         {
-          value: 1,
+          value: 'agent',
           label: "代理商"
         },
         {
-          value: 2,
-          label: "直供客户"
+          value: 'subAgent',
+          label: "子代理商"
         },
         {
-          value: 3,
-          label: "销售客户"
+          value: 'internal',
+          label: "内部客户"
         }
       ],
-      value1: "",
-      txt: "",
-      options: [
-        {
-          value: 1,
-          label: "系统管理员"
-        },
-        {
-          value: 2,
-          label: "首代"
-        }
-      ],
-      value: "",
+      //角色列表
+      roles: [],
+      //授权框
       dialogVisible: false,
+      //搜索框
       dialogVisible3: false,
-      dialogVisible1: false,
-      tableData: [
-        {}
-      ],
-      tableData1: [{}],
+      //用户列表
+      tableData: [],
       //第几页
       currentPage: 1,
       //每页的容量
@@ -206,118 +183,93 @@ export default {
     };
   },
   created(){
-    // this.getList()
+    this.getList();
+    this.getRoles();
   },
   methods: {
-    freeze(){
-      this.$confirm('确定要冻结该用户吗？', '删除', {
-          distinguishCancelAndClose: true,
-          confirmButtonText: '确定',
-          cancelButtonText: '取消'
-        })
-        .then(() => { 
-          this.$message({
-            type: 'success',
-            message: '冻结成功'
-          })
-        })
-        .catch(action => {
-          this.$message({
-            type: 'fail',
-            message: '已取消操作'
-          })
-        });
+    watchTime(data){
+      console.log(data)
+      this.time = data
+      this.resetData = false
+    },
+    rowClick(row){
+      this.rowData = row
+    },
+    submitForm(formName) {
+      this.$formTest.submitForm(this.$refs[formName],this.authorizeSure)
+    },
+    resetForm(formName) {
+      this.$formTest.resetForm(this.$refs[formName]) 
+    },
+    async authorizeSure(){
+      var data = {
+        id :this.rowData.id,
+        roleId :this.roleForm.role,
+      };
+      // const res = await saveRole(data)
+      // console.log('授权结果',res)
+      console.log('授权结果',111111)
+      this.cancel()
+      // if(res){
+      //   this.cancel()
+      // }
+      
+    },
+    cancel(){
+      this.dialogVisible = false;
+      this.resetForm('roleForm')
     },
     authorize(){
       this.dialogVisible = true
     },
+    async getRoles(){
+      var data = {
+        pageNum:1,
+        pageSize:1000000
+      }
+      const res = await getRoles(data);
+      console.log('角色列表',res)
+      if(res){
+        this.roles = res.data.data.list
+      }
+    },
     search(){
-      // this.getList()
+      this.getList()
     },
     reset(){
+      this.resetData = true
+      this.time={}
       this.clearForm()
-      // this.getList()
+      this.getList()
     },
     clearForm(){
-      this.form.date=[];
       this.form.userType='';
-      this.form.role='';
-      this.form.realName='';
+      this.form.roleName='';
       this.form.loginName='';
     },
-    getList(){
+    async getList(){
       var data = {
-        regStartTime :this.form.date.length==0 ? '' : this.form.data[0],	
-        endStartTime:this.form.date.length==0 ? '' :this.form.data[1],
+        regStartTime :this.time.startTime,	
+        endStartTime:this.time.endTime,
         realName:this.form.realName,
-        loginName:this.form.loginName,
+        roleName:this.form.roleName,
         userType:this.form.userType,
         pageNum:this.currentPage,
         pageSize:this.pageSize,
       }
-       this.$http({
-              method : 'post',
-              url :  process.env.API_ROOT+ '/user/list',
-              data:data,
-              headers:{
-                Authorization:sessionStorage.getItem('data')
-              }
-            }) .then(res => {
-                console.log("用户列表", res);
-                if (res.data.code===1) {
-                   this.tableData = res.data.data.list
-                   this.total = res.data.data.total
-                }else{
-                  this.$message({
-                    type:'error',
-                    message:res.data.msg
-                  })
-                }
-              
-              })
-              .catch(error => {
-                console.log(error);
-                alert("登入失败");
-              });
+      const res = await getUserList(data);
+      console.log('用户列表',res)
+      if(res){
+        this.tableData = res.data.data.list
+        this.total = res.data.data.total
+      }
     },
     change() {
       this.dialogVisible3 = !this.dialogVisible3;
     },
-    changeType() {
-      this.dialogVisible1 = true;
-    },
-    open() {
-      this.$confirm("确定要释放吗?", "释放", {
-        distinguishCancelAndClose: true,
-        confirmButtonText: "确定",
-        cancelButtonText: "取消"
-      })
-        .then(() => {
-          this.$message({
-            type: "success",
-            message: "释放成功"
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "fail",
-            message: "已取消操作"
-          });
-        });
-    },
-    remove() {
-      this.dialogVisible = true;
-    },
     q(index) {
       return this.pageSize * (this.currentPage - 1) + index + 1;
     },
-    //点击新增营销活动
-    add() {
-      this.$router.push({
-        name: "AddSell"
-      });
-    },
-
     // 分页
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);

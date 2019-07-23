@@ -527,29 +527,26 @@ export default {
       }
     }, 500)
   },
-  testForm: (formName, callback) => {
-    console.log('this', this)
-    // this.$refs[formName].validate((valid) => {
-    //     if (valid) {
-    //         callback;
-    //         this.resetForm('addForm')
-    //     } else {
-    //         console.log('error submit');
-    //         return false;
-    //     }
-    // });
+  resetForm(formRef) {
+    if (formRef) {
+      if (formRef !== undefined) {
+        formRef.resetFields();
+      } else {
+        this.$nextTick(() => {
+          formRef.resetFields();
+        });
+      }
+    }
   },
-  testForm2(formName, callback) {
-    console.log('this', this)
-    // this.$refs[formName].validate((valid) => {
-    //     if (valid) {
-    //         callback;
-    //         this.resetForm('addForm')
-    //     } else {
-    //         console.log('error submit');
-    //         return false;
-    //     }
-    // });
+  submitForm(formRef,fun) {
+    formRef.validate(valid => {
+      if (valid) {
+        fun()
+      } else {
+        console.log("error submit!!");
+        return false;
+      }
+    });
   },
 
 

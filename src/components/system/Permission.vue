@@ -56,7 +56,7 @@
         </div>
       </div> -->
     <el-dialog :title="edit? '修改角色' :'新建角色'"  :visible.sync="dialogVisible" width="400px" :before-close="close"
-      :close-on-click-modal="false">
+      :close-on-click-modal="false" >
       <el-form label-position="top" label-width="auto" :model="roleForm" :rules='rules' size="small" ref='roleForm' class="roleForm">
         <el-form-item label="角色名称" prop='name'>
           <el-input v-model="roleForm.name" maxlength='10' :disabled='edit'></el-input>
@@ -73,9 +73,10 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="close" size="small">取消</el-button>
-        <el-button type="primary" @click='close' size="small">提交</el-button>
+        <el-button type="primary" @click='submitForm("roleForm")' size="small">提交</el-button>
       </span>
     </el-dialog>
+
     <el-dialog title="权限配置"  :visible.sync="dialogVisible1" width="400px" :before-close="close"
       :close-on-click-modal="false">
       <el-form label-position="top" label-width="auto" :model="roleForm" :rules='rules' size="small" ref='roleForm' class="roleForm">
@@ -95,7 +96,8 @@
 </template>
 
 <script>
-import formTest from "../../assets/js/formTest";
+import { getRoles} from '@/api/system/user.js'
+import { saveRole} from '@/api/system/role.js'
 
 export default {
   name: "permission",
@@ -130,9 +132,7 @@ export default {
       defaultCheckedKeys: [],
       type: "",
       rules: {
-        name: [
-          { required: true, trigger: "change", validator: formTest.roleName }
-        ]
+        
       },
       selStr: "",
       defaultProps: {
@@ -210,9 +210,7 @@ export default {
       ],
 
       //角色列表
-      roles: [
-        {}
-      ],
+      roles: [{}],
       roleId: "",
       form: {
         name: "",
@@ -225,7 +223,7 @@ export default {
     };
   },
   created(){
-    // this.getRoles()
+    this.getRoles()
   },
   computed:{
     loginName() {
@@ -233,6 +231,8 @@ export default {
     },
   },
   methods: {
+    
+    filterNode(){},
     permissionSet(){
       this.dialogVisible1 = true
     },
@@ -244,48 +244,6 @@ export default {
       this.edit = false
       this.dialogVisible = true;
     },
-     //修改表单提交
-    submit(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.addRole()
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
-    },
-    //重置表单
-    resetForm(formName) {
-      if (this.$refs[formName]) {
-        if (this.$refs[formName] !== undefined) {
-          this.$refs[formName].resetFields();
-        } else {
-          this.$nextTick(() => {
-            this.$refs[formName].resetFields();
-          });
-        }
-      }
-    },
-    //把对象转成query值
-    cleanArray(actual) {
-      var newArray = [];
-        for (let i = 0; i < actual.length; i++) {
-          if (actual[i]) {
-            newArray.push(actual[i]);
-          }
-        }
-      return newArray;
-    },
-    toQueryString(obj) {
-      if (!obj) return "";
-        return this.cleanArray(
-        Object.keys(obj).map(key => {
-          if (obj[key] === undefined) return "";
-            return encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]);
-          })
-        ).join("&");
-    },
     close(){
       this.dialogVisible1 = false;
       this.dialogVisible = false;
@@ -295,72 +253,44 @@ export default {
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageSize = val;
-      // this.getRoles()
+      this.getRoles()
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.currentPage = val;
-      // this.getRoles()
+      this.getRoles()
     },
-    getRoles(){
+    submitForm(formName) {
+      this.$formTest.submitForm(this.$refs[formName],this.saveRole)
+    },
+    resetForm(formName) {
+      this.$formTest.resetForm(this.$refs[formName]) 
+    },
+    async getRoles(){
       var data = {
-        // roleName :this.loginName,	
         pageNum:this.currentPage,
         pageSize:this.pageSize,
+        roleName:''
       }
-       this.$http({
-              method : 'get',
-              url :  process.env.API_ROOT+ '/permission/roleInfo?'+ this.toQueryString(data),
-              headers:{
-                Authorization:sessionStorage.getItem('data')
-              }
-            }) .then(res => {
-                console.log("角色列表", res);
-                if (res.data.code===1) {
-                   this.roles = res.data.data.list
-                   this.total = res.data.data.total
-                }else{
-                  this.$message({
-                    type:'error',
-                    message:res.data.msg
-                  })
-                }
-              
-              })
-              .catch(error => {
-                console.log(error);
-                alert("登入失败");
-              });
+      const res = await getRoles(data);
+      console.log('角色列表',res)
+      if(res){
+        this.roles = res.data.data.list
+        this.total = res.data.data.total
+      }
     },
-    addRole(){
+    async saveRole(){
       var data = {
         roleName:this.roleForm.name,
         roleDesc:this.roleForm.desc,
       }
-       this.$http({
-              method : 'post',
-              url :  process.env.API_ROOT+ '/permission/saveRole',
-              data:data,
-              headers:{
-                Authorization:sessionStorage.getItem('data')
-              }
-            }) .then(res => {
-                console.log("新增角色", res);
-                if (res.data.code===1) {
-                  this.getRoles()
-                  this.close()
-                }else{
-                  this.$message({
-                    type:'error',
-                    message:res.data.msg
-                  })
-                }
-              })
-              .catch(error => {
-                console.log(error);
-                alert("网络异常");
-              });
-    },
+      const res = await saveRole(data);
+      console.log('新增结果',res)
+      if(res){
+        this.getRoles();
+        this.close()
+      }
+    }
   }
 };
 </script>

@@ -23,6 +23,9 @@ import { HappyScroll } from 'vue-happy-scroll'
 Vue.component('happy-scroll', HappyScroll)
     // 引入css
 import 'vue-happy-scroll/docs/happy-scroll.css'
+
+import formTest from './assets/js/formTest.js'
+Vue.prototype.$formTest = formTest;
 Vue.config.productionTip = false
     //引入仓库
 import store from './store'
