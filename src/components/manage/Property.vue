@@ -16,10 +16,10 @@
           <el-form-item label="客户名称">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="客户编号">
+          <el-form-item label="客户内部编号">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="客户简称">
+          <el-form-item label="客户外部编号">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="客户类型">
@@ -56,9 +56,9 @@
             </el-table-column> -->
             <el-table-column prop="2" label="客户名称" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="3" label="客户编号" show-overflow-tooltip>
+            <el-table-column prop="3" label="客户内部编号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="4" label="客户简称" show-overflow-tooltip>
+            <el-table-column prop="4" label="客户外部编号" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="5" label="客户类型" show-overflow-tooltip>
             </el-table-column>
@@ -66,6 +66,7 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" width='120' label="操作" fixed='right'>
               <template scope-slot='scope'>
+                <el-button type='text'  @click='mx'>明细</el-button>
                 <el-button type='text'  @click='add(1)'>审批</el-button>
                 <el-button type='text'  @click='add(2)'>驳回</el-button>
               </template>
@@ -215,6 +216,11 @@ export default {
   created() {},
   watch: {},
   methods: {
+    mx(){
+      this.$route.push({
+        name:'mx'
+      })
+    },
     del(){
       this.$confirm('是否删除该条报备信息', '删除', {
           distinguishCancelAndClose: true,

@@ -187,6 +187,16 @@ export default new Router({
                     name: 'SalesList',
                     component: resolve => require(['@/components/sales/shipment-upload'], resolve),
                 },
+                {
+                    path: 'cbt',
+                    name: 'cbt',
+                    component: resolve => require(['@/components/marketing/cbt'], resolve),
+                },
+                {
+                    path: 'cbtadd',
+                    name: 'cbtadd',
+                    component: resolve => require(['@/components/marketing/cbtadd'], resolve),
+                },
                 //样本管理
                 //短信营销
                 {

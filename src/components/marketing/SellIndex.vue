@@ -16,10 +16,10 @@
           <el-form-item label="客户名称">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="客户编号">
+          <el-form-item label="客户内部编号">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="客户简称">
+          <el-form-item label="客户外部编号">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="是否License客户">
@@ -54,9 +54,9 @@
             </el-table-column>
             <el-table-column prop="" show-overflow-tooltip label="客户名称" >
             </el-table-column>
-            <el-table-column prop="" label="客户编号" show-overflow-tooltip>
+            <el-table-column prop="" label="客户内部编号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="" label="客户简称" show-overflow-tooltip>
+            <el-table-column prop="" label="客户外部编号" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="" show-overflow-tooltip label="License客户" >
             </el-table-column>

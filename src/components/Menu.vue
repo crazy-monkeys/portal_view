@@ -270,8 +270,8 @@ export default {
           children: [
             {
               resourceId: "61",
-              resourceName: "差价、报价、退换货申请",
-              resourceUrl: "/home/sales/sales-index",
+              resourceName: "差价、保价、退换货申请",
+              resourceUrl: "/home/cbt",
               iconClass: "el-icon-s-123",
               children: []
             },
