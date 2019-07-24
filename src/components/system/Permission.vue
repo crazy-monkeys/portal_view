@@ -16,11 +16,11 @@
           <el-table :data="roles"  highlight-current-row ref='tab'>
             <el-table-column prop='id' label="ID" v-if="false" width="80">
             </el-table-column>
+            <el-table-column prop="roleCode" label="角色编码" show-overflow-tooltip>
+            </el-table-column>
             <el-table-column prop="roleName" label="角色名称" width="200">
             </el-table-column>
             <el-table-column prop="roleName" label="父级角色" width="200">
-            </el-table-column>
-            <el-table-column prop="roleDesc" label="职责描述" show-overflow-tooltip>
             </el-table-column>
             <el-table-column label="操作" width="200">
               <template slot-scope="scope">
@@ -58,18 +58,20 @@
     <el-dialog :title="edit? '修改角色' :'新建角色'"  :visible.sync="dialogVisible" width="400px" :before-close="close"
       :close-on-click-modal="false" >
       <el-form label-position="top" label-width="auto" :model="roleForm" :rules='rules' size="small" ref='roleForm' class="roleForm">
+        <el-form-item label="角色编码" prop='desc'>
+          <el-input type='textarea' v-model="roleForm.desc" maxlength='50'></el-input>
+        </el-form-item>
         <el-form-item label="角色名称" prop='name'>
           <el-input v-model="roleForm.name" maxlength='10' :disabled='edit'></el-input>
         </el-form-item>
-         <el-form-item label="父级角色" prop=''>
+        
+        <el-form-item label="父级角色" prop=''>
             <el-select v-model="form.role" size='small' filterable placeholder="请选择">
               <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
         </el-form-item>
-        <el-form-item label="职责描述" prop='desc'>
-          <el-input type='textarea' v-model="roleForm.desc" maxlength='50'></el-input>
-        </el-form-item>
+        
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="close" size="small">取消</el-button>

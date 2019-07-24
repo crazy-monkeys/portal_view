@@ -320,6 +320,13 @@ export default {
             },
             {
               resourceId: "75",
+              resourceName: '资源管理',
+              resourceUrl: '/home/system/resource',
+              iconClass: "el-icon-s-123",
+              children: []
+            },
+            {
+              resourceId: "76",
               resourceName: '系统参数管理',
               resourceUrl: '/home/system/document',
               iconClass: "el-icon-s-123",

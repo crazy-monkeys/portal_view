@@ -7,7 +7,7 @@
         :accordion="accordion"
         :data="options"
         :props="props"
-        :node-key="props.resourceId"    
+        node-key="id"    
         :default-expanded-keys="defaultExpandedKey"
         @node-click="handleNodeClick"
         :filter-node-method="filterNode" 
@@ -79,7 +79,6 @@ export default {
     },
     // 初始化值
     initHandle(){
-      console.log(this.valueId)
       // console.log(this.$refs.selectTree.getNode(this.valueId))
       
       if(this.valueId || this.valueId===0){
@@ -103,10 +102,8 @@ export default {
     },
     // 切换选项
     handleNodeClick(node){
-      console.log(node)
       this.valueTitle = node.resourceName
-      this.valueId = node.resourceId
-      console.log(this.valueId)
+      this.valueId = node.id
       this.$emit('getValue',this.valueId)
       this.defaultExpandedKey = []
     },
@@ -126,10 +123,18 @@ export default {
     }
   },
   watch: {
-    value(){
-      console.log(1111)
-      this.valueId = this.value
-      this.initHandle()
+    value:{
+      handler:function(n,o){
+        if(n!==null){
+          console.log(n,o)
+          this.valueId = n
+          console.log(this.$refs['selectTree'].getNode('1'))
+          this.valueTitle = this.$refs['selectTree'].getNode(n+'').label
+          this.initHandle()
+        }else{
+          this.valueTitle =''
+        }
+      }
     },
     filterText: {
         handler:function(n,o){

@@ -6,17 +6,17 @@
         <el-breadcrumb-item>系统管理</el-breadcrumb-item>
         <el-breadcrumb-item>资源管理</el-breadcrumb-item>
       </el-breadcrumb>
-      <h1>资源管理</h1>
+      <!-- <h1>资源管理</h1> -->
     </div>
     <div class="box">
       <div class="btns">
         <el-button class="add" type="primary" @click="add" size="small">
-          <i class="el-icon-plus"></i> 新增资源
+          新增资源
         </el-button>
         <div class="content">
             <el-tree 
                 :data="resource"
-                node-key="resourceId"
+                node-key="id"
                 :props="defaultProps"
                 empty-text='当前没有资源'
                 @node-click='nodeClick'     
@@ -31,16 +31,12 @@
               >
                 <!-- :allow-drag="allowDrag" -->
 
-                <span class="custom-tree-node" slot-scope="{ node, resource }" >
+                <span class="custom-tree-node" slot-scope="{ node }" >
                     <div style="width:100%" @mouseenter="mouseenter(node)" @mouseleave="mouseleave(node)">
                     <span>{{ node.label }}</span>
                     <span v-if="node.show">
                         <i class="icon el-icon-edit" @click="() => edit(node)"></i>
                         <i class="icon el-icon-delete" @click="() => delResource(node)"></i>
-                        <i class="icon el-icon-rank" @click="() => remove(node,resource,'up')"></i>
-
-                        <!-- <i class="icon el-icon-arrow-up" @click="() => remove(node,resource,'up')"></i> -->
-                        <!-- <i class="icon el-icon-arrow-down" @click="() => remove(node,resource,'down')"></i> -->
                     </span>
                     </div>
                 </span>
@@ -53,11 +49,11 @@
       :title="editToggle? '编辑资源信息' :'新增资源信息'"
       top='8vh'
       :visible.sync="dialogVisible"
-      width="40%"
+      width="600px"
       :before-close="close"
       :close-on-click-modal="false">
-      <el-form label-position="top" label-width="auto" :model="form" :rules='rules' ref='form' class="form">
-        <el-form-item label="资源所在目录" prop='catalog' v-if="!editToggle" class="selectdrop">
+      <el-form size="small"  :inline="true" label-position="top" label-width="auto" :model="form" :rules='rules' ref='form' class="form clear">
+        <el-form-item label="父级菜单" prop='catalog'  class="selectdrop">
             <SelectTree 
                 :props="props"
                 :options="resource"
@@ -68,32 +64,39 @@
         <el-form-item label="资源名称" prop='name' >
           <el-input v-model="form.name" maxlength='10'></el-input>
         </el-form-item>
-        <el-form-item label="资源代码" prop='code'>
+        <!-- <el-form-item label="资源代码" prop='code'>
           <el-input v-model="form.code" maxlength='50'></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="资源URL" prop='url'>
           <el-input v-model="form.url" ></el-input>
         </el-form-item>
-        <el-form-item label="资源类型" prop='type' v-if="!editToggle">
+        <el-form-item label="资源类型" prop='type' >
           <el-select v-model='form.type'>
                 <el-option v-for='type in types' :key='type.id' :label="type.name" :value='type.id'>
                 </el-option>
             </el-select>
         </el-form-item>
-        <el-form-item label="描述" prop='desc'>
+        <el-form-item label="资源icon" prop='icon' >
+            <el-input v-model="form.icon" ></el-input>
+        </el-form-item>
+        <el-form-item label="权限前缀" prop='permission' >
+            <el-input v-model="form.permission" ></el-input>
+        </el-form-item>
+        <el-form-item label="描述" class="desc" prop='desc'>
           <el-input type='textarea' v-model="form.desc" maxlength='10'></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="close">取消</el-button>
-        <el-button type="primary" @click="submitForm('form')">提交</el-button>
+        <el-button @click="close" size="small">取消</el-button>
+        <el-button type="primary" size="small" @click="submitForm('form')">提交</el-button>
       </span>
     </el-dialog>
-
   </div>
 </template>
 <script>
 import SelectTree from "./components/treeSelect.vue";
+import {getResource,addResource,delResource,editResource,findResource} from "@/api/system/resource.js";
+
 export default {
     components:{
         SelectTree
@@ -113,14 +116,14 @@ export default {
                     name:'菜单',
                     id:1
                 },
-                {
-                    name:'按钮',
-                    id:2
-                },
-                {
-                    name:'API',
-                    id:3
-                }
+                // {
+                //     name:'按钮',
+                //     id:2
+                // },
+                // {
+                //     name:'API',
+                //     id:3
+                // }
             ],
             name:'',
             value:'',
@@ -199,13 +202,14 @@ export default {
                 ],
             },
             form:{
+                permission:'',
                 catalog:'',
                 name:'',
-                code:'',
                 url:'',
                 type:'',
                 desc:'',
                 icon:'',
+                id:'',
             },
             dialogVisible:false,
             editToggle:false,
@@ -218,7 +222,7 @@ export default {
         }
     },
     created(){
-        this.getSource()
+        this.getResource()
     },
     watch:{
         filterText: {
@@ -284,128 +288,92 @@ export default {
             this.value =obj.resourceId
             console.log(this.value)
         },
-        delResource(node){
+        async delResource(node){
             console.log(node)
-            this.$http.delete(''+process.env.API_ROOT+'/system/resource/delResource?resourceId=' + node.key)
-            .then((res)=>{
+            var data ={
+                resourceId:node.key
+            }
+            const res = await delResource(data)
                 console.log('删除资源结果',res)
-                if(res.data.code ==1){
-                    this.$message({
-                        type:'success',
-                        message:'删除成功'
-                    })
-                    this.getSource()
-                }else{
-                    this.$message({
-                        type:'error',
-                        message:res.data.msg
-                    })
-                }
-            }).catch((err)=>{
-                console.log(err);
-                alert('网络异常')
-            })
-        },
-        updateResource(){
-            var data ={
-                //类型
-                resourceId:this.value,
-                resourceType:this.form.type,
-                resourceName:this.form.name,
-                resourceCode:this.form.code,
-                resourceUrl:this.form.url,
-                resourceDesc:this.form.desc,
-                resourceIconClass:this.form.icon,
+            if(res){
+                this.$message({
+                    type:'success',
+                    message:'删除成功'
+                })
+                this.getResource()
             }
-            this.$http.post(''+process.env.API_ROOT+'/system/resource/editResource',data)
-            .then((res)=>{
-                console.log('修改资源',res)
-                if(res.data.code ==1){
-                    this.$message({
-                        type:'success',
-                        message:'修改成功'
-                    })
-                    this.dialogVisible = false
-                    this.resetForm('form')
-                    this.clear()
-                    this.getSource()
-                }else{
-                    this.$message({
-                        type:'error',
-                        message:res.data.msg
-                    })
-                }
-            }).catch((err)=>{
-                console.log(err);
-                alert('网络异常')
-            })
         },
-        
-        addResource(){
+        async editResource(){
             var data ={
-                //类型
                 resourceType:this.form.type,
                 resourceName:this.form.name,
-                resourceCode:this.form.code,
+                id:this.form.id,
                 resourceUrl:this.form.url,
                 resourceDesc:this.form.desc,
-                resourceIconClass:'',
+                iconClass:this.form.icon,
                 parentId:this.valueId,
+                permissionPrefixUrl:this.form.permission,
             }
-            this.$http.post(''+process.env.API_ROOT+'/system/resource/addResource',data)
-            .then((res)=>{
-                console.log('新增资源',res)
-                if(res.data.code ==1){
-                    this.$message({
-                        type:'success',
-                        message:'新增成功'
-                    })
-                    this.dialogVisible = false
-                    this.clear()
-                    this.resetForm('form')
-                    this.getSource()
-                }else{
-                    this.$message({
-                        type:'error',
-                        message:res.data.msg
-                    })
-                }
-            }).catch((err)=>{
-                console.log(err);
-                alert('网络异常')
-            })
+            const res = await editResource(data);
+            console.log('编辑资源',res)
+            if(res){
+                this.$message({
+                    type:'success',
+                    message:'编辑成功'
+                })
+                this.dialogVisible = false
+                this.clear()
+                this.resetForm('form')
+                this.getResource()
+            }
+            
         },
-        getMore(id){
-            this.$http.get(''+process.env.API_ROOT+'/system/resource/preEdit?resourceId='+id)
-            .then((res)=>{
-                console.log('获取单个资源信息',res)
-                if(res.data.code ==1){
-                    this.form.name = res.data.data.resourceName
-                    this.form.code = res.data.data.resourceCode
-                    this.form.url = res.data.data.resourceUrl
-                    this.form.desc = res.data.data.resourceDesc
-                    this.form.type  = res.data.data.resourceType
-                    this.form.icon  = res.data.data.resourceIconClass
-                }else{
-                }
-            }).catch((err)=>{
-                console.log(err);
-                alert('网络异常')
-            })
+        async addResource(){
+            var data ={
+                //类型
+                resourceType:this.form.type,
+                resourceName:this.form.name,
+                // resourceCode:this.form.code,
+                resourceUrl:this.form.url,
+                resourceDesc:this.form.desc,
+                iconClass:this.form.icon,
+                parentId:this.valueId,
+                permissionPrefixUrl:this.form.permission,
+            }
+            const res = await addResource(data);
+            console.log('新增资源',res)
+            if(res){
+                this.$message({
+                    type:'success',
+                    message:'新增成功'
+                })
+                this.dialogVisible = false
+                this.clear()
+                this.resetForm('form')
+                this.getResource()
+            }
+            
+        },
+        async getMore(resourceId){
+            var data ={
+                resourceId:resourceId
+            }
+            const res = await findResource(data);
+            console.log('资源详情',res)
+            if(res){
+                this.form.name = res.data.data.resourceName
+                this.form.url = res.data.data.resourceUrl
+                this.form.desc = res.data.data.resourceDesc
+                this.form.type  = res.data.data.resourceType
+                this.form.icon  = res.data.data.resourceIconClass
+                this.form.catalog = res.data.data.parentId
+                this.valueId = res.data.data.parentId
+                console.log(this.valueId)
+                this.form.id = res.data.data.id
+            }
         },
         submitForm(formName) {
-            this.$refs[formName].validate(valid => {
-                if (valid) {
-                    if(this.editToggle){
-                        this.updateResource()
-                    }else{
-                        this.addResource()
-                    }
-                } else {
-                console.log("error submit!!");
-                return false;
-                }
-            });
+            this.$formTest.submitForm(this.$refs[formName],this.editToggle ? this.editResource : this.addResource)
         },
         clear(){
             this.form.name = ''
@@ -420,25 +388,23 @@ export default {
         },
         //重置表单
         resetForm(formName) {
-            if (this.$refs[formName]) {
-                if (this.$refs[formName] !== undefined) {
-                this.$refs[formName].resetFields();
-                } else {
-                this.$nextTick(() => {
-                    this.$refs[formName].resetFields();
-                });
-                }
-            }
+            this.$formTest.resetForm(this.$refs[formName])
         },
         close(){
+            this.valueId = null
             this.dialogVisible = false
             this.clear()
             this.resetForm('form')
         },
         mouseenter(node){
+            console.log(node.data.id)
+            if(node.data.id){
             this.$set(node,'show',true)
+
+            }
         },
         mouseleave(node){
+
             this.$set(node,'show',false)
         },
         add(){
@@ -449,26 +415,6 @@ export default {
             this.getMore(node.key)
             this.editToggle = true;
             this.dialogVisible = true
-            // const newChild = { id: id++, label: 'testtest', children: [] };
-            // if (!data.children) {
-            // this.$set(data, 'children', []);
-            // }
-            // data.children.push(newChild);
-        },
-        del(node) {
-            // const newChild = { id: id++, label: 'testtest', children: [] };
-            // if (!data.children) {
-            // this.$set(data, 'children', []);
-            // }
-            // data.children.push(newChild);
-        },
-        remove(node, resource) {
-            // const parent = node.parent;
-            // const children = parent.data.children || parent.data;
-            // const index = children.findIndex(d => d.id === data.id);
-            // children.splice(index, 1);
-            console.log(node.data.parentId)
-            console.log(resource)
         },
         filterNode(value, data) {
             console.log(value,data)
@@ -476,20 +422,12 @@ export default {
             return data.resourceName.indexOf(value) !== -1;
         },
         // 获取权限数据
-        getSource(){
-            this.$http.get(''+process.env.API_ROOT+'/system/resource/getAllResource'
-            )
-            .then((res)=>{
-                console.log('权限数据',res)
-                if(res.data.code ==1){
+        async getResource(){
+            const res =  await getResource()
+            console.log('所有资源',res)
+            if(res){
                 this.resource = [res.data.data]
-                }else{
-                this.resource=[]
-                }
-            }).catch((err)=>{
-                console.log(err);
-                alert('网络异常')
-            })
+            }
         },
     }
 };
@@ -499,17 +437,33 @@ export default {
     
         
 .resource {
-    .el-form-item{
+    .form{
+        box-sizing: border-box;
+        
+        .el-form-item{
+        box-sizing: border-box;
+        margin-right: 0;
+        padding: 0 5px;
+        float: left;
+        width: 50%;
         .el-select{
             width: 100%;
         }
     }
+    .desc{
+            width: 100%;
+            .el-input{
+                width: 100%;
+            }
+        }
     .selectdrop{
         .el-select{
             width: 100%;
         }
         
     }
+    }   
+    
     
   .head {
     h1 {

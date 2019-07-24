@@ -90,6 +90,13 @@ export default new Router({
                     component: resolve => require(['@/components/system/announcement'], resolve),
                     // meta: {keepAlive: true}
                 },
+                {
+                    path: 'system/resource',
+                    name: 'resource',
+                    component: resolve => require(['@/components/system/Resource'], resolve),
+                    // meta: {keepAlive: true}
+                },
+
                 //文档管理
                 {
                     path: 'system/document',
