@@ -1,21 +1,38 @@
 <template>
-  <div class="account">
+  <div class="document">
+    <div class="sellBox">
     <div class="head clear">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item to="/home/account/settings">系统管理</el-breadcrumb-item>
         <el-breadcrumb-item>文档管理</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div class="box">
-      <div class="btns">
-          &nbsp;
-          文件名：<el-input size='small' v-model="accountName"></el-input>
-          文件版本：<el-input size='small' v-model="phone"></el-input>
-          文件类型：
-            <el-select v-model="value" size="small" filterable placeholder="稽核报告">
+    <div class="sels clear">
+        <div class="lineBox">
+          <i class="el-icon-arrow-down" v-if='!dialogVisible3' @click='change'> 展开</i>
+          <i class="el-icon-arrow-up" v-if='dialogVisible3' @click='change'> 收起</i>
+        </div>
+        <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible3'>
+          <el-form-item label="文件名">
+            <el-input size='small' v-model="form.fileName" placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="文件版本">
+            <el-input v-model="form.version" size='small'  placeholder="请选择">
+            </el-input>
+          </el-form-item>
+          <el-form-item label="文件类型">
+            <el-select v-model="form.fileType" size='small' filterable placeholder="请选择">
+              <el-option v-for="item in fileTypes" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
             </el-select>
-        <el-button  type="primary" size="small" plain @click="search">搜索</el-button>
+          </el-form-item>
+          <el-form-item label=" ">
+            <el-button size='small' type='primary' plain @click="search">搜索</el-button>
+            <el-button  size='small' type='primary' plain @click="reset">重置</el-button>
+          </el-form-item>
+        </el-form>
       </div>
+    <div class="box">
       <div class="tab">
         <el-table :data="tableData" style="width: 100%" height="700" @row-click='rowClick'>
           <el-table-column type="index" label="编号" v-if="false" width="80">
@@ -34,7 +51,16 @@
           </el-table-column>
           <el-table-column prop="5" show-overflow-tooltip label="状态">
           </el-table-column>
-          
+          <el-table-column  show-overflow-tooltip label="操作" fixed="right" width="100">
+            <template slot-scope="scope">
+              <el-button type="text" size="small" @click="publish">
+                发布
+              </el-button>
+              <el-button type="text" size="small" @click="revoke">
+                撤销
+              </el-button>
+            </template>
+          </el-table-column>
           <div slot="empty">
             <p>无账户信息</p>
           </div>
@@ -47,18 +73,15 @@
       </div>
     </div>
     
-    <el-dialog title="创建文档" :visible.sync="dialogVisible" width="50%">
+    <el-dialog title="发布" top="5vh" :visible.sync="dialogVisible" width="50%">
 
       <el-form ref="form" :model="form" class="form" label-position='top' :inline='true'>
-          <el-form-item label="显示文件名">
+          <el-form-item label="标题">
             <el-input size='small' placeholder="" :readonly="true" v-model='v2'></el-input>
           </el-form-item>
           <el-form-item label="文件类型">
             <el-select v-model="value" size="small" filterable placeholder="稽核报告">
             </el-select>
-          </el-form-item>
-          <el-form-item label="简介">
-            <el-input type='textarea' :rows="2" :cols="60" width="200" placeholder="" resize='none'></el-input>
           </el-form-item>
         </el-form>
          <div class="div-round">
@@ -81,8 +104,12 @@
               无数据
             </div>
           </el-table>
-      
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="cancel" size='small'>取 消</el-button>
+            <el-button type="primary" @click="submitForm('roleForm')" size='small'>发 布</el-button>
+          </span>
     </el-dialog>
+    </div>
   </div>
 </template>
 
@@ -91,15 +118,22 @@
   import formatDate from "../../assets/js/formatDate";
 
   export default {
-    name: 'account',
+    name: 'document',
     data() {
       return {
+        fileTypes:[],
+        form:{
+          fileType:'',
+          fileName:'',
+          version:''
+        },
         rowData: {},
         defaultProps: {
           children: 'children',
           label: 'userGroupName'
         },
         dialogVisible: false,
+        dialogVisible3: false,
         tableData: [
           {
             "1":"最新公告.txt",
@@ -134,14 +168,38 @@
     created() {
     },
     watch: {
-      'form.checkedRoles': {
-        handler: function (n, o) {
-          console.log(n)
-        },
-        deep: true
-      }
+     
     },
     methods: {
+      revoke(){
+        this.$confirm('确定要撤回发布吗？', '撤销', {
+            distinguishCancelAndClose: true,
+            confirmButtonText: '确认',
+            cancelButtonText: '取消'
+          })
+            .then(() => {
+              this.$message({
+                type: 'success',
+                message: '撤销成功'
+              })
+            })
+            .catch(action => {
+              this.$message({
+                type: 'fail',
+                message: '已取消操作'
+              })
+            });
+      },
+      cancel(){
+        this.dialogVisible = false
+      },
+      publish(){
+        this.dialogVisible = true
+      },
+      change(){
+        this.dialogVisible3 =!this.dialogVisible3
+      },
+      reset(){},
       rowClick(row) {
         console.log(row)
         this.rowData = row
@@ -244,15 +302,16 @@
       },
       //修改表单提交
       submitForm(formName) {
-        this.$refs[formName].validate(valid => {
-          if (valid) {
-            this.commit()
-            // this.$refs[formName].clearValidate();
-          } else {
-            console.log("error submit!!");
-            return false;
-          }
-        });
+        // this.$refs[formName].validate(valid => {
+        //   if (valid) {
+        //     this.commit()
+        //     // this.$refs[formName].clearValidate();
+        //   } else {
+        //     console.log("error submit!!");
+        //     return false;
+        //   }
+        // });
+        this.dialogVisible = false
       },
       //重置表单
       resetForm(formName) {
@@ -531,181 +590,90 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
-  $sc:12;
-  .input150{
-    width: 150px;
-  }
-  .div-round{
-    birder:1px solid #ccc;
-  }
-  .account {
-    .dis {
-      span {
-        color: #ccc
-      }
-    }
+.document{
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0 20px 20px;
 
-    .el-tabs--card>.el-tabs__header {
-      border: none;
-      display: flex;
-      justify-content: center;
-
-      .el-tabs__item {
-        width: 125px;
-        text-align: center;
-        border: 1px solid #E4E7ED;
-        border-right: none;
-        border-top: none;
-
-      }
-
-      .el-tabs__item:first-child {
-        border-left: none;
-      }
-
-      .el-tabs__item.is-active {
-        border: 1px solid #3366FF
-      }
-    }
-
-    .el-tabs__content {
-      .el-tab-pane {
-        padding: 30px;
-
-        .el-checkbox {
-          margin: 10px;
+  .el-dialog{
+    .form {
+        .el-form-item__label {
+          height: 30px;
         }
+        .el-form-item {
+          .el-select{
+            width: 100%;
+          }
+        }
+    }
+  }
+  .sellBox{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .head{
+      padding: 10px 20px;
+      // background: red;
+    }
+    .sels{
+      // margin: 20px 0;
+      padding:10px 20px;
+      background: #fff;
+      margin-bottom: 10px;
+      .lineBox{
+        color: #b161bf;
       }
     }
-
-    .el-dialog {
-      .el-form-item {
-        margin-bottom: 20px
-      }
-
-      .el-form--label-top .el-form-item__label {
-        padding-bottom: 0
-      }
+    .form {
+        .el-form-item__label {
+          height: 30px;
+        }
+        .el-form-item {
+          width: 200px;
+          margin-bottom: 0;
+          .el-select{
+            width: 100%;
+          }
+        }
+        .date {
+          width: 414px;
+        }
     }
-
-    .head {
-      h1 {
-        opacity: 0.87;
-        font-family: 'zt2';
-        font-size: 18px;
-        color: #000;
-        letter-spacing: 0;
-        line-height: 36px;
-        height: 42px;
-        font-weight: bold;
-        padding: 0 50px;
-        // float: left;
-      }
-
-      .el-breadcrumb {
-        // float: right;
-        margin-left: 50px;
-        line-height: 30px;
-        margin-right: 20px
-      }
-    }
-
-    .box {
+    .box{
+      height: 100%;
       position: relative;
-      margin: 0 20px 20px 20px;
-      background: #FFFFFF;
-      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
-      border-radius: 2px;
-
-      .btns {
-        p {
-          float: right;
-        }
-
-        .el-input {
-          width: 150px;
-          margin: 12px 20px 12px 0;
-        }
-
-        .add {
-
-          margin: 12px 0 12px 20px;
-        }
-
-        .sec {
-
-          margin: 12px 0 12px 20px;
-          float: right;
-
-          margin-right: 20px;
-        }
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      .btns{
+        padding: 10px 20px;
+        // background: pink;
       }
-
-      .tab {
-        .el-table {
-          td {
-            height: 64px;
-            line-height: 64px;
-
-            .cell {
-              // overflow: hidden;
-              // text-overflow:ellipsis;
-              // display: -webkit-box;
-              // -webkit-line-clamp: 2;
-              // -webkit-box-orient: vertical;
-              // width:200px;
-              font-family: 'zt1';
-              font-size: 12px;
-              color: #333333;
-              letter-spacing: 0;
-              line-height: 18px;
-
-            }
+      .tab{
+        padding-bottom: 52px;
+        box-sizing: border-box;
+        height: 100%;
+        // background: orange;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        .el-table{
+          height: 100%;
+          position: relative;
+        }
+        .block{
+          position: absolute;
+          bottom:0;
+          padding:  10px 0 ;
+          width: 100%;
+          .el-pagination {
+            width: 100%;
+            padding: 0;
+            text-align: center;
           }
         }
       }
-
-      .block {
-        // position: absolute;
-        bottom: 26px;
-        padding: 10px;
-
-        .el-pagination {
-          width: 100%;
-          text-align: center;
-        }
-      }
-
-    }
-
-    .groupBox {
-      border: 1px solid #ccc;
-      max-height: 400px;
-      overflow: auto;
-      padding: 20px;
-
-      .el-tree {
-        .el-tree-node__content {
-          margin: 5px;
-        }
-      }
-    }
-
-    .bottom {
-      text-align: center;
-      font-size: 12px;
-      color: #999999;
-      letter-spacing: 0;
-      line-height: 16px;
-    }
-
-    .danger {
-      font-family: 'zt1';
-      font-size: 14px;
-      color: #666666;
-      letter-spacing: 0;
-      line-height: 16px;
-      height: 32px;
     }
   }
+}
 </style>

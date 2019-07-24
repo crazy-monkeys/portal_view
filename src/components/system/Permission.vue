@@ -96,8 +96,7 @@
 </template>
 
 <script>
-import { getRoles} from '@/api/system/user.js'
-import { saveRole} from '@/api/system/role.js'
+import { getRoles,saveRole} from '@/api/system/role.js'
 
 export default {
   name: "permission",

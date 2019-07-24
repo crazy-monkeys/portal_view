@@ -21,12 +21,12 @@
     </el-dropdown>
     <div class="ts" @click="ts">
       <el-tooltip class="item" effect="light" content="公告" placement="top-start">
-        <i class="el-icon-message"></i>
+        <i class="el-icon-chat-round"></i>
       </el-tooltip>
     </div>
     <div class="help" @click="help">
-      <el-tooltip class="item" effect="light" content="帮助" placement="top-start">
-        <i class="el-icon-question"></i>
+      <el-tooltip class="item" effect="light" content="文档" placement="top-start">
+        <i class="el-icon-document"></i>
       </el-tooltip>
     </div>
 
@@ -313,8 +313,15 @@ export default {
       // return 'admin';
     },
     userType() {
-      return this.$store.state.loginUser.loginInfo.userType;
-      // return '管理员';
+      if(this.$store.state.loginUser.loginInfo.userType=='agent'){
+        return '代理商'
+      }else if(
+        this.$store.state.loginUser.loginInfo.userType=='subAgent'
+      ){
+        return '子代理商'
+      }else{
+        return '内部客户'
+      }
     }
   },
   created() {},
@@ -392,10 +399,10 @@ export default {
       this.$router.push("/home/tb");
     },
     ts() {
-      this.$router.push("/home/ts");
+      this.$router.push("/home/system/document");
     },
     help() {
-      this.$router.push("/home/help");
+      this.$router.push("/home/system/announcement");
     }
   }
 };

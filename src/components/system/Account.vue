@@ -14,7 +14,7 @@
         </div>
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible3'>
           <el-form-item label="客户名称">
-            <el-input size='small' v-model="form.realName" placeholder="请输入"></el-input>
+            <el-input size='small' v-model="form.customerName" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="角色">
             <el-input v-model="form.roleName" size='small'  placeholder="请选择">
@@ -37,13 +37,13 @@
       </div>
       <div class="box">
         <div class="tab">
-          <el-table :data="tableData" border style="width: 100%" height="100%" row-click="rowClick">
+          <el-table :data="tableData" border style="width: 100%" height="100%" @row-click="rowClick">
             <el-table-column type="index"  label="编号" :index='q' width="60">
             </el-table-column>
-            <el-table-column prop="realName" show-overflow-tooltip label="客户名称" width="150">
+            <el-table-column prop="customerName" show-overflow-tooltip label="客户名称" width="150">
             </el-table-column>
-            <el-table-column prop="realName" show-overflow-tooltip label="客户简称" width="150">
-            </el-table-column>
+            <!-- <el-table-column prop="customerName" show-overflow-tooltip label="客户简称" width="150">
+            </el-table-column> -->
             <el-table-column prop="loginName" label="登录名" show-overflow-tooltip width="150">
             </el-table-column>
             <el-table-column prop="" label="用户类型" show-overflow-tooltip width="150">
@@ -53,14 +53,14 @@
               </span>
             </template>  
             </el-table-column>
-            <el-table-column prop="" show-overflow-tooltip label="角色" width="150">
-              <template slot-scope="scope">
-              <span v-for="role in tableData[scope.$index].roles" :key="role.roleName">
-                {{role.roleName}}
-              </span>
-              </template>
+            <el-table-column prop="role.roleName" show-overflow-tooltip label="角色" width="150">
+             
             </el-table-column>
-            <el-table-column prop="phone" label="手机号" show-overflow-tooltip width="150">
+            <el-table-column prop="role.roleCode" show-overflow-tooltip v-if="false" label="角色" width="150">
+            
+            </el-table-column>
+            
+            <el-table-column prop="mobile" label="手机号" show-overflow-tooltip width="150">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="email" label="邮箱" width="150">
             </el-table-column>
@@ -68,8 +68,8 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" label="状态" width="150">
               <template slot-scope="scope">
-              <span v-for="role in tableData[scope.$index].roles" :key="role.roleName">
-                {{tableData[scope.$index].userStatus=='0' ?'冻结' :tableData[scope.$index].userStatus=='1' ?'正常':'失效'}}
+              <span >
+                {{tableData[scope.$index].userStatus==0 ?'冻结' :tableData[scope.$index].userStatus==1 ?'正常':'失效'}}
               </span>
               </template>
             </el-table-column>
@@ -84,7 +84,7 @@
           </el-table>
           <div class="block">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-            :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+            :page-sizes="[10, 20,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
           </el-pagination>
         </div>
         </div>
@@ -96,9 +96,9 @@
           <el-select v-model="roleForm.role" size="small" filterable placeholder="请选择">
             <el-option
               v-for="item in roles"
-              :key="item.id"
+              :key="item.roleCode"
               :label="item.roleName"
-              :value="item.id">
+              :value="item.roleCode">
             </el-option>
           </el-select>
         </el-form-item>
@@ -112,9 +112,9 @@
 </template>
 
 <script>
-import formTest from "../../assets/js/formTest";
 import Daterange from "../com/date";
-import { getUserList ,getRoles,savePermission} from '@/api/system/user.js'
+import { getUserList ,saveUserRole} from '@/api/system/user.js'
+import {   getRolesAll } from '@/api/system/role.js'
 export default {
   name: "user",
   components:{
@@ -123,13 +123,13 @@ export default {
   data() {
     return {
       resetData:false,
-      time:{},
+     time:{},
       rowData:{},
       roleForm:{
         role:''
       },
       form:{
-        realName:'',
+        customerName:'',
         roleName:'',
         startTime:'',
         endTime:'',
@@ -184,7 +184,7 @@ export default {
   },
   created(){
     this.getList();
-    this.getRoles();
+    this.getRolesAll();
   },
   methods: {
     watchTime(data){
@@ -193,7 +193,9 @@ export default {
       this.resetData = false
     },
     rowClick(row){
+      console.log(row)
       this.rowData = row
+      this.roleForm.role = this.rowData.role.roleCode
     },
     submitForm(formName) {
       this.$formTest.submitForm(this.$refs[formName],this.authorizeSure)
@@ -203,16 +205,15 @@ export default {
     },
     async authorizeSure(){
       var data = {
-        id :this.rowData.id,
-        roleId :this.roleForm.role,
+        loginName :this.rowData.loginName,
+        roleCode :this.roleForm.role,
       };
-      // const res = await saveRole(data)
-      // console.log('授权结果',res)
-      console.log('授权结果',111111)
-      this.cancel()
-      // if(res){
-      //   this.cancel()
-      // }
+      const res = await saveUserRole(data)
+      console.log('授权结果',res)
+      if(res){
+        this.cancel()
+        this.getList()
+      }
       
     },
     cancel(){
@@ -222,15 +223,11 @@ export default {
     authorize(){
       this.dialogVisible = true
     },
-    async getRoles(){
-      var data = {
-        pageNum:1,
-        pageSize:1000000
-      }
-      const res = await getRoles(data);
+    async getRolesAll(){
+      const res = await getRolesAll();
       console.log('角色列表',res)
       if(res){
-        this.roles = res.data.data.list
+        this.roles = res.data.data
       }
     },
     search(){
@@ -248,16 +245,18 @@ export default {
       this.form.loginName='';
     },
     async getList(){
-      var data = {
-        regStartTime :this.time.startTime,	
-        endStartTime:this.time.endTime,
-        realName:this.form.realName,
-        roleName:this.form.roleName,
-        userType:this.form.userType,
+      var data ={
         pageNum:this.currentPage,
         pageSize:this.pageSize,
       }
-      const res = await getUserList(data);
+      var params = {
+        regStartTime :this.time.startTime,	
+        regEndTime:this.time.endTime,
+        customerName:this.form.customerName,
+        roleName:this.form.roleName,
+        userType:this.form.userType,
+      }
+      const res = await getUserList(data,params);
       console.log('用户列表',res)
       if(res){
         this.tableData = res.data.data.list
