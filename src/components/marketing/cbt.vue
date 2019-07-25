@@ -76,10 +76,10 @@
             </el-table-column>
             <el-table-column prop="5" label="外部客户" show-overflow-tooltip >
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" width='80' label="操作" fixed='right'>
+            <el-table-column show-overflow-tooltip prop="" width='150' label="操作" fixed='right'>
               <template scope-slot='scope'>
                 <el-button type='text'  @click='add'>明细</el-button>
-                <!-- <el-button type='text'  @click='report'>重新报备</el-button> -->
+                <el-button type='text'  @click='report'>上传</el-button>
                 <!-- <el-button type='text'  @click='del'>删除</el-button> -->
               </template>
             </el-table-column>
@@ -108,6 +108,35 @@
             <el-button type="primary" @click="sure1"  size="small">确 定</el-button>
           </span>
     </el-dialog>
+    <el-dialog
+        title="上传"
+        :visible.sync="dialogVisible3"
+        width="300px"
+        top="10vh"
+        >
+          <el-form ref="form" :model="form1" class="form1" label-width="auto" label-position='top' :inline='true' >
+          <el-form-item label="CR金额">
+            <el-input size='small' v-model="form1.cr" placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="附件">
+            <el-upload
+              class="upload-demo"
+              action=""
+              multiple
+              :limit="3"
+              :file-list="fileList"
+              >
+              <el-button size="small" type="primary">点击上传</el-button>
+              <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
+            </el-upload>
+          </el-form-item>
+          </el-form>
+
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible3= false" size="small" type="primary" plain>取 消</el-button>
+            <el-button type="primary" @click="sure3"  size="small">确 定</el-button>
+          </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -122,8 +151,13 @@ export default {
   name: "theme",
   data() {
     return {
+      fileList:[],
       dialogVisible2:false,
+      dialogVisible3:false,
       form:{},
+      form1:{
+        cr:''
+      },
       total:0,
       options: [
         {
@@ -213,6 +247,9 @@ export default {
         name:'black'
       })
     },
+    sure3(){
+      this.dialogVisible3 = false;
+    },
     del(){
       this.$confirm('是否删除该条报备信息', '删除', {
           distinguishCancelAndClose: true,
@@ -233,9 +270,7 @@ export default {
         });
     },
     report(){
-      this.$router.push({
-        name:'cbtadd'
-      })
+      this.dialogVisible3 = true
     },
 
     change() {
@@ -288,13 +323,16 @@ $sc: 12;
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;
-
   .el-dialog{
-    .form {
+    .form1 {
         .el-form-item__label {
           height: 30px;
         }
         .el-form-item {
+          width: 100%;
+          .el-input{
+            width: 100%;
+          }
           .el-select{
             width: 100%;
           }

@@ -11,25 +11,29 @@
           
           <el-form-item label="类别"  class="all">
             <el-radio-group v-model="radio">
-              <el-radio label='1' >保价</el-radio>
-              <el-radio label='2'>差价补偿</el-radio>
-              <el-radio label='3'>换货</el-radio>
+              <el-radio :label='1' >保价</el-radio>
+              <el-radio :label='2'>差价补偿</el-radio>
+              <el-radio :label='3'>换货</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="发货方编码">
-            <el-input size="small"></el-input>
+            <el-select v-model="value14" size="small" filterable placeholder="请选择">
+              <el-option
+                v-for="item in options10"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="公司">
-            <el-input size="small"></el-input>
+            <el-input size="small" disabled></el-input>
           </el-form-item>
-          <el-form-item label="申请时候" class="date">
-            <el-date-picker size="small" v-model="value1" type="date" placeholder="选择日期"></el-date-picker>
-          </el-form-item>
-          <el-form-item label="计划入账日期" class="date">
-            <el-date-picker v-model="value1" size="small" type="date" placeholder="选择日期"></el-date-picker>
+          <el-form-item label="申请时间" class="date">
+            <el-date-picker size="small" v-model="value13" type="date" placeholder="选择日期"></el-date-picker>
           </el-form-item>
           <el-form-item label="币种">
-            <el-select v-model="value1" size="small" filterable placeholder="请选择">
+            <el-select v-model="value12" size="small" filterable placeholder="请选择">
               <el-option
                 v-for="item in options1"
                 :key="item.value"
@@ -38,18 +42,16 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="CR金额">
-            <el-input size="small"></el-input>
+          <el-form-item label="CR金额" v-if="radio=='2'">
+            <el-input size="small" ></el-input>
           </el-form-item>
           
           <el-form-item label="内部客户名称">
-            <el-select  size="small" v-model="value1" placeholder="请选择">
-              <el-option  label="是" value="1"></el-option>
-              <el-option  label="否" value="0"></el-option>
-            </el-select>
+            <el-input size="small" disabled></el-input>
+            
           </el-form-item>
           <el-form-item label="外部客户名称">
-            <el-select size="small" v-model="value1" placeholder="请选择">
+            <el-select size="small" v-model="value11" placeholder="请选择">
               <el-option  label="中国客户" value="1"></el-option>
               <el-option  label="亚太客户" value="2"></el-option>
               <el-option  label="北美客户" value="3"></el-option>
@@ -82,69 +84,92 @@
         </div>
         <div class="tabBox">
           <el-table :data="tableData3" border="" style="width: 100%" height="500">
-            <el-table-column prop="t31" v-if="radio==1" label="类型" show-overflow-tooltip>
+            <el-table-column prop="" label="客户" show-overflow-tooltip width="200" v-if="radio==1">
             </el-table-column>
-            <el-table-column prop="t31" label="发货公司" show-overflow-tooltip>
+            <el-table-column prop="" v-if="radio==1"  show-overflow-tooltip label="调价时间" width="200">
             </el-table-column>
-            <el-table-column prop="t31" v-if="radio==1" label="产品线" show-overflow-tooltip>
+            <el-table-column prop="" v-if="radio==1"  show-overflow-tooltip label="收货时间" width="200">
             </el-table-column>
-            <el-table-column prop="t31"  label="BU" show-overflow-tooltip>
+            <el-table-column prop=""  v-if="radio==1" label="BU" show-overflow-tooltip width="200">
             </el-table-column>
-            <el-table-column prop="t32" label="PDT" show-overflow-tooltip>
+            <el-table-column prop="" v-if="radio==1" label="PDT" show-overflow-tooltip width="200">
             </el-table-column>
-            <el-table-column prop="t33"  show-overflow-tooltip label="平台">
+            <el-table-column prop=""  v-if="radio==1" label="产品类型" show-overflow-tooltip width="200">
             </el-table-column>
-            <el-table-column prop="t33" show-overflow-tooltip label="产品型号">
+            <el-table-column prop="" v-if="radio==1" show-overflow-tooltip label="平台" width="200">
             </el-table-column>
-            <el-table-column prop="t33" v-if="radio==1" show-overflow-tooltip label="数量">
+            <el-table-column prop="" v-if="radio==1" show-overflow-tooltip label="产品型号" width="200">
             </el-table-column>
-            <el-table-column prop="t33" show-overflow-tooltip label="币种">
+            <el-table-column prop="" v-if="radio==1"  show-overflow-tooltip label="库存数量" width="200">
             </el-table-column>
-            <el-table-column prop="t33" v-if="radio==1" show-overflow-tooltip label="价格">
+            <el-table-column prop="" v-if="radio==1" show-overflow-tooltip label="库存价格" width="200">
             </el-table-column>
-            <el-table-column prop="t33" v-if="radio==1" show-overflow-tooltip label="客户属性">
+            <el-table-column prop=""  v-if="radio==1" show-overflow-tooltip label="币种" width="200">
             </el-table-column>
-            <el-table-column prop="t33" v-if="radio==1" show-overflow-tooltip label="金额">
+            <el-table-column prop=""  v-if="radio==1" show-overflow-tooltip label="新价格" width="200">
             </el-table-column>
-            <el-table-column prop="t33" v-if="radio==1" show-overflow-tooltip label="产品">
+            <el-table-column prop="" v-if="radio==1" show-overflow-tooltip label="保价金额" width="200">
             </el-table-column>
-            <el-table-column prop="t33" v-if="radio==3" show-overflow-tooltip label="换货日期">
+            <el-table-column prop="" v-if="radio==1"  show-overflow-tooltip label="调整时间" width="200">
             </el-table-column>
-            <el-table-column prop="t33" show-overflow-tooltip label="备注" >
+            <el-table-column prop="" v-if="radio==1"  show-overflow-tooltip label="备注" width="200">
             </el-table-column>
 
-            <el-table-column prop="t33" v-if="radio==2"   show-overflow-tooltip label="库存数量" >
-            </el-table-column>
-            <el-table-column prop="t33" v-if="radio==2"  show-overflow-tooltip label="收货时间" >
-            </el-table-column>
-            <el-table-column prop="t33" v-if="radio==2"  show-overflow-tooltip label="库存价格" >
-            </el-table-column>
-            <el-table-column prop="t33"  v-if="radio==2" show-overflow-tooltip label="新价格" >
-            </el-table-column>
-            <el-table-column prop="t33" v-if="radio==2" show-overflow-tooltip label="保价金额" >
-            </el-table-column>
-            <el-table-column prop="t33" v-if="radio==2"  show-overflow-tooltip label="调价时间" >
-            </el-table-column>
-            <el-table-column prop="t33" v-if="radio==2" show-overflow-tooltip label="调价金额" >
-            </el-table-column>
-            
 
-            <el-table-column prop="t33" v-if="radio==3" show-overflow-tooltip label="数量" >
+
+            <el-table-column prop="" label="客户" show-overflow-tooltip width="200" v-if="radio==2">
             </el-table-column>
-            <el-table-column prop="t33"  v-if="radio==3" show-overflow-tooltip label="客户提货单位" >
+            <el-table-column prop=""  v-if="radio==2" label="BU" show-overflow-tooltip width="200">
             </el-table-column>
-            <el-table-column prop="t33" v-if="radio==3" show-overflow-tooltip label="代理商提货单位" >
+            <el-table-column prop="" v-if="radio==2" label="PDT" show-overflow-tooltip width="200">
             </el-table-column>
-            <el-table-column prop="t33" v-if="radio==3" show-overflow-tooltip label="差价金额" >
+            <el-table-column prop=""  v-if="radio==2" label="产品类型" show-overflow-tooltip width="200">
             </el-table-column>
-            <el-table-column prop="t33" v-if="radio==3" show-overflow-tooltip label="出货时间" >
+            <el-table-column prop="" v-if="radio==2" show-overflow-tooltip label="平台" width="200">
             </el-table-column>
-            <el-table-column prop="t33" v-if="radio==3" show-overflow-tooltip label="发货公司" >
+            <el-table-column prop="" v-if="radio==2" show-overflow-tooltip label="产品型号" width="200">
             </el-table-column>
-            <el-table-column prop="" show-overflow-tooltip label="操作" fixed="right" width="80">
-              <template>
-                <el-button type="text" size="small"> 删除 </el-button>
-              </template>
+            <el-table-column prop="" v-if="radio==2"  show-overflow-tooltip label="出货时间" width="200">
+            </el-table-column>
+            <el-table-column prop="" v-if="radio==2" show-overflow-tooltip label="数量" width="200">
+            </el-table-column>
+            <el-table-column prop="" v-if="radio==2" show-overflow-tooltip label="客户提货单价" width="200">
+            </el-table-column>
+            <el-table-column prop="" v-if="radio==2" show-overflow-tooltip label="代理提货单价" width="200">
+            </el-table-column>
+            <el-table-column prop="" v-if="radio==2" show-overflow-tooltip label="差价金额" width="200">
+            </el-table-column>
+            <el-table-column prop="" v-if="radio==2" show-overflow-tooltip label="备注" width="200">
+            </el-table-column>
+
+
+            <el-table-column prop="" v-if="radio==3" show-overflow-tooltip label="类型" width="200">
+            </el-table-column>
+            <el-table-column prop="" v-if="radio==3" show-overflow-tooltip label="订单号" width="200">
+            </el-table-column>
+            <el-table-column prop="" v-if="radio==3" show-overflow-tooltip label="提货日期" width="200">
+            </el-table-column>
+            <el-table-column prop="" v-if="radio==3" show-overflow-tooltip label="产品线" width="200">
+            </el-table-column>
+            <el-table-column prop="" v-if="radio==3" show-overflow-tooltip label="BU" width="200">
+            </el-table-column>
+            <el-table-column prop="" v-if="radio==3" show-overflow-tooltip label="PDT" width="200">
+            </el-table-column>
+            <el-table-column prop="" v-if="radio==3" show-overflow-tooltip label="品台" width="200">
+            </el-table-column>
+            <el-table-column prop="" v-if="radio==3" show-overflow-tooltip label="产品型号" width="200">
+            </el-table-column>
+            <el-table-column prop="" v-if="radio==3" show-overflow-tooltip label="数量" width="200">
+            </el-table-column>
+            <el-table-column prop="" v-if="radio==3" show-overflow-tooltip label="币种" width="200">
+            </el-table-column>
+            <el-table-column prop="" v-if="radio==3" show-overflow-tooltip label="价格" width="200">
+            </el-table-column>
+            <el-table-column prop="" v-if="radio==3" show-overflow-tooltip label="金额" width="200">
+            </el-table-column>
+            <el-table-column prop="" v-if="radio==3" show-overflow-tooltip label="换货日期" width="200">
+            </el-table-column>
+            <el-table-column prop="" v-if="radio==3" show-overflow-tooltip label="备注" width="200">
             </el-table-column>
             <div slot="empty">
               无数据
@@ -166,83 +191,35 @@ export default {
   name: "cbtadd",
   data() {
     return {
-      radio:'',
+      value11:'',
+      value12:'',
+      value13:'',
+      value14:'',
+      value15:'',
+      radio:1,
       fileList:[],
-      tableData5:[
-      ],
-      tableData2:[
-      ],
       tableData3:[
       ],
       options1: [
         {
-          value: "选项1",
-          label: "Mass Market"
+          value: "1",
+          label: "USD"
         },
         {
-          value: "选项2",
-          label: "Account Market"
+          value: "2",
+          label: "RMB"
         }
       ],
-      value1: "",
-
-      options2: [
+      options10: [
         {
-          value: "选项1",
-          label: "销售A"
+          value: "1",
+          label: "3001"
         },
         {
-          value: "选项2",
-          label: "销售B"
+          value: "2",
+          label: "7100"
         }
       ],
-      value2: "",
-
-      options3: [
-        {
-          value: "选项1",
-          label: "阿米巴A"
-        },
-        {
-          value: "选项2",
-          label: "阿米巴B"
-        }
-      ],
-      value3: "",
-
-      options4: [
-        {
-          value: "选项1",
-          label: "上海"
-        },
-        {
-          value: "选项2",
-          label: "北京"
-        }
-      ],
-      value4: "",
-      options5: [
-        {
-          value: "选项1",
-          label: "上海"
-        },
-        {
-          value: "选项2",
-          label: "北京"
-        }
-      ],
-      value5: "",
-      options6: [
-        {
-          value: "选项1",
-          label: "静安"
-        },
-        {
-          value: "选项2",
-          label: "王府井"
-        }
-      ],
-      value6: "",
 
       form: {},
       activeName: "first",
