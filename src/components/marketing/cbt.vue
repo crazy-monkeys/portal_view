@@ -52,7 +52,7 @@
       </div>
       <div class="box">
         <div class="btns">
-          <el-button type='primary' class="add" size='mini' @click="report">新建</el-button>
+          <el-button type='primary' class="add" size='mini' @click="add">新建</el-button>
         </div>
         <div class="tab">
           <el-table :data="tableData" border style="width: 100%" height="100%">
@@ -78,7 +78,7 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" width='150' label="操作" fixed='right'>
               <template scope-slot='scope'>
-                <el-button type='text'  @click='add'>明细</el-button>
+                <el-button type='text'  @click='mx'>明细</el-button>
                 <el-button type='text'  @click='report'>上传</el-button>
                 <!-- <el-button type='text'  @click='del'>删除</el-button> -->
               </template>
@@ -300,7 +300,12 @@ export default {
     },
     add() {
       this.$router.push({
-        name: "AddSell"
+        name: "cbtadd"
+      });
+    },
+    mx() {
+      this.$router.push({
+        name: "cbtmx"
       });
     },
     // 分页

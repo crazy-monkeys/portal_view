@@ -197,6 +197,11 @@ export default new Router({
                     name: 'cbtadd',
                     component: resolve => require(['@/components/marketing/cbtadd'], resolve),
                 },
+                {
+                    path: 'cbtmx',
+                    name: 'cbtmx',
+                    component: resolve => require(['@/components/marketing/cbtmx'], resolve),
+                },
                 //样本管理
                 //短信营销
                 {
