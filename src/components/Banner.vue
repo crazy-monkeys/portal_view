@@ -399,10 +399,12 @@ export default {
       this.$router.push("/home/tb");
     },
     ts() {
-      this.$router.push("/home/system/document");
+      this.$router.push({
+        name:'announcelist'
+      });
     },
     help() {
-      this.$router.push("/home/system/announcement");
+      this.$router.push("/home/system/document");
     }
   }
 };

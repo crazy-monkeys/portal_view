@@ -27,7 +27,7 @@ export default new Router({
                 //提示页
                 {
                     path: 'ts',
-                    name: 'ts',
+                    name: 'announcelist',
                     component: resolve => require(['@/components/Ts'], resolve)
                 },
 
@@ -35,14 +35,14 @@ export default new Router({
                 {
                     path: 'shortmsg',
                     name: 'shortmsg',
-                    component: resolve => require(['@/components/marketing/Shortmsg'], resolve),
+                    component: resolve => require(['@/components/customer/Shortmsg'], resolve),
                     // meta: {keepAlive: true}
                 },
                 //主题管理
                 {
                     path: 'theme',
-                    name: 'theme',
-                    component: resolve => require(['@/components/marketing/Theme'], resolve),
+                    name: 'customerRep',
+                    component: resolve => require(['@/components/customer/customerRep'], resolve),
                     // meta: {keepAlive: true},
                 },
                 {
@@ -161,7 +161,7 @@ export default new Router({
                 {
                     path: 'user/visiteRecord',
                     name: 'visiteRecord',
-                    component: resolve => require(['@/components/marketing/visiteRecord'], resolve),
+                    component: resolve => require(['@/components/customer/visiteRecord'], resolve),
                 },
 
                 {
@@ -198,14 +198,14 @@ export default new Router({
                 //短信营销
                 {
                     path: 'sell',
-                    name: 'SellIndex',
-                    component: resolve => require(['@/components/marketing/SellIndex'], resolve),
+                    name: 'customerQuery',
+                    component: resolve => require(['@/components/customer/customerQuery'], resolve),
                     // meta: {keepAlive: true}
                 },
                 {
                     path: 'addSell',
-                    name: 'AddSell',
-                    component: resolve => require(['@/components/marketing/AddSell'], resolve),
+                    name: 'customerAdd',
+                    component: resolve => require(['@/components/customer/customerAdd'], resolve),
                     // meta: {keepAlive: true}
                 },
                 //资源设置

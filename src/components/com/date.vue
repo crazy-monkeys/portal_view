@@ -21,6 +21,12 @@ export default {
         }
     },
     watch:{
+        time:{
+            handler:function(n,o){
+                this.$emit('data',n)
+            },
+            deep:true
+        },
         resetData:{
             handler:function(n,o){
                 console.log(n)
