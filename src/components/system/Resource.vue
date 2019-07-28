@@ -362,6 +362,7 @@ export default {
             console.log('资源详情',res)
             if(res){
                 this.form.name = res.data.data.resourceName
+                this.form.permission = res.data.data.permissionPrefixUrl
                 this.form.url = res.data.data.resourceUrl
                 this.form.desc = res.data.data.resourceDesc
                 this.form.type  = res.data.data.resourceType
@@ -439,7 +440,6 @@ export default {
 .resource {
     .form{
         box-sizing: border-box;
-        
         .el-form-item{
         box-sizing: border-box;
         margin-right: 0;
@@ -466,22 +466,7 @@ export default {
     
     
   .head {
-    h1 {
-      opacity: 0.87;
-      font-family: "zt2";
-      font-size: 18px;
-      color: #000;
-      letter-spacing: 0;
-      line-height: 36px;
-      height: 42px;
-      font-weight: bold;
-      padding: 0 50px;
-    }
-    .el-breadcrumb {
-      margin-left: 50px;
-      line-height: 30px;
-      margin-right: 20px;
-    }
+    padding: 10px 40px;
   }
   .box {
     position: relative;
@@ -491,15 +476,14 @@ export default {
     border-radius: 2px;
     .btns {
       .add {
-        font-family: "zt2";
-        margin: 12px 0 12px 30px;
+        margin: 10px 20px;
       }
     }
     .content{
         border-top: 1px solid #ccc;
         background: #fff;
         box-shadow: 0 0 8px 0 rgba(0,0,0,0.05);
-        padding: 30px;
+        padding: 20px;
         .custom-tree-node{
             display: inline-block;
             width: 100%;

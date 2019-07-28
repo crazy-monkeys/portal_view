@@ -4,7 +4,7 @@
 
     <div class="head clear">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item to="/home/account/settings">系统管理</el-breadcrumb-item>
+        <el-breadcrumb-item >系统管理</el-breadcrumb-item>
         <el-breadcrumb-item>公告管理</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -42,7 +42,7 @@
         <div class="btns clear">
           <el-button class="add" @click='add' size='small' type='primary'>新建</el-button>
         </div>
-        <el-table :data="list" border style="width: 100%" height="700" @row-click='rowClick'>
+        <el-table :data="list" border style="width: 100%" height="700" @row-click='rowClick' >
           <el-table-column type="index" label="编号" v-if="false" width="80">
           </el-table-column>
           <el-table-column label="id" prop="id" width="30" v-if="false">
@@ -59,7 +59,7 @@
           </el-table-column>
           <el-table-column prop="status" show-overflow-tooltip label="状态">
           </el-table-column>
-          <el-table-column prop="status" show-overflow-tooltip label="操作" >
+          <el-table-column prop="status" show-overflow-tooltip label="操作" fixed="right" width="80">
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="cancel(list[scope.$index].id)">撤销</el-button>
             </template>
@@ -78,11 +78,11 @@
     
     <el-dialog title="公告发布" :visible.sync="dialogVisible" width="50%" :center="true">
 
-      <el-form ref="form" label-position="top" :model="form" class="form" :inline='true'>
-          <el-form-item label="标题">
+      <el-form ref="form" label-position="top" :rules="rules" :model="form" class="form" :inline='true'>
+          <el-form-item label="标题" prop='title'>
             <el-input size='small' v-model="form.title" placeholder=""  ></el-input>
           </el-form-item>
-          <el-form-item label="类型">
+          <el-form-item label="类型" prop='type'>
             <el-select  size="small" v-model="form.type" filterable placeholder="维护公告">
               <el-option
                 v-for="item in types"
@@ -92,8 +92,8 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="附件">
-            <el-upload class="upload-demo"  name='files' :on-success='uploadSuccess' :action='serverUrl+"/announcement/file"' :file-list="fileList">
+          <el-form-item label="附件" prop="fileList">
+            <el-upload class="upload-demo" accept=".pdf" name='files' :on-success='uploadSuccess' :action='serverUrl+"/announcement/file"' :headers="{'Authorization': data,}" :file-list="fileList">
               <el-button size="mini" type="" >上传文件</el-button>
             </el-upload>
           </el-form-item>
@@ -122,6 +122,18 @@
     },
     data() {
       return {
+        data:sessionStorage.getItem('data'),
+        rules: {
+          title: [
+            { required: true, trigger: 'blur',message:'标题不能为空'}
+          ],
+          type: [
+            { required: true, trigger: 'blur',message:'类型不能为空'}
+          ],
+          fileList: [
+            { required: true, trigger: 'blur',message:'附件不能为空'}
+          ],
+        },
         resetData:false,
         serverUrl: serverUrl,
         form:{

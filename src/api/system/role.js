@@ -18,3 +18,17 @@ export const getRolesAll = () => {
 export const getRoles = data => {
     return request('get', `${serverUrl}/permission/rolePageInfo`, data).then(result => result)
 }
+
+//获取角色详情
+export const findRole = data => {
+    return request('get', `${serverUrl}/permission/findRole/${data.id}`).then(result => result)
+}
+
+//获取角色菜单
+export const findRoleResource = data => {
+        return request('get', `${serverUrl}/permission/findPermission/${data.id}`).then(result => result)
+    }
+    //获取角色菜单
+export const modRolePermission = data => {
+    return request('post', `${serverUrl}/permission/savePermission`, data).then(result => result)
+}

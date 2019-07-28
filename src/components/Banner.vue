@@ -363,7 +363,6 @@ export default {
     changePwd() {
       this.dialogVisible1 = true;
     },
-
     modPwd() {},
     zd() {
       this.statu = !this.statu;

@@ -46,6 +46,13 @@ export default new Router({
                     // meta: {keepAlive: true},
                 },
                 {
+                    path: 'system/param',
+                    name: 'systemParam',
+                    component: resolve => require(['@/components/system/systemParam'], resolve),
+                    // meta: {keepAlive: true},
+                },
+
+                {
                     path: 'agent/index',
                     name: 'agentIndex',
                     component: resolve => require(['@/components/agent/index'], resolve),

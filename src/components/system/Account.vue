@@ -3,7 +3,7 @@
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to='/home/sell'>系统管理</el-breadcrumb-item>
+          <el-breadcrumb-item >系统管理</el-breadcrumb-item>
           <el-breadcrumb-item>用户管理</el-breadcrumb-item>
         </el-breadcrumb>
       </div>

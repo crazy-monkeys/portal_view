@@ -25,7 +25,13 @@
           </el-form-item>
         </div>
         <el-form-item class="loginBtns">
-          <el-button  @click="sub">登 录 </el-button>
+          <el-button class="sub"  @click="sub">登 录 </el-button>
+ 
+          <span class="dd">
+            <!-- <a :href="url + '/ad/index'">Click here</a>  -->
+            <el-button @click="dd" type="text">Click here</el-button>
+            for domain account login
+          </span>
         </el-form-item>
       </el-form>
       <!-- <div class="logo">
@@ -38,16 +44,17 @@
 </template>
 
 <script>
-// import loginServer from '../api/login.js'
 export default {
   name: "login",
   data() {
     return {
       loginName: "",
       loginPwd: "",
+      url:process.env.API_ROOT
     };
   },
   created() {},
+  
   methods: {
     // sub1(params){
     //     loginServer.getTestData(params).then(res =>{
@@ -56,6 +63,50 @@ export default {
     //             //提示错误
     //     })
     // },
+    dd(){
+      this.$http({
+              method : 'get',
+              url :  process.env.API_ROOT+ '/ad/index',
+              // data:data
+            }) .then(res => {
+                console.log("登陆信息", res);
+                if (res.data.code===1) {
+                    this.$store.commit('getMenu',res.data.data.permissions);
+                    this.$store.commit('getLoginInfo',res.data.data.user);
+                    var ses = window.sessionStorage;
+                    var authorization=res.headers['authorization'];
+                    ses.setItem("data", authorization);
+                    ses.setItem("vuexData", JSON.stringify(res));
+                    this.$router.push("/home/tb");
+                }else{
+                  this.$message({
+                    type:'error',
+                    message:res.data.msg
+                  })
+                }
+              
+              })
+              .catch(error => {
+
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    console.log(error.response.data);
+                    this.$message({
+                      type:'error',
+                      message:error.response.data.msg
+                    })
+                  } else if (error.request) {
+                    // The request was made but no response was received
+                    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                    // http.ClientRequest in node.js
+                    console.log(error.request);
+                  } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.log('Error', error.message);
+                  }
+              });
+    },
     sub() {
         var data ={
           'loginName':this.loginName,
@@ -73,32 +124,32 @@ export default {
               message: "请输入密码"
             });
           } else {
-            // this.$http({
-            //   method : 'post',
-            //   url :  process.env.API_ROOT+ '/user/login',
-            //   data:data
-            // }) .then(res => {
-                // console.log("登陆信息", res);
-                // if (res.data.code===1) {
-                    // this.$store.commit('getMenu',res.data.data.permissions);
-                    // this.$store.commit('getLoginInfo',res.data.data.user);
-                    // var ses = window.sessionStorage;
-                    // var authorization=res.headers['authorization'];
-                    // ses.setItem("data", authorization);
-                    // ses.setItem("vuexData", JSON.stringify(res));
+            this.$http({
+              method : 'post',
+              url :  process.env.API_ROOT+ '/user/login',
+              data:data
+            }) .then(res => {
+                console.log("登陆信息", res);
+                if (res.data.code===1) {
+                    this.$store.commit('getMenu',res.data.data.permissions);
+                    this.$store.commit('getLoginInfo',res.data.data.user);
+                    var ses = window.sessionStorage;
+                    var authorization=res.headers['authorization'];
+                    ses.setItem("data", authorization);
+                    ses.setItem("vuexData", JSON.stringify(res));
                     this.$router.push("/home/tb");
-              //   }else{
-              //     this.$message({
-              //       type:'error',
-              //       message:res.data.msg
-              //     })
-              //   }
+                }else{
+                  this.$message({
+                    type:'error',
+                    message:res.data.msg
+                  })
+                }
               
-              // })
-              // .catch(error => {
-              //   console.log(error);
-              //   alert("登入失败");
-              // });
+              })
+              .catch(error => {
+                console.log(error);
+                alert("登入失败");
+              });
           }
         }
       },   
@@ -129,7 +180,7 @@ $sc: 12;
   color: rgb(146,7,132);
 }
 
-.login .login-box .el-button {
+.login .login-box .sub {
   border: none;
   font-size: 16 / $sc + rem;
   color: #ffffff;
@@ -248,7 +299,18 @@ $sc: 12;
       }
     }
     .loginBtns {
-      .el-button {
+      .dd{
+          padding-top: 40/$sc+rem;
+          display: inline-block;
+          width: 100%;
+          text-align: center;
+          .el-button{
+            font-size: 16/$sc+rem;
+            font-weight: bold;
+            color: rgba(146,7,132,1)
+          }
+      }
+      .sub {
         border-radius: 2 / $sc + rem;
         span {
           font-family: zt3;

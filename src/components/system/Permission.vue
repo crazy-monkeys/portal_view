@@ -4,7 +4,7 @@
     <div class="head clear">
       <el-breadcrumb separator="/">
         <!-- <el-breadcrumb-item :to="{ path: '/home' }">客户营销</el-breadcrumb-item> -->
-        <el-breadcrumb-item to='/home/account/settings'>系统管理</el-breadcrumb-item>
+        <el-breadcrumb-item >系统管理</el-breadcrumb-item>
         <el-breadcrumb-item>权限管理</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -13,21 +13,21 @@
           <el-button type='primary' size='small' @click="add">新建</el-button>
         </div>
         <div class="tab">
-          <el-table :data="roles"  highlight-current-row ref='tab'>
+          <el-table :data="roles"  highlight-current-row ref='tab' @row-click='rowClick' height="100%">
             <el-table-column prop='id' label="ID" v-if="false" width="80">
             </el-table-column>
             <el-table-column prop="roleCode" label="角色编码" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="roleName" label="角色名称" width="200">
             </el-table-column>
-            <el-table-column prop="roleName" label="父级角色" width="200">
+            <el-table-column prop="createTime" label="创建时间" width="200">
             </el-table-column>
-            <el-table-column label="操作" width="200">
+            <el-table-column label="操作" width="200" fixed="right">
               <template slot-scope="scope">
-                <el-button type="text" size="small" @click="mod">
+                <el-button type="text" size="small" @click="mod(roles[scope.$index].roleCode)">
                   修改
                 </el-button>
-                <el-button type="text" size="small" @click="permissionSet">
+                <el-button type="text" size="small" @click="permissionSet(roles[scope.$index].roleCode)">
                   权限配置
                 </el-button>
               </template>
@@ -39,58 +39,44 @@
           </el-table>
           <div class="block">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-            :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
+            :page-sizes="[10, 30,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
           </el-pagination>
         </div>
         </div>
         
     </div>
-      <!-- <div class="r-box">
-        <div class="r-t-box">
-          <h2>权限配置</h2>
-          <div class="groupBox">
-            <el-tree :data="groups" show-checkbox node-key="resourceId" :props="defaultProps" :filter-node-method="filterNode"
-              :default-checked-keys="form.groups" ref="tree" :check-strictly='true'>
-            </el-tree>
-          </div>
-        </div>
-      </div> -->
+    
     <el-dialog :title="edit? '修改角色' :'新建角色'"  :visible.sync="dialogVisible" width="400px" :before-close="close"
       :close-on-click-modal="false" >
       <el-form label-position="top" label-width="auto" :model="roleForm" :rules='rules' size="small" ref='roleForm' class="roleForm">
-        <el-form-item label="角色编码" prop='desc'>
-          <el-input type='textarea' v-model="roleForm.desc" maxlength='50'></el-input>
+        <el-form-item label="角色编码" prop='code'>
+          <el-input  v-model="roleForm.code" maxlength='50'></el-input>
         </el-form-item>
         <el-form-item label="角色名称" prop='name'>
-          <el-input v-model="roleForm.name" maxlength='10' :disabled='edit'></el-input>
+          <el-input v-model="roleForm.name" maxlength='10' ></el-input>
         </el-form-item>
         
-        <el-form-item label="父级角色" prop=''>
-            <el-select v-model="form.role" size='small' filterable placeholder="请选择">
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-        </el-form-item>
+       
         
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="close" size="small">取消</el-button>
-        <el-button type="primary" @click='submitForm("roleForm")' size="small">提交</el-button>
+        <el-button type="primary" @click='submitForm("roleForm",1)' size="small">提交</el-button>
       </span>
     </el-dialog>
 
     <el-dialog title="权限配置"  :visible.sync="dialogVisible1" width="400px" :before-close="close"
       :close-on-click-modal="false">
-      <el-form label-position="top" label-width="auto" :model="roleForm" :rules='rules' size="small" ref='roleForm' class="roleForm">
+      <el-form label-position="top" label-width="auto" :model="form" :rules='rules' size="small" ref='form' class="form">
         <el-form-item label="角色权限" prop=''>
-          <el-tree :data="groups" show-checkbox node-key="resourceId" :props="defaultProps" :filter-node-method="filterNode"
-              :default-checked-keys="form.groups" ref="tree" :check-strictly='true'>
+          <el-tree :data="resource" @check-change="checkChange" show-checkbox node-key="id" :props="defaultProps" :filter-node-method="filterNode"
+              :default-checked-keys="form.resource" ref="tree" >
             </el-tree>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="close" size="small">取消</el-button>
-        <el-button type="primary" @click='close' size="small">提交</el-button>
+        <el-button type="primary" @click='submitForm("form",2)' size="small">提交</el-button>
       </span>
     </el-dialog>
   </div>
@@ -98,148 +84,116 @@
 </template>
 
 <script>
-import { getRoles,saveRole} from '@/api/system/role.js'
+import { getRoles,updateRole,saveRole,findRole,findRoleResource,modRolePermission} from '@/api/system/role.js'
+import { getResource} from '@/api/system/resource.js'
 
 export default {
   name: "permission",
   data() {
     return {
-      options:[
-        {
-          label:'父级角色1',
-          value:1
-        },
-        {
-          label:'父级角色2',
-          value:2
-        },
-        {
-          label:'父级角色3',
-          value:3
-        },
-      ],
       rowData: {},
-      delArr: [],
-      addArr: [],
-      selectGroup: [],
       edit: false,
       roleForm: {
         name: "",
-        desc: ""
+        code: "",
       },
       dialogVisible: false,
       dialogVisible1: false,
-      tableData: [],
       defaultCheckedKeys: [],
-      type: "",
       rules: {
-        
+        name: [
+          { required: true, trigger: 'blur',message:'角色名称不能为空'}
+        ],
+        code: [
+          { required: true, trigger: 'blur',message:'角色编码不能为空'}
+        ],
       },
-      selStr: "",
       defaultProps: {
         children: "children",
         label: "resourceName"
       },
-      //用户组列表
-      groups: [
-        {
-          resourceId: 233,
-          parentId: 0,
-          resourceName: "客户管理",
-          resourceType: 1,
-          resourceOrder: 208,
-          children: [
-            {
-              resourceId: 9067,
-              parentId: 233,
-              resourceName: "客户查询",
-              resourceType: 2,
-              resourceOrder: 210,
-              children: []
-            },
-            {
-              resourceId: 9066,
-              parentId: 233,
-              resourceName: "客户报备",
-              resourceType: 3,
-              resourceOrder: 211,
-              children: []
-            },
-            {
-              resourceId: 9065,
-              parentId: 233,
-              resourceName: "报备审批",
-              resourceType: 2,
-              resourceOrder: 212,
-              children: []
-            },
-          ]
-        },
-        {
-          resourceId: 233,
-          parentId: 0,
-          resourceName: "预测管理",
-          resourceType: 1,
-          resourceOrder: 208,
-          children: [
-            {
-              resourceId: 9067,
-              parentId: 233,
-              resourceName: "销售预测查询",
-              resourceType: 2,
-              resourceOrder: 210,
-              children: []
-            },
-            {
-              resourceId: 9066,
-              parentId: 233,
-              resourceName: "销售预测上传",
-              resourceType: 3,
-              resourceOrder: 211,
-              children: []
-            },
-            {
-              resourceId: 9065,
-              parentId: 233,
-              resourceName: "销售预测审批",
-              resourceType: 2,
-              resourceOrder: 212,
-              children: []
-            },
-          ]
-        }
-      ],
-
+      //资源
+      resource: [],
       //角色列表
-      roles: [{}],
-      roleId: "",
+      roles: [],
       form: {
-        name: "",
-        desc: "",
-        groups: []
+        resource:[]
       },
       pageSize:10,
       currentPage:1,
       total:0,
+      addArr:[],
+      reArr:[],
     };
   },
   created(){
     this.getRoles()
+    this.getResource()
   },
   computed:{
-    loginName() {
-      return this.$store.state.loginUser.loginInfo.loginName;
-    },
+   
   },
   methods: {
     
+    checkChange(val){
+      console.log(val)
+      this.form.resource =  this.$refs['tree'].getCheckedKeys(true)
+      console.log(this.form.resource)
+      this.addArr = this.form.resource.filter(item=>{
+           return this.defaultCheckedKeys.indexOf(item)==-1
+      })
+      this.reArr= this.defaultCheckedKeys.filter(item=>{
+           return this.form.resource.indexOf(item)==-1
+      })
+      console.log(this.addArr,this.reArr)
+    },
+     rowClick(row){
+      this.rowData = row
+    },
     filterNode(){},
-    permissionSet(){
+    permissionSet(id){
+      // this.getResource()
+      this.findRoleResource(id)
       this.dialogVisible1 = true
     },
-    mod(){
+    mod(id){
+      this.findRole(id)
       this.edit = true
       this.dialogVisible = true;
+    },
+    //获取角色详情
+    async findRole(id){
+      var data ={
+        id : id
+      }
+      const res = await findRole(data);
+      console.log('角色详情',res);
+      if(res){
+        this.roleForm.name = res.data.data.roleName
+        this.roleForm.code = res.data.data.roleCode
+      }
+    },
+
+    //获取角色权限
+    async findRoleResource(id){
+      var data ={
+        id : id
+      }
+      const res = await findRoleResource(data);
+      console.log('角色拥有的权限',res);
+      if(res){
+        this.defaultCheckedKeys = res.data.data
+        this.form.resource = res.data.data
+        console.log(this.form.resource)
+      }
+    },
+    //获取所有权限
+    async getResource(){
+      const res = await getResource();
+      console.log('所有资源',res);
+      if(res){
+        this.resource = [res.data.data]
+      }
     },
     add(){
       this.edit = false
@@ -249,6 +203,8 @@ export default {
       this.dialogVisible1 = false;
       this.dialogVisible = false;
       this.resetForm('roleForm')
+      this.resetForm('form')
+      this.$refs['tree'].setCheckedKeys([])
     },
      // 分页
     handleSizeChange(val) {
@@ -261,12 +217,38 @@ export default {
       this.currentPage = val;
       this.getRoles()
     },
-    submitForm(formName) {
-      this.$formTest.submitForm(this.$refs[formName],this.saveRole)
-    },
+    //表单验证
     resetForm(formName) {
       this.$formTest.resetForm(this.$refs[formName]) 
     },
+    submitForm(formName,type) {
+      if(type==1){
+      this.$formTest.submitForm(this.$refs[formName],this.edit ? this.updateRole: this.saveRole)
+
+      }else{
+      this.$formTest.submitForm(this.$refs[formName],this.setPermission)
+
+      }
+    },
+    //修改角色权限
+    async setPermission(){
+      var data ={
+        roleCode:this.rowData.roleCode,
+        addPermissionIds:this.addArr,
+        rmPermissionIds:this.reArr,
+      }
+      const res = await modRolePermission(data);
+      console.log('修改角色权限结果',res)
+      if(res){
+        this.dialogVisible1 = false;
+        this.form.resource =[]
+        this.$refs['tree'].setCheckedKeys([])
+        this.resetForm('form')
+        this.getRoles()
+      }
+    },
+    
+    //获取角色列表
     async getRoles(){
       var data = {
         pageNum:this.currentPage,
@@ -280,12 +262,27 @@ export default {
         this.total = res.data.data.total
       }
     },
+    //新增角色列表
     async saveRole(){
       var data = {
         roleName:this.roleForm.name,
-        roleDesc:this.roleForm.desc,
+        roleCode:this.roleForm.code,
       }
       const res = await saveRole(data);
+      console.log('新增结果',res)
+      if(res){
+        this.getRoles();
+        this.close()
+      }
+    },
+    //编辑角色列表
+    async updateRole(){
+      var data = {
+        id:this.rowData.id,
+        roleName:this.roleForm.name,
+        roleCode:this.roleForm.code,
+      }
+      const res = await updateRole(data);
       console.log('新增结果',res)
       if(res){
         this.getRoles();
@@ -331,7 +328,7 @@ $sc: 12;
           height: 30px;
         }
         .el-form-item {
-          width: 200px;
+          // width: 200px;
           margin-bottom: 0;
           .el-select{
             width: 100%;
