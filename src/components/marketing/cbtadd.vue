@@ -42,7 +42,7 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="CR金额" v-if="radio=='2'">
+          <el-form-item label="CR金额" v-if="radio!='2'">
             <el-input size="small" ></el-input>
           </el-form-item>
           

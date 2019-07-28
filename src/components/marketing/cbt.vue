@@ -55,10 +55,10 @@
           <el-button type='primary' class="add" size='mini' @click="add">新建</el-button>
         </div>
         <div class="tab">
-          <el-table :data="tableData" border style="width: 100%" height="100%">
+          <el-table :data="tableData" border style="width: 100%" height="100%" @row-click='rowClick'>
             <el-table-column type="index" width='100' label="编号" :index='q'>
             </el-table-column>
-            <el-table-column prop="1" show-overflow-tooltip label="类别">
+            <el-table-column prop="type" show-overflow-tooltip label="类别">
             </el-table-column>
             <el-table-column prop="2" label="发货方编号" show-overflow-tooltip>
             </el-table-column>
@@ -115,8 +115,8 @@
         top="10vh"
         >
           <el-form ref="form" :model="form1" class="form1" label-width="auto" label-position='top' :inline='true' >
-          <el-form-item label="CR金额">
-            <el-input size='small' v-model="form1.cr" placeholder="请输入"></el-input>
+          <el-form-item label="CR金额" v-if="rowData.type==1">
+            <el-input size='small' v-model="form1.cr" placeholder="请输入" > </el-input>
           </el-form-item>
           <el-form-item label="附件">
             <el-upload
@@ -220,14 +220,15 @@ export default {
       isIndeterminate: false,
       dialogVisible: false,
       tableData: [
-        {},
-        {},
-        {},
+        {type:1},
+        {type:2},
+        {type:3},
       ],
       //第几页
       currentPage: 1,
       //每页的容量
-      pageSize: 10
+      pageSize: 10,
+      rowData:{}
     };
   },
   computed: {
@@ -238,6 +239,9 @@ export default {
   created() {},
   watch: {},
   methods: {
+    rowClick(row){
+      this.rowData=row
+    },
     search(){
       this.dialogVisible2 = true ;
     },
