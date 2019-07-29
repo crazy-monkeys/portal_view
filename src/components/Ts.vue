@@ -88,7 +88,7 @@
         }
       },
       check(id){
-          window.open('/static/pdf/web/viewer.html?file=' + encodeURIComponent(process.env.API_ROOT + '/announcement/file/'+id) )
+          window.open('/portal/static/pdf/web/viewer.html?file=' + encodeURIComponent(process.env.API_ROOT + '/announcement/file/'+id +'&.pdf') )
       },
       
       // 将返回的流数据转换为url
