@@ -10,3 +10,9 @@ export const getList = data => {
 export const addAndEdit = data => {
     return request('post', `${serverUrl}/sys/param/saveOrUpdate`, data).then(result => result)
 }
+
+
+//获取类型
+export const getType = data => {
+    return request('get', `${serverUrl}/sys/param/selectByMAndF/${data.model}/${data.func}`).then(result => result)
+}

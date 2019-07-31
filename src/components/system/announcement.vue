@@ -23,9 +23,9 @@
             <el-select size='small' v-model="selForm.typeId" placeholder="请输入">
               <el-option 
               v-for="item in types" 
-              :key='item.value'
-              :label='item.label'
-              :value='item.value'
+              :key='item.pValue'
+              :label='item.zhName'
+              :value='item.pValue'
               ></el-option>
             </el-select>
           </el-form-item>
@@ -43,13 +43,13 @@
           <el-button class="add" @click='add' size='small' type='primary'>新建</el-button>
         </div>
         <el-table :data="list" border style="width: 100%" height="700" @row-click='rowClick' >
-          <el-table-column type="index" label="编号" v-if="false" width="80">
+          <el-table-column type="index" label="编号" v-if="false" width="80" show-overflow-tooltip>
           </el-table-column>
           <el-table-column label="id" prop="id" width="30" v-if="false">
           </el-table-column>
-          <el-table-column prop="title" label="标题" >
+          <el-table-column prop="title" label="标题" show-overflow-tooltip>
           </el-table-column>
-          <el-table-column prop="typeId" label="类型"  show-overflow-tooltip>
+          <el-table-column prop="zhName" label="类型"  show-overflow-tooltip>
           </el-table-column>
           <el-table-column prop="createTimeStr" show-overflow-tooltip label="创建时间">
           </el-table-column>
@@ -83,12 +83,12 @@
             <el-input size='small' v-model="form.title" placeholder=""  ></el-input>
           </el-form-item>
           <el-form-item label="类型" prop='type'>
-            <el-select  size="small" v-model="form.type" filterable placeholder="维护公告">
+            <el-select  size="small" v-model="form.type" filterable >
               <el-option
                 v-for="item in types"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+                :key="item.pValue"
+                :label="item.zhName"
+                :value="item.pValue">
               </el-option>
             </el-select>
           </el-form-item>
@@ -112,6 +112,7 @@
 
 <script>
   import {getList ,detail,addAndEdit,improve,cancel,upload} from "@/api/system/announce.js";
+  import {getType} from "@/api/system/param.js";
   import {serverUrl} from "@/axios/request.js";
   import Daterange from "../com/date";
   
@@ -143,18 +144,7 @@
         },
         time:'',
         types:[
-          {
-            label:'类型1',
-            value:1
-          },
-          {
-            label:'类型2',
-            value:2
-          },
-          {
-            label:'类型3',
-            value:3
-          },
+         
         ],
         selForm:{
           title:'',
@@ -174,6 +164,7 @@
     },
     created() {
       this.getList()
+      this.getType()
     },
     watch:{
       fileList:{
@@ -183,6 +174,17 @@
       }
     },
     methods: {
+      async getType(){
+        var data ={
+          model:1,
+          func:1,
+        }
+        const res = await getType(data);
+        console.log('公告类型',res)
+        if(res){
+          this.types = res.data.data
+        }
+      },
       watchTime(data){
       console.log(data)
       this.selForm.startTime = data.startTime

@@ -1,8 +1,8 @@
 <template>
   <div class="announcelist">
    
-    <el-tabs tab-position="left" style="height: 100%;" @tab-click="handleClick">
-      <el-tab-pane label="所有公告" >
+    <el-tabs tab-position="left" v-model="aciveName" style="height: 100%;"   @tab-click="handleClick">
+      <el-tab-pane :label="type.zhName" :name='type.id+""' v-for="type in types" :key="type.id" >
         <div class="tab">
           <div class="filter">
             <el-input
@@ -30,12 +30,6 @@
         </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="维护公告">维护公告</el-tab-pane>
-      <el-tab-pane label="产品发布">产品发布</el-tab-pane>
-      <el-tab-pane label="处罚公告">处罚公告</el-tab-pane>
-      <el-tab-pane label="安全公告">安全公告</el-tab-pane>
-      <el-tab-pane label="活动公告">活动公告</el-tab-pane>
-      <el-tab-pane label="任务公告">任务公告</el-tab-pane>
     </el-tabs>
     
   </div>
@@ -44,11 +38,14 @@
 <script>
   import {getList,view } from "@/api/system/announce.js";
   import {serverUrl } from "../axios/request.js";
+  import {getType} from "@/api/system/param.js";
 
   export default {
     name: 'announcelist',
     data() {
       return {
+        aciveName:'0',
+        types:[],
         search:'',
         value:'',
         rowData: {},
@@ -60,6 +57,7 @@
     },
     created() {
       this.getList()
+      this.getType()
     },
     watch:{
       search:{
@@ -76,6 +74,22 @@
       }
     },
     methods: {
+      
+      async getType(){
+        var data ={
+          model:1,
+          func:1,
+        }
+        const res = await getType(data);
+        console.log('公告类型',res)
+        if(res){
+          this.types = res.data.data
+          this.types.unshift({
+            id: 0,
+            zhName: "所有公告"
+          })
+        }
+      },
       async view(id){
         var data ={
           id:id
@@ -120,6 +134,9 @@
           pageNum: this.currentPage,
           pageSize: this.pageSize,
         }
+        if(this.aciveName!=0){
+          data.typeId = this.aciveName
+        }
         const res = await getList(data)
         console.log('公告列表',res)
         if(res){
@@ -133,7 +150,9 @@
       },
       //切换tab
       handleClick(tab, event) {
-        // console.log(tab, event);
+        console.log(tab, event);
+        console.log(this.aciveName)
+        this.getList()
       },
     }
   }

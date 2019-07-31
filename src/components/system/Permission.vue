@@ -137,7 +137,7 @@ export default {
     
     checkChange(val){
       console.log(val)
-      this.form.resource =  this.$refs['tree'].getCheckedKeys(true)
+      this.form.resource =  this.$refs['tree'].getCheckedKeys().filter(item=>{return item})
       console.log(this.form.resource)
       this.addArr = this.form.resource.filter(item=>{
            return this.defaultCheckedKeys.indexOf(item)==-1
@@ -240,11 +240,11 @@ export default {
       const res = await modRolePermission(data);
       console.log('修改角色权限结果',res)
       if(res){
-        this.dialogVisible1 = false;
         this.form.resource =[]
         this.$refs['tree'].setCheckedKeys([])
         this.resetForm('form')
         this.getRoles()
+        this.dialogVisible1 = false;
       }
     },
     

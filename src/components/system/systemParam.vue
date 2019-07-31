@@ -60,9 +60,15 @@
           </el-table-column>
           <el-table-column label="id" prop="id" width="30" v-if="false">
           </el-table-column>
-          <el-table-column prop="pModel" label="模块" >
+          <el-table-column prop="" label="模块" >
+            <template slot-scope="scope">
+              <span v-if="list[scope.$index].pModel==1">公告管理</span>
+            </template>
           </el-table-column>
-          <el-table-column prop="pFunction" label="功能"  show-overflow-tooltip>
+          <el-table-column prop="" label="功能"  show-overflow-tooltip>
+            <template slot-scope="scope">
+              <span v-if="list[scope.$index].pFunction==1">公告类型</span>
+            </template>
           </el-table-column>
           <el-table-column prop="zhName" show-overflow-tooltip label="中文名">
           </el-table-column>
