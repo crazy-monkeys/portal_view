@@ -179,8 +179,36 @@ export default new Router({
                 },
                 {
                     path: 'sales/shipment-index',
-                    name: 'SalesList',
+                    name: 'shipmentQuery',
                     component: resolve => require(['@/components/sales/shipment-index'], resolve),
+                },
+                {
+                    path: 'sales/shipment/detail',
+                    name: 'shipmentDetail',
+                    component: resolve => require(['@/components/sales/shipmentDetail'], resolve),
+                },
+
+
+
+
+
+
+
+                // 收货
+                {
+                    path: 'sales/shouhuo/detail',
+                    name: 'shouhuoDetail',
+                    component: resolve => require(['@/components/sales/shouhuoDetail'], resolve),
+                },
+                {
+                    path: 'sales/shouhuo/index',
+                    name: 'shouhuoQuery',
+                    component: resolve => require(['@/components/sales/shouhuo-index'], resolve),
+                },
+                {
+                    path: 'sales/shouhuo/upload',
+                    name: 'shouhuoUpload',
+                    component: resolve => require(['@/components/sales/shouhuo-upload'], resolve),
                 },
                 {
                     path: 'sales/shipment-upload',

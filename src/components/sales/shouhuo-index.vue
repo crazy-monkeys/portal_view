@@ -1,10 +1,10 @@
 <template>
-  <div class="shipmentQuery">
+  <div class="shouhuoQuery">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item to='/home/sell'>销售管理</el-breadcrumb-item>
-          <el-breadcrumb-item>出货数据查询</el-breadcrumb-item>
+          <el-breadcrumb-item>收货数据查询</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
 
@@ -18,9 +18,6 @@
         <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <el-form-item label="代理商">
             <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="出货日期" class="date">
-            <Daterange />
           </el-form-item>
           <el-form-item label="上传日期"  class="date">
             <Daterange />
@@ -42,11 +39,11 @@
           <el-table :data="tableData" border style="width: 100%" height="100%">
             <el-table-column prop="0" width='' label="状态" ></el-table-column>
             <el-table-column prop="0" width='' label="代理商" ></el-table-column>
-            <el-table-column prop="0" width='' label="出货日期"></el-table-column>
             <el-table-column prop="1" width="" label="上传日期" show-overflow-tooltip></el-table-column>
             <el-table-column  label="操作" fixed="right" width="100" show-overflow-tooltip>
               <template slot-scope='scope' >
                 <el-button type="text" @click="mx">明细</el-button>
+                <el-button type="text" >确认</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -68,7 +65,7 @@
 <script>
   import Daterange from "../com/date";
   export default {
-    name: 'shipmentQuery',
+    name: 'shouhuoQuery',
     components:{
       Daterange
     },
@@ -99,7 +96,7 @@
     methods: {
       mx(){
         this.$router.push({
-          name:'shipmentDetail'
+          name:'shouhuoDetail'
         })
       },
       change() {
@@ -141,7 +138,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
   $sc:12;
-.shipmentQuery{
+.shouhuoQuery{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;

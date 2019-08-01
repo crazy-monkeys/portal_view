@@ -1,41 +1,77 @@
 <template>
-  <div class="index3">
+  <div class="shipmentUpload">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to='/home/sell'>销售管理</el-breadcrumb-item>
-          <el-breadcrumb-item>收货数据查询</el-breadcrumb-item>
+          <el-breadcrumb-item>销售管理</el-breadcrumb-item>
+          <el-breadcrumb-item>出货数据上传</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-
+<div class="sels clear">
+        <div class="lineBox">
+          <i class="el-icon-arrow-down" v-if='!dialogVisible' @click='change'> 展开</i>
+          <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
+        </div>
+        <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
+          <el-form-item label="上传时间"  class="date">
+            <Daterange />
+          </el-form-item>
+          <el-form-item label="出货日期"  class="date">
+            <Daterange />
+          </el-form-item>
+          <el-form-item label="客户">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="产品型号">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="出货类型">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="订单号">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="订单月份">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item :label="' '">
+            <el-button size='small' type='primary' plain>查询</el-button>
+            <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
       <!-- </transition-group> -->
       <div class="box">
         <div class="btns clear">
           <el-button class="add" @click='open' size='small' type='primary'>下载模版</el-button>
           <el-button class="add" @click='remove' size='small' type='primary'>上传</el-button>
+          <el-button class="add" @click='open' size='small' type='primary'>下载错误数据</el-button>
+
           <el-button class="add" @click='changeType' size='small' type='primary'>验证</el-button>
-          <el-button class="add" @click='open' size='small' type='primary'>保存</el-button>
+          <!-- <el-button class="add" @click='open' size='small' type='primary'>保存</el-button> -->
           <el-button class="add" @click='remove' size='small' type='primary'>提交</el-button>
-          <el-button class="add" @click='changeType' size='small' type='primary'>删除</el-button>
         </div>
         <div class="tab">
-          <el-table :data="tableData" style="width: 100%" height="700">
-            <el-table-column prop="" type="selection" width='30' show-overflow-tooltip label="">
-            </el-table-column>
-            <el-table-column prop="0" width='100' label="错误信息" :index='q'></el-table-column>
-            <el-table-column prop="1" label="上传日期" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="2" label="年月" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="3" label="库存类别" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="4" label="发货公司" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="5" label="仓储地" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="6" label="产品型号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="7" label="提货时间" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="8" label="提货数量" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="PO Price" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="金额" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="发票号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="BU" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="备注" show-overflow-tooltip></el-table-column>
+          <el-table :data="tableData" border style="width: 100%" height="100%">
+            <el-table-column prop="0" width='150' label="上传时间" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="0" width='150' label="客户外部号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="0" width='150' label="客户全称" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="0" width='150' label="销售" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="0" width='150' label="类别一(类型)" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="类别二(子类)" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="类别三(平台)" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="产品型号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="出货日期" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="数量" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="Sale Price" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="Po Price" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="Margin" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="币种" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="客户订单号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="出货类型" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="订单月份" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="发货公司" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150'  label="备注"  show-overflow-tooltip></el-table-column>
             <div slot="empty">
               <p>未查询到客户信息</p>
             </div>
@@ -65,8 +101,12 @@
 
 <script>
   import formTest from '../../assets/js/formTest'
+  import Daterange from '../com/date'
   export default {
-    name: 'index',
+    name: 'shipmentUpload',
+    components:{
+      Daterange
+    },
     data() {
       return {
         form: {},
@@ -166,7 +206,7 @@
 <style lang='scss'>
   $sc:12;
 
-.index3{
+.shipmentUpload{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;

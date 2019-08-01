@@ -1,10 +1,10 @@
 <template>
-  <div class="index1">
+  <div class="shouhuoUpload">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to='/home/sell'>销售管理</el-breadcrumb-item>
-          <el-breadcrumb-item>销售预测审批</el-breadcrumb-item>
+          <el-breadcrumb-item>销售管理</el-breadcrumb-item>
+          <el-breadcrumb-item>收货数据上传</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="sels clear">
@@ -12,40 +12,51 @@
           <i class="el-icon-arrow-down" v-if='!dialogVisible' @click='change'> 展开</i>
           <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
         </div>
-        <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
-          <el-form-item label="代理商">
-            <el-input size='small' v-model="form.value1" placeholder="请输入"></el-input>
+        <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
+          <el-form-item label="上传时间"  class="date">
+            <Daterange />
           </el-form-item>
-          <el-form-item label="客户">
-            <el-input size='small' v-model="form.value2" placeholder="请输入"></el-input>
+          <el-form-item label="提货日期"  class="date">
+            <Daterange />
           </el-form-item>
-          <el-form-item label="状态">
-            <el-select v-model="form.value3" size="small"> 
-              <el-option label="客户已确认" value='1'></el-option> 
-              <el-option label="客户未确认" value='2'></el-option> 
-            </el-select>
+          <el-form-item label="产品型号">
+            <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item :label="checkedCities.length==0 ?'' : ' '">
+          <el-form-item label="发货公司">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="仓储地">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item :label="' '">
             <el-button size='small' type='primary' plain>查询</el-button>
-            <el-button @click='reset' size='small' type='primary' plain>重置</el-button>
+            <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
           </el-form-item>
         </el-form>
       </div>
       <div class="box">
+        <div class="btns clear">
+          <el-button class="add" @click='open' size='small' type='primary'>下载模版</el-button>
+          <el-button class="add" @click='upload' size='small' type='primary'>上传</el-button>
+          <el-button class="add" @click='open' size='small' type='primary'>下载错误数据</el-button>
+
+          <el-button class="add" @click='changeType' size='small' type='primary'>验证</el-button>
+          <!-- <el-button class="add" @click='open' size='small' type='primary'>保存</el-button> -->
+          <el-button class="add" @click='remove' size='small' type='primary'>提交</el-button>
+        </div>
         <div class="tab">
-          <el-table :data="tableData" style="width: 100%" height="700">
-            <el-table-column prop="" width='30' show-overflow-tooltip label=""></el-table-column>
-            <el-table-column prop="6" label="代理商" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="7" label="客户" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="8" label="Rebate金额" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="9" label="状态" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="10" label="操作" show-overflow-tooltip>
-              <template >
-                <el-button type='text'>发送确认函</el-button>
-                <el-button type='text'>明细</el-button>
-              </template>
-            </el-table-column>
-            
+          <el-table :data="tableData" border style="width: 100%" height="100%">
+            <el-table-column prop="0" width='150' label="上传时间" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="0" width='150' label="产品型号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="0" width='150' label="库存类别" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="0" width='150' label="库存单价" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="0" width='150' label="仓储地" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="提货时间" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="提货发票号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="提货数量" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="发货公司" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="采购单号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="备注" show-overflow-tooltip></el-table-column>
             <div slot="empty">
               <p>未查询到客户信息</p>
             </div>
@@ -59,22 +70,34 @@
         
       </div>
     </div>
+    <el-dialog
+        title="上传结果"
+        :visible.sync="dialogVisible1"
+        width="600px"
+        >
+        数据上传成功，请确认是否提交
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="quit" size="small">取 消</el-button>
+          <el-button type="primary" size="small" @click="dialogVisible1 = false ">提 交</el-button>
+        </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
   import formTest from '../../assets/js/formTest'
+  import Daterange from '../com/date'
   export default {
-    name: 'index',
+    name: 'shouhuoUpload',
+    components:{
+      Daterange
+    },
     data() {
       return {
-        form: {
-          value1:'',
-          value2:'',
-          value3:'',
-        },
+        form: {},
         total: 0,
         d1: [],
+        dialogVisible1:false,
         options: [{
           value: '选项1',
           label: 'Mass Market'
@@ -100,7 +123,7 @@
         isIndeterminate: false,
         dialogVisible: false,
         tableData: [
-        {}
+        
         ],
         //第几页
         currentPage: 1,
@@ -118,12 +141,21 @@
     watch: {
     },
     methods: {
-      reset(){
-        this.form={
-          value1:'',
-          value2:'',
-          value3:'',
-        }
+      quit(){
+        this.$confirm('取消将会丢失已上传的数据，确定取消吗？', '取消', {
+          distinguishCancelAndClose: true,
+          confirmButtonText: '确认',
+          cancelButtonText: '取消'
+        })
+        .then(() => { 
+          this.dialogVisible1 = false
+        })
+        .catch(action => {
+          
+        });
+      },
+      upload(){
+        this.dialogVisible1 = true
       },
       change() {
         this.dialogVisible = !this.dialogVisible
@@ -176,7 +208,7 @@
 <style lang='scss'>
   $sc:12;
 
- .index1{
+.shouhuoUpload{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;

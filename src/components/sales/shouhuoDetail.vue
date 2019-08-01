@@ -1,35 +1,30 @@
 <template>
-  <div class="shipmentQuery">
+  <div class="shouhuoDetail">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to='/home/sell'>销售管理</el-breadcrumb-item>
-          <el-breadcrumb-item>出货数据查询</el-breadcrumb-item>
+          <el-breadcrumb-item >销售管理</el-breadcrumb-item>
+          <el-breadcrumb-item>收货数据查询</el-breadcrumb-item>
+          <el-breadcrumb-item>明细</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-
       <div class="sels clear">
         <div class="lineBox">
           <i class="el-icon-arrow-down" v-if='!dialogVisible' @click='change'> 展开</i>
-
           <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
-
         </div>
         <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
-          <el-form-item label="代理商">
+          <el-form-item label="提货日期"  class="date">
+            <Daterange />
+          </el-form-item>
+          <el-form-item label="产品型号">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="出货日期" class="date">
-            <Daterange />
+          <el-form-item label="发货公司">
+            <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="上传日期"  class="date">
-            <Daterange />
-          </el-form-item>
-          <el-form-item label="状态" >
-            <el-select v-model="value">
-              <el-option label="待确认" value="1"></el-option>
-              <el-option label="已提交" value="2"></el-option>
-            </el-select>
+          <el-form-item label="仓储地">
+            <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item :label="' '">
             <el-button size='small' type='primary' plain>查询</el-button>
@@ -39,27 +34,27 @@
       </div>
       <div class="box">
         <div class="tab">
-          <el-table :data="tableData" border style="width: 100%" height="100%">
-            <el-table-column prop="0" width='' label="状态" ></el-table-column>
-            <el-table-column prop="0" width='' label="代理商" ></el-table-column>
-            <el-table-column prop="0" width='' label="出货日期"></el-table-column>
-            <el-table-column prop="1" width="" label="上传日期" show-overflow-tooltip></el-table-column>
-            <el-table-column  label="操作" fixed="right" width="100" show-overflow-tooltip>
-              <template slot-scope='scope' >
-                <el-button type="text" @click="mx">明细</el-button>
-              </template>
-            </el-table-column>
+          <el-table :data="tableData" border height="100%" style="width:100%">
+            <el-table-column prop="0" width='150' label="产品型号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="0" width='150' label="库存类别" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="0" width='150' label="库存单价" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="0" width='150' label="仓储地" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="提货时间" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="提货发票号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="提货数量" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="发货公司" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="采购单号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="备注" show-overflow-tooltip></el-table-column>
             <div slot="empty">
               <p>无数据</p>
             </div>
           </el-table>
-           <div class="block">
-          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-            :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
-          </el-pagination>
+          <div class="block">
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+              :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+            </el-pagination>
+          </div>
         </div>
-        </div>
-       
       </div>
     </div>
   </div>
@@ -68,7 +63,7 @@
 <script>
   import Daterange from "../com/date";
   export default {
-    name: 'shipmentQuery',
+    name: 'shouhuoDetail',
     components:{
       Daterange
     },
@@ -78,7 +73,6 @@
         value: '',
         dialogVisible: false,
         tableData: [
-        {}
         ],
         //第几页
         currentPage: 1,
@@ -99,7 +93,7 @@
     methods: {
       mx(){
         this.$router.push({
-          name:'shipmentDetail'
+          name:'shouhuoDetail'
         })
       },
       change() {
@@ -141,23 +135,10 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
   $sc:12;
-.shipmentQuery{
+.shouhuoDetail{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;
-
-  .el-dialog{
-    .form {
-        .el-form-item__label {
-          height: 30px;
-        }
-        .el-form-item {
-          .el-select{
-            width: 100%;
-          }
-        }
-    }
-  }
   .sellBox{
     height: 100%;
     display: flex;
