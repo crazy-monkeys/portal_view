@@ -1,8 +1,8 @@
 <template>
   <div class="menu">
       <div class="logo" :key='1'>
-        <img class="lglogo" src="../assets/img/logostr.png" alt="" v-if="!isCollapse">
-        <img class="smalllogo" src="../assets/img/logo.png" alt="" v-if="isCollapse">
+        <!-- <img class="lglogo" src="../assets/img/logostr.png" alt="" v-if="!isCollapse"> -->
+        <!-- <img class="smalllogo" src="../assets/img/logo.png" alt="" v-if="isCollapse"> -->
       </div>
         <el-menu :key='2' text-color='#B161BF' class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
           :collapse="isCollapse" :unique-opened="true" :router='true' :default-active='$route.path'>
@@ -171,6 +171,13 @@ export default {
               resourceUrl: "/home/price/inquiry/approval",
               iconClass: "el-icon-s-123",
               children: []
+            },
+            {
+              resourceId: "35",
+              resourceName: "特价申请",
+              resourceUrl: "/home/ts",
+              iconClass: "el-icon-s-123",
+              children: []
             }
           ]
         },
@@ -221,28 +228,32 @@ export default {
             {
               resourceId: "51",
               resourceName: "提货申请",
-              resourceUrl: "/home/sales/sales-index",
+              // resourceUrl: "/home/sales/sales-index",
+              resourceUrl: "/home/ts",
               iconClass: "el-icon-s-123",
               children: []
             },
             {
               resourceId: "52",
               resourceName: "提货查询",
-              resourceUrl: "/home/sales/sales-index",
+              resourceUrl: "/home/ts",
+              // resourceUrl: "/home/sales/sales-index",
               iconClass: "el-icon-s-123",
               children: []
             },
             {
               resourceId: "53",
               resourceName: "销售数据查询",
-              resourceUrl: "/home/sales/sales-index",
+              resourceUrl: "/home/ts",
+              // resourceUrl: "/home/sales/sales-index",
               iconClass: "el-icon-s-123",
               children: []
             },
             {
               resourceId: "54",
               resourceName: "销售数据上传",
-              resourceUrl: "/home/sales/sales-upload",
+              resourceUrl: "/home/ts",
+              // resourceUrl: "/home/sales/sales-upload",
               iconClass: "el-icon-s-123",
               children: []
             },

@@ -1,6 +1,6 @@
 <template>
   <div class="index1">
-    <div>
+    <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item to='/home/sell'>销售管理</el-breadcrumb-item>
@@ -20,7 +20,7 @@
         </div>
         <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
-          <el-form-item label="客户名称">
+          <!-- <el-form-item label="客户名称">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="客户编号">
@@ -41,11 +41,23 @@
           <el-form-item label="上传日期" class="date">
             <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
               v-model="d1">
-            </el-date-picker>
+            </el-date-picker> 
+          </el-form-item> -->
+          <el-form-item label="代理商">
+            <el-input size='small' v-model="form.value1" placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="客户">
+            <el-input size='small' v-model="form.value2" placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="状态">
+            <el-select v-model="form.value3" size="small"> 
+              <el-option label="客户已确认" value='1'></el-option> 
+              <el-option label="客户未确认" value='2'></el-option> 
+            </el-select>
           </el-form-item>
           <el-form-item :label="checkedCities.length==0 ?'' : ' '">
             <el-button size='small' type='primary' plain>查询</el-button>
-            <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
+            <el-button @click='reset' size='small' type='primary' plain>重置</el-button>
           </el-form-item>
         </el-form>
         <!-- </transition-group> -->
@@ -57,7 +69,7 @@
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" height="700">
             <el-table-column prop="" width='30' show-overflow-tooltip label=""></el-table-column>
-            <el-table-column prop="0" width='100' label="代理商" :index='q'></el-table-column>
+            <!-- <el-table-column prop="0" width='100' label="代理商" :index='q'></el-table-column>
             <el-table-column prop="1" label="上传日期" show-overflow-tooltip></el-table-column>
             <el-table-column prop="2" label="客户名称" show-overflow-tooltip></el-table-column>
             <el-table-column prop="3" label="客户编号" show-overflow-tooltip></el-table-column>
@@ -76,17 +88,28 @@
             <el-table-column prop="12" label="出货类型" show-overflow-tooltip></el-table-column>
             <el-table-column prop="12" label="订单月份" show-overflow-tooltip></el-table-column>
             <el-table-column prop="12" label="发货公司" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="备注" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="12" label="备注" show-overflow-tooltip></el-table-column> -->
+             <el-table-column prop="6" label="代理商" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="7" label="客户" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="8" label="Rebate金额" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="9" label="状态" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="10" label="操作" show-overflow-tooltip>
+              <template >
+                <el-button type='text'>发送确认函</el-button>
+              </template>
+            </el-table-column>
+            
             <div slot="empty">
               <p>未查询到客户信息</p>
             </div>
           </el-table>
-        </div>
-        <div class="block">
+          <div class="block">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
             :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
           </el-pagination>
         </div>
+        </div>
+        
       </div>
     </div>
     <!-- <el-dialog
@@ -109,7 +132,11 @@
     name: 'index',
     data() {
       return {
-        form: {},
+        form: {
+          value1:'',
+          value2:'',
+          value3:'',
+        },
         total: 0,
         d1: [],
         options: [{
@@ -137,7 +164,7 @@
         isIndeterminate: false,
         dialogVisible: false,
         tableData: [
-        
+        {}
         ],
         //第几页
         currentPage: 1,
@@ -155,6 +182,13 @@
     watch: {
     },
     methods: {
+      reset(){
+        this.form={
+          value1:'',
+          value2:'',
+          value3:'',
+        }
+      },
       change() {
         this.dialogVisible = !this.dialogVisible
       },
@@ -206,105 +240,90 @@
 <style lang='scss'>
   $sc:12;
 
-  .index1 {
-    .head {
-      h1 {
-        opacity: 0.87;
-        font-size: 18px;
-        color: #000;
-        letter-spacing: 0;
-        line-height: 42px;
-        height: 42px;
-        /* font-weight: bold; */
-        padding: 0 50px;
-      }
+ .index1{
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0 20px 20px;
 
-      .el-breadcrumb {
-        line-height: 30px;
-        margin-left: 50px;
-        margin-right: 20px;
-        font-size: 14px;
-      }
-    }
-
-    .sels {
-      background: #fff;
-      padding: 10px 30px;
-      margin: 0 20px 10px 20px;
-
-      .lineBox {
-        i {
-          color: #800080;
-          font-weight: bold;
-        }
-      }
-
-      .line {
-        height: 12px;
-        background: #800080;
-        margin-left: 20px;
-      }
-
-      .form {
-
-        /* max-width: 1000px; */
+  .el-dialog{
+    .form {
         .el-form-item__label {
           height: 30px;
         }
-
+        .el-form-item {
+          .el-select{
+            width: 100%;
+          }
+        }
+    }
+  }
+  .sellBox{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .head{
+      padding: 10px 20px;
+      // background: red;
+    }
+    .sels{
+      // margin: 20px 0;
+      padding:10px 20px;
+      background: #fff;
+      margin-bottom: 10px;
+      .lineBox{
+        color: #b161bf;
+      }
+    }
+    .form {
+        .el-form-item__label {
+          height: 30px;
+        }
         .el-form-item {
           width: 200px;
           margin-bottom: 0;
+          .el-select{
+            width: 100%;
+          }
         }
-
         .date {
           width: 414px;
-
-          .el-date-editor {
-            width: 414px;
-          }
         }
-
-      }
     }
-
-    .box {
-      margin: 0 20px 20px 20px;
-      background: #FFFFFF;
-      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
-      border-radius: 2px;
+    .box{
+      height: 100%;
       position: relative;
-
-      .btns {
-        .add {
-          margin: 12px 0 12px 30px;
-        }
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      .btns{
+        padding: 10px 20px;
+        // background: pink;
       }
-
-      .tab {
-        .el-table {
-          td {
-            height: 64px;
-            line-height: 64px;
-
-            .cell {
-              font-size: 12px;
-              color: #333333;
-              letter-spacing: 0;
-              line-height: 18px;
-            }
-          }
+      .tab{
+        padding-bottom: 52px;
+        box-sizing: border-box;
+        height: 100%;
+        // background: orange;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        .el-table{
+          height: 100%;
+          position: relative;
         }
-      }
-
-      .block {
-        padding: 10px;
-
-        .el-pagination {
+        .block{
+          position: absolute;
+          bottom:0;
+          padding:  10px 0 ;
           width: 100%;
-          text-align: center;
+          .el-pagination {
+            width: 100%;
+            padding: 0;
+            text-align: center;
+          }
         }
       }
     }
   }
+}
 </style>

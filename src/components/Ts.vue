@@ -1,6 +1,6 @@
 <template>
   <div class="ts">
-    提示页正在开发中。。。
+    正在开发中。。。
   </div>
 </template>
 

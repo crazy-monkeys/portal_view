@@ -1,6 +1,6 @@
 <template>
-  <div class="index">
-    <div>
+  <div class="index2">
+    <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item to='/home/sell'>销售管理</el-breadcrumb-item>
@@ -74,12 +74,13 @@
               <p>未查询到客户信息</p>
             </div>
           </el-table>
-        </div>
-        <div class="block">
+           <div class="block">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
             :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
           </el-pagination>
         </div>
+        </div>
+       
       </div>
     </div>
     <!-- <el-dialog
@@ -199,105 +200,90 @@
 <style lang='scss'>
   $sc:12;
 
-  .index {
-    .head {
-      h1 {
-        opacity: 0.87;
-        font-size: 18px;
-        color: #000;
-        letter-spacing: 0;
-        line-height: 42px;
-        height: 42px;
-        /* font-weight: bold; */
-        padding: 0 50px;
-      }
+  .index2{
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0 20px 20px;
 
-      .el-breadcrumb {
-        line-height: 30px;
-        margin-left: 50px;
-        margin-right: 20px;
-        font-size: 14px;
-      }
-    }
-
-    .sels {
-      background: #fff;
-      padding: 10px 30px;
-      margin: 0 20px 10px 20px;
-
-      .lineBox {
-        i {
-          color: #800080;
-          font-weight: bold;
-        }
-      }
-
-      .line {
-        height: 12px;
-        background: #800080;
-        margin-left: 20px;
-      }
-
-      .form {
-
-        /* max-width: 1000px; */
+  .el-dialog{
+    .form {
         .el-form-item__label {
           height: 30px;
         }
-
+        .el-form-item {
+          .el-select{
+            width: 100%;
+          }
+        }
+    }
+  }
+  .sellBox{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .head{
+      padding: 10px 20px;
+      // background: red;
+    }
+    .sels{
+      // margin: 20px 0;
+      padding:10px 20px;
+      background: #fff;
+      margin-bottom: 10px;
+      .lineBox{
+        color: #b161bf;
+      }
+    }
+    .form {
+        .el-form-item__label {
+          height: 30px;
+        }
         .el-form-item {
           width: 200px;
           margin-bottom: 0;
+          .el-select{
+            width: 100%;
+          }
         }
-
         .date {
           width: 414px;
-
-          .el-date-editor {
-            width: 414px;
-          }
         }
-
-      }
     }
-
-    .box {
-      margin: 0 20px 20px 20px;
-      background: #FFFFFF;
-      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
-      border-radius: 2px;
+    .box{
+      height: 100%;
       position: relative;
-
-      .btns {
-        .add {
-          margin: 12px 0 12px 30px;
-        }
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      .btns{
+        padding: 10px 20px;
+        // background: pink;
       }
-
-      .tab {
-        .el-table {
-          td {
-            height: 64px;
-            line-height: 64px;
-
-            .cell {
-              font-size: 12px;
-              color: #333333;
-              letter-spacing: 0;
-              line-height: 18px;
-            }
-          }
+      .tab{
+        padding-bottom: 52px;
+        box-sizing: border-box;
+        height: 100%;
+        // background: orange;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        .el-table{
+          height: 100%;
+          position: relative;
         }
-      }
-
-      .block {
-        padding: 10px;
-
-        .el-pagination {
+        .block{
+          position: absolute;
+          bottom:0;
+          padding:  10px 0 ;
           width: 100%;
-          text-align: center;
+          .el-pagination {
+            width: 100%;
+            padding: 0;
+            text-align: center;
+          }
         }
       }
     }
   }
+}
 </style>

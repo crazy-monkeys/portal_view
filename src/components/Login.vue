@@ -3,7 +3,7 @@
 <!-- <button v-print="'#app'">打印</button> -->
       <el-form status-icon class="login-box">
         <div class="login-box-login">
-          <h1><img src="../assets/img/logostr.png" alt=""> </h1>
+          <!-- <h1><img src="../assets/img/logostr.png" alt=""> </h1> -->
           <el-form-item  label-width="100" label="">
             <el-input
               type="text"
@@ -32,7 +32,8 @@
       <img src="../../static/bg.jpg" alt="">
       </div> -->
       <div class="txt">
-使用中有任何技术问题，请发送邮件到 <a  href="mailto:ITServiceDesk@unisoc.com">ITServiceDesk@unisoc.com</a> ，我们会尽快回复。
+<!-- 使用中有任何技术问题，请发送邮件到 <a  href="mailto:ITServiceDesk@unisoc.com">ITServiceDesk@unisoc.com</a> ，我们会尽快回复。 -->
+使用中有任何技术问题，请发送邮件到 <a  href="">xxxxxxx@xxx.com</a> ，我们会尽快回复。
       </div>
   </div>
 </template>
