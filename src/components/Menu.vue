@@ -1,8 +1,8 @@
 <template>
   <div class="menu">
       <div class="logo" :key='1'>
-        <!-- <img class="lglogo" src="../assets/img/logostr.png" alt="" v-if="!isCollapse"> -->
-        <!-- <img class="smalllogo" src="../assets/img/logo.png" alt="" v-if="isCollapse"> -->
+        <img class="lglogo" src="../assets/img/logostr.png" alt="" v-if="!isCollapse">
+        <img class="smalllogo" src="../assets/img/logo.png" alt="" v-if="isCollapse">
       </div>
         <el-menu :key='2' text-color='#B161BF' class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
           :collapse="isCollapse" :unique-opened="true" :router='true' :default-active='$route.path'>
@@ -401,7 +401,6 @@ $sc: 12;
       width: 44px;
       margin-top: 20px;
     }
-
     .lglogo {
       width: 180px;
     }
