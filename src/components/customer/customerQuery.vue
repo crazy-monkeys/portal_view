@@ -34,7 +34,6 @@
               </el-option>
             </el-select>
           </el-form-item>
-          
           <el-form-item label="报备日期" class="date">
             <Daterange @data='watchRepTime' :resetData='resetData' />
           </el-form-item>
@@ -60,8 +59,6 @@
             </el-table-column>
             <el-table-column prop="isLicense" show-overflow-tooltip label="License客户" >
             </el-table-column>
-            <el-table-column prop="" show-overflow-tooltip label="信用状况" sortable>
-            </el-table-column>
             <el-table-column prop="businessType" label="业务类型" show-overflow-tooltip>
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" label="报备日期" sortable> 
@@ -69,8 +66,8 @@
             <el-table-column show-overflow-tooltip prop="registerTimeStr" label="创建日期" sortable>
             </el-table-column>
             <el-table-column show-overflow-tooltip label="操作" fixed='right' width="120">
-              <template scope-slot='scope'>
-                <el-button type='text'  @click='add'>明细</el-button>
+              <template slot-scope="scope">
+                <el-button type='text'  @click='add(scope.row.id)'>明细</el-button>
                 <el-button type='text'  @click='mod'>修改</el-button>
               </template>
             </el-table-column>
@@ -81,7 +78,7 @@
           </el-table>
           <div class="block">
             <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-              :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
+              :page-sizes="[10, 30,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
             </el-pagination>
           </div>
         </div>
@@ -142,7 +139,6 @@ export default {
   watch: {},
   methods: {
     reset(){
-      
       this.form = {
         businessType:'',
         customerName:'',
@@ -164,24 +160,29 @@ export default {
       console.log(data)
       this.form.createStartDate = data.startTime
       this.form.createEndDate = data.endTime
+      this.resetData = false
     },
     watchRepTime(data){
       console.log(data)
       this.form.reportStartDate = data.startTime
       this.form.reportEndDate = data.endTime
+      this.resetData = false
+
     },
     async getList(form){
       var data ={
+        pageIndex:this.currentPage,
+        pageSize:this.pageSize,
         customerName:form.customerName,
         customerInCode:form.customerInCode,
-        customerOutCode:form.customerOUtCode,
+        customerOutCode:form.customerOutCode,
         isLicense:form.isLicense,
         businessType:form.businessType,
         reportStartDate:form.reportStartDate,
         reportEndDate:form.reportEndDate,
         createStartDate:form.createStartDate,
         createEndDate:form.createEndDate,
-        // customerStatus:form.customerName,
+        // customerStatus:3,
       }
       const res = await getList(data);
       console.log('客户列表',res)
@@ -213,19 +214,24 @@ export default {
     q(index) {
       return this.pageSize * (this.currentPage - 1) + index + 1;
     },
-    add() {
+    add(id) {
       this.$router.push({
-        name: "AddSell"
+        name: "customerAdd",
+        query:{
+          id:id
+        }
       });
     },
     // 分页
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageSize = val;
+      this.getList(this.form)
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.currentPage = val;
+      this.getList(this.form)
     }
   }
 };

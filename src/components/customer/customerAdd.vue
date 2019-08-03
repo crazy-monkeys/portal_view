@@ -1,20 +1,20 @@
 <template>
   <!-- 添加新增控件 -->
-  <div class="addsell">
+  <div class="customerAdd">
     <div class="head clear">
       <el-page-header @back="back" content="明细">
     </el-page-header>
     </div>
     <div class="content">
       <div class="selBox">
-        <el-form ref="form" :model="form" label-position="top" class="form" :inline="true">
+        <el-form ref="form" :model="form"  label-position="top" class="form" :inline="true">
           <el-form-item label="客户名称">
-            <el-input size="small"></el-input>
+            <el-input size="small" v-model="form.custName"></el-input>
           </el-form-item>
           <el-form-item label="客户类型">
-            <el-select v-model="value1" size="small" filterable placeholder="请选择">
+            <el-select v-model="form.custType" size="small" filterable placeholder="请选择">
               <el-option
-                v-for="item in options1"
+                v-for="item in businessTypes"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
@@ -22,145 +22,125 @@
             </el-select>
           </el-form-item>
           <el-form-item label="是否License客户">
-            <el-select v-model="value" size="small"  placeholder="请选择">
-              <el-option  label="是" value="1"></el-option>
-              <el-option  label="否" value="0"></el-option>
+            <el-select v-model="form.isLicense" size="small"  placeholder="请选择">
+              <el-option  label="是" :value="1"></el-option>
+              <el-option  label="否" :value="0"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="角色">
-            <el-select v-model="value" size="small"  placeholder="请选择">
-              <el-option  label="中国客户" value="1"></el-option>
-              <el-option  label="亚太客户" value="2"></el-option>
-              <el-option  label="北美客户" value="3"></el-option>
+            <el-select v-model="form.custRole" size="small"  placeholder="请选择">
+              <el-option  label="中国客户" :value="1"></el-option>
+              <el-option  label="亚太客户" :value="2"></el-option>
+              <el-option  label="北美客户" :value="3"></el-option>
             </el-select>
           </el-form-item>
-          <!-- <el-form-item label="销售">
-            <el-select v-model="value2" size="small" filterable placeholder="请选择">
-              <el-option
-                v-for="item in options2"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-          </el-form-item> -->
-          <!-- <el-form-item label="阿米巴">
-            <el-select v-model="value3" size="small" filterable placeholder="请选择">
-              <el-option
-                v-for="item in options3"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-          </el-form-item> -->
           <el-form-item label="公司资产">
-            <el-input size="small"></el-input>
+            <el-input size="small" v-model="form.corporateAssets"></el-input>
           </el-form-item>
           <el-form-item label="员工人数">
-            <el-input size="small"></el-input>
+            <el-input size="small" v-model="form.corporateNumber"></el-input>
           </el-form-item>
           <el-form-item label="传真">
-            <el-input size="small"></el-input>
+            <el-input size="small" v-model="form.custFax"></el-input>
           </el-form-item>
           <el-form-item label="邮箱">
-            <el-input size="small"></el-input>
+            <el-input size="small" v-model='form.custEmail'></el-input>
           </el-form-item>
           <el-form-item label="公司网站">
-            <el-input size="small"></el-input>
+            <el-input size="small" v-model='form.custWeb'></el-input>
           </el-form-item>
           <el-form-item label="母公司">
-            <el-input size="small"></el-input>
+            <el-input size="small" v-model='form.corporateParents'></el-input>
           </el-form-item>
           <el-form-item label="公司总机">
-            <el-input size="small"></el-input>
+            <el-input size="small" v-model='form.custPhoneNo'></el-input>
           </el-form-item>
           <el-form-item label="注册时间" size="small" class="date">
-            <el-date-picker v-model="value1" type="date" placeholder="选择日期"></el-date-picker>
+            <el-input v-model="form.registerTimeStr"></el-input>
+            <!-- <el-date-picker v-model="form.registerTime" type="date" placeholder="选择日期"></el-date-picker> -->
           </el-form-item>
           <el-form-item label="注册地址" class="address">
-            <el-select v-model="value4" size="small" filterable placeholder="省">
+
+            <el-cascader
+              v-model="regCity"
+              :options="province"
+              size="small"
+              :props="prop"
+              placeholder="请选择省市区">
+              </el-cascader>
+            <!-- <el-select v-model="regPro" size="small" filterable placeholder="省">
               <el-option
-                v-for="item in options4"
+                v-for="item in province"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
               ></el-option>
             </el-select>
-            <el-select v-model="value5" size="small" filterable placeholder="市">
+            <el-select v-model="regCity" size="small" filterable placeholder="市">
               <el-option
-                v-for="item in options5"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                v-for="item in city"
+                :key="item.name"
+                :label="item.name"
+                :value="item.name"
               ></el-option>
             </el-select>
-            <el-select v-model="value6" size="small" filterable placeholder="区">
+            <el-select v-model="regDis" size="small" filterable placeholder="区">
               <el-option
-                v-for="item in options6"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                v-for="item in district"
+                :key="item.name"
+                :label="item.name"
+                :value="item.name"
               ></el-option>
-            </el-select>
+            </el-select> -->
             <el-input size="small" placeholder="详细地址"></el-input>
           </el-form-item>
           <el-form-item label="办公地址" class="address">
-            <el-select v-model="value4" size="small" filterable placeholder="省">
+            <el-select v-model="workPro" size="small" filterable placeholder="省">
               <el-option
-                v-for="item in options4"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                v-for="item in province"
+                :key="item.name"
+                :label="item.name"
+                :value="item.name"
               ></el-option>
             </el-select>
-            <el-select v-model="value4" size="small" filterable placeholder="市">
+            <el-select v-model="workCity" size="small" filterable placeholder="市">
               <el-option
-                v-for="item in options4"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                v-for="item in city"
+                :key="item.name"
+                :label="item.name"
+                :value="item.name"
               ></el-option>
             </el-select>
-            <el-select v-model="value4" size="small" filterable placeholder="区">
+            <el-select v-model="workDis" size="small" filterable placeholder="区">
               <el-option
-                v-for="item in options4"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                v-for="item in district"
+                :key="item.name"
+                :label="item.name"
+                :value="item.name"
               ></el-option>
             </el-select>
             <el-input size="small" placeholder="详细地址"></el-input>
           </el-form-item>
           <el-form-item label="业务介绍" class="txt">
-            <el-input type="textarea" v-model="form.txt" :rows="2" placeholder resize="none"></el-input>
+            <el-input type="textarea" v-model="form.businessIntroduction" :rows="2" placeholder resize="none"></el-input>
           </el-form-item>
         </el-form>
       </div>
       <div class="tab">
         <el-tabs v-model="activeName"  @tab-click="handleClick">
-          <el-tab-pane label="开票信息" name='ccc'>
+          <el-tab-pane label="开票信息" name='first'>
             <div class="tabBox">
-              <el-table :data="tableData3" style="width: 100%" height="300">
-                <el-table-column prop="t31" label="购货单位" show-overflow-tooltip>
+              <el-table :data="form.basicInvoice" style="width: 100%" height="300">
+                <el-table-column prop="purchasingUnit" label="购货单位" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t31" label="收货地址" show-overflow-tooltip>
+                <el-table-column prop="shippingAddress" label="收货地址" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t32" label="收货手机号" show-overflow-tooltip>
+                <el-table-column prop="shippingMobile" label="收货手机号" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t33" show-overflow-tooltip label="纳税人登记号">
+                <el-table-column prop="taxpayerRegistrationNumber" show-overflow-tooltip label="纳税人登记号">
                 </el-table-column>
-                <el-table-column prop="t33" show-overflow-tooltip label="币种">
+                <el-table-column prop="currency" show-overflow-tooltip label="币种">
                 </el-table-column>
-                <el-table-column prop="t33" show-overflow-tooltip label="银行识别码">
-                </el-table-column>
-                <el-table-column prop="t33" show-overflow-tooltip label="银行名称">
-                </el-table-column>
-                <el-table-column prop="t33" show-overflow-tooltip label="银行地址">
-                </el-table-column>
-                <el-table-column prop="t33" show-overflow-tooltip label="银行账号">
-                </el-table-column>
-               
                 <div slot="empty">
                   无数据
                 </div>
@@ -169,38 +149,43 @@
           </el-tab-pane>
           <el-tab-pane label="联系人" name='aa'>
             <div class="tabBox">
-              <el-table :data="tableData3" style="width: 100%" height="300">
-                <el-table-column prop="t31" label="联系人类型" show-overflow-tooltip>
+              <el-table :data="form.basicContact" style="width: 100%" height="300">
+                <el-table-column prop="contactType" label="联系人类型" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t31" label="姓名" show-overflow-tooltip>
+                <el-table-column prop="contactName" label="姓名" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t32" label="部门" show-overflow-tooltip>
+                <el-table-column prop="contactDepartment" label="部门" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t33" show-overflow-tooltip label="职位">
+                <el-table-column prop="contactPosition" show-overflow-tooltip label="职位">
                 </el-table-column>
-                <el-table-column prop="t33" show-overflow-tooltip label="联系方式">
+                <el-table-column prop="contactMobile" show-overflow-tooltip label="联系方式">
                 </el-table-column>
-                <el-table-column prop="t33" show-overflow-tooltip label="邮箱">
+                <el-table-column prop="contactEmail" show-overflow-tooltip label="邮箱">
                 </el-table-column>
-                <el-table-column prop="t33" show-overflow-tooltip label="是否关键决策人">
+                <el-table-column  show-overflow-tooltip label="是否关键决策人">
+                  <template slot-scope="scope">
+                    {{scope.row.isDecisionMaker ? '是':'否'}}
+                  </template>
                 </el-table-column>
-                <el-table-column prop="t33" show-overflow-tooltip label="股东占比">
+                <el-table-column  show-overflow-tooltip label="股东占比">
+                  <template slot-scope="scope">
+                    {{scope.row.equityRatio+'%'}}
+                  </template>
                 </el-table-column>
-                
                 <div slot="empty">
                   无数据
                 </div>
               </el-table>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="客户层次结构" name="first">
+          <el-tab-pane label="客户层次结构" name="aaa">
             <div class="tabBox">
-              <el-table :data="tableData1" style="width: 100%" height="300">
-                <el-table-column prop="t11" label="名称" show-overflow-tooltip>
+              <el-table :data="form.basicStructure" style="width: 100%" height="300">
+                <el-table-column prop="corporateStructureName" label="名称" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t11" label="地址" show-overflow-tooltip>
+                <el-table-column prop="corporateStructureAddress" label="地址" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t11" label="主要联系人" show-overflow-tooltip>
+                <el-table-column prop="isDefaultContact" label="主要联系人" show-overflow-tooltip>
                 </el-table-column>
                 <div slot="empty">
                   无数据
@@ -210,14 +195,13 @@
           </el-tab-pane>
           <el-tab-pane label="展锐销售团队" name="third">
             <div class="tabBox">
-              <el-table :data="tableData2" style="width: 100%" height="300">
-                <el-table-column prop="t21" label="角色类型" show-overflow-tooltip>
+              <el-table :data="form.salesTeam" style="width: 100%" height="300">
+                <el-table-column prop="roleName" label="角色类型" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t21" label="名称" show-overflow-tooltip>
+                <el-table-column prop="name" label="名称" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t22" label="手机号" show-overflow-tooltip>
+                <el-table-column prop="mobile" label="手机号" show-overflow-tooltip>
                 </el-table-column>
-                
                 <div slot="empty">
                   无数据
                 </div>
@@ -226,12 +210,11 @@
           </el-tab-pane>
           <el-tab-pane label="关系" name="zzz">
             <div class="tabBox">
-              <el-table :data="tableData2" style="width: 100%" height="300">
-                <el-table-column prop="t21" label="名称" show-overflow-tooltip>
+              <el-table :data="form.basicShip" style="width: 100%" height="300">
+                <el-table-column prop="corporateName" label="名称" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t22" label="关系类型" show-overflow-tooltip>
+                <el-table-column prop="corporateType" label="关系类型" show-overflow-tooltip>
                 </el-table-column>
-                
                 <div slot="empty">
                   无数据
                 </div>
@@ -240,30 +223,29 @@
           </el-tab-pane>
           <el-tab-pane label="销售数据" name="a">
             <div class="tabBox">
-              <el-table :data="tableData2" style="width: 100%" height="300">
-                <el-table-column prop="t21" label="销售组织" show-overflow-tooltip>
+              <el-table :data="form.sales" style="width: 100%" height="300">
+                <el-table-column prop="salesOrganize" label="销售组织" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t22" label="分销渠道" show-overflow-tooltip>
+                <el-table-column prop="distributionChannel" label="分销渠道" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t22" label="产品组" show-overflow-tooltip>
+                <el-table-column prop="productGroup" label="产品组" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t22" label="货币" show-overflow-tooltip>
+                <el-table-column prop="currency" label="货币" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t22" label="装运条件" show-overflow-tooltip>
+                <el-table-column prop="shippingConditions" label="装运条件" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t22" label="交货工厂" show-overflow-tooltip>
+                <el-table-column prop="deliveryPlant" label="交货工厂" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t22" label="最大部分交货" show-overflow-tooltip>
+                <el-table-column prop="maxPartialDelivery" label="最大部分交货" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t22" label="内部客户" show-overflow-tooltip>
+                <el-table-column prop="internalCustomers" label="内部客户" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t22" label="账户分配组" show-overflow-tooltip>
+                <el-table-column prop="accountGroup" label="账户分配组" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t22" label="客户组" show-overflow-tooltip>
+                <el-table-column prop="custGroup" label="客户组" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t22" label="税分类" show-overflow-tooltip>
+                <el-table-column prop="taxClassification" label="税分类" show-overflow-tooltip>
                 </el-table-column>
-                
                 <div slot="empty">
                   无数据
                 </div>
@@ -272,20 +254,22 @@
           </el-tab-pane>
            <el-tab-pane label="附件" name="fourth">
             <div class="tabBox">
-              <el-table :data="tableData5" style="width: 100%" height="300">
-                <el-table-column prop="" label="附件类型" show-overflow-tooltip>
-                  <template slot-scope="scope">
+              
+
+              <el-table :data="form.basicFile" style="width: 100%" height="300">
+                <el-table-column prop="fileType" label="附件类型" show-overflow-tooltip>
+                  <!-- <template slot-scope="scope">
                     <el-select size="small">
                       <el-option value="营业执照" label='营业执照'></el-option>
                       <el-option value="银行开户证明" label='银行开户证明'></el-option>
                     </el-select>
-                  </template>
+                  </template> -->
                 </el-table-column>
-                <el-table-column prop="t31" label="附件" show-overflow-tooltip>
+                <el-table-column prop="fileName" label="附件" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t32" label="上传时间" show-overflow-tooltip>
+                <el-table-column prop="createTime" label="上传时间" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t33" show-overflow-tooltip label="上传人">
+                <el-table-column prop="createUserName" show-overflow-tooltip label="上传人">
                 </el-table-column>
                 
                 <div slot="empty">
@@ -302,152 +286,129 @@
 </template>
 
 <script>
-import formTest from "../../assets/js/formTest";
+import {detail} from "@/api/customer/query.js";
+
 export default {
-  name: "black",
+  name: "customerAdd",
   data() {
     return {
-      tableData5:[
-        {}
-      ],
-      options1: [
+      prop:{
+        label:'name',
+        value:'name',
+        children:'cityList',
+      },
+      form:{
+        advantageIntroduction: "",
+        advantageValue: "",
+        basicAddress: [],
+        basicBank: {},
+        basicContact: [],
+        basicFile: [],
+        basicInvoice: [],
+        basicLables: '',
+        basicShip: [],
+        basicStructure: [],
+        businessIntroduction: "",
+        businessType: '',
+        corporateAssets: '',
+        corporateNumber: '',
+        corporateParents: "",
+        creditEngagedValue: '',
+        creditInitalValue: '',
+        creditSurplus: '',
+        custAbbreviation: "",
+        custEmail: "",
+        custEnName: "",
+        custFax: "",
+        custInCode: "",
+        custMobile: "",
+        custOutCode: "",
+        custPhoneNo: "",
+        custRole: '',
+        custType: '',
+        custWeb: "",
+        custZhName: "",
+        customerStatus: '',
+        dealerStatus: '',
+        id: '',
+        isLicense: '',
+        isWhiteList: '',
+        registerTime: '',
+        registerTimeStr: "",
+        sales: [],
+        salesTeam: [],
+      },
+      businessTypes: [
         {
-          value: "选项1",
+          value: 1,
           label: "Mass Market"
         },
         {
-          value: "选项2",
+          value: 2,
           label: "Account Market"
         }
       ],
-      value1: "",
-
-      options2: [
-        {
-          value: "选项1",
-          label: "销售A"
-        },
-        {
-          value: "选项2",
-          label: "销售B"
-        }
+      province: [
       ],
-      value2: "",
-
-      options3: [
-        {
-          value: "选项1",
-          label: "阿米巴A"
-        },
-        {
-          value: "选项2",
-          label: "阿米巴B"
-        }
-      ],
-      value3: "",
-
-      options4: [
-        {
-          value: "选项1",
-          label: "上海"
-        },
-        {
-          value: "选项2",
-          label: "北京"
-        }
-      ],
-      value4: "",
-      options5: [
-        {
-          value: "选项1",
-          label: "上海"
-        },
-        {
-          value: "选项2",
-          label: "北京"
-        }
-      ],
-      value5: "",
-      options6: [
-        {
-          value: "选项1",
-          label: "静安"
-        },
-        {
-          value: "选项2",
-          label: "王府井"
-        }
-      ],
-      value6: "",
-
-      form: {},
+      regPro:'',
+      regCity:'',
+      regDis:'',
+      workPro:'',
+      workCity:'',
+      workDis:'',
+      city:[],
+      district:[],
       activeName: "first",
-      tableData: [{}],
-      tableData1: [{}],
       currentPage: 1,
       pageSize: 10,
       total: 0
     };
   },
+  created(){
+    this.getCity()
+    this.getDetail()
+    
+  },
+  watch:{
+    
+  },
+  computed:{
+    queryId(){
+      return this.$route.query.id
+    },
+  },
   methods: {
+    getCity() {
+      this.$http({
+        method: "get",
+        url: "static/cityL3.json"
+      })
+        .then(res => {
+          console.log("城市list", res);
+          this.province = res.data;
+            
+        })
+        .catch(error => {
+          console.log(error);
+          alert("系统异常");
+        });
+    },
+    async getDetail(){
+      var data ={
+        id:this.queryId
+      }
+      const res = await detail(data);
+      console.log('详情',res);
+      if(res){
+        this.form = res.data.data
+      }
+    },
     handleClick(tab, event) {
       console.log(tab, event);
     },
-    changeCon() {},
-    changeSign(val) {},
-    // 表单验证
-    submitForm(formName) {},
-    submitForm1(formName) {},
-    resetForm(formName) {},
-    resetForm1(formName) {},
-    qx() {},
-    //发送测试短信
-    send(shopInfoId, mobiles, content, noticeRegisterId) {},
-    // 清空表单
-    clear() {},
-    //获取主题列表
-    getTheme(shopid) {},
-    //新增营销活动
-    submit() {},
-    change() {},
-    //roi时间选择事件
-    selRuleFormTime() {},
-    //获取短信签名列表
-    getSignatures(shopInfoId) {},
-    getSnapshots(id) {},
-
-    //获取用户店铺列表
-    getShopList() {},
-
-    // 点击弹出测试短信框
-    cs() {
-      this.csdialogVisible = true;
-    },
-    handleSelect(item) {
-      console.log(item);
-    },
-    //创建主题按钮
-    create() {
-      this.dialogVisible = true;
-    },
-    // 点击返回按钮
     back() {
       window.history.back();
     },
-    back1() {
-      this.dialogVisible = false;
-    },
-
-    // 创建主题和测试短信关闭
-    close() {
-      this.dialogVisible = false;
-      this.csdialogVisible = false;
-    },
-    // 添加主题 的提交
-    commit() {
-      this.dialogVisible = false;
-      this.csdialogVisible = false;
-    }
   }
 };
 </script>
@@ -456,7 +417,7 @@ export default {
 <style lang='scss'>
 $sc: 12;
 
-.addsell {
+.customerAdd {
   height: 100%;
   overflow-y: auto;
   padding: 0 20px ;

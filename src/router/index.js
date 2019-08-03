@@ -219,13 +219,13 @@ export default new Router({
                 //样本管理
                 //短信营销
                 {
-                    path: 'sell',
+                    path: 'customer/query',
                     name: 'customerQuery',
                     component: resolve => require(['@/components/customer/customerQuery'], resolve),
                     // meta: {keepAlive: true}
                 },
                 {
-                    path: 'addSell',
+                    path: 'customer/add',
                     name: 'customerAdd',
                     component: resolve => require(['@/components/customer/customerAdd'], resolve),
                     // meta: {keepAlive: true}
