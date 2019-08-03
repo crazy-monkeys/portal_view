@@ -366,7 +366,7 @@ export default {
                 this.form.url = res.data.data.resourceUrl
                 this.form.desc = res.data.data.resourceDesc
                 this.form.type  = res.data.data.resourceType
-                this.form.icon  = res.data.data.resourceIconClass
+                this.form.icon  = res.data.data.iconClass
                 this.form.catalog = res.data.data.parentId
                 this.valueId = res.data.data.parentId
                 console.log(this.valueId)

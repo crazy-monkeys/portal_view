@@ -377,22 +377,22 @@ export default {
       // console.log(e);
     },
     quit() {
-      this.$http({
-        method: "post",
-        url: process.env.API_ROOT + "/logout",
-        headers: {
-          authorization: sessionStorage.getItem("data")
-        }
-      })
-        .then(res => {
-          console.log("退出登陆", res);
-          sessionStorage.removeItem("data");
+      // this.$http({
+      //   method: "post",
+      //   url: process.env.API_ROOT + "/logout",
+      //   headers: {
+      //     authorization: sessionStorage.getItem("data")
+      //   }
+      // })
+      //   .then(res => {
+      //     console.log("退出登陆", res);
+          // sessionStorage.removeItem("data");
           this.$router.push("/login");
-        })
-        .catch(error => {
-          console.log(error);
-          alert("系统异常");
-        });
+        // })
+        // .catch(error => {
+        //   console.log(error);
+        //   alert("系统异常");
+        // });
     },
     tb() {
       this.$router.push("/home/tb");

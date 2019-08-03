@@ -14,36 +14,36 @@
         </div>
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <el-form-item label="客户名称">
-            <el-input size='small' placeholder="请输入"></el-input>
+            <el-input size='small' placeholder="请输入" v-model="form.customerName"></el-input>
           </el-form-item>
-          <el-form-item label="客户编号">
-            <el-input size='small' placeholder="请输入"></el-input>
+          <el-form-item label="客户内部编号">
+            <el-input size='small' placeholder="请输入" v-model="form.customerInCode"></el-input>
           </el-form-item>
-          <el-form-item label="客户简称">
-            <el-input size='small' placeholder="请输入"></el-input>
+          <el-form-item label="客户外部编号" >
+            <el-input size='small' placeholder="请输入" v-model="form.customerOutCode"></el-input>
           </el-form-item>
           <el-form-item label="是否License客户">
-            <el-select v-model="value" size="small"  placeholder="请选择">
+            <el-select v-model="form.isLicense" size="small"  placeholder="请选择">
               <el-option  label="是" value="1"></el-option>
               <el-option  label="否" value="0"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="业务类型">
-            <el-select v-model="value" size="small"  placeholder="请选择">
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+            <el-select v-model="form.businessType" size="small"  placeholder="请选择">
+              <el-option v-for="item in businessTypes" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
           
           <el-form-item label="报备日期" class="date">
-            <Daterange />
+            <Daterange @data='watchRepTime' :resetData='resetData' />
           </el-form-item>
           <el-form-item label="创建日期" class="date">
-            <Daterange />
+            <Daterange @data='watchCreatTime' :resetData='resetData' />
           </el-form-item>
-          <el-form-item :label="checkedCities.length==0 ?'' : ' '">
-            <el-button size='small' type='primary' plain>搜索</el-button>
-            <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
+          <el-form-item label=" ">
+            <el-button size='small' @click="search" type='primary' plain>搜索</el-button>
+            <el-button @click='reset' size='small' type='primary' plain>重置</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -52,23 +52,23 @@
           <el-table :data="tableData"  style="width:100%" border height="100%">
             <el-table-column type="index" width='80' label="编号" :index='q'  fixed="left" >
             </el-table-column>
-            <el-table-column prop="" show-overflow-tooltip label="客户名称" >
+            <el-table-column prop="custZhName" show-overflow-tooltip label="客户名称" >
             </el-table-column>
-            <el-table-column prop="" label="客户编号" show-overflow-tooltip>
+            <el-table-column prop="custInCode" label="客户内部编号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="" label="客户简称" show-overflow-tooltip>
+            <el-table-column prop="custOutCode" label="客户外部编号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="" show-overflow-tooltip label="License客户" >
+            <el-table-column prop="isLicense" show-overflow-tooltip label="License客户" >
             </el-table-column>
             <el-table-column prop="" show-overflow-tooltip label="信用状况" sortable>
             </el-table-column>
-            <el-table-column prop="" label="业务类型" show-overflow-tooltip>
+            <el-table-column prop="businessType" label="业务类型" show-overflow-tooltip>
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" label="报备日期" sortable> 
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="创建日期" sortable>
+            <el-table-column show-overflow-tooltip prop="registerTimeStr" label="创建日期" sortable>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right' width="120">
+            <el-table-column show-overflow-tooltip label="操作" fixed='right' width="120">
               <template scope-slot='scope'>
                 <el-button type='text'  @click='add'>明细</el-button>
                 <el-button type='text'  @click='mod'>修改</el-button>
@@ -92,8 +92,8 @@
 </template>
 
 <script>
-import formTest from "../../assets/js/formTest";
 import Daterange from "../com/date";
+import {getList} from "@/api/customer/query.js";
 export default {
   name: "SellIndex",
   components:{
@@ -101,60 +101,95 @@ export default {
   },
   data() {
     return {
-      form: {},
-      total: 0,
-      d1: [],
-      options: [
+      resetData:false,
+      form: {
+        businessType:'',
+        customerName:'',
+        customerOutCode:'',
+        customerInCode:'',
+        isLicense:'',
+        reportStartDate:'',
+        reportEndDate:'',
+        createStartDate:'',
+        createEndDate:'',
+      },
+      time:[],
+      businessTypes: [
         {
-          value: "选项1",
+          value: 1,
           label: "Mass Market"
         },
         {
-          value: "选项2",
+          value: 2,
           label: "Account Market"
         }
       ],
-      value: "",
-      checkAll: false,
-      checkedCities: [1, 2],
-      conditions: [
-        {
-          label: "客户名称",
-          value: 1
-        },
-        {
-          label: "英文名称",
-          value: 2
-        }
-      ],
-      isIndeterminate: false,
       dialogVisible: false,
-      tableData: [
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-      ],
+      tableData: [],
       //第几页
       currentPage: 1,
       //每页的容量
-      pageSize: 10
+      pageSize: 10,
+      total: 0,
     };
   },
   computed: {
-    shopId() {
-      return this.$store.state.shopId.shopId;
-    }
+    
   },
-  created() {},
+  created() {
+    this.getList(this.form)
+  },
   watch: {},
   methods: {
+    reset(){
+      
+      this.form = {
+        businessType:'',
+        customerName:'',
+        customerInCode:'',
+        customerOutCode:'',
+        isLicense:'',
+        reportStartDate:'',
+        reportEndDate:'',
+        createStartDate:'',
+        createEndDate:'',
+      }
+      this.resetData = true
+      this.getList(this.form)
+    },
+    search(){
+      this.getList(this.form)
+    },
+    watchCreatTime(data){
+      console.log(data)
+      this.form.createStartDate = data.startTime
+      this.form.createEndDate = data.endTime
+    },
+    watchRepTime(data){
+      console.log(data)
+      this.form.reportStartDate = data.startTime
+      this.form.reportEndDate = data.endTime
+    },
+    async getList(form){
+      var data ={
+        customerName:form.customerName,
+        customerInCode:form.customerInCode,
+        customerOutCode:form.customerOUtCode,
+        isLicense:form.isLicense,
+        businessType:form.businessType,
+        reportStartDate:form.reportStartDate,
+        reportEndDate:form.reportEndDate,
+        createStartDate:form.createStartDate,
+        createEndDate:form.createEndDate,
+        // customerStatus:form.customerName,
+      }
+      const res = await getList(data);
+      console.log('客户列表',res)
+      if(res){
+        this.tableData = res.data.data.list;
+        this.total = res.data.data.total;
+      }
+    },
     mod(){
       this.$router.push(
         {name:'customerUpdate'}
@@ -163,18 +198,8 @@ export default {
     change() {
       this.dialogVisible = !this.dialogVisible;
     },
-    handleCheckAllChange(val) {
-      console.log(val);
-      this.checkedCities = val ? [1, 2, 3, 4, 5, 6] : [];
-      this.isIndeterminate = false;
-    },
-    handleCheckedCitiesChange(value) {
-      console.log(value);
-      let checkedCount = value.length;
-      this.checkAll = checkedCount === this.conditions.length;
-      this.isIndeterminate =
-        checkedCount > 0 && checkedCount < this.conditions.length;
-    },
+    
+    
     sure() {
       this.dialogVisible = false;
     },

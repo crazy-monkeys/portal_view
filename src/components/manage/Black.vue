@@ -12,13 +12,7 @@
     <div class="content">
       <div class="selBox">
         <el-form ref="form" :model="form" label-position="top" class="form" :inline="true">
-          <el-form-item label="客户号">
-            <el-input size="small" :readonly="true"></el-input>
-          </el-form-item>
-          <el-form-item label="中文名">
-            <el-input size="small"></el-input>
-          </el-form-item>
-          <el-form-item label="英文名">
+          <el-form-item label="客户名称">
             <el-input size="small"></el-input>
           </el-form-item>
           <el-form-item label="客户类型">
@@ -31,7 +25,20 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="销售">
+          <el-form-item label="是否License客户">
+            <el-select v-model="value" size="small"  placeholder="请选择">
+              <el-option  label="是" value="1"></el-option>
+              <el-option  label="否" value="0"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="角色">
+            <el-select v-model="value" size="small"  placeholder="请选择">
+              <el-option  label="中国客户" value="1"></el-option>
+              <el-option  label="亚太客户" value="2"></el-option>
+              <el-option  label="北美客户" value="3"></el-option>
+            </el-select>
+          </el-form-item>
+          <!-- <el-form-item label="销售">
             <el-select v-model="value2" size="small" filterable placeholder="请选择">
               <el-option
                 v-for="item in options2"
@@ -40,8 +47,8 @@
                 :value="item.value"
               ></el-option>
             </el-select>
-          </el-form-item>
-          <el-form-item label="阿米巴">
+          </el-form-item> -->
+          <!-- <el-form-item label="阿米巴">
             <el-select v-model="value3" size="small" filterable placeholder="请选择">
               <el-option
                 v-for="item in options3"
@@ -50,7 +57,7 @@
                 :value="item.value"
               ></el-option>
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="公司资产">
             <el-input size="small"></el-input>
           </el-form-item>
@@ -58,6 +65,12 @@
             <el-input size="small"></el-input>
           </el-form-item>
           <el-form-item label="传真">
+            <el-input size="small"></el-input>
+          </el-form-item>
+          <el-form-item label="邮箱">
+            <el-input size="small"></el-input>
+          </el-form-item>
+          <el-form-item label="公司网站">
             <el-input size="small"></el-input>
           </el-form-item>
           <el-form-item label="母公司">
@@ -130,82 +143,7 @@
       </div>
       <div class="tab">
         <el-tabs v-model="activeName"  @tab-click="handleClick">
-          <el-tab-pane label="主要开户行信息" name="first">
-            <div class="tabBox">
-              <el-table :data="tableData"   style="width: 100%" height="300">
-                <el-table-column prop="" label="ID" v-if="false">
-                </el-table-column>
-                <el-table-column prop="t1" label="银行名称" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t2" label="银行地址" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t3" label="账号" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t4" label="银行识别码" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t4" label="" show-overflow-tooltip>
-                  <template slot="header">
-                    <el-button type="primary" size="small">新增</el-button>
-                  </template>
-                  <template >
-                    <el-button type="text" size="small">删除</el-button>
-                  </template>
-                </el-table-column>
-                <div slot="empty">
-                  无数据
-                </div>
-              </el-table>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="组织结构" name="second">
-            <div class="tabBox">
-              <el-table :data="tableData1" style="width: 100%" height="300">
-                <el-table-column prop="t11" label="姓名" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t11" label="部门" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t11" label="职位" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t11" label="联系方式" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t12" label="股东占比" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t4" label="" show-overflow-tooltip>
-                  <template slot="header">
-                    <el-button type="primary" size="small">新增</el-button>
-                  </template>
-                  <template >
-                    <el-button type="text" size="small">删除</el-button>
-                  </template>
-                </el-table-column>
-                <div slot="empty">
-                  无数据
-                </div>
-              </el-table>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="主要供应商/客户" name="third">
-            <div class="tabBox">
-              <el-table :data="tableData2" style="width: 100%" height="300">
-                <el-table-column prop="t21" label="类型" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t22" label="名称" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t4" label="" show-overflow-tooltip>
-                  <template slot="header">
-                    <el-button type="primary" size="small">新增</el-button>
-                  </template>
-                  <template >
-                    <el-button type="text" size="small">删除</el-button>
-                  </template>
-                </el-table-column>
-                <div slot="empty">
-                  无数据
-                </div>
-              </el-table>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="开票信息" name="fff">
+          <el-tab-pane label="开票信息" name='ccc'>
             <div class="tabBox">
               <el-table :data="tableData3" style="width: 100%" height="300">
                 <el-table-column prop="t31" label="购货单位" show-overflow-tooltip>
@@ -217,6 +155,145 @@
                 <el-table-column prop="t33" show-overflow-tooltip label="纳税人登记号">
                 </el-table-column>
                 <el-table-column prop="t33" show-overflow-tooltip label="币种">
+                </el-table-column>
+                <el-table-column prop="t33" show-overflow-tooltip label="银行识别码">
+                </el-table-column>
+                <el-table-column prop="t33" show-overflow-tooltip label="银行名称">
+                </el-table-column>
+                <el-table-column prop="t33" show-overflow-tooltip label="银行地址">
+                </el-table-column>
+                <el-table-column prop="t33" show-overflow-tooltip label="银行账号">
+                </el-table-column>
+                <el-table-column prop="t4" label="" show-overflow-tooltip>
+                  <template slot="header">
+                    <el-button type="primary" size="small">新增</el-button>
+                  </template>
+                  <template >
+                    <el-button type="text" size="small">删除</el-button>
+                  </template>
+                </el-table-column>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="联系人" name='aa'>
+            <div class="tabBox">
+              <el-table :data="tableData3" style="width: 100%" height="300">
+                <el-table-column prop="t31" label="联系人类型" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t31" label="姓名" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t32" label="部门" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t33" show-overflow-tooltip label="职位">
+                </el-table-column>
+                <el-table-column prop="t33" show-overflow-tooltip label="联系方式">
+                </el-table-column>
+                <el-table-column prop="t33" show-overflow-tooltip label="邮箱">
+                </el-table-column>
+                <el-table-column prop="t33" show-overflow-tooltip label="是否关键决策人">
+                </el-table-column>
+                <el-table-column prop="t33" show-overflow-tooltip label="股东占比">
+                </el-table-column>
+                <el-table-column prop="t4" label="" show-overflow-tooltip>
+                  <template slot="header">
+                    <el-button type="primary" size="small">新增</el-button>
+                  </template>
+                  <template >
+                    <el-button type="text" size="small">删除</el-button>
+                  </template>
+                </el-table-column>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="客户层次结构" name="first">
+            <div class="tabBox">
+              <el-table :data="tableData1" style="width: 100%" height="300">
+                <el-table-column prop="t11" label="名称" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t11" label="地址" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t11" label="主要联系人" show-overflow-tooltip>
+                </el-table-column>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="展锐销售团队" name="third">
+            <div class="tabBox">
+              <el-table :data="tableData2" style="width: 100%" height="300">
+                <el-table-column prop="t21" label="角色类型" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t21" label="名称" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t22" label="手机号" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t4" label="" show-overflow-tooltip>
+                  <template slot="header">
+                    <el-button type="primary" size="small">新增</el-button>
+                  </template>
+                  <template >
+                    <el-button type="text" size="small">删除</el-button>
+                  </template>
+                </el-table-column>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="关系" name="zzz">
+            <div class="tabBox">
+              <el-table :data="tableData2" style="width: 100%" height="300">
+                <el-table-column prop="t21" label="名称" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t22" label="关系类型" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t4" label="" show-overflow-tooltip>
+                  <template slot="header">
+                    <el-button type="primary" size="small">新增</el-button>
+                  </template>
+                  <template >
+                    <el-button type="text" size="small">删除</el-button>
+                  </template>
+                </el-table-column>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="销售数据" name="a">
+            <div class="tabBox">
+              <el-table :data="tableData2" style="width: 100%" height="300">
+                <el-table-column prop="t21" label="销售组织" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t22" label="分销渠道" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t22" label="产品组" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t22" label="货币" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t22" label="装运条件" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t22" label="交货工厂" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t22" label="最大部分交货" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t22" label="内部客户" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t22" label="账户分配组" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t22" label="客户组" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="t22" label="税分类" show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column prop="t4" label="" show-overflow-tooltip>
                   <template slot="header">

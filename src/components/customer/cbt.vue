@@ -1,10 +1,10 @@
 <template>
-  <div class="theme">
+  <div class="cbt">
     <div class="sellBox"> 
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to='/home/sell'>客户管理</el-breadcrumb-item>
-          <el-breadcrumb-item to='/home/theme'>客户报备</el-breadcrumb-item>
+          <el-breadcrumb-item to='/home/sell'>商务管理</el-breadcrumb-item>
+          <el-breadcrumb-item to='/home/theme'>差价、保价、退换货申请</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="sels clear">
@@ -13,28 +13,35 @@
           <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
         </div>
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
-          <el-form-item label="客户名称">
+          <el-form-item label="类别">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="客户内部编号">
+          <el-form-item label="发货方编号">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="客户外部编号">
+          <el-form-item label="公司">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="客户类型">
+          <el-form-item label="CR金额">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="内部客户">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="外部客户">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="币种">
             <el-select v-model="value" size="small" filterable placeholder="请选择">
               <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="审批状态">
-            <el-select v-model="value1" size="small" filterable placeholder="请选择">
-              <el-option v-for="item in options1" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
+         
+          <el-form-item label="申请时间" class="date">
+            <Daterange />
           </el-form-item>
-          <el-form-item label="报备日期" class="date">
+          <el-form-item label="计划入账时间" class="date">
             <Daterange />
           </el-form-item>
           <el-form-item :label="checkedCities.length==0 ?'' : ' '">
@@ -45,33 +52,35 @@
       </div>
       <div class="box">
         <div class="btns">
-          <el-button type='primary' class="add" size='mini' @click="report">报备</el-button>
+          <el-button type='primary' class="add" size='mini' @click="add">新建</el-button>
         </div>
         <div class="tab">
-          <el-table :data="tableData" border style="width: 100%" height="100%">
+          <el-table :data="tableData" border style="width: 100%" height="100%" @row-click='rowClick'>
             <el-table-column type="index" width='100' label="编号" :index='q'>
             </el-table-column>
-            <el-table-column prop="1" show-overflow-tooltip label="审批状态">
+            <el-table-column prop="type" show-overflow-tooltip label="类别">
             </el-table-column>
-            <el-table-column prop="2" label="客户名称" show-overflow-tooltip>
+            <el-table-column prop="2" label="发货方编号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="3" label="客户内部编号" show-overflow-tooltip>
+            <el-table-column prop="3" label="公司" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="4" label="客户外部编号" show-overflow-tooltip>
+            <el-table-column prop="4" label="申请时间" show-overflow-tooltip sortable="">
             </el-table-column>
-            <el-table-column prop="5" label="客户类型" show-overflow-tooltip>
+            <el-table-column prop="5" label="币种" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="5" label="代理商" show-overflow-tooltip>
+            <el-table-column prop="5" label="CR金额" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="5" label="销售" show-overflow-tooltip>
+            <el-table-column prop="5" label="计划入账时间" width="150" show-overflow-tooltip sortable="">
             </el-table-column>
-            <el-table-column prop="5" label="报备时间" show-overflow-tooltip sortable="">
+            <el-table-column prop="5" label="内部客户" show-overflow-tooltip >
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" width='180' label="操作" fixed='right'>
+            <el-table-column prop="5" label="外部客户" show-overflow-tooltip >
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="" width='150' label="操作" fixed='right'>
               <template scope-slot='scope'>
-                <el-button type='text'  @click='add'>明细</el-button>
-                <el-button type='text'  @click='report'>重新报备</el-button>
-                <el-button type='text'  @click='del'>删除</el-button>
+                <el-button type='text'  @click='mx'>明细</el-button>
+                <el-button type='text'  @click='report'>上传</el-button>
+                <!-- <el-button type='text'  @click='del'>删除</el-button> -->
               </template>
             </el-table-column>
             <div slot="empty">
@@ -99,6 +108,35 @@
             <el-button type="primary" @click="sure1"  size="small">确 定</el-button>
           </span>
     </el-dialog>
+    <el-dialog
+        title="上传"
+        :visible.sync="dialogVisible3"
+        width="300px"
+        top="10vh"
+        >
+          <el-form ref="form" :model="form1" class="form1" label-width="auto" label-position='top' :inline='true' >
+          <el-form-item label="CR金额" v-if="rowData.type==1">
+            <el-input size='small' v-model="form1.cr" placeholder="请输入" > </el-input>
+          </el-form-item>
+          <el-form-item label="附件">
+            <el-upload
+              class="upload-demo"
+              action=""
+              multiple
+              :limit="3"
+              :file-list="fileList"
+              >
+              <el-button size="small" type="primary">点击上传</el-button>
+              <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
+            </el-upload>
+          </el-form-item>
+          </el-form>
+
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible3= false" size="small" type="primary" plain>取 消</el-button>
+            <el-button type="primary" @click="sure3"  size="small">确 定</el-button>
+          </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -113,8 +151,13 @@ export default {
   name: "theme",
   data() {
     return {
+      fileList:[],
       dialogVisible2:false,
+      dialogVisible3:false,
       form:{},
+      form1:{
+        cr:''
+      },
       total:0,
       options: [
         {
@@ -177,14 +220,15 @@ export default {
       isIndeterminate: false,
       dialogVisible: false,
       tableData: [
-        {},
-        {},
-        {},
+        {type:1},
+        {type:2},
+        {type:3},
       ],
       //第几页
       currentPage: 1,
       //每页的容量
-      pageSize: 10
+      pageSize: 10,
+      rowData:{}
     };
   },
   computed: {
@@ -195,6 +239,9 @@ export default {
   created() {},
   watch: {},
   methods: {
+    rowClick(row){
+      this.rowData=row
+    },
     search(){
       this.dialogVisible2 = true ;
     },
@@ -203,6 +250,9 @@ export default {
       this.$router.push({
         name:'black'
       })
+    },
+    sure3(){
+      this.dialogVisible3 = false;
     },
     del(){
       this.$confirm('是否删除该条报备信息', '删除', {
@@ -224,9 +274,7 @@ export default {
         });
     },
     report(){
-      this.$router.push({
-        name:'black'
-      })
+      this.dialogVisible3 = true
     },
 
     change() {
@@ -256,7 +304,12 @@ export default {
     },
     add() {
       this.$router.push({
-        name: "AddSell"
+        name: "cbtadd"
+      });
+    },
+    mx() {
+      this.$router.push({
+        name: "cbtmx"
       });
     },
     // 分页
@@ -275,17 +328,20 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
 $sc: 12;
-.theme{
+.cbt{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;
-
   .el-dialog{
-    .form {
+    .form1 {
         .el-form-item__label {
           height: 30px;
         }
         .el-form-item {
+          width: 100%;
+          .el-input{
+            width: 100%;
+          }
           .el-select{
             width: 100%;
           }
