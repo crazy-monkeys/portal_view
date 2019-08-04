@@ -35,10 +35,10 @@
             </el-select>
           </el-form-item>
           <el-form-item label="报备日期" class="date">
-            <Daterange @data='watchRepTime' :resetData='resetData' />
+            <Daterange @data='watchRepTime' :resetDataReg='resetData1' />
           </el-form-item>
           <el-form-item label="创建日期" class="date">
-            <Daterange @data='watchCreatTime' :resetData='resetData' />
+            <Daterange @data='watchCreatTime' :resetDataCreate='resetData' />
           </el-form-item>
           <el-form-item label=" ">
             <el-button size='small' @click="search" type='primary' plain>搜索</el-button>
@@ -49,21 +49,27 @@
       <div class="box">
         <div class="tab">
           <el-table :data="tableData"  style="width:100%" border height="100%">
-            <el-table-column type="index" width='80' label="编号" :index='q'  fixed="left" >
+            <el-table-column type="index" width='80' label="编号" :index='q'   >
             </el-table-column>
-            <el-table-column prop="custZhName" show-overflow-tooltip label="客户名称" >
+            <el-table-column prop="custName" width="150" show-overflow-tooltip label="客户名称" >
             </el-table-column>
-            <el-table-column prop="custInCode" label="客户内部编号" show-overflow-tooltip>
+            <el-table-column prop="custInCode" width="150" label="客户内部编号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="custOutCode" label="客户外部编号" show-overflow-tooltip>
+            <el-table-column prop="custOutCode" width="150" label="客户外部编号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="isLicense" show-overflow-tooltip label="License客户" >
+            <el-table-column prop="" width="150" show-overflow-tooltip label="License客户" >
+              <template slot-scope="scope">
+                {{scope.row.isLicense==1?'是':'否'}}
+              </template>
             </el-table-column>
-            <el-table-column prop="businessType" label="业务类型" show-overflow-tooltip>
+            <el-table-column prop="" width="150"  label="业务类型" show-overflow-tooltip>
+              <template slot-scope="scope">
+                {{scope.row.businessType==1?'massMarket':'accountMarket'}}
+              </template>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="报备日期" sortable> 
+            <el-table-column show-overflow-tooltip prop="createTime" width="180" label="报备日期" sortable> 
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="registerTimeStr" label="创建日期" sortable>
+            <el-table-column show-overflow-tooltip prop="registerTimeStr" width="180" label="创建日期" sortable>
             </el-table-column>
             <el-table-column show-overflow-tooltip label="操作" fixed='right' width="120">
               <template slot-scope="scope">
@@ -99,6 +105,7 @@ export default {
   data() {
     return {
       resetData:false,
+      resetData1:false,
       form: {
         businessType:'',
         customerName:'',
@@ -151,6 +158,7 @@ export default {
         createEndDate:'',
       }
       this.resetData = true
+      this.resetData1 = true
       this.getList(this.form)
     },
     search(){
@@ -166,8 +174,7 @@ export default {
       console.log(data)
       this.form.reportStartDate = data.startTime
       this.form.reportEndDate = data.endTime
-      this.resetData = false
-
+      this.resetData1 = false
     },
     async getList(form){
       var data ={
@@ -182,7 +189,7 @@ export default {
         reportEndDate:form.reportEndDate,
         createStartDate:form.createStartDate,
         createEndDate:form.createEndDate,
-        // customerStatus:3,
+        customerStatus:3,
       }
       const res = await getList(data);
       console.log('客户列表',res)
@@ -199,8 +206,6 @@ export default {
     change() {
       this.dialogVisible = !this.dialogVisible;
     },
-    
-    
     sure() {
       this.dialogVisible = false;
     },

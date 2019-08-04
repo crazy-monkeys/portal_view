@@ -40,7 +40,7 @@ export default new Router({
                 },
                 //主题管理
                 {
-                    path: 'theme',
+                    path: 'customer/rep',
                     name: 'customerRep',
                     component: resolve => require(['@/components/customer/customerRep'], resolve),
                     // meta: {keepAlive: true},

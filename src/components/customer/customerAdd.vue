@@ -7,11 +7,15 @@
     </div>
     <div class="content">
       <div class="selBox">
-        <el-form ref="form" :model="form"  label-position="top" class="form" :inline="true">
-          <el-form-item label="客户名称">
+        <el-form ref="form" :model="form" disabled  label-position="top" class="form" >
+          <el-row :gutter="22">
+            <el-col :span="6">
+              <el-form-item label="客户名称">
             <el-input size="small" v-model="form.custName"></el-input>
           </el-form-item>
-          <el-form-item label="客户类型">
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="客户类型">
             <el-select v-model="form.custType" size="small" filterable placeholder="请选择">
               <el-option
                 v-for="item in businessTypes"
@@ -21,106 +25,118 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="是否License客户">
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="是否License客户">
             <el-select v-model="form.isLicense" size="small"  placeholder="请选择">
               <el-option  label="是" :value="1"></el-option>
               <el-option  label="否" :value="0"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="角色">
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="角色">
             <el-select v-model="form.custRole" size="small"  placeholder="请选择">
               <el-option  label="中国客户" :value="1"></el-option>
               <el-option  label="亚太客户" :value="2"></el-option>
               <el-option  label="北美客户" :value="3"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="公司资产">
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="公司资产">
             <el-input size="small" v-model="form.corporateAssets"></el-input>
           </el-form-item>
-          <el-form-item label="员工人数">
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="员工人数">
             <el-input size="small" v-model="form.corporateNumber"></el-input>
           </el-form-item>
-          <el-form-item label="传真">
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="传真">
             <el-input size="small" v-model="form.custFax"></el-input>
           </el-form-item>
-          <el-form-item label="邮箱">
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="邮箱">
             <el-input size="small" v-model='form.custEmail'></el-input>
           </el-form-item>
-          <el-form-item label="公司网站">
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="公司网站">
             <el-input size="small" v-model='form.custWeb'></el-input>
           </el-form-item>
-          <el-form-item label="母公司">
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="母公司">
             <el-input size="small" v-model='form.corporateParents'></el-input>
           </el-form-item>
-          <el-form-item label="公司总机">
+            </el-col>
+            
+            <el-col :span="6">
+              <el-form-item label="公司总机">
             <el-input size="small" v-model='form.custPhoneNo'></el-input>
           </el-form-item>
-          <el-form-item label="注册时间" size="small" class="date">
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="注册时间" size="small" class="date">
             <el-input v-model="form.registerTimeStr"></el-input>
             <!-- <el-date-picker v-model="form.registerTime" type="date" placeholder="选择日期"></el-date-picker> -->
           </el-form-item>
-          <el-form-item label="注册地址" class="address">
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="注册地址" >
+                <el-row :gutter="22">
+                  <el-col :span="12">
+                <el-cascader
+                  v-model="regAddress"
+                  :options="province"
+                  separator='-'
+                  size="small"
+                  :props="prop"
+                  placeholder="请选择省市区">
+                  </el-cascader>
+                  </el-col>
+                <el-col :span="12">
+                <el-input size="small"  v-model="regDetailAddress"  placeholder="详细地址"></el-input>
 
-            <el-cascader
-              v-model="regCity"
+
+                </el-col>
+                </el-row>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="办公地址" >
+                <el-row :gutter="22">
+            <el-col :span="12">
+   <el-cascader
+              v-model="workAddress"
               :options="province"
               size="small"
+              separator='-'
               :props="prop"
               placeholder="请选择省市区">
               </el-cascader>
-            <!-- <el-select v-model="regPro" size="small" filterable placeholder="省">
-              <el-option
-                v-for="item in province"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-            <el-select v-model="regCity" size="small" filterable placeholder="市">
-              <el-option
-                v-for="item in city"
-                :key="item.name"
-                :label="item.name"
-                :value="item.name"
-              ></el-option>
-            </el-select>
-            <el-select v-model="regDis" size="small" filterable placeholder="区">
-              <el-option
-                v-for="item in district"
-                :key="item.name"
-                :label="item.name"
-                :value="item.name"
-              ></el-option>
-            </el-select> -->
-            <el-input size="small" placeholder="详细地址"></el-input>
+
+
+            </el-col>
+            <el-col :span="12">
+            <el-input size="small" v-model="workDetailAddress" placeholder="详细地址"></el-input>
+
+            </el-col>
+
+
+                </el-row>
+         
           </el-form-item>
-          <el-form-item label="办公地址" class="address">
-            <el-select v-model="workPro" size="small" filterable placeholder="省">
-              <el-option
-                v-for="item in province"
-                :key="item.name"
-                :label="item.name"
-                :value="item.name"
-              ></el-option>
-            </el-select>
-            <el-select v-model="workCity" size="small" filterable placeholder="市">
-              <el-option
-                v-for="item in city"
-                :key="item.name"
-                :label="item.name"
-                :value="item.name"
-              ></el-option>
-            </el-select>
-            <el-select v-model="workDis" size="small" filterable placeholder="区">
-              <el-option
-                v-for="item in district"
-                :key="item.name"
-                :label="item.name"
-                :value="item.name"
-              ></el-option>
-            </el-select>
-            <el-input size="small" placeholder="详细地址"></el-input>
-          </el-form-item>
+
+
+
+            </el-col>
+          </el-row>
+          
+          
           <el-form-item label="业务介绍" class="txt">
             <el-input type="textarea" v-model="form.businessIntroduction" :rows="2" placeholder resize="none"></el-input>
           </el-form-item>
@@ -295,7 +311,7 @@ export default {
       prop:{
         label:'name',
         value:'name',
-        children:'cityList',
+        children:'list',
       },
       form:{
         advantageIntroduction: "",
@@ -350,14 +366,10 @@ export default {
       ],
       province: [
       ],
-      regPro:'',
-      regCity:'',
-      regDis:'',
-      workPro:'',
-      workCity:'',
-      workDis:'',
-      city:[],
-      district:[],
+      regDetailAddress:'',
+      workDetailAddress:'',
+      regAddress:'',
+      workAddress:'',
       activeName: "first",
       currentPage: 1,
       pageSize: 10,
@@ -370,7 +382,11 @@ export default {
     
   },
   watch:{
-    
+    workAddress:{
+      handler:function(n,o){
+        console.log(n)
+      }
+    }
   },
   computed:{
     queryId(){
@@ -400,7 +416,23 @@ export default {
       const res = await detail(data);
       console.log('详情',res);
       if(res){
-        this.form = res.data.data
+        this.form = res.data.data;
+        this.form.basicAddress.forEach(item=>{
+          if(item.addressType=='办公地址'){
+            this.workDetailAddress = item.detailInfo
+            this.workAddress = []
+            this.workAddress.push(item.province)
+            this.workAddress.push(item.city)
+            this.workAddress.push(item.district)
+          }else{
+            this.regDetailAddress = item.detailInfo
+            this.regAddress = []
+            this.regAddress.push(item.province)
+            this.regAddress.push(item.city)
+            this.regAddress.push(item.district)
+            console.log(this.regAddress)
+          }
+        })
       }
     },
     handleClick(tab, event) {
@@ -439,42 +471,38 @@ $sc: 12;
       background: #fff;
       .form {
         width: 100%;
-        min-width: 900px;
-        max-width: 1300px;
+        // min-width: 900px;
+        // max-width: 1300px;
+        
         .el-form-item {
           margin-bottom: 0;
-          width: 200px;
           .el-select {
-            width: 200px;
+            width: 100%;
+            .el-input{
+              width: 100%;
+            }
+            
+          }
+          .el-input{
+            width: 100%;
           }
           .el-form-item__label {
             height: 30px;
           }
+          
         }
         .txt{
           width: 100%;
         }
-        // .el-form-item:last-child {
-        //   /* width:100%; */
-        //   .el-textarea__inner {
-        //     width: 414px;
-        //     margin-top: 2px;
-        //   }
-        // }
         .date {
-          width: 200px;
-          .el-date-editor {
-            margin-top: 4px;
-            width: 200px;
+          .el-form-item__content {
+            line-height: 40px;
           }
-        }
-        .address {
-          display: block;
-          width: 900px;
-          .el-select,
-          .el-input {
-            width: 200px;
-            margin-right: 10px;
+          width:100%;
+          // width: 200px;
+          .el-date-editor {
+            width: 100%;
+            // width: 200px;
           }
         }
       }

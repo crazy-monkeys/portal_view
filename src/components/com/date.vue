@@ -11,7 +11,7 @@
 </template>
 <script>
 export default {
-    props:['resetData'],
+    props:['resetDataReg','resetDataCreate'],
     data(){
         return {
             time:{
@@ -23,21 +23,33 @@ export default {
     watch:{
         time:{
             handler:function(n,o){
+                console.log(n)
                 this.$emit('data',n)
             },
             deep:true
         },
-        resetData:{
+        resetDataReg:{
             handler:function(n,o){
                 console.log(n)
                 if(n){
                     this.time = {
-                        startTime:'',
-                        endTime:'',
+                        startTime :'',
+                        endTime :'',
                     }
                 }
             }
-        }
+        },
+        resetDataCreate:{
+            handler:function(n,o){
+                console.log(n)
+                if(n){
+                    this.time = {
+                        startTime :'',
+                        endTime :'',
+                    }
+                }
+            }
+        },
     },
     methods:{
         changeStartTime(val){
