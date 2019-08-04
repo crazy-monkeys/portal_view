@@ -232,9 +232,16 @@ export default new Router({
                 },
                 //资源设置
                 {
-                    path: 'manage/black',
-                    name: 'black',
-                    component: resolve => require(['@/components/manage/Black'], resolve),
+                    path: 'customer/report',
+                    name: 'rep',
+                    component: resolve => require(['@/components/customer/rep'], resolve),
+                    // meta: {keepAlive: true}
+
+                },
+                {
+                    path: 'account/children',
+                    name: 'children',
+                    component: resolve => require(['@/components/system/children'], resolve),
                     // meta: {keepAlive: true}
 
                 },

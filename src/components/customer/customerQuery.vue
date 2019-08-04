@@ -28,7 +28,7 @@
               <el-option  label="否" value="0"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="业务类型">
+          <el-form-item label="客户类型">
             <el-select v-model="form.businessType" size="small"  placeholder="请选择">
               <el-option v-for="item in businessTypes" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
@@ -62,7 +62,7 @@
                 {{scope.row.isLicense==1?'是':'否'}}
               </template>
             </el-table-column>
-            <el-table-column prop="" width="150"  label="业务类型" show-overflow-tooltip>
+            <el-table-column prop="" width="150"  label="客户类型" show-overflow-tooltip>
               <template slot-scope="scope">
                 {{scope.row.businessType==1?'massMarket':'accountMarket'}}
               </template>

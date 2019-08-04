@@ -28,7 +28,7 @@
               <el-option  label="否" value="0"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="业务类型">
+          <el-form-item label="客户类型">
             <el-select v-model="form.businessType" size="small"  placeholder="请选择">
               <el-option v-for="item in businessTypes" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
@@ -70,17 +70,17 @@
                 {{scope.row.businessType==1?'代理商':'客户'}}
               </template>
             </el-table-column>
-            <el-table-column prop="5" width="150" label="代理商" show-overflow-tooltip>
+            <el-table-column prop="dealerName" width="150" label="代理商" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="5" width="150" label="销售" show-overflow-tooltip>
+            <el-table-column prop="salesName" width="150" label="销售" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="createTime" width="180" label="报备时间" show-overflow-tooltip sortable="">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" width='180' label="操作" fixed='right'>
-              <template scope-slot='scope'>
-                <el-button type='text'  @click='add'>明细</el-button>
-                <el-button type='text'  @click='report'>重新报备</el-button>
-                <el-button type='text'  @click='del'>删除</el-button>
+              <template slot-scope='scope'>
+                <el-button type='text'  @click='add(scope.row)'>明细</el-button>
+                <el-button type='text'  @click='report(scope.row)'>重新报备</el-button>
+                <el-button type='text'  @click='del(scope.row)'>删除</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -113,7 +113,7 @@
 
 <script>
 import Daterange from "../com/date";
-import {getList} from "@/api/customer/query.js";
+import {getList,del} from "@/api/customer/query.js";
 
 export default {
   components:{
@@ -220,28 +220,39 @@ export default {
         name:'black'
       })
     },
-    del(){
+    async delCus (row){
+      var data = {
+        id:row.id
+      }
+      const res = await del(data)
+      console.log('删除结果',res)
+      if(res){
+        this.$message({
+            type: 'success',
+            message: '删除成功'
+          })
+          this.getList(this.form)
+      }
+    },
+    del(row){
       this.$confirm('是否删除该条报备信息', '删除', {
           distinguishCancelAndClose: true,
           confirmButtonText: '确认',
           cancelButtonText: '取消'
         })
         .then(() => { 
-          this.$message({
-            type: 'success',
-            message: '删除成功'
-          })
+          this.delCus(row)
         })
         .catch(action => {
-          this.$message({
-            type: 'fail',
-            message: '已取消操作'
-          })
+          // this.$message({
+          //   type: 'fail',
+          //   message: '已取消操作'
+          // })
         });
     },
     report(){
       this.$router.push({
-        name:'black'
+        name:'rep'
       })
     },
 
@@ -252,9 +263,12 @@ export default {
     q(index) {
       return this.pageSize * (this.currentPage - 1) + index + 1;
     },
-    add() {
+    add(row) {
       this.$router.push({
-        name: "customerAdd"
+        name: "customerAdd",
+        query:{
+          id:row.id
+        }
       });
     },
     // 分页

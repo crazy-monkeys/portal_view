@@ -16,7 +16,7 @@
             </el-col>
             <el-col :span="6">
               <el-form-item label="客户类型">
-            <el-select v-model="form.custType" size="small" filterable placeholder="请选择">
+            <el-select v-model="form.businessType" size="small" filterable placeholder="请选择">
               <el-option
                 v-for="item in businessTypes"
                 :key="item.value"
@@ -167,6 +167,7 @@
             <div class="tabBox">
               <el-table :data="form.basicContact" style="width: 100%" height="300">
                 <el-table-column prop="contactType" label="联系人类型" show-overflow-tooltip>
+                 
                 </el-table-column>
                 <el-table-column prop="contactName" label="姓名" show-overflow-tooltip>
                 </el-table-column>
@@ -476,6 +477,9 @@ $sc: 12;
         
         .el-form-item {
           margin-bottom: 0;
+          .el-cascader{
+            width: 100%;
+          }
           .el-select {
             width: 100%;
             .el-input{

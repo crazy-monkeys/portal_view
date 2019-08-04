@@ -204,7 +204,10 @@ export default {
       this.dialogVisible = false;
       this.resetForm('roleForm')
       this.resetForm('form')
+      if(this.$refs['tree']){
       this.$refs['tree'].setCheckedKeys([])
+
+      }
     },
      // 分页
     handleSizeChange(val) {
