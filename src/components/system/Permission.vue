@@ -22,7 +22,7 @@
             </el-table-column>
             <el-table-column prop="createTime" label="创建时间" width="200">
             </el-table-column>
-            <el-table-column label="操作" width="200" fixed="right">
+            <el-table-column label="操作" width="150" fixed="right">
               <template slot-scope="scope">
                 <el-button type="text" size="small" @click="mod(roles[scope.$index].roleCode)">
                   修改
@@ -55,7 +55,12 @@
         <el-form-item label="角色名称" prop='name'>
           <el-input v-model="roleForm.name" maxlength='10' ></el-input>
         </el-form-item>
-        
+        <el-form-item label="角色类型" prop='roleType'>
+          <el-select v-model="roleForm.roleType">
+             <el-option label="账号角色" :value="1"></el-option>
+             <el-option label="子账号角色" :value="2"></el-option>
+          </el-select>
+        </el-form-item>
        
         
       </el-form>
@@ -96,6 +101,7 @@ export default {
       roleForm: {
         name: "",
         code: "",
+        roleType:'',
       },
       dialogVisible: false,
       dialogVisible1: false,
@@ -106,6 +112,9 @@ export default {
         ],
         code: [
           { required: true, trigger: 'blur',message:'角色编码不能为空'}
+        ],
+        roleType: [
+          { required: true, trigger: 'blur',message:'角色类型不能为空'}
         ],
       },
       defaultProps: {
@@ -171,6 +180,7 @@ export default {
       if(res){
         this.roleForm.name = res.data.data.roleName
         this.roleForm.code = res.data.data.roleCode
+        this.roleForm.roleType = res.data.data.roleType
       }
     },
 
@@ -270,6 +280,7 @@ export default {
       var data = {
         roleName:this.roleForm.name,
         roleCode:this.roleForm.code,
+        roleType:this.roleForm.roleType
       }
       const res = await saveRole(data);
       console.log('新增结果',res)
@@ -284,6 +295,7 @@ export default {
         id:this.rowData.id,
         roleName:this.roleForm.name,
         roleCode:this.roleForm.code,
+        roleType:this.roleForm.roleType
       }
       const res = await updateRole(data);
       console.log('新增结果',res)
