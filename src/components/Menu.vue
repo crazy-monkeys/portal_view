@@ -175,7 +175,7 @@ export default {
             {
               resourceId: "35",
               resourceName: "特价申请",
-              resourceUrl: "/home/ts",
+              resourceUrl: "/home/tb",
               iconClass: "el-icon-s-123",
               children: []
             }
