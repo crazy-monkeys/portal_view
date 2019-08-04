@@ -164,9 +164,14 @@ export default new Router({
                 },
 
                 {
-                    path: 'sales/sales-index',
-                    name: 'SalesList',
-                    component: resolve => require(['@/components/sales/sales-index'], resolve),
+                    path: 'sales/shouhuoQuery',
+                    name: 'shouhuoQuery',
+                    component: resolve => require(['@/components/sales/shouhuo-index'], resolve),
+                },
+                {
+                    path: 'sales/shouhuoDetail',
+                    name: 'shouhuoDetail',
+                    component: resolve => require(['@/components/sales/shouhuoDetail'], resolve),
                 },
                 {
                     path: 'sales/approve',
@@ -179,9 +184,9 @@ export default new Router({
                     component: resolve => require(['@/components/sales/reset'], resolve),
                 },
                 {
-                    path: 'sales/sales-upload',
-                    name: 'SalesList',
-                    component: resolve => require(['@/components/sales/sales-upload'], resolve),
+                    path: 'sales/shouhuoUpload',
+                    name: 'shouhuoUpload',
+                    component: resolve => require(['@/components/sales/shouhuo-upload'], resolve),
                 },
                 {
                     path: 'sales/shipment-index',
