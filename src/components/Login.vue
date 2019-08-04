@@ -3,7 +3,10 @@
 <!-- <button v-print="'#app'">打印</button> -->
       <el-form status-icon class="login-box">
         <div class="login-box-login">
-          <!-- <h1><img src="../assets/img/logostr.png" alt=""> </h1> -->
+          <h1>
+            LOGO
+            <!-- <img src="../assets/img/logostr.png" alt="">  -->
+            </h1>
           <el-form-item  label-width="100" label="">
             <el-input
               type="text"
@@ -222,6 +225,7 @@ $sc: 12;
         // margin-bottom: 50 / $sc + rem;
         font-size: 22 / $sc + rem;
         color: #920784;
+        height: 100px;
         // letter-spacing: 0.64 / $sc + rem;
         // line-height: 36 / $sc + rem;
         // height: 36 / $sc + rem;
