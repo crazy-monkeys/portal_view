@@ -1,5 +1,8 @@
 <template>
-  <div id="app">
+  <div id="app" 
+    element-loading-text="请稍候..."
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(255, 255, 255, 0.8)">
     <keep-alive>
       <router-view v-if="$route.meta.keepAlive" />
     </keep-alive>
@@ -14,6 +17,7 @@
     name: "App",
     data() {
       return {
+        loading:false
       }
     },
     created() {
@@ -33,32 +37,56 @@
         sessionStorage.setItem("vuexData",JSON.stringify(this.$store.state));
       });
 
-      // this.$http.interceptors.response.use(
-      //   function(response) {
-      //     // 对响应数据做点什么
-      //     // console.log(response)
-      //     if (response.data.code == 10016) {
-      //       console.log("未登录");
-      //       router.replace({
-      //         path: "/"
-      //         // query: {redirect: router.currentRoute.fullPath}//登录成功后跳入浏览的当前页面
-      //       });
-      //     }
-      //     if ( response.data.code == 10007) {
-      //       console.log("异地登陆");
-      //       router.replace({
-      //         path: "/"
-      //         // query: {redirect: router.currentRoute.fullPath}//登录成功后跳入浏览的当前页面
-      //       });
-      //     }
-      //     return response;
-      //   },
-      //   function(error) {
-      //     // 对响应错误做点什么
-      //     console.log(error);
-      //     return Promise.reject(error);
-      //   }
-      // );
+
+      this.$http.interceptors.request.use(
+        this.loading = true,
+        function(response) {
+          // 对响应数据做点什么
+          // console.log(response)
+
+          return response;
+        },
+        function(error) {
+          // 对响应错误做点什么
+          console.log(error);
+          return Promise.reject(error);
+          this.loading = false
+        }
+      );
+
+      this.$http.interceptors.response.use(
+        function(response) {
+          // 对响应数据做点什么
+
+          // console.log(response)
+          if (response.data.code == 10016) {
+            console.log("未登录");
+            router.replace({
+              path: "/"
+              // query: {redirect: router.currentRoute.fullPath}//登录成功后跳入浏览的当前页面
+            });
+
+          }
+          if ( response.data.code == 10007) {
+            console.log("异地登陆");
+            router.replace({
+              path: "/"
+              // query: {redirect: router.currentRoute.fullPath}//登录成功后跳入浏览的当前页面
+            });
+          }
+          return response;
+            this.loading = false
+
+        },
+        function(error) {
+          // 对响应错误做点什么
+          console.log(error);
+            this.loading = false
+
+          return Promise.reject(error);
+
+        }
+      );
       // router.beforeEach((to, from, next) => {
       //   console.log(to,from,next)
       //   next()

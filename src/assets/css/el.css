@@ -18,9 +18,25 @@
     padding: 0;
 }
 
-.el-table tbody td {
+.el-table__body {
+    /* height: 100%; */
+}
+
+.el-table .el-table__body tbody {
     padding: 0;
-    border: none
+    border: none;
+    /* height: 100%; */
+}
+
+.el-table .el-table__body tbody .el-table__row {
+    padding: 0;
+    border: none;
+    height: 10% !important;
+}
+
+.el-table tbody tr td {
+    padding: 0;
+    border: none;
 }
 
 .el-table th .cell {
