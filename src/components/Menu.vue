@@ -215,6 +215,13 @@ export default {
               resourceUrl: "/home/order/list",
               iconClass: "el-icon-s-123",
               children: []
+            },
+            {
+              resourceId: "43",
+              resourceName: "订单审批",
+              resourceUrl: "/home/order/approve",
+              iconClass: "el-icon-s-123",
+              children: []
             }
           ]
         },
@@ -225,22 +232,22 @@ export default {
           iconClass: "el-icon-s-shop",
           children: [
             
-            {
-              resourceId: "51",
-              resourceName: "提货申请",
-              // resourceUrl: "/home/sales/sales-index",
-              resourceUrl: "/home/ts",
-              iconClass: "el-icon-s-123",
-              children: []
-            },
-            {
-              resourceId: "52",
-              resourceName: "提货查询",
-              resourceUrl: "/home/ts",
-              // resourceUrl: "/home/sales/sales-index",
-              iconClass: "el-icon-s-123",
-              children: []
-            },
+            // {
+            //   resourceId: "51",
+            //   resourceName: "提货申请",
+            //   // resourceUrl: "/home/sales/sales-index",
+            //   resourceUrl: "/home/ts",
+            //   iconClass: "el-icon-s-123",
+            //   children: []
+            // },
+            // {
+            //   resourceId: "52",
+            //   resourceName: "提货查询",
+            //   resourceUrl: "/home/ts",
+            //   // resourceUrl: "/home/sales/sales-index",
+            //   iconClass: "el-icon-s-123",
+            //   children: []
+            // },
             {
               resourceId: "53",
               resourceName: "销售数据查询",

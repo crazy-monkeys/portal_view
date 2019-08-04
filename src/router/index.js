@@ -71,6 +71,12 @@ export default new Router({
                     // meta: {keepAlive: true}
                 },
                 {
+                    path: 'order/approve',
+                    name: 'approve',
+                    component: resolve => require(['@/components/order/approve'], resolve),
+                    // meta: {keepAlive: true}
+                },
+                {
                     path: 'product/query',
                     name: 'productQuery',
                     component: resolve => require(['@/components/product/query'], resolve),

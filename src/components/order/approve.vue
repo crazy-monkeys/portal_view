@@ -1,10 +1,10 @@
 <template>
-  <div class="list">
+  <div class="approve">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item to='/home/order/list'>订单管理</el-breadcrumb-item>
-          <el-breadcrumb-item>订单查询</el-breadcrumb-item>
+          <el-breadcrumb-item>订单审批</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
 
@@ -29,6 +29,12 @@
           <el-form-item label="订单状态">
             <el-select v-model="value" size="small" filterable placeholder="专货订单">
               <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="申请类型">
+            <el-select v-model="value" size="small" filterable placeholder="">
+              <el-option v-for="item in options1" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
@@ -74,31 +80,35 @@
                   </el-table-column>
                   <el-table-column label="提货数量" prop='7' show-overflow-tooltip>
                   </el-table-column>
-                  <el-table-column width="200" prop=""  label="操作" >
-                <template slot-scope='scope'>
-                  <el-button type='text' size='mini' @click='th'>提货</el-button>
-                  <el-button type='text' size='mini' @click='cancel'>取消</el-button>
-                  <el-button type='text' size='mini' @click='changeTime'>变更交期</el-button>
-                </template>
+                  <el-table-column label="首代备注" prop='8' show-overflow-tooltip>
+                  </el-table-column>
+                  <el-table-column show-overflow-tooltip prop=""  label="操作" fixed='right'>
+                <!-- <template slot-scope='scope'>
+                  <el-button type='text' size='mini' >提货</el-button>
+                </template> -->
               </el-table-column>
                 </el-table>
               </template>
             </el-table-column>
-            <el-table-column type="index" width='100' show-overflow-tooltip label="编号"  :index="q">
+            <el-table-column prop="" width='30' show-overflow-tooltip label="">
             </el-table-column>
-            <el-table-column prop="1" width='100' label="订单号">
+            <el-table-column type="index" width='100' label="编号" :index='q'>
             </el-table-column>
-            <el-table-column prop="2" show-overflow-tooltip label="状态">
+            <el-table-column prop="1" width='100' label="订单号" >
             </el-table-column>
-            <el-table-column prop="3" label="下单人" show-overflow-tooltip>
+            <el-table-column prop="1" show-overflow-tooltip label="申请类型">
             </el-table-column>
-            <el-table-column prop="4" label="总金额" show-overflow-tooltip>
+            <el-table-column prop="1" show-overflow-tooltip label="状态">
             </el-table-column>
-            <el-table-column prop="5" show-overflow-tooltip label="开户银行">
+            <el-table-column prop="2" label="下单人" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="6" label="付款方式" show-overflow-tooltip>
+            <el-table-column prop="3" label="总金额" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="7" label="发票种类">
+            <el-table-column prop="4" show-overflow-tooltip label="开户银行">
+            </el-table-column>
+            <el-table-column prop="5" label="付款方式" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="6" label="发票种类">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="7" label="委托代表人">
             </el-table-column>
@@ -112,11 +122,12 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="12" label="下单日期">
             </el-table-column>
-            <!-- <el-table-column show-overflow-tooltip prop="13" label="交货日期">
-            </el-table-column> -->
-              <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
+            <el-table-column show-overflow-tooltip prop="13" label="交货日期">
+            </el-table-column>
+              <el-table-column  prop="" width="120" label="操作" fixed='right'>
                 <template slot-scope='scope'>
                   <el-button type='text' size='mini' @click='detail'>明细</el-button>
+                  <el-button type='text' size='mini' @click='approve'>审批</el-button>
                 </template>
               </el-table-column>
             <div slot="empty">
@@ -161,7 +172,7 @@
               </el-table>
             </div>
           </el-tab-pane> -->
-          <el-tab-pane label="出货信息" name="first">
+          <el-tab-pane label="出货信息"  name="first">
             <div class="tabBox">
             </div>
           </el-tab-pane>
@@ -172,8 +183,10 @@
       </el-tabs>
       </div>
     </el-dialog>
-        <el-dialog
-        title="提货"
+
+
+    <el-dialog
+        title="审批"
         :visible.sync="dialogVisible5"
         width="400px"
         top="10vh"
@@ -191,33 +204,13 @@
             <el-input size='small'  resize="none"  ></el-input>
             
           </el-form-item>
-          <el-form-item label="提货数量" >
-            <el-input size='small'  resize="none"  ></el-input>
-            
+          <el-form-item label="审批信息">
+            <el-input size='small' rows='4' resize="none" type="textarea" placeholder="请输入"></el-input>
           </el-form-item>
         </el-form>
           <span slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="dialogVisible5 = false" size="small" plain>取 消</el-button>
-            <el-button @click="dialogVisible5= false" size="small" type="primary" >提 货</el-button>
-          </span>
-    </el-dialog>
-
-     </el-dialog>
-        <el-dialog
-        title="变更交期"
-        :visible.sync="dialogVisible6"
-        width="400px"
-        top="10vh"
-        >
-        <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top'  >
-          <el-form-item label="交货日期" >
-            <el-date-picker size='small' type="date" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
-              v-model="timeStr" />
-          </el-form-item>
-        </el-form>
-          <span slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="dialogVisible6 = false" size="small" plain>取 消</el-button>
-            <el-button @click="dialogVisible6= false" size="small" type="primary" >提 货</el-button>
+            <el-button type="primary" @click="dialogVisible5 = false" size="small" plain>驳 回</el-button>
+            <el-button @click="dialogVisible5= false" size="small" type="primary" >通 过</el-button>
           </span>
     </el-dialog>
   </div>
@@ -226,12 +219,10 @@
 <script>
 import formTest from "../../assets/js/formTest";
 export default {
-  name: "list",
+  name: "approve",
   data() {
     return {
-      timeStr:'',
       dialogVisible5:false,
-      dialogVisible6:false,
       form: {},
       total: 0,
       d1: [],
@@ -244,6 +235,20 @@ export default {
         {
           value: "选项2",
           label: "退货"
+        }
+      ],
+      options1: [
+        {
+          value: "选项1",
+          label: "申请单"
+        },
+        {
+          value: "选项2",
+          label: "取消单"
+        },
+        {
+          value: "选项2",
+          label: "延期单"
         }
       ],
       value: "",
@@ -283,29 +288,7 @@ export default {
   created() {},
   watch: {},
   methods: {
-    changeTime(){
-      this.dialogVisible6 = true
-    },
-    cancel(){
-      this.$confirm('确定要取消订单吗?', '取消', {
-            distinguishCancelAndClose: true,
-            confirmButtonText: '确定',
-            cancelButtonText: '取消'
-          })
-            .then(() => {
-              this.$message({
-                type: 'success',
-                message: '取消订单成功'
-              })
-            })
-            .catch(action => {
-              this.$message({
-                type: 'fail',
-                message: '已取消操作'
-              })
-            });
-    },
-    th(){
+    approve(){
       this.dialogVisible5 = true
     },
     change() {
@@ -356,7 +339,7 @@ export default {
 <style lang='scss'>
 $sc: 12;
 
-.list{
+.approve{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;
@@ -364,9 +347,6 @@ $sc: 12;
   .el-dialog{
     .el-select{
       width: 100%;
-    }
-    .el-date-editor{
-      width: 100%
     }
   }
   .sellBox{
@@ -399,6 +379,9 @@ $sc: 12;
         }
         .date {
           width: 414px;
+          .el-date-editor{
+            width: 100%
+          }
         }
     }
     .box{
