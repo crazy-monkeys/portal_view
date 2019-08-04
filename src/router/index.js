@@ -133,6 +133,11 @@ export default new Router({
                     component: resolve => require(['@/components/price/price-sales-actual'], resolve),
                 },
                 {
+                    path: 'sales/sales-index',
+                    name: 'index',
+                    component: resolve => require(['@/components/sales/sales-index'], resolve),
+                },
+                {
                     path: 'price/inquiry',
                     name: 'PriceInquiry',
                     component: resolve => require(['@/components/price/price-inquiry'], resolve),
