@@ -96,6 +96,12 @@ export default new Router({
                     component: resolve => require(['@/components/system/announcement'], resolve),
                     // meta: {keepAlive: true}
                 },
+                {
+                    path: 'system/param',
+                    name: 'systemParam',
+                    component: resolve => require(['@/components/system/systemParam'], resolve),
+                    // meta: {keepAlive: true}
+                },
                 //文档管理
                 {
                     path: 'system/document',

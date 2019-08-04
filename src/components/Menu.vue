@@ -337,7 +337,7 @@ export default {
             {
               resourceId: "75",
               resourceName: '系统参数管理',
-              resourceUrl: '/home/system/document',
+              resourceUrl: '/home/system/param',
               iconClass: "el-icon-s-123",
               children: []
             }
