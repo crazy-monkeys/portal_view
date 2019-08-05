@@ -79,11 +79,11 @@
             <el-table-column prop="4" width='100'  label="拜访目的" show-overflow-tooltip></el-table-column>
             <el-table-column prop="5" width='100'  label="项目名称" show-overflow-tooltip></el-table-column>
             <el-table-column prop="6" width='100'  label="项目状态" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="7" width='200'  label="项目所属展锐事业部" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="7" width='200'  label="项目所属事业部" show-overflow-tooltip></el-table-column>
             <el-table-column prop="8" width='180'  label="会议内容简述" show-overflow-tooltip></el-table-column>
             <el-table-column prop="9" width='180'  label="后续行动计划" show-overflow-tooltip></el-table-column>
             <el-table-column prop="10" width='180'  label="述求描述" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="11" width='180'  label="参与人员:展锐" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="11" width='180'  label="参与人员:" show-overflow-tooltip></el-table-column>
             <el-table-column prop="12" width='180'  label="参与人员:客户" show-overflow-tooltip></el-table-column>
             <el-table-column prop="13" width="180" label="参与人员:代理" show-overflow-tooltip></el-table-column>
             <div slot="empty">

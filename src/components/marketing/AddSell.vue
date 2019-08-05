@@ -208,7 +208,7 @@
               </el-table>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="展锐销售团队" name="third">
+          <el-tab-pane label="销售团队" name="third">
             <div class="tabBox">
               <el-table :data="tableData2" style="width: 100%" height="300">
                 <el-table-column prop="t21" label="角色类型" show-overflow-tooltip>

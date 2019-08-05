@@ -105,12 +105,12 @@
           <el-form-item label="项目状态">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="项目所属展锐事业部">
+          <el-form-item label="项目所属事业部">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
           
         </el-form>
-        <!-- 客户名称  客户所在地   项目名称  项目状态   项目所属展锐事业部 -->
+        <!-- 客户名称  客户所在地   项目名称  项目状态   项目所属事业部 -->
           <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible1= false" size="small" type="primary" plain>取 消</el-button>
             <el-button type="primary" @click="dialogVisible1 = false" size="small">上 传</el-button>
