@@ -42,7 +42,7 @@
             <el-table-column prop="10" label="操作" show-overflow-tooltip>
               <template >
                 <el-button type='text'>发送确认函</el-button>
-                <el-button type='text'>明细</el-button>
+                <el-button type='text' @click="mx">明细</el-button>
               </template>
             </el-table-column>
             
@@ -118,6 +118,11 @@
     watch: {
     },
     methods: {
+      mx(){
+        this.$router.push({
+          name:'rebateDetail'
+        })
+      },
       reset(){
         this.form={
           value1:'',

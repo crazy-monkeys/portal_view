@@ -38,6 +38,13 @@
           <el-form-item label="订单月份">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
+          <el-form-item label="类型">
+            <el-select v-model="status" size="small">
+              <el-option value='1' label="延期提交"></el-option>
+              <el-option value='2' label="删除"></el-option>
+              <el-option value='3' label="修改"></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="上传日期" class="date">
             <Daterange />
           </el-form-item>
@@ -85,6 +92,8 @@
             <el-table-column
               type="selection"
               width="55">
+            </el-table-column>
+            <el-table-column prop="0" width='100' label="类型" >
             </el-table-column>
             <el-table-column prop="0" width='100' label="代理商" >
             </el-table-column>

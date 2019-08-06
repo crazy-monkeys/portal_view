@@ -220,15 +220,15 @@ export default {
             
             {
               resourceId: "51",
-              resourceName: "提货申请",
-              resourceUrl: "/home/sales/sales-index",
+              resourceName: "库存转移、转换查询",
+              resourceUrl: "/home/sales/kucun-index",
               iconClass: "el-icon-s-123",
               children: []
             },
             {
               resourceId: "52",
-              resourceName: "提货查询",
-              resourceUrl: "/home/sales/sales-index",
+              resourceName: "库存转移、转换申请",
+              resourceUrl: "/home/sales/kucun-remove",
               iconClass: "el-icon-s-123",
               children: []
             },

@@ -25,10 +25,11 @@
           <el-form-item label="上传日期"  class="date">
             <Daterange />
           </el-form-item>
-          <el-form-item label="状态" >
+          <el-form-item label="类型" >
             <el-select v-model="value">
-              <el-option label="待确认" value="1"></el-option>
-              <el-option label="已提交" value="2"></el-option>
+              <el-option value='1' label="延期提交"></el-option>
+              <el-option value='2' label="删除"></el-option>
+              <el-option value='3' label="修改"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item :label="' '">
@@ -40,7 +41,7 @@
       <div class="box">
         <div class="tab">
           <el-table :data="tableData" border style="width: 100%" height="100%">
-            <el-table-column prop="0" width='' label="状态" ></el-table-column>
+            <el-table-column prop="0" width='' label="类型" ></el-table-column>
             <el-table-column prop="0" width='' label="代理商" ></el-table-column>
             <el-table-column prop="0" width='' label="出货日期"></el-table-column>
             <el-table-column prop="1" width="" label="上传日期" show-overflow-tooltip></el-table-column>

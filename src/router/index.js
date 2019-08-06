@@ -147,6 +147,16 @@ export default new Router({
                     component: resolve => require(['@/components/sales/forcast-index'], resolve),
                 },
                 {
+                    path: 'sales/kucun-index',
+                    name: 'kcquery',
+                    component: resolve => require(['@/components/sales/kucun-index'], resolve),
+                },
+                {
+                    path: 'sales/kucun-remove',
+                    name: 'kcremove',
+                    component: resolve => require(['@/components/sales/kucun-upload'], resolve),
+                },
+                {
                     path: 'sales/forcast-upload',
                     name: 'SalesList',
                     component: resolve => require(['@/components/sales/forcast-upload'], resolve),
@@ -162,6 +172,12 @@ export default new Router({
                     name: 'SalesList',
                     component: resolve => require(['@/components/sales/sales-index'], resolve),
                 },
+                {
+                    path: 'sales/rebateDetail',
+                    name: 'rebateDetail',
+                    component: resolve => require(['@/components/sales/rebateDetail'], resolve),
+                },
+
                 {
                     path: 'sales/approve',
                     name: 'SalesList',

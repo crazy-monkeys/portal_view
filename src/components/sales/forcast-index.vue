@@ -23,6 +23,7 @@
           <el-form-item label="客户名称">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
+          
           <el-form-item label="客户编号">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
@@ -41,6 +42,19 @@
           <el-form-item label="上传日期" class="date">
             <Daterange />
           </el-form-item>
+          <el-form-item label="状态">
+            <el-select v-model="value" size="small">
+              <el-option label="已调整" value="1"> </el-option>
+              <el-option label="未调整" value="0"> </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="阿米巴队长">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="首代">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          
           <el-form-item :label="checkedCities.length==0 ?'' : ' '">
             <el-button size='small' type='primary' plain>查询</el-button>
             <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
@@ -52,6 +66,10 @@
 
       <!-- </transition-group> -->
       <div class="box">
+        <div class="btns clear">
+          <el-button class="add"  size='small' type='primary'>下载</el-button>
+          <el-button class="add"  size='small' type='primary'>上传</el-button>
+        </div>
         <div class="tab">
           <el-table :data="tableData" border style="width: 100%" height="100%">
             <el-table-column type="expand">
@@ -78,6 +96,8 @@
                   </el-table-column>
                 </el-table>
               </template>
+            </el-table-column>
+            <el-table-column prop="" width='100' label="状态" >
             </el-table-column>
             <el-table-column prop="0" width='100' label="代理商" >
             </el-table-column>

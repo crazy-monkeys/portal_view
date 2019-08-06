@@ -1,10 +1,10 @@
 <template>
-  <div class="shouhuoQuery">
+  <div class="shipmentQuery">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item to='/home/sell'>销售管理</el-breadcrumb-item>
-          <el-breadcrumb-item>收货数据查询</el-breadcrumb-item>
+          <el-breadcrumb-item>库存转移、转换查询</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
 
@@ -18,6 +18,9 @@
         <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <el-form-item label="代理商">
             <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="出货日期" class="date">
+            <Daterange />
           </el-form-item>
           <el-form-item label="上传日期"  class="date">
             <Daterange />
@@ -40,11 +43,11 @@
           <el-table :data="tableData" border style="width: 100%" height="100%">
             <el-table-column prop="0" width='' label="类型" ></el-table-column>
             <el-table-column prop="0" width='' label="代理商" ></el-table-column>
+            <el-table-column prop="0" width='' label="出货日期"></el-table-column>
             <el-table-column prop="1" width="" label="上传日期" show-overflow-tooltip></el-table-column>
             <el-table-column  label="操作" fixed="right" width="100" show-overflow-tooltip>
               <template slot-scope='scope' >
-                <el-button type="text" @click="mx">明细</el-button>
-                <el-button type="text" >确认</el-button>
+                <el-button type="text" @click="approve">审批</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -60,19 +63,36 @@
        
       </div>
     </div>
+    <el-dialog
+        title="审批"
+        :visible.sync="dialogVisible1"
+        width="400px"
+        top="10vh"
+        >
+        <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top'  >
+          <el-form-item label="审批意见">
+            <el-input size='small' rows='4' resize="none" type="textarea" placeholder="请输入"></el-input>
+          </el-form-item>
+        </el-form>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible1= false" size="small" type="primary" plain>驳 回</el-button>
+            <el-button type="primary" @click="dialogVisible1 = false" size="small">通 过</el-button>
+          </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
   import Daterange from "../com/date";
   export default {
-    name: 'shouhuoQuery',
+    name: 'kcquery',
     components:{
       Daterange
     },
     data() {
       return {
         form: {},
+        dialogVisible1:false,
         value: '',
         dialogVisible: false,
         tableData: [
@@ -95,9 +115,12 @@
     watch: {
     },
     methods: {
+      approve(type) {
+        this.dialogVisible1 = true
+      },
       mx(){
         this.$router.push({
-          name:'shouhuoDetail'
+          name:'shipmentDetail'
         })
       },
       change() {
@@ -139,7 +162,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
   $sc:12;
-.shouhuoQuery{
+.shipmentQuery{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;
