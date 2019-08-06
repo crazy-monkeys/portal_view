@@ -21,9 +21,9 @@ export const request = (method, url, data = {}, header = {}) => {
         method,
         [dataType]: data,
         headers: {
+            // ...header,
             'Authorization': sessionStorage.getItem('data'),
-            'Content-Type': 'application/json;charset=UTF-8',
-            ...header
+            'Content-Type': 'application/json;charset=UTF-8'
         }
     }
     return axios(options)
