@@ -166,7 +166,7 @@ export default new Router({
                     component: resolve => require(['@/components/sales/forcast-upload'], resolve),
                 },
                 {
-                    path: 'user/visiteRecord',
+                    path: 'customer/visiteRecord',
                     name: 'visiteRecord',
                     component: resolve => require(['@/components/customer/visiteRecord'], resolve),
                 },
@@ -253,9 +253,9 @@ export default new Router({
 
                 },
                 {
-                    path: 'custom/manage/property',
-                    name: 'property',
-                    component: resolve => require(['@/components/manage/Property'], resolve),
+                    path: 'customer/approve',
+                    name: 'customerApprove',
+                    component: resolve => require(['@/components/customer/approve'], resolve),
                     // meta: {keepAlive: true}
 
                 },

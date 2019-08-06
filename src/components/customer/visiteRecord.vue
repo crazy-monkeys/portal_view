@@ -17,33 +17,33 @@
         </div>
         <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <el-form-item label="客户名称">
-            <el-input  placeholder="请输入"></el-input>
+            <el-input  placeholder="请输入" v-model="form.customerName"></el-input>
           </el-form-item>
           <el-form-item label="项目名称">
-            <el-input  placeholder="请输入"></el-input>
+            <el-input  placeholder="请输入" v-model="form.projectName"></el-input>
           </el-form-item>
           <el-form-item label="拜访目的">
-            <el-input  placeholder="请输入"></el-input>
+            <el-input  placeholder="请输入" v-model="form.visitPurpose"></el-input>
           </el-form-item>
           <el-form-item label="拜访日期" class="date">
-            <Daterange />
+            <Daterange @data='watchCreatTime' :resetDataCreate='resetData' />
           </el-form-item>
           <el-form-item label=" ">
-            <el-button  type='primary' plain>查询</el-button>
-            <el-button   type='primary' plain>重置</el-button>
+            <el-button  type='primary' plain @click="search">查询</el-button>
+            <el-button   type='primary' plain @click="reset"> 重置</el-button>
           </el-form-item>
         </el-form>
 
       </div>
       <div class="box">
         <div class="btns clear">
-          <el-button   size='small' type='primary'>下载模版</el-button>
+          <el-button   size='small' type='primary' @click="download">下载模版</el-button>
           <el-button   size='small' type='primary'>上传</el-button>
           <!-- <el-button   size='small' type='primary'>新建</el-button> -->
         </div>
         <div class="tab">
           <el-table :data="tableData" border style="width: 100%" height="100%">
-            <el-table-column   label="" width="60">
+             <!--<el-table-column   label="" width="60">
               <template slot="header" >
                 <el-dropdown :hide-on-click='false' placement='bottom-start' trigger="click">
                   <span class="el-dropdown-link">
@@ -62,30 +62,30 @@
                 </el-dropdown>
               </template>
               <template >
-                 <!-- <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">
+                 <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">
                         全选</el-checkbox>
                 <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
                   <el-checkbox v-for="city in cities" :label="city" :key="city"></el-checkbox>
-                </el-checkbox-group> -->
+                </el-checkbox-group> 
                 <el-checkbox></el-checkbox>
               </template>
                 
-            </el-table-column>
-            <el-table-column prop="0" width='100' label="错误信息" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="0" width='100' label="拜访日期" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="1" width='100' label="客户所在地" show-overflow-tooltip></el-table-column>
+            </el-table-column>-->
+            <el-table-column prop="errorMessage" width='100' label="错误信息" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="visitDate" width='100' label="拜访日期" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="customerLocation" width='100' label="客户所在地" show-overflow-tooltip></el-table-column>
             <el-table-column prop="2" width='100' label="客户名称" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="3" width='100'  label="拜访次数" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="4" width='100'  label="拜访目的" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="5" width='100'  label="项目名称" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="6" width='100'  label="项目状态" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="7" width='200'  label="项目所属展锐事业部" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="8" width='180'  label="会议内容简述" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="9" width='180'  label="后续行动计划" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="10" width='180'  label="述求描述" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="11" width='180'  label="参与人员:展锐" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" width='180'  label="参与人员:客户" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="13" width="180" label="参与人员:代理" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="visitNumber" width='100'  label="拜访次数" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="visitPurpose" width='100'  label="拜访目的" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="projectName" width='100'  label="项目名称" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="projectStatus" width='100'  label="项目状态" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="projectDepartment" width='200'  label="项目所属展锐事业部" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="talkContent" width='180'  label="会议内容简述" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="followPlan" width='180'  label="后续行动计划" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="claimDescription" width='180'  label="述求描述" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="participantsZr" width='180'  label="参与人员:展锐" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="participantsCt" width='180'  label="参与人员:客户" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="participantsDl" width="180" label="参与人员:代理" show-overflow-tooltip></el-table-column>
             <div slot="empty">
               <p>未查询到客户信息</p>
             </div>
@@ -103,7 +103,7 @@
 </template>
 
 <script>
-  import formTest from '../../assets/js/formTest'
+  import {getList,download} from '@/api/customer/visiteRecord.js'
 import Daterange from "../com/date";
 
   export default {
@@ -115,18 +115,25 @@ import Daterange from "../com/date";
       return {
         status:'',
         dialogVisible:false,
-        form:{},
         cities:['上海','北京','杭州'],
         checkAll: false,
         checkedCities: [
         ],
         conditions: [
         ],
+        resetData:false,
         isIndeterminate: false,
         //表格数据
         tableData: [
          
         ],
+        form: {
+          projectName:'',
+          visitPurpose:'',
+          customerName:'',
+          createStartDate:'',
+          createEndDate:'',
+        },
         //第几页
         currentPage: 1,
         //每页的容量
@@ -139,10 +146,76 @@ import Daterange from "../com/date";
      
     },
     created() {
+      this.getList()
     },
     watch: {
     },
     methods: {
+      download() {
+          this.$http({
+            method: "get",
+            url: "" + process.env.API_ROOT + "/customer/visitRecord/download",
+            responseType: "arraybuffer",
+            headers:{
+              'Authorization': sessionStorage.getItem('data'),
+            }
+          })
+            .then(res => {
+              console.log(res.data);
+              const blob = new Blob([res.data], {
+                type: "application/vnd.ms-excel"
+              });
+              const blobUrl = window.URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              document.body.appendChild(a);
+              a.style.display = "none";
+              a.download = "模版.xlsx";
+              a.href = blobUrl;
+              a.click();
+              document.body.removeChild(a);
+            })
+            .catch(err => {
+              console.log(err);
+              alert("网络异常");
+            });
+      },
+      search(){
+        this.getList()
+      },
+      reset(){
+        this.form = {
+          projectName:'',
+          visitPurpose:'',
+          customerName:'',
+          createStartDate:'',
+          createEndDate:'',
+        }
+        this.resetData = true
+        this.getList()
+      },
+      watchCreatTime(data){
+        console.log(data)
+        this.form.createStartDate = data.startTime
+        this.form.createEndDate = data.endTime
+        this.resetData = false
+      },
+      async getList(){
+        var data ={
+          pageIndex	:this.currentPage,
+          pageSize	:this.pageSize,
+          customerCode	:this.form.customerName,
+          projectName	:this.form.projectName,
+          visitPurpose	:this.form.visitPurpose,
+          visitStartDate	:this.form.createStartDate,
+          visitEndDate	:this.form.createEndDate,
+        }
+        const res = await getList(data);
+        console.log('摆放记录列表',res)
+        if(res){
+          this.tableData = res.data.data.list
+          this.total = res.data.data.total
+        }
+      },
       change(){
         this.dialogVisible = !this.dialogVisible
       },
@@ -165,10 +238,12 @@ import Daterange from "../com/date";
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
         this.pageSize = val;
+        this.getList()
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
         this.currentPage = val;
+        this.getList()
       },
     }
   }
