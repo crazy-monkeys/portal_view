@@ -166,7 +166,16 @@ export default new Router({
                     name: 'visiteRecord',
                     component: resolve => require(['@/components/marketing/visiteRecord'], resolve),
                 },
-
+                {
+                    path: 'agent/rate/query',
+                    name: 'agentRate',
+                    component: resolve => require(['@/components/sales/agentRate'], resolve),
+                },
+                {
+                    path: 'agent/rate/defend',
+                    name: 'agentRateDefend',
+                    component: resolve => require(['@/components/sales/agentRateDefend'], resolve),
+                },
                 {
                     path: 'sales/sales-index',
                     name: 'SalesList',

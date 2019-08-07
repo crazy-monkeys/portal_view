@@ -263,6 +263,21 @@ export default {
           ]
         },
         {
+          resourceId: "9",
+          resourceName: "代理商费率管理",
+          resourceUrl: "#9",
+          iconClass: "el-icon-s-shop",
+          children: [
+            {
+              resourceId: "81",
+              resourceName: "代理商费率查询",
+              resourceUrl: "/home/agent/rate/query",
+              iconClass: "el-icon-s-123",
+              children: []
+            }
+          ]
+        },
+        {
           resourceId: "6",
           resourceName: "商务管理",
           resourceUrl: "#6",
