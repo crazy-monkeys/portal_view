@@ -39,6 +39,7 @@
         <div class="btns clear">
           <el-button   size='small' type='primary' @click="download">下载模版</el-button>
           <el-button   size='small' type='primary'>上传</el-button>
+          <el-button   size='small' type='primary' @click="sub">提交</el-button>
           <!-- <el-button   size='small' type='primary'>新建</el-button> -->
         </div>
         <div class="tab">
@@ -151,6 +152,9 @@ import Daterange from "../com/date";
     watch: {
     },
     methods: {
+      sub(){
+        
+      },
       download() {
           this.$http({
             method: "get",

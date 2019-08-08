@@ -112,8 +112,8 @@
           </el-form-item>
         </el-form>
           <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible1= false" size="small" type="primary" plain>取 消</el-button>
-            <el-button type="primary" @click="dialogVisible1 = false" size="small">确 定</el-button>
+            <el-button @click="close" size="small" type="primary" plain>取 消</el-button>
+            <el-button type="primary" @click="sure" size="small">确 定</el-button>
           </span>
     </el-dialog>
   </div>
@@ -172,6 +172,9 @@ export default {
   },
   watch: {},
   methods: {
+    close(){
+      this.dialogVisible1 = false
+    },
     watchCreatTime(data){
       console.log(data)
       this.form.reportStartDate = data.startTime
@@ -251,7 +254,7 @@ export default {
     },
     
     sure() {
-      this.dialogVisible = false;
+      
     },
     handleClose(done) {
       this.$confirm("确认关闭？")
