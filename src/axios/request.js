@@ -1,17 +1,77 @@
 // import 'babel-polyfill';
 require('es6-promise').polyfill();
 import axios from 'axios'
-import { Message } from 'element-ui';
+import { Message, Loading } from 'element-ui';
 
 // 配置API接口地址
 // used environment variable
 export const serverUrl = process.env.API_ROOT; // 本地
 
 
+let loading
+let pending = []
+let CancelToken = axios.CancelToken
+
+let cancelPending = (config) => {
+    pending.forEach((item, index) => {
+        if (config) {
+            if (item.UrlPath === config.url) {
+                item.Cancel() // 取消请求
+                pending.splice(index, 1) // 移除当前请求记录
+            };
+        } else {
+            item.Cancel() // 取消请求
+            pending.splice(index, 1) // 移除当前请求记录
+        }
+    })
+}
+
+
+let startLoading = () => { // 使用Element loading-start 方法
+    loading = Loading.service({
+        lock: true,
+        text: '加载中……'
+            // background: 'rgba(0, 0, 0, 0.7)'
+    })
+}
+let endLoading = () => { // 使用Element loading-close 方法
+    loading.close()
+}
+
 // 自定义判断元素类型JS
 function toType(obj) {
     return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
 }
+
+axios.interceptors.request.use(
+    config => {
+        cancelPending(config)
+        config.cancelToken = new CancelToken(res => {
+            pending.push({ 'UrlPath': config.url, 'Cancel': res })
+        })
+        startLoading()
+        return config
+    },
+    (error, response) => {
+        console.log(error)
+        console.log(response)
+    }
+)
+
+axios.interceptors.response.use(
+    response => {
+        setTimeout(() => {
+            endLoading()
+            cancelPending(response.config)
+        }, 5000);
+
+        return response
+    }, error => {
+        console.log(error)
+        return Promise.reject(error)
+    }
+)
+
 // 参数过滤函数
 export const request = (method, url, data = {}, header = {}) => {
 
@@ -46,8 +106,8 @@ export const request = (method, url, data = {}, header = {}) => {
                 console.log(err.request);
             } else {
                 // Something happened in setting up the request that triggered an Error
-                console.log('Error', err.message);
+                // console.log('Error', err.message);
             }
-            console.log(err)
+            // console.log(err)
         })
 }
