@@ -38,12 +38,7 @@
           <el-form-item label="类别三(平台)">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="BU Head" >
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="副产总" >
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
+          
            <el-form-item label="SAP 物料号" >
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
@@ -85,9 +80,7 @@
             </el-table-column>
             <el-table-column label="类别三(平台)" prop='5' show-overflow-tooltip>
             </el-table-column>
-            <el-table-column label="BU Head" prop='6' show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column label="副产总" prop='7' show-overflow-tooltip>
+            <el-table-column label="最小包装数" prop='' show-overflow-tooltip>
             </el-table-column>
             <el-table-column label="SAP 物料号" prop='8' show-overflow-tooltip>
             </el-table-column>
