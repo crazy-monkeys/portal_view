@@ -2,7 +2,11 @@
   <!-- 添加新增控件 -->
   <div class="rep">
     <div class="head clear">
-      <el-page-header @back="back" content="明细">
+      <el-breadcrumb separator="/">
+          <el-breadcrumb-item >客户管理</el-breadcrumb-item>
+          <el-breadcrumb-item >客户报备</el-breadcrumb-item>
+          <el-breadcrumb-item >报备</el-breadcrumb-item>
+        </el-breadcrumb>
     </el-page-header>
     </div>
     <div class="content">
@@ -177,7 +181,7 @@
                     </el-select>
                   </template>
                 </el-table-column>
-                <el-table-column prop="t4" label="" show-overflow-tooltip>
+                <el-table-column prop="" label="" show-overflow-tooltip>
                   <template slot="header">
                     <el-button type="primary" size="small" @click="addRow(1)">新增</el-button>
                   </template>
@@ -441,6 +445,7 @@
                     class="upload-demo"
                     action="https://jsonplaceholder.typicode.com/posts/"
                     :auto-upload="false"
+                    :on-change='changeFile'
                     >
                     <el-button size="small" type="primary">选择文件</el-button>
                   </el-upload>
@@ -566,6 +571,9 @@ export default {
     },
   },
   methods: {
+    changeFile(file){
+      console.log(file)
+    },
     delRow(type,index){
       console.log(index)
       switch (type) {
@@ -656,6 +664,7 @@ export default {
           this.form.basicFile.unshift({
             "fileType":'',
             "fileName":'',
+            'file':''
           })
           break;
         default:

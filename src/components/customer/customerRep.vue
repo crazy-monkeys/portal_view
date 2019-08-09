@@ -250,9 +250,12 @@ export default {
           // })
         });
     },
-    report(){
+    report(row){
       this.$router.push({
-        name:'rep'
+        name:'rep',
+        query:{
+          id:row.id
+        }
       })
     },
 
