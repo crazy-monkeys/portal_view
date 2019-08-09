@@ -60,10 +60,10 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
     response => {
-        setTimeout(() => {
-            endLoading()
-            cancelPending(response.config)
-        }, 500);
+        // setTimeout(() => {
+        endLoading()
+        cancelPending(response.config)
+            // }, 500);
         return response
     }, error => {
         console.log(error)
