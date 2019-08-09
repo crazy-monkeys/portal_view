@@ -63,8 +63,7 @@ axios.interceptors.response.use(
         setTimeout(() => {
             endLoading()
             cancelPending(response.config)
-        }, 5000);
-
+        }, 500);
         return response
     }, error => {
         console.log(error)
