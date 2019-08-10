@@ -1,5 +1,5 @@
 <template>
-  <div class="pro">
+  <div class="customerApprove">
     <div class="sellBox"> 
       <div class="head clear">
         <el-breadcrumb separator="/">
@@ -14,32 +14,26 @@
         </div>
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <el-form-item label="客户名称">
-            <el-input size='small' placeholder="请输入"></el-input>
+            <el-input size='small' placeholder="请输入" v-model="form.customerName"></el-input>
           </el-form-item>
           <el-form-item label="客户内部编号">
-            <el-input size='small' placeholder="请输入"></el-input>
+            <el-input size='small' placeholder="请输入" v-model="form.customerInCode"></el-input>
           </el-form-item>
           <el-form-item label="客户外部编号">
-            <el-input size='small' placeholder="请输入"></el-input>
+            <el-input size='small' placeholder="请输入" v-model="form.customerOutCode"></el-input>
           </el-form-item>
           <el-form-item label="客户类型">
-            <el-select v-model="value" size="small" filterable placeholder="请选择">
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+            <el-select v-model="form.businessType" size="small" filterable placeholder="请选择">
+              <el-option v-for="item in businessTypes" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
-          <!-- <el-form-item label="审批状态">
-            <el-select v-model="value1" size="small" filterable placeholder="请选择">
-              <el-option v-for="item in options1" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item> -->
           <el-form-item label="报备日期" class="date">
-            <Daterange />
+            <Daterange @data='watchCreatTime' :resetDataCreate='resetData' />
           </el-form-item>
-          <el-form-item :label="checkedCities.length==0 ?'' : ' '">
-            <el-button size='small' type='primary' plain>搜索</el-button>
-            <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
+          <el-form-item label=" ">
+            <el-button size='small' type='primary' plain @click="search">搜索</el-button>
+            <el-button @click='reset' size='small' type='primary' plain>重置</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -49,24 +43,27 @@
           <el-button type='primary' class="add" size='mini' @click="upload">拜访记录上传</el-button>
         </div> -->
         <div class="tab">
-          <el-table :data="tableData" border style="width: 100%" height="100%">
+          <el-table :data="tableData" border style="width: 100%" height="100%" @row-click='rowClick'>
             <el-table-column type="index" width='80' label="编号" :index='q'>
             </el-table-column>
-            <!-- <el-table-column prop="1" show-overflow-tooltip label="审批状态">
-            </el-table-column> -->
-            <el-table-column prop="2" label="客户名称" show-overflow-tooltip>
+            <el-table-column prop="custName" width="150" show-overflow-tooltip label="客户名称" >
             </el-table-column>
-            <el-table-column prop="3" label="客户内部编号" show-overflow-tooltip>
+            <el-table-column prop="custInCode" width="150" label="客户内部编号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="4" label="客户外部编号" show-overflow-tooltip>
+            <el-table-column prop="custOutCode" width="150" label="客户外部编号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="5" label="客户类型" show-overflow-tooltip>
+            <el-table-column prop="" width="150"  label="客户类型" show-overflow-tooltip>
+              <template slot-scope="scope">
+                {{scope.row.businessType==1?'massMarket':'accountMarket'}}
+              </template>
             </el-table-column>
-            <el-table-column prop="5" label="报备时间" show-overflow-tooltip sortable>
+            <el-table-column show-overflow-tooltip prop="createTime" width="180" label="报备日期" sortable> 
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" width='120' label="操作" fixed='right'>
-              <template scope-slot='scope'>
-                <el-button type='text'  @click='mx'>明细</el-button>
+            <el-table-column show-overflow-tooltip prop="registerTimeStr" width="180" label="创建日期" sortable>
+            </el-table-column>
+            <el-table-column  prop="" width='160' label="操作" fixed='right'>
+              <template slot-scope="scope">
+                <el-button type='text'  @click='mx(scope.row.id)'>明细</el-button>
                 <el-button type='text'  @click='add(1)'>审批</el-button>
                 <el-button type='text'  @click='add(2)'>驳回</el-button>
               </template>
@@ -89,34 +86,34 @@
         width="400px"
         top="10vh"
         >
-        <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top'  >
-          <el-form-item label="代理商" v-if="title=='审批'">
-            <el-select v-model="value" placeholder="请选择" > 
+        <el-form ref="form1" :model="form1" :rules='rules' size="small" class="form1" label-width="auto" label-position='top'  >
+          <el-form-item :label="userType.indexOf('代理商')!=-1 ? '销售':'代理商'" v-if="title=='审批'" prop='value'>
+            <el-select v-model="form1.value" placeholder="请选择" > 
               <el-option
                 label="label1"
-                value="value1">
+                value="1">
               </el-option>
               <el-option
                 label="label2"
-                value="value2">
+                value="2">
               </el-option>
               <el-option
                 label="label3"
-                value="value3">
+                value="3">
               </el-option>
               <el-option
                 label="label4"
-                value="value4">
+                value="4">
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item :label="label">
-            <el-input size='small' rows='4' resize="none" type="textarea" placeholder="请输入"></el-input>
+          <el-form-item :label="label" prop="msg">
+            <el-input size='small' v-model="form1.msg" rows='4' resize="none" type="textarea" placeholder="请输入"></el-input>
           </el-form-item>
         </el-form>
           <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible1= false" size="small" type="primary" plain>取 消</el-button>
-            <el-button type="primary" @click="dialogVisible1 = false" size="small">确 定</el-button>
+            <el-button @click="close" size="small" type="primary" plain>取 消</el-button>
+            <el-button type="primary" @click="submitForm('form1',title=='审批'?1:2)" size="small">确 定</el-button>
           </span>
     </el-dialog>
   </div>
@@ -124,83 +121,49 @@
 
 <script>
 import Daterange from "../com/date";
-import formTest from "../../assets/js/formTest";
+import {getList,approve,ret} from "@/api/customer/query.js";
 export default {
-  name: "theme",
+  name: "customerApprove",
   components:{
     Daterange
   },
   data() {
     return {
-      form:{},
+      rules: {
+        value: [{ required: true, trigger: "blur" ,message:'请选择'}],
+        msg: [{ required: true, trigger: "blur" ,message:'请输入'}],
+      },
+      rowData:{},
+      resetData:false,
+      form:{
+        businessType:'',
+        customerName:'',
+        customerInCode:'',
+        customerOutCode:'',
+        reportStartDate:'',
+        reportEndDate:'',
+      },
+      form1:{
+        value:'',
+        msg:'',
+      },
       title:'',
       label:'',
       total:0,
       dialogVisible1:false,
-      options: [
+      businessTypes: [
         {
-          value: "1",
+          value:1,
           label: "Mass Market"
         },
         {
-          value: "2",
+          value: 2,
           label: "Account Market"
         }
       ],
       value: "",
-      options1: [
-        {
-          value: "1",
-          label: "审批通过"
-        },
-        {
-          value: "2",
-          label: "审批驳回"
-        },
-        {
-          value: "3",
-          label: "审批中"
-        },
-        {
-          value: "4",
-          label: "草稿"
-        }
-      ],
-      value1: "",
-      checkAll: false,
-      checkedCities: [1, 2],
-      conditions: [
-        {
-          label: "客户名称",
-          value: 1
-        },
-        {
-          label: "英文名称",
-          value: 2
-        },
-        {
-          label: "客户号",
-          value: 3
-        },
-        {
-          label: "代理商",
-          value: 4
-        },
-        {
-          label: "客户类别",
-          value: 5
-        },
-        {
-          label: "报备日期",
-          value: 6
-        }
-      ],
-      isIndeterminate: false,
       dialogVisible: false,
       tableData: [
-        {},
-        {},
-        {},
       ],
       //第几页
       currentPage: 1,
@@ -209,16 +172,87 @@ export default {
     };
   },
   computed: {
-    shopId() {
-      return this.$store.state.shopId.shopId;
+    userType() {
+      if(this.$store.state.loginUser.loginInfo.userType=='agent'){
+        return '代理商'
+      }else if(
+        this.$store.state.loginUser.loginInfo.userType=='subAgent'
+      ){
+        return '子代理商'
+      }else{
+        return '内部客户'
+      }
     }
   },
-  created() {},
+  created() {
+    this.getList()
+  },
   watch: {},
   methods: {
-    mx(){
-      this.$route.push({
-        name:'mx'
+    rowClick(row){
+      this.rowData = row
+    },
+    submitForm(formName,type){
+      this.$formTest.submitForm(this.$refs[formName],type==1 ?this.sure : this.ret)
+    },
+    resetForm(formName){
+      this.$formTest.resetForm(this.$refs[formName])
+    },
+    close(){
+      this.resetForm('form1')
+      this.form1={
+        value:'',
+        msg:'',
+      }
+      this.dialogVisible1 = false
+    },
+    watchCreatTime(data){
+      console.log(data)
+      this.form.reportStartDate = data.startTime
+      this.form.reportEndDate = data.endTime
+      this.resetData = false
+    },
+    search(){
+      this.getList()
+    },
+    reset(){
+      this.form = {
+        businessType:'',
+        customerName:'',
+        customerInCode:'',
+        customerOutCode:'',
+        reportStartDate:'',
+        reportEndDate:'',
+      }
+      this.resetData = true
+      this.getList()
+    },
+    async getList(form){
+      var data ={
+        pageIndex:this.currentPage,
+        pageSize:this.pageSize,
+        customerName:this.form.customerName,
+        customerInCode:this.form.customerInCode,
+        customerOutCode:this.form.customerOutCode,
+        // isLicense:form.isLicense,
+        businessType:this.form.businessType,
+        reportStartDate:this.form.reportStartDate,
+        reportEndDate:this.form.reportEndDate,
+        customerStatus:2,
+      }
+      const res = await getList(data);
+      console.log('报备审批列表',res)
+      if(res){
+        this.tableData = res.data.data.list;
+        this.total = res.data.data.total;
+      }
+    },
+    mx(id){
+      this.$router.push({
+        name:'customerAdd',
+        query:{
+          id:id
+        }
       })
     },
     del(){
@@ -252,20 +286,37 @@ export default {
     change() {
       this.dialogVisible = !this.dialogVisible;
     },
-    handleCheckAllChange(val) {
-      console.log(val);
-      this.checkedCities = val ? [1, 2, 3, 4, 5, 6] : [];
-      this.isIndeterminate = false;
+    
+    async ret() {
+      var data ={
+        id:this.rowData.id,
+        // dealerId:this.userType.indexOf('代理商')==-1?this.form1.value :'',
+        // salesId:this.userType.indexOf('代理商')!=-1?this.form1.value :'',
+        approvalRemark:this.form1.msg,
+      }
+      const res = await ret(data);
+      console.log('驳回结果',res);
+      if(res){
+        this.close()
+        this.dialogVisible1 = false
+        this.getList()
+      }
     },
-    handleCheckedCitiesChange(value) {
-      console.log(value);
-      let checkedCount = value.length;
-      this.checkAll = checkedCount === this.conditions.length;
-      this.isIndeterminate =
-        checkedCount > 0 && checkedCount < this.conditions.length;
-    },
-    sure() {
-      this.dialogVisible = false;
+    async sure() {
+      var data ={
+        id:this.rowData.id,
+        dealerId:this.userType.indexOf('代理商')==-1?this.form1.value :'',
+        salesId:this.userType.indexOf('代理商')!=-1?this.form1.value :'',
+        approvalRemark:this.form1.msg,
+      }
+      const res = await approve(data);
+      console.log('审批结果',res);
+      if(res){
+        this.$message.success('审批通过')
+        this.close()
+        this.dialogVisible1 = false
+        this.getList()
+      }
     },
     handleClose(done) {
       this.$confirm("确认关闭？")
@@ -303,12 +354,12 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
 $sc: 12;
-.pro{
+.customerApprove{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;
   .el-dialog{
-    .form {
+    .form1 {
         .el-form-item__label {
           height: 30px;
         }

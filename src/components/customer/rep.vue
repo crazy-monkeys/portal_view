@@ -2,7 +2,11 @@
   <!-- 添加新增控件 -->
   <div class="rep">
     <div class="head clear">
-      <el-page-header @back="back" content="明细">
+      <el-breadcrumb separator="/">
+          <el-breadcrumb-item >客户管理</el-breadcrumb-item>
+          <el-breadcrumb-item >客户报备</el-breadcrumb-item>
+          <el-breadcrumb-item >报备</el-breadcrumb-item>
+        </el-breadcrumb>
     </el-page-header>
     </div>
     <div class="content">
@@ -177,7 +181,7 @@
                     </el-select>
                   </template>
                 </el-table-column>
-                <el-table-column prop="t4" label="" show-overflow-tooltip>
+                <el-table-column prop="" label="" show-overflow-tooltip>
                   <template slot="header">
                     <el-button type="primary" size="small" @click="addRow(1)">新增</el-button>
                   </template>
@@ -425,25 +429,32 @@
           </el-tab-pane>
            <el-tab-pane label="附件" name="fourth">
             <div class="tabBox">
-              
-
-              <el-table :data="form.basicFile" style="width: 100%" height="300">
+              <el-table :data="form.basicFile" style="width: 100%" height="300" @row-click='rowClick'>
+                <el-table-column type="index"  label="" v-if='false' show-overflow-tooltip>
+                </el-table-column>
                 <el-table-column  label="附件类型" show-overflow-tooltip>
                   <template slot-scope="scope">
                     <el-select size="small" v-model="scope.row.fileType">
-                      <el-option value="1" label='营业执照'></el-option>
-                      <el-option value="2" label='银行开户证明'></el-option>
+                      <el-option :value="1" label='营业执照'></el-option>
+                      <el-option :value="2" label='银行开户证明'></el-option>
                     </el-select>
                   </template>
                 </el-table-column>
-                <el-table-column prop="fileName" label="附件" show-overflow-tooltip>
-                  <el-upload
-                    class="upload-demo"
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    :auto-upload="false"
-                    >
-                    <el-button size="small" type="primary">选择文件</el-button>
-                  </el-upload>
+                <el-table-column  label="附件" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                      <el-upload
+                        class="upload-demo"
+                        action=" "
+                        :auto-upload="true"
+                        :on-change='changeFile'
+                        :limit="1"
+                        :http-request="httpReq1"
+
+                        >
+                        <el-button size="small" type="primary">选择文件</el-button>
+                      </el-upload>
+                  </template>
+                  
                 </el-table-column>
                 <el-table-column prop="t4" label="" show-overflow-tooltip>
                   <template slot="header">
@@ -474,17 +485,20 @@
 
 <script>
 import {detail,add} from "@/api/customer/query.js";
+import {stringify} from "qs";
 
 export default {
   name: "rep",
   data() {
     return {
+      rowData:{},
       prop:{
         label:'name',
         value:'name',
         children:'list',
       },
       form:{
+        
         advantageIntroduction: "",
         advantageValue: "",
         basicAddress: [],
@@ -492,7 +506,7 @@ export default {
         basicContact: [],
         basicFile: [],
         basicInvoice: [],
-        basicLables: '',
+        // basicLables: '',
         basicShip: [],
         basicStructure: [],
         businessIntroduction: "",
@@ -558,7 +572,13 @@ export default {
       handler:function(n,o){
         console.log(n)
       }
-    }
+    },
+    'form.basicFile':{
+      handler:function(n,o){
+        console.log(n)
+      },
+      deep:true
+    },
   },
   computed:{
     queryId(){
@@ -566,6 +586,28 @@ export default {
     },
   },
   methods: {
+    httpReq1(val){
+      console.log(val)
+      // console.log(this.form.basicFile.length - this.rowData.index-1)
+      this.form.basicFile[this.rowData.index].file = val.file
+      // this.form.basicFile[this.form.basicFile.length - this.rowData.index-1].fileList.push(val.file)
+      console.log(val.file)
+          // this.form.basicFile[this.form.basicFile.length - this.rowData.index-1].fileList = fileList
+    },
+    rowClick(row){
+      // console.log(row)
+      this.rowData = row
+    },
+    changeFile(file,fileList){
+      console.log(this.rowData.index)
+      console.log(this.form.basicFile.length -this.rowData.index)
+      // this.form.basicFile.forEach(item=>{
+        // if(item.index == this.rowData.index){
+          // this.form.basicFile[this.form.basicFile.length - this.rowData.index-1].file = file
+          // this.form.basicFile[this.form.basicFile.length - this.rowData.index-1].fileList = fileList
+        // }
+      // })
+    },
     delRow(type,index){
       console.log(index)
       switch (type) {
@@ -653,10 +695,20 @@ export default {
           })
           break;
           case 7:
-          this.form.basicFile.unshift({
+            
+          this.form.basicFile.push({
+            'index':this.form.basicFile.length,
             "fileType":'',
             "fileName":'',
+            'file':'',
+            // 'fileList':[],
+            'id'	:'',
+            'custId':''	,
+            'filePath':'',	
+            'create_time'	:'',
+            "create_user_name":''	
           })
+          // console.log(this.form.basicFile)
           break;
         default:
           break;
@@ -665,6 +717,7 @@ export default {
     },
     async sub(){
       var data =this.form
+      data.customerStatus =2
       data.basicAddress = [{addressType: "注册地址",
         city: this.regAddress[1],
         country: "",
@@ -683,11 +736,100 @@ export default {
         id: '',
         isDefault: 1,
         province: this.workAddress[0]}]
-      const res = await add(data)
+      var params = new FormData()
+      for (let i in data) {
+        // console.log(i,data[i])
+        if(typeof(data[i]) == 'object'){
+          for(let j in data[i]){
+            console.log(data[i][j])
+            if(typeof(data[i][j]) == 'object'){
+              for(let x in data[i][j]){
+                console.log(data[i][j][x])
+                if(data[i][j][x] ){
+                  params.append(i+'['+j+']'+'.'+x,data[i][j][x])
+                }
+              }
+            }else{
+                if(data[i][j] ){
+
+              params.append(data[i]+j,data[i][j])
+                }
+            }
+          }
+        }else{
+          if(data[i]){
+          params.append(i,data[i])
+
+          }
+        }
+      }
+        console.log(params)
+      const res = await add(params)
       console.log('新增结果',res)
+      if(res){
+        this.$message.success('保存成功')
+        this.cancel()
+      }
     },
-    save(){},
-    cancel(){},
+    async save(){
+      var data =this.form
+      data.customerStatus =1
+      data.basicAddress = [{addressType: "注册地址",
+        city: this.regAddress[1],
+        country: "",
+        custId: '',
+        detailInfo: this.regDetailAddress,
+        district: this.regAddress[2],
+        id: '',
+        isDefault: 1,
+        province: this.regAddress[0]},
+        {addressType: "办公地址",
+        city: this.workAddress[1],
+        country: "",
+        custId: '',
+        detailInfo: this.workDetailAddress,
+        district: this.workAddress[2],
+        id: '',
+        isDefault: 1,
+        province: this.workAddress[0]}]
+      var params = new FormData()
+      for (let i in data) {
+        // console.log(i,data[i])
+        if(typeof(data[i]) == 'object'){
+          for(let j in data[i]){
+            console.log(data[i][j])
+            if(typeof(data[i][j]) == 'object'){
+              for(let x in data[i][j]){
+                console.log(data[i][j][x])
+                if(data[i][j][x] ){
+                  params.append(i+'['+j+']'+'.'+x,data[i][j][x])
+                }
+              }
+            }else{
+                if(data[i][j] ){
+
+              params.append(data[i]+j,data[i][j])
+                }
+            }
+          }
+        }else{
+          if(data[i]){
+          params.append(i,data[i])
+
+          }
+        }
+      }
+        console.log(params)
+      const res = await add(params)
+      console.log('新增结果',res)
+      if(res){
+        this.$message.success('保存成功')
+        this.cancel()
+      }
+    },
+    cancel(){
+      window.history.go(-1)
+    },
     getCity() {
       this.$http({
         method: "get",
@@ -730,7 +872,7 @@ export default {
       }
     },
     handleClick(tab, event) {
-      console.log(tab, event);
+      // console.log(tab, event);
     },
     back() {
       window.history.back();

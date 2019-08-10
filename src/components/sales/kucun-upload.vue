@@ -4,7 +4,7 @@
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item>销售管理</el-breadcrumb-item>
-          <el-breadcrumb-item>出货数据上传</el-breadcrumb-item>
+          <el-breadcrumb-item>库存转移、转换申请</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -44,8 +44,8 @@
           </div>
           <div class="box">
             <div class="btns clear">
-              <el-button class="add"  size='small' type='primary'>批量删除</el-button>
-              <el-button class="add"  size='small' type='primary'>批量修改</el-button>
+              <el-button class="add" @click='open' size='small' type='primary'>批量删除</el-button>
+              <el-button class="add" @click='remove' size='small' type='primary'>批量修改</el-button>
             </div>
             <div class="tab">
               <el-table :data="tableData" border style="width: 100%" height="100%">
@@ -85,47 +85,29 @@
         <el-tab-pane label="上传" name="second">
           <div class="box">
             <div class="btns clear">
-              <el-button class="add" @click='download' size='small' type='primary' > 下载模版</el-button>
-              <!-- <el-button class="add" @click='upload' size='small' type='primary'>上传</el-button> -->
+              <el-button class="add" @click='open' size='small' type='primary'>下载模版</el-button>
+              <el-button class="add" @click='remove' size='small' type='primary'>上传</el-button>
+              <el-button class="add" @click='open' size='small' type='primary'>下载错误数据</el-button>
 
-
-              <el-upload
-                class="upload-demo"
-                ref="upload"
-                :action="url"
-                :data='data'
-                :headers='headers'
-                name="excel"
-                accept=".xlsx,.xls"
-                :auto-upload="true"
-                :show-file-list="false"
-                :on-success="suc"
-                >
-                <el-button size="small"  type="primary">上传</el-button>
-              </el-upload>
-              <el-button class="add"  size='small' type='primary' :disabled="isError1" @click="downloadError">下载错误数据</el-button>
-
-              <!-- <el-button class="add"  size='small' type='primary'>验证</el-button> -->
+              <!-- <el-button class="add" @click='changeType' size='small' type='primary'>验证</el-button> -->
               <!-- <el-button class="add" @click='open' size='small' type='primary'>保存</el-button> -->
-              <el-button class="add" @click='sub' size='small' type='primary' :disabled="isError2">提交</el-button>
+              <el-button class="add" @click='remove' size='small' type='primary'>提交</el-button>
             </div>
             <div class="tab">
               <el-table :data="tableData" border style="width: 100%" height="100%">
-                <el-table-column prop="errorMsg" width='150' label="错误信息" show-overflow-tooltip></el-table-column>
-
-                <el-table-column prop="categoryOne" width='150' label="上传时间" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="客户外部号" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="客户全称" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="销售" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="类别一(类型)" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="类别二(子类)" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="类别三(平台)" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="产品型号" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="出货日期" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="数量" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="Sale Price" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="Po Price" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="Margin" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="0" width='150' label="上传时间" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="0" width='150' label="客户外部号" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="0" width='150' label="客户全称" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="0" width='150' label="销售" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="0" width='150' label="类别一(类型)" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="" width='150' label="类别二(子类)" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="" width='150' label="类别三(平台)" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="" width='150' label="产品型号" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="" width='150' label="出货日期" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="" width='150' label="数量" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="" width='150' label="Sale Price" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="" width='150' label="Po Price" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="" width='150' label="Margin" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="" width='150' label="币种" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="" width='150' label="客户订单号" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="" width='150' label="出货类型" show-overflow-tooltip></el-table-column>
@@ -189,25 +171,13 @@
 <script>
   import formTest from '../../assets/js/formTest'
   import Daterange from '../com/date'
-  import {download,sub,upload,downloadError} from '@/api/handover/upload.js'
-  import {serverUrl} from '../../axios/request'
   export default {
-    name: 'shipmentUpload',
+    name: 'kcremove',
     components:{
       Daterange
     },
     data() {
       return {
-        recordId:'',
-        isError1:true,
-        isError2:true,
-        url:serverUrl + '/handover/template',
-        headers:{
-                  "Authorization": sessionStorage.getItem("data"),
-                },
-                data:{
-                  type:"deliver"
-                },
         form: {},
         total: 0,
         d1: [],
@@ -255,106 +225,6 @@
     watch: {
     },
     methods: {
-      downloadError(){
-        this.$http({
-            method: "get",
-            url: "" + process.env.API_ROOT + "/handover/error?type=deliver",
-            responseType: "arraybuffer",
-            headers:{
-              'Authorization': sessionStorage.getItem('data'),
-            }
-          })
-            .then(res => {
-              console.log(res.data);
-              const blob = new Blob([res.data], {
-                type: "application/vnd.ms-excel"
-              });
-              const blobUrl = window.URL.createObjectURL(blob);
-              const a = document.createElement("a");
-              document.body.appendChild(a);
-              a.style.display = "none";
-              a.download = "errorData.xlsx";
-              a.href = blobUrl;
-              a.click();
-              document.body.removeChild(a);
-            })
-            .catch(err => {
-              console.log(err);
-              alert("网络异常");
-            });
-      },
-      suc(val){
-        console.log(val)
-        if(val.data.isError){
-          this.isError1 = false
-          this.isError2 = true
-          this.$message.error(val.data.msg)
-        }else{
-          this.$message.success('上传成功')
-          this.recordId = val.data.recordId
-          this.isError1 = true
-          this.isError2 = false
-        }
-        this.tableData = val.data.deliverDetails
-        // this.total = val.data.deliverDetails.length
-      },
-      submitUpload() {
-        this.$refs.upload.submit();
-      },
-      async upload(val){
-        var param = new FormData()
-        param.append('excel',val.file)
-        param.append('type','deliver')
-        const res = await upload(data);
-        if(res){
-
-        }
-      },
-      async sub(){
-        var param= new FormData()
-        param.append('recordId' ,this.recordId)
-        param.append('type' ,'deliver')
-        const res = await sub(param);
-        if(res){
-          this.$message.success('提交成功')
-          this.isError2 = true
-          this.tableData = []
-        }
-      },
-      download() {
-          this.$http({
-            method: "get",
-            url: "" + process.env.API_ROOT + "/handover/template?type=deliver",
-            responseType: "arraybuffer",
-            headers:{
-              'Authorization': sessionStorage.getItem('data'),
-            }
-          })
-            .then(res => {
-              console.log(res.data);
-              const blob = new Blob([res.data], {
-                type: "application/vnd.ms-excel"
-              });
-              const blobUrl = window.URL.createObjectURL(blob);
-              const a = document.createElement("a");
-              document.body.appendChild(a);
-              a.style.display = "none";
-              a.download = "deliver_template.xlsx";
-              a.href = blobUrl;
-              a.click();
-              document.body.removeChild(a);
-            })
-            .catch(err => {
-              console.log(err);
-              alert("网络异常");
-            });
-      },
-      // async download(){
-      //   var data ={
-      //     type:'deliver'
-      //   }
-      //   const res = await download(data);
-      // },
       handleClick(){},
       change() {
         this.dialogVisible = !this.dialogVisible
@@ -489,9 +359,6 @@
           .btns{
             padding: 10px 20px;
             // background: pink;
-            .upload-demo{
-              display: inline-block;
-            }
           }
           .tab{
             padding-bottom: 52px;
