@@ -43,7 +43,7 @@
           <el-button type='primary' class="add" size='mini' @click="upload">拜访记录上传</el-button>
         </div> -->
         <div class="tab">
-          <el-table :data="tableData" border style="width: 100%" height="100%">
+          <el-table :data="tableData" border style="width: 100%" height="100%" @row-click='rowClick'>
             <el-table-column type="index" width='80' label="编号" :index='q'>
             </el-table-column>
             <el-table-column prop="custName" width="150" show-overflow-tooltip label="客户名称" >
@@ -62,8 +62,8 @@
             <el-table-column show-overflow-tooltip prop="registerTimeStr" width="180" label="创建日期" sortable>
             </el-table-column>
             <el-table-column  prop="" width='160' label="操作" fixed='right'>
-              <template scope-slot='scope'>
-                <el-button type='text'  @click='mx'>明细</el-button>
+              <template slot-scope="scope">
+                <el-button type='text'  @click='mx(scope.row.id)'>明细</el-button>
                 <el-button type='text'  @click='add(1)'>审批</el-button>
                 <el-button type='text'  @click='add(2)'>驳回</el-button>
               </template>
@@ -86,34 +86,34 @@
         width="400px"
         top="10vh"
         >
-        <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top'  >
-          <el-form-item label="代理商" v-if="title=='审批'">
-            <el-select v-model="value" placeholder="请选择" > 
+        <el-form ref="form1" :model="form1" :rules='rules' size="small" class="form1" label-width="auto" label-position='top'  >
+          <el-form-item :label="userType.indexOf('代理商')!=-1 ? '销售':'代理商'" v-if="title=='审批'" prop='value'>
+            <el-select v-model="form1.value" placeholder="请选择" > 
               <el-option
                 label="label1"
-                value="value1">
+                value="1">
               </el-option>
               <el-option
                 label="label2"
-                value="value2">
+                value="2">
               </el-option>
               <el-option
                 label="label3"
-                value="value3">
+                value="3">
               </el-option>
               <el-option
                 label="label4"
-                value="value4">
+                value="4">
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item :label="label">
-            <el-input size='small' rows='4' resize="none" type="textarea" placeholder="请输入"></el-input>
+          <el-form-item :label="label" prop="msg">
+            <el-input size='small' v-model="form1.msg" rows='4' resize="none" type="textarea" placeholder="请输入"></el-input>
           </el-form-item>
         </el-form>
           <span slot="footer" class="dialog-footer">
             <el-button @click="close" size="small" type="primary" plain>取 消</el-button>
-            <el-button type="primary" @click="sure" size="small">确 定</el-button>
+            <el-button type="primary" @click="submitForm('form1',title=='审批'?1:2)" size="small">确 定</el-button>
           </span>
     </el-dialog>
   </div>
@@ -121,7 +121,7 @@
 
 <script>
 import Daterange from "../com/date";
-import {getList} from "@/api/customer/query.js";
+import {getList,approve,ret} from "@/api/customer/query.js";
 export default {
   name: "customerApprove",
   components:{
@@ -129,6 +129,11 @@ export default {
   },
   data() {
     return {
+      rules: {
+        value: [{ required: true, trigger: "blur" ,message:'请选择'}],
+        msg: [{ required: true, trigger: "blur" ,message:'请输入'}],
+      },
+      rowData:{},
       resetData:false,
       form:{
         businessType:'',
@@ -137,6 +142,10 @@ export default {
         customerOutCode:'',
         reportStartDate:'',
         reportEndDate:'',
+      },
+      form1:{
+        value:'',
+        msg:'',
       },
       title:'',
       label:'',
@@ -163,8 +172,16 @@ export default {
     };
   },
   computed: {
-    shopId() {
-      return this.$store.state.shopId.shopId;
+    userType() {
+      if(this.$store.state.loginUser.loginInfo.userType=='agent'){
+        return '代理商'
+      }else if(
+        this.$store.state.loginUser.loginInfo.userType=='subAgent'
+      ){
+        return '子代理商'
+      }else{
+        return '内部客户'
+      }
     }
   },
   created() {
@@ -172,7 +189,21 @@ export default {
   },
   watch: {},
   methods: {
+    rowClick(row){
+      this.rowData = row
+    },
+    submitForm(formName,type){
+      this.$formTest.submitForm(this.$refs[formName],type==1 ?this.sure : this.ret)
+    },
+    resetForm(formName){
+      this.$formTest.resetForm(this.$refs[formName])
+    },
     close(){
+      this.resetForm('form1')
+      this.form1={
+        value:'',
+        msg:'',
+      }
       this.dialogVisible1 = false
     },
     watchCreatTime(data){
@@ -216,9 +247,12 @@ export default {
         this.total = res.data.data.total;
       }
     },
-    mx(){
-      this.$route.push({
-        name:'mx'
+    mx(id){
+      this.$router.push({
+        name:'customerAdd',
+        query:{
+          id:id
+        }
       })
     },
     del(){
@@ -253,8 +287,36 @@ export default {
       this.dialogVisible = !this.dialogVisible;
     },
     
-    sure() {
-      
+    async ret() {
+      var data ={
+        id:this.rowData.id,
+        // dealerId:this.userType.indexOf('代理商')==-1?this.form1.value :'',
+        // salesId:this.userType.indexOf('代理商')!=-1?this.form1.value :'',
+        approvalRemark:this.form1.msg,
+      }
+      const res = await ret(data);
+      console.log('驳回结果',res);
+      if(res){
+        this.close()
+        this.dialogVisible1 = false
+        this.getList()
+      }
+    },
+    async sure() {
+      var data ={
+        id:this.rowData.id,
+        dealerId:this.userType.indexOf('代理商')==-1?this.form1.value :'',
+        salesId:this.userType.indexOf('代理商')!=-1?this.form1.value :'',
+        approvalRemark:this.form1.msg,
+      }
+      const res = await approve(data);
+      console.log('审批结果',res);
+      if(res){
+        this.$message.success('审批通过')
+        this.close()
+        this.dialogVisible1 = false
+        this.getList()
+      }
     },
     handleClose(done) {
       this.$confirm("确认关闭？")
@@ -297,7 +359,7 @@ $sc: 12;
   box-sizing: border-box;
   padding: 0 20px 20px;
   .el-dialog{
-    .form {
+    .form1 {
         .el-form-item__label {
           height: 30px;
         }

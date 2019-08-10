@@ -18,5 +18,17 @@ export const del = data => {
 
 //新增客户
 export const add = data => {
-    return request('post', `${serverUrl}/customer/info`, data).then(result => result)
+    return request('post', `${serverUrl}/customer/info`, data, { 'Content-Type': 'multipart/form-data' }).then(result => result)
 }
+
+
+//新增客户
+export const approve = data => {
+    return request('get', `${serverUrl}/customer/approval?${stringify(data)}`).then(result => result)
+}
+
+//新增客户
+export const ret = data => {
+        return request('get', `${serverUrl}/customer/reject?${stringify(data)}`).then(result => result)
+    }
+    // boundary=----WebKitFormBoundaryooHyQ87B5UJFDb9I
