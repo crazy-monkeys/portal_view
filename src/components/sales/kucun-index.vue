@@ -1,103 +1,99 @@
 <template>
-  <div class="index1">
+  <div class="shipmentQuery">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to='/home/sell'>商务管理</el-breadcrumb-item>
-          <el-breadcrumb-item>客户Rebate</el-breadcrumb-item>
+          <el-breadcrumb-item to='/home/sell'>销售管理</el-breadcrumb-item>
+          <el-breadcrumb-item>库存转移、转换查询</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
+
       <div class="sels clear">
         <div class="lineBox">
           <i class="el-icon-arrow-down" v-if='!dialogVisible' @click='change'> 展开</i>
+
           <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
+
         </div>
-        <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
+        <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <el-form-item label="代理商">
-            <el-input size='small' v-model="form.value1" placeholder="请输入"></el-input>
+            <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="客户">
-            <el-input size='small' v-model="form.value2" placeholder="请输入"></el-input>
+          <el-form-item label="出货日期" class="date">
+            <Daterange />
           </el-form-item>
-          <el-form-item label="状态">
-            <el-select v-model="form.value3" size="small"> 
-              <el-option label="客户已确认" value='1'></el-option> 
-              <el-option label="客户未确认" value='2'></el-option> 
+          <el-form-item label="上传日期"  class="date">
+            <Daterange />
+          </el-form-item>
+          <el-form-item label="类型" >
+            <el-select v-model="value">
+              <el-option value='1' label="延期提交"></el-option>
+              <el-option value='2' label="删除"></el-option>
+              <el-option value='3' label="修改"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item :label="checkedCities.length==0 ?'' : ' '">
+          <el-form-item :label="' '">
             <el-button size='small' type='primary' plain>查询</el-button>
-            <el-button @click='reset' size='small' type='primary' plain>重置</el-button>
+            <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
           </el-form-item>
         </el-form>
       </div>
       <div class="box">
         <div class="tab">
-          <el-table :data="tableData" style="width: 100%" height="700">
-            <el-table-column prop="" width='30' show-overflow-tooltip label=""></el-table-column>
-            <el-table-column prop="6" label="代理商" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="7" label="客户" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="8" label="Rebate金额" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="9" label="状态" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="10" label="操作" show-overflow-tooltip>
-              <template >
-                <el-button type='text'>发送确认函</el-button>
-                <el-button type='text' @click="mx">明细</el-button>
+          <el-table :data="tableData" border style="width: 100%" height="100%">
+            <el-table-column prop="0" width='' label="类型" ></el-table-column>
+            <el-table-column prop="0" width='' label="代理商" ></el-table-column>
+            <el-table-column prop="0" width='' label="出货日期"></el-table-column>
+            <el-table-column prop="1" width="" label="上传日期" show-overflow-tooltip></el-table-column>
+            <el-table-column  label="操作" fixed="right" width="100" show-overflow-tooltip>
+              <template slot-scope='scope' >
+                <el-button type="text" @click="approve">审批</el-button>
               </template>
             </el-table-column>
-            
             <div slot="empty">
-              <p>未查询到客户信息</p>
+              <p>无数据</p>
             </div>
           </el-table>
-          <div class="block">
+           <div class="block">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
             :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
           </el-pagination>
         </div>
         </div>
-        
+       
       </div>
     </div>
+    <el-dialog
+        title="审批"
+        :visible.sync="dialogVisible1"
+        width="400px"
+        top="10vh"
+        >
+        <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top'  >
+          <el-form-item label="审批意见">
+            <el-input size='small' rows='4' resize="none" type="textarea" placeholder="请输入"></el-input>
+          </el-form-item>
+        </el-form>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible1= false" size="small" type="primary" plain>驳 回</el-button>
+            <el-button type="primary" @click="dialogVisible1 = false" size="small">通 过</el-button>
+          </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-  import formTest from '../../assets/js/formTest'
+  import Daterange from "../com/date";
   export default {
-    name: 'index',
+    name: 'kcquery',
+    components:{
+      Daterange
+    },
     data() {
       return {
-        form: {
-          value1:'',
-          value2:'',
-          value3:'',
-        },
-        total: 0,
-        d1: [],
-        options: [{
-          value: '选项1',
-          label: 'Mass Market'
-        }, {
-          value: '选项2',
-          label: 'Account Market'
-        }],
+        form: {},
+        dialogVisible1:false,
         value: '',
-        checkAll: false,
-        checkedCities: [
-          1, 2
-        ],
-        conditions: [
-          {
-            label: '客户名称',
-            value: 1
-          },
-          {
-            label: '英文名称',
-            value: 2
-          }
-        ],
-        isIndeterminate: false,
         dialogVisible: false,
         tableData: [
         {}
@@ -106,6 +102,7 @@
         currentPage: 1,
         //每页的容量
         pageSize: 10,
+        total: 0,
       }
     },
     computed: {
@@ -118,31 +115,16 @@
     watch: {
     },
     methods: {
+      approve(type) {
+        this.dialogVisible1 = true
+      },
       mx(){
         this.$router.push({
-          name:'rebateDetail'
+          name:'shipmentDetail'
         })
-      },
-      reset(){
-        this.form={
-          value1:'',
-          value2:'',
-          value3:'',
-        }
       },
       change() {
         this.dialogVisible = !this.dialogVisible
-      },
-      handleCheckAllChange(val) {
-        console.log(val)
-        this.checkedCities = val ? [1, 2, 3, 4, 5, 6] : [];
-        this.isIndeterminate = false;
-      },
-      handleCheckedCitiesChange(value) {
-        console.log(value)
-        let checkedCount = value.length;
-        this.checkAll = checkedCount === this.conditions.length;
-        this.isIndeterminate = checkedCount > 0 && checkedCount < this.conditions.length;
       },
       sure() {
         this.dialogVisible = false
@@ -180,8 +162,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
   $sc:12;
-
- .index1{
+.shipmentQuery{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;

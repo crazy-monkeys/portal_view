@@ -7,143 +7,252 @@
           <el-breadcrumb-item>销售预测上传</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <div class="sels clear">
-        <!-- <el-button @click='change'  size='small' type='primary' plain>{{!dialogVisible ? '展开筛选条件' :'收起筛选条件'}}
-          </el-button> -->
-        <div class="lineBox">
-          <i class="el-icon-arrow-down" v-if='!dialogVisible' @click='change'> 展开</i>
-
-          <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
-
-          <!-- <div class="line"></div> -->
-        </div>
-        <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
-        <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
-          <el-form-item label="客户名称">
-            <el-input  placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="客户编号">
-            <el-input  placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="状态">
-            <el-select v-model="status">
-              <el-option value='1' label="已保存"></el-option>
-              <el-option value='2' label="已验证"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="销售">
-            <el-input  placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="订单月份">
-            <el-input  placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="上传日期" class="date">
-            <Daterange />
-          </el-form-item>
-          <el-form-item label=" ">
-            <el-button  type='primary' plain>查询</el-button>
-            <el-button   type='primary' plain>重置</el-button>
-          </el-form-item>
-        </el-form>
-        <!-- </transition-group> -->
-
-      </div>
-      <!-- </transition-group> -->
-      <div class="box">
-        <div class="btns clear">
-          <el-button   size='small' type='primary'>下载模版</el-button>
-          <el-button   size='small' type='primary'>上传</el-button>
-        </div>
-        <div class="tab">
-          <el-table :data="tableData" border style="width: 100%" height="100%">
-            <el-table-column   label="" width="60">
-              <template slot="header" >
-                <el-dropdown :hide-on-click='false' placement='bottom-start' trigger="click">
-                  <span class="el-dropdown-link">
-                    <i class="el-icon-arrow-down el-icon--right"></i>
-                  </span>
-                  <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>
-                      <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">
-                        全选</el-checkbox>
-                        </el-dropdown-item>
-                    <el-dropdown-item divided>批量删除</el-dropdown-item>
-                    <el-dropdown-item>批量验证</el-dropdown-item>
-                    <el-dropdown-item >批量保存</el-dropdown-item>
-                    <el-dropdown-item >批量提交</el-dropdown-item>
-                  </el-dropdown-menu>
-                </el-dropdown>
-              </template>
-              <template >
-                 <!-- <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">
-                        全选</el-checkbox>
-                <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
-                  <el-checkbox v-for="city in cities" :label="city" :key="city"></el-checkbox>
-                </el-checkbox-group> -->
-                <el-checkbox></el-checkbox>
-              </template>
-                
-            </el-table-column>
-            <el-table-column prop="0" width='100' label="错误信息" ></el-table-column>
-            <el-table-column prop="1" width='100' label="上传日期" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="2" width='80' label="年月" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="3" width='100'  label="客户名称" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="4" width='100'  label="客户类别" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="5" width='180'  label="阿米巴队长" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="6" width='80'  label="销售" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="7" width='180'  label="类别一（类型）" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="8" width='150'  label="Product Type" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="9" width='100'  label="Platform" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="10" width='100'  label="产品型号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="11" width='100'  label="截止日期" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" width='180'  label="未完成专货库存" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="13" width="80" label="月份一" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
-            
-            <el-table-column prop="13" width="80" label="月份二" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
-            
-            <el-table-column prop="13" width="80" label="月份三" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
-
-            <el-table-column prop="13" width="80" label="月份四" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
-
-            <el-table-column prop="13" width="80" label="月份五" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
-
-            <el-table-column prop="13" width="80" label="月份六" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
-            <div slot="empty">
-              <p>未查询到客户信息</p>
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="查询" name="first">
+          <div class="sels clear">
+            <div class="lineBox">
+              <i class="el-icon-arrow-down" v-if='!dialogVisible' @click='change'> 展开</i>
+              <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
             </div>
-          </el-table>
-          <div class="block">
-          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-            :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
-          </el-pagination>
-        </div>
-        </div>
-        
-      </div>
+            <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
+              <el-form-item label="客户名称">
+                <el-input  placeholder="请输入"></el-input>
+              </el-form-item>
+              <el-form-item label="客户编号">
+                <el-input  placeholder="请输入"></el-input>
+              </el-form-item>
+              <el-form-item label="状态">
+                <el-select v-model="status">
+                  <el-option value='1' label="已保存"></el-option>
+                  <el-option value='2' label="已验证"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="销售">
+                <el-input  placeholder="请输入"></el-input>
+              </el-form-item>
+              <el-form-item label="订单月份">
+                <el-input  placeholder="请输入"></el-input>
+              </el-form-item>
+              <el-form-item label="上传日期" class="date">
+                <Daterange />
+              </el-form-item>
+              <el-form-item label=" ">
+                <el-button  type='primary' plain>查询</el-button>
+                <el-button   type='primary' plain>重置</el-button>
+              </el-form-item>
+            </el-form>
+            <!-- </transition-group> -->
+
+          </div>
+          <div class="box">
+            <div class="btns clear">
+              <el-button   size='small' type='primary'>批量删除</el-button>
+              <el-button   size='small' type='primary'>批量修改</el-button>
+            </div>
+            <div class="tab">
+              <el-table :data="tableData" border style="width: 100%" height="100%">
+                <el-table-column type="selection"  show-overflow-tooltip></el-table-column>
+                <el-table-column prop="0" width='100' label="错误信息" ></el-table-column>
+                <el-table-column prop="1" width='100' label="上传日期" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="2" width='80' label="年月" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="3" width='100'  label="客户名称" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="4" width='100'  label="客户类别" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="5" width='180'  label="阿米巴队长" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="6" width='80'  label="销售" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="7" width='180'  label="类别一（类型）" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="8" width='150'  label="Product Type" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="9" width='100'  label="Platform" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="10" width='100'  label="产品型号" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="11" width='100'  label="截止日期" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="12" width='180'  label="未完成专货库存" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="13" width="80" label="月份一" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+                
+                <el-table-column prop="13" width="80" label="月份二" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+                
+                <el-table-column prop="13" width="80" label="月份三" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+
+                <el-table-column prop="13" width="80" label="月份四" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+
+                <el-table-column prop="13" width="80" label="月份五" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+
+                <el-table-column prop="13" width="80" label="月份六" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+                <div slot="empty">
+                  <p>未查询到客户信息</p>
+                </div>
+              </el-table>
+              <div class="block">
+              <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+                :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+              </el-pagination>
+            </div>
+            </div>
+            
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="上传" name="second">
+          <div class="box">
+            <div class="btns clear">
+              <el-button class="add" @click='open' size='small' type='primary'>下载模版</el-button>
+              <el-button class="add" @click='remove' size='small' type='primary'>上传</el-button>
+              <el-button class="add" @click='open' size='small' type='primary'>下载错误数据</el-button>
+
+              <!-- <el-button class="add" @click='changeType' size='small' type='primary'>验证</el-button> -->
+              <!-- <el-button class="add" @click='open' size='small' type='primary'>保存</el-button> -->
+              <el-button class="add" @click='remove' size='small' type='primary'>提交</el-button>
+            </div>
+            <div class="tab">
+              <el-table :data="tableData" border style="width: 100%" height="100%">
+                <el-table-column prop="0" width='100' label="错误信息" ></el-table-column>
+                <el-table-column prop="1" width='100' label="上传日期" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="2" width='80' label="年月" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="3" width='100'  label="客户名称" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="4" width='100'  label="客户类别" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="5" width='180'  label="阿米巴队长" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="6" width='80'  label="销售" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="7" width='180'  label="类别一（类型）" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="8" width='150'  label="Product Type" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="9" width='100'  label="Platform" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="10" width='100'  label="产品型号" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="11" width='100'  label="截止日期" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="12" width='180'  label="未完成专货库存" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="13" width="80" label="月份一" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+                
+                <el-table-column prop="13" width="80" label="月份二" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+                
+                <el-table-column prop="13" width="80" label="月份三" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+
+                <el-table-column prop="13" width="80" label="月份四" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+
+                <el-table-column prop="13" width="80" label="月份五" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+
+                <el-table-column prop="13" width="80" label="月份六" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+                <div slot="empty">
+                  <p>未查询到客户信息</p>
+                </div>
+              </el-table>
+              <div class="block">
+              <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+                :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+              </el-pagination>
+            </div>
+            </div>
+            
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="驳回记录" name="third">
+          <div class="box">
+            <div class="tab">
+              <el-table :data="tableData" border style="width: 100%" height="100%">
+                <el-table-column prop="0" width='100' label="错误信息" ></el-table-column>
+                <el-table-column prop="1" width='100' label="上传日期" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="2" width='80' label="年月" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="3" width='100'  label="客户名称" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="4" width='100'  label="客户类别" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="5" width='180'  label="阿米巴队长" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="6" width='80'  label="销售" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="7" width='180'  label="类别一（类型）" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="8" width='150'  label="Product Type" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="9" width='100'  label="Platform" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="10" width='100'  label="产品型号" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="11" width='100'  label="截止日期" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="12" width='180'  label="未完成专货库存" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="13" width="80" label="月份一" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+                
+                <el-table-column prop="13" width="80" label="月份二" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+                
+                <el-table-column prop="13" width="80" label="月份三" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+
+                <el-table-column prop="13" width="80" label="月份四" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+
+                <el-table-column prop="13" width="80" label="月份五" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+
+                <el-table-column prop="13" width="80" label="月份六" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+                <div slot="empty">
+                  <p>未查询到客户信息</p>
+                </div>
+              </el-table>
+              <div class="block">
+              <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+                :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+              </el-pagination>
+            </div>
+            </div>
+            
+          </div>
+        </el-tab-pane>
+      </el-tabs>
     </div>
   </div>
 </template>
@@ -159,6 +268,7 @@ import Daterange from "../com/date";
     },
     data() {
       return {
+        activeName:'first',
         status:'',
         dialogVisible:false,
         form:{},
@@ -218,6 +328,7 @@ import Daterange from "../com/date";
     watch: {
     },
     methods: {
+      handleClick(){},
       change(){
         this.dialogVisible = !this.dialogVisible
       },
@@ -257,6 +368,7 @@ import Daterange from "../com/date";
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;
+
   .el-dialog{
     .form {
         .el-form-item__label {
@@ -273,73 +385,92 @@ import Daterange from "../com/date";
     height: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
+    padding-top: 34px;
+    box-sizing: border-box;
     .head{
       padding: 10px 20px;
+      position: absolute;
+      top: 0;
       // background: red;
     }
-    .sels{
-      // margin: 20px 0;
-      padding:10px 20px;
-      background: #fff;
-      margin-bottom: 10px;
-      .lineBox{
-        color: #b161bf;
-      }
-    }
-    .form {
-        .el-form-item__label {
-          height: 30px;
-        }
-        .el-form-item {
-          width: 200px;
-          margin-bottom: 0;
-          
-          .el-select{
-            width: 100%;
-          }
-        }
-        .date {
-          width: 414px;
-          
-        }
-    }
-    .box{
+    .el-tabs{
       height: 100%;
       position: relative;
-      display: flex;
-      flex-direction: column;
-      background: #fff;
-      .btns{
-        padding: 10px 20px;
-        // background: pink;
+      box-sizing: border-box;
+      padding-top: 50px;
+      .el-tabs__header{
+        position: absolute;
+        top: 0;
+        width: 100%;
+        .el-tabs__nav-wrap {
+          padding:0 20px;
+        }
       }
-      .tab{
-        padding-bottom: 52px;
-        box-sizing: border-box;
+      .el-tabs__content{
         height: 100%;
-        // background: orange;
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        .el-table{
+        .el-tab-pane{
           height: 100%;
-          position: relative;
-          .el-dropdown{
-            padding: 0;
-            .el-icon--right{
-              margin: 0;
-            }
+          display: flex;
+          flex-direction: column;
+        }
+        .sels{
+          // margin: 20px 0;
+          padding:10px 20px;
+          background: #fff;
+          margin-bottom: 10px;
+          .lineBox{
+            color: #b161bf;
           }
         }
-        .block{
-          position: absolute;
-          bottom:0;
-          padding:  10px 0 ;
-          width: 100%;
-          .el-pagination {
-            width: 100%;
-            padding: 0;
-            text-align: center;
+        .form {
+            .el-form-item__label {
+              height: 30px;
+            }
+            .el-form-item {
+              width: 200px;
+              margin-bottom: 0;
+              .el-select{
+                width: 100%;
+              }
+            }
+            .date {
+              width: 414px;
+            }
+        }
+        .box{
+          height: 100%;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          background: #fff;
+          .btns{
+            padding: 10px 20px;
+            // background: pink;
+          }
+          .tab{
+            padding-bottom: 52px;
+            box-sizing: border-box;
+            height: 100%;
+            // background: orange;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            .el-table{
+              height: 100%;
+              position: relative;
+            }
+            .block{
+              position: absolute;
+              bottom:0;
+              padding:  10px 0 ;
+              width: 100%;
+              .el-pagination {
+                width: 100%;
+                padding: 0;
+                text-align: center;
+              }
+            }
           }
         }
       }

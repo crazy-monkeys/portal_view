@@ -397,7 +397,6 @@ $sc: 12;
       width: 44px;
       margin-top: 20px;
     }
-
     .lglogo {
       width: 180px;
     }

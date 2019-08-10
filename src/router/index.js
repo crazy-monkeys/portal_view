@@ -161,6 +161,16 @@ export default new Router({
                     component: resolve => require(['@/components/sales/forcast-index'], resolve),
                 },
                 {
+                    path: 'sales/kucun-index',
+                    name: 'kcquery',
+                    component: resolve => require(['@/components/sales/kucun-index'], resolve),
+                },
+                {
+                    path: 'sales/kucun-remove',
+                    name: 'kcremove',
+                    component: resolve => require(['@/components/sales/kucun-upload'], resolve),
+                },
+                {
                     path: 'sales/forcast-upload',
                     name: 'SalesList',
                     component: resolve => require(['@/components/sales/forcast-upload'], resolve),
@@ -170,12 +180,27 @@ export default new Router({
                     name: 'visiteRecord',
                     component: resolve => require(['@/components/customer/visiteRecord'], resolve),
                 },
-
+                {
+                    path: 'agent/rate/query',
+                    name: 'agentRate',
+                    component: resolve => require(['@/components/sales/agentRate'], resolve),
+                },
+                {
+                    path: 'agent/rate/defend',
+                    name: 'agentRateDefend',
+                    component: resolve => require(['@/components/sales/agentRateDefend'], resolve),
+                },
                 {
                     path: 'sales/sales-index',
                     name: 'SalesList',
                     component: resolve => require(['@/components/sales/sales-index'], resolve),
                 },
+                {
+                    path: 'sales/rebateDetail',
+                    name: 'rebateDetail',
+                    component: resolve => require(['@/components/sales/rebateDetail'], resolve),
+                },
+
                 {
                     path: 'sales/approve',
                     name: 'SalesList',
@@ -193,8 +218,36 @@ export default new Router({
                 },
                 {
                     path: 'sales/shipment-index',
-                    name: 'SalesList',
+                    name: 'shipmentQuery',
                     component: resolve => require(['@/components/sales/shipment-index'], resolve),
+                },
+                {
+                    path: 'sales/shipment/detail',
+                    name: 'shipmentDetail',
+                    component: resolve => require(['@/components/sales/shipmentDetail'], resolve),
+                },
+
+
+
+
+
+
+
+                // 收货
+                {
+                    path: 'sales/shouhuo/detail',
+                    name: 'shouhuoDetail',
+                    component: resolve => require(['@/components/sales/shouhuoDetail'], resolve),
+                },
+                {
+                    path: 'sales/shouhuo/index',
+                    name: 'shouhuoQuery',
+                    component: resolve => require(['@/components/sales/shouhuo-index'], resolve),
+                },
+                {
+                    path: 'sales/shouhuo/upload',
+                    name: 'shouhuoUpload',
+                    component: resolve => require(['@/components/sales/shouhuo-upload'], resolve),
                 },
                 {
                     path: 'sales/shipment-upload',

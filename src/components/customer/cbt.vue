@@ -62,6 +62,7 @@
             </el-table-column>
             <el-table-column prop="2" label="发货方编号" show-overflow-tooltip>
             </el-table-column>
+
             <el-table-column prop="3" label="公司" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="4" label="申请时间" show-overflow-tooltip sortable="">

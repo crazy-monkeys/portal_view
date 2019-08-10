@@ -1,36 +1,30 @@
 <template>
-  <div class="shipmentQuery">
+  <div class="shouhuoDetail">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item >销售管理</el-breadcrumb-item>
-          <el-breadcrumb-item>{{type==1 ?  '出货数据查询' :'收货数据查询'}}</el-breadcrumb-item>
+          <el-breadcrumb-item>收货数据查询</el-breadcrumb-item>
+          <el-breadcrumb-item>明细</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-
       <div class="sels clear">
         <div class="lineBox">
           <i class="el-icon-arrow-down" v-if='!dialogVisible' @click='change'> 展开</i>
-
           <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
-
         </div>
         <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
-          <el-form-item label="代理商">
+          <el-form-item label="提货日期"  class="date">
+            <Daterange />
+          </el-form-item>
+          <el-form-item label="产品型号">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="出货日期" class="date">
-            <Daterange />
+          <el-form-item label="发货公司">
+            <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="上传日期"  class="date">
-            <Daterange />
-          </el-form-item>
-          <el-form-item label="类型" >
-            <el-select v-model="value">
-              <el-option value='1' label="延期提交"></el-option>
-              <el-option value='2' label="删除"></el-option>
-              <el-option value='3' label="修改"></el-option>
-            </el-select>
+          <el-form-item label="仓储地">
+            <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item :label="' '">
             <el-button size='small' type='primary' plain>查询</el-button>
@@ -40,69 +34,41 @@
       </div>
       <div class="box">
         <div class="tab">
-          <el-table :data="tableData" border style="width: 100%" height="100%">
-            <el-table-column prop="type" width='' label="类型" >
-              <template slot-scope='scope'>
-                {{scope.row.type==1 ? '出货':'收货'}}
-              </template>
-            </el-table-column>
-            <el-table-column prop="dealerName" width='' label="代理商" ></el-table-column>
-            <!-- <el-table-column prop="0" width='' label="出货日期"></el-table-column> -->
-            <el-table-column prop="uploadTime" width="" label="上传日期" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="statusStr" width="" label="状态" show-overflow-tooltip></el-table-column>
-            <el-table-column  label="操作" fixed="right" width="100" show-overflow-tooltip>
-              <template slot-scope='scope' >
-                <el-button type="text" @click="mx(scope.row)">明细</el-button>
-                <el-button type="text" @click="bz">确认</el-button>
-              </template>
-            </el-table-column>
+          <el-table :data="tableData" border height="100%" style="width:100%">
+            <el-table-column prop="0" width='150' label="产品型号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="0" width='150' label="库存类别" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="0" width='150' label="库存单价" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="0" width='150' label="仓储地" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="提货时间" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="提货发票号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="提货数量" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="发货公司" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="采购单号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150' label="备注" show-overflow-tooltip></el-table-column>
             <div slot="empty">
               <p>无数据</p>
             </div>
           </el-table>
-           <div class="block">
-          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-            :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
-          </el-pagination>
+          <div class="block">
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+              :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+            </el-pagination>
+          </div>
         </div>
-        </div>
-       
       </div>
     </div>
-    <el-dialog
-  title="确认"
-  :visible.sync="dialogVisible3"
-  width="400px"
-  >
-  <el-form ref="form" :model="form3" size="small" class="form" label-width="auto" label-position='top'>
-    <el-form-item label="确认信息" >
-      <el-input size='small' type="textarea" row='4' v-model="form3.msg" placeholder="请输入"></el-input>
-    </el-form-item>
-  </el-form>
-  <span slot="footer" class="dialog-footer">
-    <el-button size='small' type='primary' @click='pass'  plain>通过</el-button>
-    <el-button @click='ret' size='small' type='primary' >驳回</el-button>
-  </span>
-</el-dialog>
   </div>
 </template>
 
 <script>
   import Daterange from "../com/date";
-  import {download,sub,upload,downloadError} from '@/api/handover/upload.js'
-  import {getList} from '@/api/handover/index.js'
-  import {serverUrl} from '../../axios/request'
   export default {
-    name: 'shipmentQuery',
+    name: 'shouhuoDetail',
     components:{
       Daterange
     },
     data() {
       return {
-        form3:{
-          msg:''
-        },
-        dialogVisible3:false,
         form: {},
         value: '',
         dialogVisible: false,
@@ -116,46 +82,18 @@
       }
     },
     computed: {
-      type(){
-        return this.$route.query.type
+      shopId() {
+        return this.$store.state.shopId.shopId
       }
     },
     created() {
-      this.getList()
     },
     watch: {
     },
     methods: {
-      ret(){
-        this.dialogVisible3= false
-        
-      },
-      pass(){
-        this.dialogVisible3= false
-
-      },
-      bz(){
-        this.dialogVisible3= true
-      },
-      async getList(){
-        var data ={
-          pageNum:this.currentPage,
-          pageSize:this.pageSize,
-        }
-        const res = await getList(data)
-        console.log('出货数据列表',res);
-        if(res){
-          this.tableData = res.data.data.list
-          this.total = res.data.data.total
-        }
-      },
-      mx(row){
+      mx(){
         this.$router.push({
-          name:'shipmentDetail',
-          query:{
-            id:row.id,
-            type:row.type==1? 'deliver':'receive'
-          }
+          name:'shouhuoDetail'
         })
       },
       change() {
@@ -197,23 +135,10 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
   $sc:12;
-.shipmentQuery{
+.shouhuoDetail{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;
-
-  .el-dialog{
-    .form {
-        .el-form-item__label {
-          height: 30px;
-        }
-        .el-form-item {
-          .el-select{
-            width: 100%;
-          }
-        }
-    }
-  }
   .sellBox{
     height: 100%;
     display: flex;

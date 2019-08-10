@@ -19,14 +19,8 @@
           <!-- <div class="line"></div> -->
         </div>
         <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
-        <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
+        <el-form ref="form" size="small" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <el-form-item label="客户名称">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="客户编号">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="订单号">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
            <el-form-item label="代理商">
@@ -35,12 +29,26 @@
            <el-form-item label="销售">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="订单月份">
+          <el-form-item label="月份">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="上传日期" class="date">
             <Daterange />
           </el-form-item>
+          <el-form-item label="渠道" >
+            
+            <el-select v-model="value" size="small">
+              <el-option :value='1' label='职工客户'></el-option>
+              <el-option :value='2' label='代理客户'></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="查询方式" >
+            <el-select v-model="value1">
+              <el-option :value='1' label='按年'></el-option>
+              <el-option :value='2' label='按月'></el-option>
+            </el-select>
+          </el-form-item>
+          
           <el-form-item :label="checkedCities.length==0 ?'' : ' '">
             <el-button size='small' type='primary' plain>查询</el-button>
             <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
@@ -52,12 +60,14 @@
 
       <!-- </transition-group> -->
       <div class="box">
+        <div class="btns clear">
+          
+        </div>
         <div class="tab">
-          <el-table :data="tableData" border style="width: 100%" height="100%">
-            <el-table-column type="expand">
-              <template slot-scope="props">
-                <el-table size='small' :data="props.row.children" border style="width: 100%" height="100%">
-                  
+          <el-table :data="tableData" border style="width: 100%" height="100%" v-show="value1==2">
+            <el-table-column type="expand" v-if="value1==2">
+              <template slot-scope="props" v-if="value1==2">
+                <el-table size='small'  v-if="value1==2" :data="props.row.children" border style="width: 100%" height="100%">
                   <el-table-column label="月份" prop='0' show-overflow-tooltip> 
                   </el-table-column>
                   <el-table-column label="上次填写" prop='1' show-overflow-tooltip>
@@ -81,23 +91,91 @@
             </el-table-column>
             <el-table-column prop="0" width='100' label="代理商" >
             </el-table-column>
-            <el-table-column prop="1" label="上传日期" width="100" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="2" label="年月" width="80" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="3" label="客户名称" width="100" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="4" label="客户类别" width="100" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="5" label="阿米巴队长" width="120" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="6" label="销售" width="80" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="7" label="类别一（类型）" width="150" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="8" label="Product Type" width="150" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="9" label="Platform" width="100" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="10" label="产品型号" width="100" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="11" label="截止日期" width="100" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="12" label="未完成专货库存" width="180" show-overflow-tooltip></el-table-column>
-            <!-- <el-table-column  label="操作" width="100"  v-if="s==1" fixed="right" >
-              <template>
-                <el-button size="small" type="text" @click="adjust">预测调整</el-button>
-              </template>
-            </el-table-column> -->
+            <el-table-column prop="1" label="上传日期" width="100" show-overflow-tooltip>
+
+            </el-table-column>
+            <el-table-column prop="2" label="年月" width="80" show-overflow-tooltip>
+
+            </el-table-column>
+            <el-table-column prop="3" label="客户名称" width="100" show-overflow-tooltip>
+
+            </el-table-column>
+            <el-table-column prop="" label="客户类别" width="100" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="渠道" width="100" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="阿米巴队长" width="120" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="销售" width="80" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="类别一（类型）" width="150" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="Product Type" width="150" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="Platform" width="100" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="产品型号" width="100" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="截止日期" width="100" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="未完成专货库存" width="180" show-overflow-tooltip></el-table-column>
+            <div slot="empty">
+              <p>无数据</p>
+            </div>
+          </el-table>
+
+          <el-table :data="tableData" border style="width: 100%" height="100%" v-show="value1==1">
+            <el-table-column prop="" width='100' label="代理商" show-overflow-tooltip>
+            </el-table-column>
+            
+            <el-table-column prop="" label="上传日期" width="100" show-overflow-tooltip>
+
+            </el-table-column>
+            <el-table-column prop="" label="年月" width="80" show-overflow-tooltip>
+
+            </el-table-column>
+            <el-table-column prop="" label="客户名称" width="100" show-overflow-tooltip>
+
+            </el-table-column>
+            <el-table-column prop="" label="客户类别" width="100" show-overflow-tooltip>
+
+            </el-table-column>
+            <el-table-column prop="" label="渠道" width="100" show-overflow-tooltip>
+
+            </el-table-column>
+            <el-table-column prop="" label="阿米巴队长" width="120" show-overflow-tooltip>
+
+            </el-table-column>
+            <el-table-column prop="" label="销售" width="80" show-overflow-tooltip>
+
+            </el-table-column>
+            <el-table-column prop="" label="类别一（类型）" width="150" show-overflow-tooltip>
+
+            </el-table-column>
+            <el-table-column prop="" label="Product Type" width="150" show-overflow-tooltip>
+
+            </el-table-column>
+            <el-table-column prop="" label="Platform" width="100" show-overflow-tooltip>
+
+            </el-table-column>
+            <el-table-column prop="" label="产品型号" width="100" show-overflow-tooltip>
+
+            </el-table-column>
+            <el-table-column prop="" label="截止日期" width="100" show-overflow-tooltip>
+
+            </el-table-column>
+            <el-table-column prop="" label="未完成专货库存" width="180" show-overflow-tooltip>
+
+            </el-table-column>
+            <el-table-column prop="" label="月份" width="80" show-overflow-tooltip >
+            </el-table-column>
+            <el-table-column prop="" label="本次填写" width="100" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="" label="上次填写" width="100" show-overflow-tooltip >
+            </el-table-column>
+            <el-table-column label="GAP" prop='' show-overflow-tooltip  width="100">
+            </el-table-column>
+            <el-table-column label="备注" prop='' show-overflow-tooltip  width="100">
+            </el-table-column>
+            <el-table-column label="阿米巴队长调整" prop='' show-overflow-tooltip  width="150">
+            </el-table-column>
+            <el-table-column label="阿米巴队长备注" prop='' show-overflow-tooltip  width="150">
+            </el-table-column>
+            <el-table-column label="首代调整" prop='' show-overflow-tooltip width="100" >
+            </el-table-column>
+            <el-table-column label="首代备注" prop='' show-overflow-tooltip width="100" >
+            </el-table-column>
             <div slot="empty">
               <p>无数据</p>
             </div>
@@ -147,6 +225,8 @@
     name: 'index',
     data() {
       return {
+        value:'',
+        value1:1,
         s:1,
         form: {},
         total: 0,
@@ -177,172 +257,6 @@
         dialogVisible: false,
         dialogVisible1: false,
         tableData: [
-          {
-            0:'CEAC',
-            1:'201904',
-            2:'冠捷',
-            3:'',
-            4:'',
-            5:'',
-            6:'',
-            7:'TV',
-            8:'Tuner',
-            9:'RDA5160',
-            10:'RDA5160',
-            11:'',
-            12:'',
-            children:[
-              {
-                0:'201905',
-                1:'',
-                2:'9.9',
-                3:'0',
-                4:'',
-                5:'',
-                6:'',
-                7:'',
-                8:'',
-              },
-              {
-                0:'201906',
-                1:'',
-                2:'9.9',
-                3:'0',
-                4:'',
-                5:'',
-                6:'',
-                7:'',
-                8:'',
-              },
-              {
-                0:'201907',
-                1:'',
-                2:'9.9',
-                3:'0',
-                4:'',
-                5:'',
-                6:'',
-                7:'',
-                8:'',
-              },
-              {
-                0:'201908',
-                1:'',
-                2:'9.9',
-                3:'0',
-                4:'',
-                5:'',
-                6:'',
-                7:'',
-                8:'',
-              },
-              {
-                0:'201909',
-                1:'',
-                2:'9.9',
-                3:'0',
-                4:'',
-                5:'',
-                6:'',
-                7:'',
-                8:'',
-              },
-              {
-                0:'201910',
-                1:'',
-                2:'9.9',
-                3:'0',
-                4:'',
-                5:'',
-                6:'',
-                7:'',
-                8:'',
-              }
-            ]
-          },
-          {
-            0:'CEAC',
-            1:'201904',
-            2:'冠捷',
-            3:'',
-            4:'',
-            5:'',
-            6:'',
-            7:'TV',
-            8:'Tuner',
-            9:'RDA5160',
-            10:'RDA5160',
-            11:'',
-            12:'',
-            children:[
-              {
-                0:'201905',
-                1:'',
-                2:'9.9',
-                3:'0',
-                4:'',
-                5:'',
-                6:'',
-                7:'',
-                8:'',
-              },
-              {
-                0:'201906',
-                1:'',
-                2:'9.9',
-                3:'0',
-                4:'',
-                5:'',
-                6:'',
-                7:'',
-                8:'',
-              },
-              {
-                0:'201907',
-                1:'',
-                2:'9.9',
-                3:'0',
-                4:'',
-                5:'',
-                6:'',
-                7:'',
-                8:'',
-              },
-              {
-                0:'201908',
-                1:'',
-                2:'9.9',
-                3:'0',
-                4:'',
-                5:'',
-                6:'',
-                7:'',
-                8:'',
-              },
-              {
-                0:'201909',
-                1:'',
-                2:'9.9',
-                3:'0',
-                4:'',
-                5:'',
-                6:'',
-                7:'',
-                8:'',
-              },
-              {
-                0:'201910',
-                1:'',
-                2:'9.9',
-                3:'0',
-                4:'',
-                5:'',
-                6:'',
-                7:'',
-                8:'',
-              }
-            ]
-          },
         ],
         tableData1: [
           {}
