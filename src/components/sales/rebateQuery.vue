@@ -1,10 +1,10 @@
 <template>
-  <div class="index1">
+  <div class="rebateQuery">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item to='/home/sell'>商务管理</el-breadcrumb-item>
-          <el-breadcrumb-item>客户Rebate</el-breadcrumb-item>
+          <el-breadcrumb-item>Rebate查询</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="sels clear">
@@ -40,17 +40,12 @@
             <el-table-column prop="6" label="代理商" show-overflow-tooltip></el-table-column>
             <el-table-column prop="7" label="客户" show-overflow-tooltip></el-table-column>
             <el-table-column prop="8" label="Rebate金额" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="8" label="通知日期" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="8" label="执行方" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="8" label="释放金额" show-overflow-tooltip></el-table-column>
             <el-table-column prop="8" label="执行方式" show-overflow-tooltip></el-table-column>
             <el-table-column prop="8" label="备注" show-overflow-tooltip></el-table-column>
             <el-table-column prop="9" label="状态" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="10" label="操作" fixed="right" width="240" >
+            <el-table-column prop="10" label="操作" fixed="right" width="100" >
               <template >
-                <el-button type='text' @click="send" >发送确认函</el-button>
-                <el-button type='text' @click="mx">明细</el-button>
-                <el-button type='text' >上传</el-button>
+                <el-button type='text' @click="send" >上传</el-button>
               </template>
             </el-table-column>
             
@@ -104,7 +99,7 @@
 <script>
   import formTest from '../../assets/js/formTest'
   export default {
-    name: 'index',
+    name: 'rebateQuery',
     data() {
       return {
         form: {
@@ -224,7 +219,7 @@
 <style lang='scss'>
   $sc:12;
 
- .index1{
+ .rebateQuery{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;

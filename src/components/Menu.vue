@@ -129,13 +129,13 @@ export default {
               iconClass: "el-icon-s-123",
               children: []
             },
-            {
-              resourceId: "24",
-              resourceName: "销售预测调整",
-              resourceUrl: "/home/sales/reset",
-              iconClass: "el-icon-s-123",
-              children: []
-            },
+            // {
+            //   resourceId: "24",
+            //   resourceName: "销售预测调整",
+            //   resourceUrl: "/home/sales/reset",
+            //   iconClass: "el-icon-s-123",
+            //   children: []
+            // },
           ]
         },
         {
@@ -297,6 +297,14 @@ export default {
               iconClass: "el-icon-s-123",
               children: []
             },
+            {
+              resourceId: "63",
+              resourceName: "Rebate查询",
+              resourceUrl: "/home/rebate/query",
+              iconClass: "el-icon-s-123",
+              children: []
+            },
+            
           ]
         },
         {
@@ -339,6 +347,13 @@ export default {
               resourceUrl: '/home/system/document',
               iconClass: "el-icon-s-123",
               children: []
+            },
+            {
+              resourceId: "76",
+              resourceName: '代理商关联配置',
+              resourceUrl: '/home/system/delearRelation',
+              iconClass: "el-icon-s-123",
+              children: []
             }
           ]
         }
@@ -379,6 +394,8 @@ $sc: 12;
 .menu {
   height: 100%;
   padding-top: 56px;
+  position: relative;
+  box-sizing: border-box;
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 240px;
     min-height: 400px;

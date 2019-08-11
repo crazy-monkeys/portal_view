@@ -20,6 +20,22 @@
           <el-form-item label="类型">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
+           <el-form-item label="终端客户确认状态" >
+            <el-select v-model="value">
+              <el-option value='1' label="已确认"></el-option>
+              <el-option value='2' label="未确认"></el-option>
+              <el-option value='3' label="已发送确认函"></el-option>
+              <el-option value='4' label="未发送确认函"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="稽核状态" >
+            <el-select v-model="value">
+              <el-option value='1' label="已发送"></el-option>
+              <el-option value='2' label="未发送"></el-option>
+              <el-option value='3' label="已上传"></el-option>
+              <el-option value='4' label="未上传"></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="子类">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
@@ -44,6 +60,9 @@
       <div class="box">
         <div class="tab">
           <el-table :data="tableData" border height="100%" style="width:100%">
+            <el-table-column prop="0" width='150' label="状态" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="0" width='150' label="稽核状态" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="0" width='150' label="稽核文件" show-overflow-tooltip></el-table-column>
             <el-table-column prop="0" width='150' label="客户外部号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="0" width='150' label="客户全称" show-overflow-tooltip></el-table-column>
             <el-table-column prop="0" width='150' label="销售" show-overflow-tooltip></el-table-column>
@@ -61,7 +80,18 @@
             <el-table-column prop="" width='150' label="出货类型" show-overflow-tooltip></el-table-column>
             <el-table-column prop="" width='150' label="订单月份" show-overflow-tooltip></el-table-column>
             <el-table-column prop="" width='150' label="发货公司" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="" width='150' fixed="right" label="备注"  show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width='150'  label="备注"  show-overflow-tooltip></el-table-column>
+            <el-table-column label="操作" fixed="right" width="200">
+              <template slot-scope="scope">
+                <el-button type="text" size="small" >
+                  订单稽核
+                </el-button>
+                <el-button type="text" size="small" >
+                  发送确认函
+                </el-button>
+                
+              </template>
+            </el-table-column>
             <div slot="empty">
               <p>无数据</p>
             </div>
@@ -90,6 +120,7 @@
         value: '',
         dialogVisible: false,
         tableData: [
+          {}
         ],
         //第几页
         currentPage: 1,

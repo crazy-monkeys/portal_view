@@ -182,6 +182,11 @@ export default new Router({
                     component: resolve => require(['@/components/sales/sales-index'], resolve),
                 },
                 {
+                    path: 'rebate/query',
+                    name: 'rebateQuery',
+                    component: resolve => require(['@/components/sales/rebateQuery'], resolve),
+                },
+                {
                     path: 'sales/rebateDetail',
                     name: 'rebateDetail',
                     component: resolve => require(['@/components/sales/rebateDetail'], resolve),
@@ -313,6 +318,11 @@ export default new Router({
                     path: 'system/permissions',
                     name: 'permission',
                     component: resolve => require(['@/components/system/Permission'], resolve),
+                },
+                {
+                    path: 'system/delearRelation',
+                    name: 'delearRelation',
+                    component: resolve => require(['@/components/system/delearRelation'], resolve),
                 },
             ]
         },

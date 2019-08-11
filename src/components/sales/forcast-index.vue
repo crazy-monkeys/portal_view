@@ -92,13 +92,10 @@
             <el-table-column prop="0" width='100' label="代理商" >
             </el-table-column>
             <el-table-column prop="1" label="上传日期" width="100" show-overflow-tooltip>
-
             </el-table-column>
             <el-table-column prop="2" label="年月" width="80" show-overflow-tooltip>
-
             </el-table-column>
             <el-table-column prop="3" label="客户名称" width="100" show-overflow-tooltip>
-
             </el-table-column>
             <el-table-column prop="" label="客户类别" width="100" show-overflow-tooltip></el-table-column>
             <el-table-column prop="" label="渠道" width="100" show-overflow-tooltip></el-table-column>

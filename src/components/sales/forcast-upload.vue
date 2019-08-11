@@ -52,54 +52,22 @@
             <div class="tab">
               <el-table :data="tableData" border style="width: 100%" height="100%">
                 <el-table-column type="selection"  show-overflow-tooltip></el-table-column>
-                <el-table-column prop="0" width='100' label="错误信息" ></el-table-column>
-                <el-table-column prop="1" width='100' label="上传日期" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="2" width='80' label="年月" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="3" width='100'  label="客户名称" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="4" width='100'  label="客户类别" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="5" width='180'  label="阿米巴队长" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="6" width='80'  label="销售" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="7" width='180'  label="类别一（类型）" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="8" width='150'  label="Product Type" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="9" width='100'  label="Platform" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="10" width='100'  label="产品型号" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="11" width='100'  label="截止日期" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="12" width='180'  label="未完成专货库存" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="13" width="80" label="月份一" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
-                
-                <el-table-column prop="13" width="80" label="月份二" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
-                
-                <el-table-column prop="13" width="80" label="月份三" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
-
-                <el-table-column prop="13" width="80" label="月份四" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
-
-                <el-table-column prop="13" width="80" label="月份五" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
-
-                <el-table-column prop="13" width="80" label="月份六" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="14"  width='100'  label="上次填写" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="15" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="1" label="上传日期" width="100" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="2" label="年月" width="80" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="3" label="客户名称" width="100" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="" label="客户类别" width="100" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="渠道" width="100" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="阿米巴队长" width="120" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="销售" width="80" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="类别一（类型）" width="150" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="Product Type" width="150" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="Platform" width="100" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="产品型号" width="100" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="截止日期" width="100" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" label="未完成专货库存" width="180" show-overflow-tooltip></el-table-column>
                 <div slot="empty">
                   <p>未查询到客户信息</p>
                 </div>

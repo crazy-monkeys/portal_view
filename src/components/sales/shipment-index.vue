@@ -27,11 +27,11 @@
           </el-form-item>
           <el-form-item label="类型" >
             <el-select v-model="value">
-              <el-option value='1' label="延期提交"></el-option>
-              <el-option value='2' label="删除"></el-option>
-              <el-option value='3' label="修改"></el-option>
+              <el-option value='1' label="出货"></el-option>
+              <el-option value='2' label="收货"></el-option>
             </el-select>
           </el-form-item>
+         
           <el-form-item :label="' '">
             <el-button size='small' type='primary' plain>查询</el-button>
             <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>

@@ -1,0 +1,422 @@
+<template>
+  <div class="delearRelation">
+    <div class="sellBox">
+    <div class="head clear">
+      <el-breadcrumb separator="/">
+        <!-- <el-breadcrumb-item :to="{ path: '/home' }">客户营销</el-breadcrumb-item> -->
+        <el-breadcrumb-item to='/home/account/settings'>系统管理</el-breadcrumb-item>
+        <el-breadcrumb-item>代理商关联配置</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+    <div class="box clear">
+        <!-- <div class="btns">
+          <el-button type='primary' size='small' @click="add">新建</el-button>
+        </div> -->
+        <div class="tab">
+          <el-table :data="roles" border highlight-current-row ref='tab' height="100%">
+            <el-table-column prop='id' label="ID" v-if="false" width="80">
+            </el-table-column>
+            <el-table-column prop="" label="代理商" width="200">
+            </el-table-column>
+            <el-table-column prop="" label="关联营销运作部" width="">
+            </el-table-column>
+            <el-table-column prop="" label="关联代理商经营部" width="">
+            </el-table-column>
+            <el-table-column label="操作" width="80" fixed="right">
+              <template slot-scope="scope">
+                <el-button type="text" size="small" @click="permissionSet">
+                  配置
+                </el-button>
+              </template>
+            </el-table-column>
+            <div slot="empty">
+
+              <p>无数据</p>
+            </div>
+          </el-table>
+          <div class="block">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+            :page-sizes="[10, 100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
+          </el-pagination>
+        </div>
+        </div>
+        
+    </div>
+    
+    <el-dialog title="配置"  :visible.sync="dialogVisible1" width="400px" :before-close="close"
+      :close-on-click-modal="false">
+      <el-form label-position="top" label-width="auto" :model="roleForm" :rules='rules' size="small" ref='roleForm' class="roleForm">
+       <el-form-item label="负责人" prop=''>
+          <el-select v-model="form.role" multiple  filterable>
+            <el-option label="负责人1" value="1"></el-option>
+            <el-option label="负责人2" value="2"></el-option>
+            <el-option label="负责人3" value="3"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="close" size="small">取消</el-button>
+        <el-button type="primary" @click='close' size="small">提交</el-button>
+      </span>
+    </el-dialog>
+  </div>
+  </div>
+</template>
+
+<script>
+import formTest from "../../assets/js/formTest";
+
+export default {
+  name: "delearRelation",
+  data() {
+    return {
+      options:[
+        {
+          label:'父级角色1',
+          value:1
+        },
+        {
+          label:'父级角色2',
+          value:2
+        },
+        {
+          label:'父级角色3',
+          value:3
+        },
+      ],
+      rowData: {},
+      delArr: [],
+      addArr: [],
+      selectGroup: [],
+      edit: false,
+      roleForm: {
+        name: "",
+        desc: ""
+      },
+      dialogVisible: false,
+      dialogVisible1: false,
+      tableData: [],
+      defaultCheckedKeys: [],
+      type: "",
+      rules: {
+        name: [
+          { required: true, trigger: "change", validator: formTest.roleName }
+        ]
+      },
+      selStr: "",
+      defaultProps: {
+        children: "children",
+        label: "resourceName"
+      },
+      //用户组列表
+      groups: [
+        {
+          resourceId: 233,
+          parentId: 0,
+          resourceName: "客户管理",
+          resourceType: 1,
+          resourceOrder: 208,
+          children: [
+            {
+              resourceId: 9067,
+              parentId: 233,
+              resourceName: "客户查询",
+              resourceType: 2,
+              resourceOrder: 210,
+              children: []
+            },
+            {
+              resourceId: 9066,
+              parentId: 233,
+              resourceName: "客户报备",
+              resourceType: 3,
+              resourceOrder: 211,
+              children: []
+            },
+            {
+              resourceId: 9065,
+              parentId: 233,
+              resourceName: "报备审批",
+              resourceType: 2,
+              resourceOrder: 212,
+              children: []
+            },
+          ]
+        },
+        {
+          resourceId: 233,
+          parentId: 0,
+          resourceName: "预测管理",
+          resourceType: 1,
+          resourceOrder: 208,
+          children: [
+            {
+              resourceId: 9067,
+              parentId: 233,
+              resourceName: "销售预测查询",
+              resourceType: 2,
+              resourceOrder: 210,
+              children: []
+            },
+            {
+              resourceId: 9066,
+              parentId: 233,
+              resourceName: "销售预测上传",
+              resourceType: 3,
+              resourceOrder: 211,
+              children: []
+            },
+            {
+              resourceId: 9065,
+              parentId: 233,
+              resourceName: "销售预测审批",
+              resourceType: 2,
+              resourceOrder: 212,
+              children: []
+            },
+          ]
+        }
+      ],
+
+      //角色列表
+      roles: [
+        {}
+      ],
+      roleId: "",
+      form: {
+        name: "",
+        desc: "",
+        groups: []
+      },
+      pageSize:10,
+      currentPage:1,
+      total:0,
+    };
+  },
+  created(){
+    // this.getRoles()
+  },
+  computed:{
+    loginName() {
+      return this.$store.state.loginUser.loginInfo.loginName;
+    },
+  },
+  methods: {
+    permissionSet(){
+      this.dialogVisible1 = true
+    },
+    mod(){
+      this.edit = true
+      this.dialogVisible = true;
+    },
+    add(){
+      this.edit = false
+      this.dialogVisible = true;
+    },
+     //修改表单提交
+    submit(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.addRole()
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    //重置表单
+    resetForm(formName) {
+      if (this.$refs[formName]) {
+        if (this.$refs[formName] !== undefined) {
+          this.$refs[formName].resetFields();
+        } else {
+          this.$nextTick(() => {
+            this.$refs[formName].resetFields();
+          });
+        }
+      }
+    },
+    //把对象转成query值
+    cleanArray(actual) {
+      var newArray = [];
+        for (let i = 0; i < actual.length; i++) {
+          if (actual[i]) {
+            newArray.push(actual[i]);
+          }
+        }
+      return newArray;
+    },
+    toQueryString(obj) {
+      if (!obj) return "";
+        return this.cleanArray(
+        Object.keys(obj).map(key => {
+          if (obj[key] === undefined) return "";
+            return encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]);
+          })
+        ).join("&");
+    },
+    close(){
+      this.dialogVisible1 = false;
+      this.dialogVisible = false;
+      this.resetForm('roleForm')
+    },
+     // 分页
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.pageSize = val;
+      // this.getRoles()
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.currentPage = val;
+      // this.getRoles()
+    },
+    getRoles(){
+      var data = {
+        // roleName :this.loginName,	
+        pageNum:this.currentPage,
+        pageSize:this.pageSize,
+      }
+       this.$http({
+              method : 'get',
+              url :  process.env.API_ROOT+ '/permission/roleInfo?'+ this.toQueryString(data),
+              headers:{
+                Authorization:sessionStorage.getItem('data')
+              }
+            }) .then(res => {
+                console.log("角色列表", res);
+                if (res.data.code===1) {
+                   this.roles = res.data.data.list
+                   this.total = res.data.data.total
+                }else{
+                  this.$message({
+                    type:'error',
+                    message:res.data.msg
+                  })
+                }
+              
+              })
+              .catch(error => {
+                console.log(error);
+                alert("登入失败");
+              });
+    },
+    addRole(){
+      var data = {
+        roleName:this.roleForm.name,
+        roleDesc:this.roleForm.desc,
+      }
+       this.$http({
+              method : 'post',
+              url :  process.env.API_ROOT+ '/permission/saveRole',
+              data:data,
+              headers:{
+                Authorization:sessionStorage.getItem('data')
+              }
+            }) .then(res => {
+                console.log("新增角色", res);
+                if (res.data.code===1) {
+                  this.getRoles()
+                  this.close()
+                }else{
+                  this.$message({
+                    type:'error',
+                    message:res.data.msg
+                  })
+                }
+              })
+              .catch(error => {
+                console.log(error);
+                alert("网络异常");
+              });
+    },
+  }
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang='scss'>
+$sc: 12;
+.delearRelation{
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0 20px 20px;
+
+  .el-dialog{
+    .el-select{
+      width: 100%;
+    }
+  }
+  .sellBox{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .head{
+      padding: 10px 20px;
+      // background: red;
+    }
+    .sels{
+      // margin: 20px 0;
+      padding:10px 20px;
+      background: #fff;
+      margin-bottom: 10px;
+      .lineBox{
+        color: #b161bf;
+      }
+    }
+    .form {
+        .el-form-item__label {
+          height: 30px;
+        }
+        .el-form-item {
+          width: 200px;
+          margin-bottom: 0;
+          .el-select{
+            width: 100%;
+          }
+        }
+        .date {
+          width: 414px;
+          .el-date-editor {
+            width: 414px;
+          }
+        }
+    }
+    .box{
+      height: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      .btns{
+        padding: 10px 20px;
+        // background: pink;
+      }
+      .tab{
+        padding-bottom: 52px;
+        box-sizing: border-box;
+        height: 100%;
+        // background: orange;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        .el-table{
+          height: 100%;
+          position: relative;
+        }
+        .block{
+          position: absolute;
+          bottom:0;
+          padding:  10px 0 ;
+          width: 100%;
+          .el-pagination {
+            width: 100%;
+            padding: 0;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}
+</style>

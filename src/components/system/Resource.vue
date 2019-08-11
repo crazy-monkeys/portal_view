@@ -10,9 +10,9 @@
     </div>
     <div class="box">
       <div class="btns">
-        <el-button class="add" type="primary" @click="add" size="small">
+        <!-- <el-button class="add" type="primary" @click="add" size="small">
           <i class="el-icon-plus"></i> 新增资源
-        </el-button>
+        </el-button> -->
         <div class="content">
             <el-tree 
                 :data="resource"
@@ -95,6 +95,7 @@
 <script>
 import SelectTree from "./components/treeSelect.vue";
 export default {
+    name:'Resource',
     components:{
         SelectTree
     },
@@ -214,11 +215,25 @@ export default {
                 children: 'children',
                 label: 'resourceName'
             },
-            resource:[],
+            resource:[
+                {
+                    resourceName:'代理商1',
+                    children:[
+                        {
+                            resourceName:'cs1'
+                        },
+                        {
+                            resourceName:'cs2'
+                        },
+                        {
+                            resourceName:'cs3'
+                        }
+                    ]
+                }
+            ],
         }
     },
     created(){
-        this.getSource()
     },
     watch:{
         filterText: {
