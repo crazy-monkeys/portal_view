@@ -1,16 +1,16 @@
 import { request, serverUrl } from "../../axios/request";
 import { stringify } from 'qs'
 
-//客户列表
+//下载模版
 export const download = data => {
         return request('get', `${serverUrl}/handover/template?${stringify(data)}`).then(result => result)
     }
-    //客户列表
+    //下载错误数据
 export const downloadError = data => {
     return request('get', `${serverUrl}/handover/error?${stringify(data)}`).then(result => result)
 }
 
-//客户列表
+//上传
 export const upload = data => {
         return request('post', `${serverUrl}/handover/template`, data).then(result => result)
     }
@@ -18,29 +18,17 @@ export const upload = data => {
 export const sub = (data) => {
         return request('post', `${serverUrl}/handover/detail`, data).then(result => result)
     }
-    //客户详情
-export const detail = data => {
-    return request('get', `${serverUrl}/customer/info/${data.id}`).then(result => result)
+    //驳回记录
+export const getReject = data => {
+    return request('get', `${serverUrl}/handover/dealer/reject?${stringify(data)}`).then(result => result)
 }
 
-//删除报备
-export const del = data => {
-    return request('delete', `${serverUrl}/customer/info/${data.id}`).then(result => result)
+//上传页面查询部分
+export const getList = data => {
+    return request('get', `${serverUrl}/handover/dealer/detail?${stringify(data)}`).then(result => result)
 }
 
-//新增客户
-export const add = data => {
-    return request('post', `${serverUrl}/customer/info`, data, { 'Content-Type': 'multipart/form-data' }).then(result => result)
+//确认  通过或者驳回
+export const operat = (data, param) => {
+    return request('get', `${serverUrl}/handover/operation/${data.id}?${stringify(param)}`).then(result => result)
 }
-
-
-//新增客户
-export const approve = data => {
-    return request('get', `${serverUrl}/customer/approval?${stringify(data)}`).then(result => result)
-}
-
-//新增客户
-export const ret = data => {
-        return request('get', `${serverUrl}/customer/reject?${stringify(data)}`).then(result => result)
-    }
-    // boundary=----WebKitFormBoundaryooHyQ87B5UJFDb9I

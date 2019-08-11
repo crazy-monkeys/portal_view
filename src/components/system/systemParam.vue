@@ -98,7 +98,7 @@
       </div>
     </div>
     
-    <el-dialog title="新建" :inline='true' :visible.sync="dialogVisible" width="50%" >
+    <el-dialog title="新建" :inline='true' :visible.sync="dialogVisible" width="50%" :close-on-click-modal='false' :close-on-press-escape='false' :show-close='false'>
 
       <el-form ref="form" size="small" label-position="top" :rules="rules" :model="form" class="form clear" :inline='true'>
           <el-form-item label="模块" prop='model'>
@@ -142,8 +142,9 @@
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
+          <el-button type="" @click="quit" size="small">取 消</el-button>
           <el-button type="primary" @click="submitForm('form')" size="small">确 定</el-button>
-          <el-button type="primary" @click="quit" size="small">取 消</el-button>
+
         </span>
       
     </el-dialog>

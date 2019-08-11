@@ -7,34 +7,6 @@
           <el-breadcrumb-item>子账号管理</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <!-- <div class="sels clear">
-        <div class="lineBox">
-          <i class="el-icon-arrow-down" v-if='!dialogVisible3' @click='change'> 展开</i>
-          <i class="el-icon-arrow-up" v-if='dialogVisible3' @click='change'> 收起</i>
-        </div>
-        <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible3'>
-          <el-form-item label="客户名称">
-            <el-input size='small' v-model="form.customerName" placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="角色">
-            <el-input v-model="form.roleName" size='small'  placeholder="请选择">
-            </el-input>
-          </el-form-item>
-          <el-form-item label="用户类型">
-            <el-select v-model="form.userType" size='small' filterable placeholder="请选择">
-              <el-option v-for="item in userTypes" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="开通日期" class="date">
-            <Daterange @data='watchTime' :resetData='resetData' />
-          </el-form-item>
-          <el-form-item label=" ">
-            <el-button size='small' type='primary' plain @click="search">搜索</el-button>
-            <el-button  size='small' type='primary' plain @click="reset">重置</el-button>
-          </el-form-item>
-        </el-form>
-      </div>-->
       <div class="box">
         <div class="btns">
           <el-button type="primary" size="small" @click="add">新建</el-button>
@@ -76,7 +48,7 @@
       </div>
     </div>
 
-    <el-dialog :title="edit?'编辑':'新建'" :visible.sync="dialogVisible" width="400px">
+    <el-dialog :title="edit?'编辑':'新建'" :visible.sync="dialogVisible" width="400px" :close-on-click-modal='false' :close-on-press-escape='false' :show-close='false'>
       <el-form :model="form" :rules="rules" ref="form" size="small">
         <el-form-item label="客户名称" prop="userName">
           <el-input v-model="form.userName"></el-input>
@@ -259,7 +231,16 @@ export default {
         this.getList();
       }
     },
+    clear(){
+      this.form = {
+        userName: "",
+        role: "",
+        loginName: "",
+        email: ""
+      }
+    },
     cancel() {
+      this.clear()
       this.dialogVisible = false;
       this.resetForm("form");
     },

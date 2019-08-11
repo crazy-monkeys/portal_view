@@ -3,7 +3,7 @@
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to='/home/sell'>销售管理</el-breadcrumb-item>
+          <el-breadcrumb-item to='/home/sell'>交付管理</el-breadcrumb-item>
           <el-breadcrumb-item>收货数据查询</el-breadcrumb-item>
         </el-breadcrumb>
       </div>

@@ -217,11 +217,6 @@ export default new Router({
                     component: resolve => require(['@/components/sales/sales-upload'], resolve),
                 },
                 {
-                    path: 'sales/shipment-index',
-                    name: 'shipmentQuery',
-                    component: resolve => require(['@/components/sales/shipment-index'], resolve),
-                },
-                {
                     path: 'sales/shipment/detail',
                     name: 'shipmentDetail',
                     component: resolve => require(['@/components/sales/shipmentDetail'], resolve),
@@ -240,9 +235,9 @@ export default new Router({
                     component: resolve => require(['@/components/sales/shouhuoDetail'], resolve),
                 },
                 {
-                    path: 'sales/shouhuo/index',
-                    name: 'shouhuoQuery',
-                    component: resolve => require(['@/components/sales/shouhuo-index'], resolve),
+                    path: 'handover/query',
+                    name: 'shipmentQuery',
+                    component: resolve => require(['@/components/sales/shipment-index'], resolve),
                 },
                 {
                     path: 'sales/shouhuo/upload',
@@ -250,8 +245,8 @@ export default new Router({
                     component: resolve => require(['@/components/sales/shouhuo-upload'], resolve),
                 },
                 {
-                    path: 'sales/shipment-upload',
-                    name: 'SalesList',
+                    path: 'handover/upload',
+                    name: 'shipmentUpload',
                     component: resolve => require(['@/components/sales/shipment-upload'], resolve),
                 },
                 {

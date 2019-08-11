@@ -3,7 +3,7 @@
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item >销售管理</el-breadcrumb-item>
+          <el-breadcrumb-item >交付管理</el-breadcrumb-item>
           <el-breadcrumb-item>出货数据查询</el-breadcrumb-item>
           <el-breadcrumb-item>明细</el-breadcrumb-item>
         </el-breadcrumb>
@@ -116,10 +116,13 @@
     methods: {
       async getMore(){
         var data ={
+          
           id:this.queryId,
         }
         var param ={
-          type:this.type
+          type:this.type,
+          pageNum:this.currentPage,
+          pageSize:this.pageSize,
         }
         const res = await getMore(data,param);
         console.log('详情',res)
@@ -160,10 +163,12 @@
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
         this.pageSize = val;
+        this.getMore()
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
         this.currentPage = val;
+        this.getMore()
       },
     }
   }

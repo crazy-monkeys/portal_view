@@ -3,8 +3,8 @@
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item>销售管理</el-breadcrumb-item>
-          <el-breadcrumb-item>出货数据上传</el-breadcrumb-item>
+          <el-breadcrumb-item>交付管理</el-breadcrumb-item>
+          <el-breadcrumb-item>{{type==1 ?  '出货数据上传' :'收货数据上传'}}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -48,34 +48,34 @@
               <el-button class="add"  size='small' type='primary'>批量修改</el-button>
             </div>
             <div class="tab">
-              <el-table :data="tableData" border style="width: 100%" height="100%">
+              <el-table :data="queryList" border style="width: 100%" height="100%">
                 <el-table-column type="selection"  show-overflow-tooltip></el-table-column>
-                <el-table-column prop="0" width='150' label="上传时间" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="0" width='150' label="客户外部号" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="0" width='150' label="客户全称" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="0" width='150' label="销售" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="0" width='150' label="类别一(类型)" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150' label="类别二(子类)" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150' label="类别三(平台)" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150' label="产品型号" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150' label="出货日期" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150' label="数量" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150' label="Sale Price" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150' label="Po Price" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150' label="Margin" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150' label="币种" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150' label="客户订单号" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150' label="出货类型" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150' label="订单月份" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150' label="发货公司" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150'  label="备注"  show-overflow-tooltip></el-table-column>
+                <el-table-column prop="uploadTime" width='150' label="上传时间" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="customerExternalNumber" width='150' label="客户外部号" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="customerFullName" width='150' label="客户全称" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="sales" width='150' label="销售" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="categoryOne" width='150' label="类别一(类型)" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="categoryTow" width='150' label="类别二(子类)" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="categoryThree" width='150' label="类别三(平台)" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="productModel" width='150' label="产品型号" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="deliveryDate" width='150' label="出货日期" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="deliverNumber" width='150' label="数量" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="salePrice" width='150' label="Sale Price" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="poPrice" width='150' label="Po Price" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="margin" width='150' label="Margin" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="currency" width='150' label="币种" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="customerOrderNumber" width='150' label="客户订单号" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="deliveryType" width='150' label="出货类型" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="orderMonth" width='150' label="订单月份" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="deliveryCompany" width='150' label="发货公司" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="remark" width='150'  label="备注"  show-overflow-tooltip></el-table-column>
                 <div slot="empty">
                   <p>无数据</p>
                 </div>
               </el-table>
               <div class="block">
               <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-                :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+                :page-sizes="[20,50,100]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
               </el-pagination>
             </div>
             </div>
@@ -86,14 +86,11 @@
           <div class="box">
             <div class="btns clear">
               <el-button class="add" @click='download' size='small' type='primary' > 下载模版</el-button>
-              <!-- <el-button class="add" @click='upload' size='small' type='primary'>上传</el-button> -->
-
-
               <el-upload
                 class="upload-demo"
                 ref="upload"
                 :action="url"
-                :data='data'
+                :data='da'
                 :headers='headers'
                 name="excel"
                 accept=".xlsx,.xls"
@@ -104,57 +101,80 @@
                 <el-button size="small"  type="primary">上传</el-button>
               </el-upload>
               <el-button class="add"  size='small' type='primary' :disabled="isError1" @click="downloadError">下载错误数据</el-button>
-
-              <!-- <el-button class="add"  size='small' type='primary'>验证</el-button> -->
-              <!-- <el-button class="add" @click='open' size='small' type='primary'>保存</el-button> -->
+              <el-upload
+                class="upload-demo"
+                ref="upload"
+                :action="url1"
+                :data='da1'
+                :headers='headers'
+                name="excel"
+                accept=".xlsx,.xls"
+                :auto-upload="true"
+                :show-file-list="false"
+                :on-success="suc1"
+                >
+                <el-button size="small"  type="primary" >上传错误数据</el-button>
+              </el-upload>
               <el-button class="add" @click='sub' size='small' type='primary' :disabled="isError2">提交</el-button>
+
             </div>
             <div class="tab">
               <el-table :data="tableData" border style="width: 100%" height="100%">
-                <el-table-column prop="errorMsg" width='150' label="错误信息" show-overflow-tooltip></el-table-column>
+                <div v-if="type==2">
+                  <el-table-column prop="thirdErrorMsg" width='150' label="错误信息" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="uploadTime" width='150' label="上传时间" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="productModel" width='150' label="产品型号" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="inventoryCategory" width='150' label="库存类别" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="inventoryUnitPrice" width='150' label="库存单价" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="warehouse" width='150' label="仓储地" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="deliveryTime" width='150' label="提货时间" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="invoiceNumber" width='150' label="提货发票号" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="deliveryNum" width='150' label="提货数量" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="deliveryCompany" width='150' label="发货公司" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="purchaseNumber" width='150' label="采购单号" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="remark" width='150' label="备注" show-overflow-tooltip></el-table-column>
+                </div>
+              
+                <div v-if="type==1">
+                  <el-table-column prop="thirdErrorMsg" width='150' label="错误信息" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="uploadTime" width='150' label="上传时间" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="customerExternalNumber" width='150' label="客户外部号" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="customerFullName" width='150' label="客户全称" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="sales" width='150' label="销售" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="categoryOne" width='150' label="类别一(类型)" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="categoryTow" width='150' label="类别二(子类)" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="categoryThree" width='150' label="类别三(平台)" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="productModel" width='150' label="产品型号" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="deliveryDate" width='150' label="出货日期" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="deliverNumber" width='150' label="数量" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="salePrice" width='150' label="Sale Price" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="poPrice" width='150' label="Po Price" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="margin" width='150' label="Margin" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="currency" width='150' label="币种" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="customerOrderNumber" width='150' label="客户订单号" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="deliveryType" width='150' label="出货类型" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="orderMonth" width='150' label="订单月份" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="deliveryCompany" width='150' label="发货公司" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="remark" width='150'  label="备注"  show-overflow-tooltip></el-table-column>
+                </div>
 
-                <el-table-column prop="categoryOne" width='150' label="上传时间" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="客户外部号" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="客户全称" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="销售" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="类别一(类型)" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="类别二(子类)" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="类别三(平台)" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="产品型号" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="出货日期" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="数量" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="Sale Price" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="Po Price" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="Margin" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150' label="币种" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150' label="客户订单号" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150' label="出货类型" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150' label="订单月份" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150' label="发货公司" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150'  label="备注"  show-overflow-tooltip></el-table-column>
                 <div slot="empty">
                   <p>无数据</p>
                 </div>
               </el-table>
-              <div class="block">
-              <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-                :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
-              </el-pagination>
             </div>
-            </div>
-            
           </div>
         </el-tab-pane>
         <el-tab-pane label="驳回记录" name="third">
           <div class="box">
             <div class="tab">
-              <el-table :data="tableData" border style="width: 100%" height="100%">
-                <el-table-column prop="" width='' label="驳回原因" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='' label="上传日期" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='' label="驳回日期" show-overflow-tooltip></el-table-column>
+              <el-table :data="rejectData" border style="width: 100%" height="100%">
+                <el-table-column prop="remark" width='' label="驳回原因" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="uploadTimeStr" width='200' label="上传日期" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="approvalTimeStr" width='200' label="驳回日期" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="" width='80' fixed="right" label="操作">
                   <template slot-scope="scope">
-                    <el-button type="text" >下载</el-button>
+                    <el-button type="text" @click="downloadReject(scope.row)">下载</el-button>
                   </template>
                 </el-table-column>
                 <div slot="empty">
@@ -162,8 +182,8 @@
                 </div>
               </el-table>
               <div class="block">
-              <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-                :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+              <el-pagination @size-change="handleSizeChange1" @current-change="handleCurrentChange1" :current-page="currentPage1"
+                :page-sizes="[10, 20,50]" :page-size="pageSize1" layout="sizes,total, jumper, prev, pager, next" :total="total1">
               </el-pagination>
             </div>
             </div>
@@ -172,24 +192,13 @@
         </el-tab-pane>
       </el-tabs>
     </div>
-    <!-- <el-dialog
-        title="筛选条件选取"
-        :visible.sync="dialogVisible"
-        width="600px"
-        >
-        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
-          <div style="margin: 15px 0;"></div>
-          <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
-            <el-checkbox v-for="con in conditions" :label="con.value" :key="con.value">{{con.label}}</el-checkbox>
-        </el-checkbox-group>
-    </el-dialog> -->
   </div>
 </template>
 
 <script>
   import formTest from '../../assets/js/formTest'
   import Daterange from '../com/date'
-  import {download,sub,upload,downloadError} from '@/api/handover/upload.js'
+  import {download,sub,upload,downloadError,getReject,getList} from '@/api/handover/upload.js'
   import {serverUrl} from '../../axios/request'
   export default {
     name: 'shipmentUpload',
@@ -198,67 +207,130 @@
     },
     data() {
       return {
+        fileName:'',
         recordId:'',
         isError1:true,
         isError2:true,
         url:serverUrl + '/handover/template',
+        url1:serverUrl+'/handover/error/retry',
         headers:{
-                  "Authorization": sessionStorage.getItem("data"),
-                },
-                data:{
-                  type:"deliver"
-                },
+          "Authorization": sessionStorage.getItem("data"),
+        },
+        da1:{
+        },
         form: {},
         total: 0,
-        d1: [],
-        options: [{
-          value: '选项1',
-          label: 'Mass Market'
-        }, {
-          value: '选项2',
-          label: 'Account Market'
-        }],
-        value: '',
-        checkAll: false,
-        checkedCities: [
-          1, 2
-        ],
-        conditions: [
-          {
-            label: '客户名称',
-            value: 1
-          },
-          {
-            label: '英文名称',
-            value: 2
-          }
-        ],
-        isIndeterminate: false,
         dialogVisible: false,
-        tableData: [
-        {}
-        ],
+        tableData: [],
+        rejectData:[],
+        queryList:[],
         //第几页
         currentPage: 1,
         //每页的容量
-        pageSize: 10,
+        pageSize: 20,
+        currentPage1: 1,
+        //每页的容量
+        pageSize1: 10,
+        total1:0,
         activeName:'first'
       }
     },
     computed: {
-      shopId() {
-        return this.$store.state.shopId.shopId
+      type(){
+        return this.$route.query.type
+      },
+      da(){
+        return {
+          type : this.type ==1?'deliver' :'receive'
+        }
+      },
+      dealerId(){
+        return this.$store.state.loginUser.loginInfo.id
       }
     },
     created() {
+      this.getList()
     },
     watch: {
+      type:{
+        handler:function(n,o){
+          this.activeName = 'first'
+          this.getList()
+        }
+      },
+      activeName:{
+        handler:function(n,o){
+          if(n=='first'){
+            this.getList()
+          }else if(n=='second'){
+
+          }else{
+            this.getReject()
+          }
+        }
+      }
     },
     methods: {
+      async getReject(){
+        var data = {
+          dealerId:this.dealerId,
+          type:this.type==1 ? 'deliver' :'receive',
+          pageSize:this.pageSize1,
+          pageNum:this.currentPage1,
+        }
+        const res = await getReject(data)
+        console.log('驳回记录',res)
+        if(res){
+          this.rejectData=res.data.data.list
+          this.total1 = res.data.data.total
+        }
+      },
+      async getList(){
+        var data = {
+          dealerId:this.dealerId,
+          type:this.type==1 ? 'deliver' :'receive',
+          pageSize:this.pageSize,
+          pageNum:this.currentPage,
+        }
+        const res = await getList(data)
+        console.log('上传查询部分列表',res)
+        if(res){
+          this.queryList=res.data.data.list
+          this.total = res.data.data.total
+        }
+      },
+      downloadReject(row){
+        this.$http({
+            method: "get",
+            url: "" + process.env.API_ROOT + "/handover/dealer/reject/download?recordId="+row.id+'&type='+(this.type==1 ? 'deliver' :'receive'),
+            responseType: "arraybuffer",
+            headers:{
+              'Authorization': sessionStorage.getItem('data'),
+            }
+          })
+            .then(res => {
+              console.log(res.data);
+              const blob = new Blob([res.data], {
+                type: "application/vnd.ms-excel"
+              });
+              const blobUrl = window.URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              document.body.appendChild(a);
+              a.style.display = "none";
+              a.download = "rejectData.xlsx";
+              a.href = blobUrl;
+              a.click();
+              document.body.removeChild(a);
+            })
+            .catch(err => {
+              console.log(err);
+              alert("网络异常");
+            });
+      },
       downloadError(){
         this.$http({
             method: "get",
-            url: "" + process.env.API_ROOT + "/handover/error?type=deliver",
+            url: "" + process.env.API_ROOT + "/handover/error?type="+(this.type==1 ? 'deliver' :'receive')+"&fileName=" + this.fileName,
             responseType: "arraybuffer",
             headers:{
               'Authorization': sessionStorage.getItem('data'),
@@ -285,18 +357,44 @@
       },
       suc(val){
         console.log(val)
-        if(val.data.isError){
-          this.isError1 = false
-          this.isError2 = true
-          this.$message.error(val.data.msg)
+        if(val.code!=1){
+          this.$message.error(val.msg)
         }else{
-          this.$message.success('上传成功')
+          if(val.data.isError){
+            this.isError1 = false
+            this.isError2 = true
+            this.$message.error(val.data.msg)
+          }else{
+            this.$message.success('上传成功')
+            this.isError1 = true
+            this.isError2 = false
+          }
           this.recordId = val.data.recordId
-          this.isError1 = true
-          this.isError2 = false
+          this.fileName = val.data.errorFileName
+          
+          this.da1={
+            type:this.type==1 ? 'deliver' :'receive',
+            recordId:this.recordId,
+            fileName:this.fileName,
+          },
+          this.tableData = this.type==1 ? val.data.deliverDetails :val.data.receiveDetails
+          console.log(this.tableData)
+
+          console.log(this.recordId,this.fileName)
         }
-        this.tableData = val.data.deliverDetails
-        // this.total = val.data.deliverDetails.length
+      },
+      suc1(val){
+        console.log(val)
+        if(val.code!=1){
+          this.$message.error(val.msg)
+        }else{
+          if(val.data.isError){
+            this.$message.error(val.data.msg)
+          }else{
+            this.$message.success('上传成功')
+          }
+          this.tableData =this.type==1 ?   val.data.deliverDetails :val.data.receiveDetails
+        }
       },
       submitUpload() {
         this.$refs.upload.submit();
@@ -304,7 +402,7 @@
       async upload(val){
         var param = new FormData()
         param.append('excel',val.file)
-        param.append('type','deliver')
+        param.append('type',this.type==1 ? 'deliver' :'receive')
         const res = await upload(data);
         if(res){
 
@@ -313,7 +411,7 @@
       async sub(){
         var param= new FormData()
         param.append('recordId' ,this.recordId)
-        param.append('type' ,'deliver')
+        param.append('type' ,this.type==1 ? 'deliver' :'receive')
         const res = await sub(param);
         if(res){
           this.$message.success('提交成功')
@@ -324,7 +422,7 @@
       download() {
           this.$http({
             method: "get",
-            url: "" + process.env.API_ROOT + "/handover/template?type=deliver",
+            url: "" + process.env.API_ROOT + "/handover/template?type="+(this.type==1 ? 'deliver' :'receive'),
             responseType: "arraybuffer",
             headers:{
               'Authorization': sessionStorage.getItem('data'),
@@ -349,55 +447,36 @@
               alert("网络异常");
             });
       },
-      // async download(){
-      //   var data ={
-      //     type:'deliver'
-      //   }
-      //   const res = await download(data);
-      // },
-      handleClick(){},
+     
+      handleClick(a,b){
+        if(a.name=='third'){
+          this.getReject()
+        }
+      },
       change() {
         this.dialogVisible = !this.dialogVisible
-      },
-      handleCheckAllChange(val) {
-        console.log(val)
-        this.checkedCities = val ? [1, 2, 3, 4, 5, 6] : [];
-        this.isIndeterminate = false;
-      },
-      handleCheckedCitiesChange(value) {
-        console.log(value)
-        let checkedCount = value.length;
-        this.checkAll = checkedCount === this.conditions.length;
-        this.isIndeterminate = checkedCount > 0 && checkedCount < this.conditions.length;
-      },
-      sure() {
-        this.dialogVisible = false
-      },
-      handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => { });
-      },
-      q(index) {
-        return this.pageSize * (this.currentPage - 1) + index + 1
-      },
-      add() {
-        this.$router.push(
-          {
-            name: 'AddSell'
-          }
-        )
       },
       // 分页
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
         this.pageSize = val;
+        this.getList()
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
         this.currentPage = val;
+        this.getList()
+      },
+      handleSizeChange1(val) {
+        console.log(`每页 ${val} 条`);
+        this.pageSize1 = val;
+        this.getReject()
+      },
+      handleCurrentChange1(val) {
+        console.log(`当前页: ${val}`);
+        this.currentPage1 = val;
+        this.getReject()
+
       },
     }
   }
