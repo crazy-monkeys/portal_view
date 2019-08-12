@@ -36,16 +36,17 @@
       <div class="box">
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" height="700">
-            <el-table-column prop="" width='30' show-overflow-tooltip label=""></el-table-column>
-            <el-table-column prop="6" label="代理商" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="7" label="客户" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="8" label="Rebate金额" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="8" label="通知日期" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="8" label="执行方" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="8" label="释放金额" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="8" label="执行方式" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="8" label="备注" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="9" label="状态" show-overflow-tooltip></el-table-column>
+            <!-- <el-table-column prop="" width='30' show-overflow-tooltip label=""></el-table-column> -->
+            <el-table-column prop="6" label="代理商" width='150' show-overflow-tooltip></el-table-column>
+            <el-table-column prop="7" label="客户"  width='150' show-overflow-tooltip></el-table-column>
+            <el-table-column prop="8" label="Rebate金额" width='150' show-overflow-tooltip></el-table-column>
+            <el-table-column prop="8" label="通知日期" width='150' show-overflow-tooltip></el-table-column>
+            <el-table-column prop="8" label="执行方" width='150' show-overflow-tooltip></el-table-column>
+            <el-table-column prop="8" label="释放金额" width='150' show-overflow-tooltip></el-table-column>
+            <el-table-column prop="8" label="剩余Rebate金额" width='150' show-overflow-tooltip></el-table-column>
+            <el-table-column prop="8" label="执行方式" width='150' show-overflow-tooltip></el-table-column>
+            <el-table-column prop="8" label="备注" width='150' show-overflow-tooltip></el-table-column>
+            <el-table-column prop="9" label="状态" width='150' show-overflow-tooltip></el-table-column>
             <el-table-column prop="10" label="操作" fixed="right" width="240" >
               <template >
                 <el-button type='text' @click="send" >发送确认函</el-button>
