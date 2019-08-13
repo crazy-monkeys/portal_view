@@ -62,7 +62,7 @@
                 @getValue="getValue($event)"/>
         </el-form-item>
         <el-form-item label="资源名称" prop='name' >
-          <el-input v-model="form.name" maxlength='10'></el-input>
+          <el-input v-model="form.name" ></el-input>
         </el-form-item>
         <!-- <el-form-item label="资源代码" prop='code'>
           <el-input v-model="form.code" maxlength='50'></el-input>
@@ -152,24 +152,25 @@ export default {
                     }
                 ],
                 name: [
-                    { required: true, trigger: "change",  validator: (rule, value, callback) =>{
-                        var reg = /[`~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；‘’，。、 ]{1,10}$/
-                            // var reg = /^[^\~\`\!\@\#\$\%\^\&\*\(\)\-\_\+\=\{\}\[\]\|\\\;\:\'\"\,\.\<\>\/\?\ ]{1,5}$/;
-                            if (!value) {
-                                callback(new Error('资源名称不能为空'))
-                            } else {
-                                if(value.length>10){
-                                    callback(new Error('资源名称最长不能超过10个字'))
-                                }else{
-                                    if(reg.test(value)){
-                                        callback(new Error('资源名称不能包含特殊字符'))
-                                    }else{
-                                        callback()
-                                    }
-                                }
-                            }
-                        },
-                    }
+                    { required: true, trigger: "blur",message:'资源名称不能为空'}
+                    //   validator: (rule, value, callback) =>{
+                    //     var reg = /[`~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；‘’，。、 ]{1,10}$/
+                    //         // var reg = /^[^\~\`\!\@\#\$\%\^\&\*\(\)\-\_\+\=\{\}\[\]\|\\\;\:\'\"\,\.\<\>\/\?\ ]{1,5}$/;
+                    //         if (!value) {
+                    //             callback(new Error('资源名称不能为空'))
+                    //         } else {
+                    //             if(value.length>10){
+                    //                 callback(new Error('资源名称最长不能超过10个字'))
+                    //             }else{
+                    //                 if(reg.test(value)){
+                    //                     callback(new Error('资源名称不能包含特殊字符'))
+                    //                 }else{
+                    //                     callback()
+                    //                 }
+                    //             }
+                    //         }
+                    //     },
+                    // }
                 ],
                 code: [
                     { required: true, trigger: "change",  validator: (rule, value, callback) =>{

@@ -3,8 +3,8 @@
     <div class="sellBox"> 
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to='/home/sell'>商务管理</el-breadcrumb-item>
-          <el-breadcrumb-item to='/home/theme'>差价、保价、退换货申请</el-breadcrumb-item>
+          <el-breadcrumb-item >商务管理</el-breadcrumb-item>
+          <el-breadcrumb-item >差价、保价、退换货申请</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="sels clear">
@@ -14,39 +14,38 @@
         </div>
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <el-form-item label="类别">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="发货方编号">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="公司">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="CR金额">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="内部客户">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="外部客户">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="币种">
-            <el-select v-model="value" size="small" filterable placeholder="请选择">
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+            <el-select v-model="form.type" size="small" filterable placeholder="请选择">
+              <el-option v-for="item in types" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
-         
+          <el-form-item label="发货方编号">
+            <el-input size='small' v-model="form.shipperCode"  placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="公司">
+            <el-input size='small' v-model="form.company" placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="CR金额">
+            <el-input size='small' v-model="form.crAmount" placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="内部客户">
+            <el-input size='small' v-model="form.inCustomerName" placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="外部客户">
+            <el-input size='small' v-model="form.outCustomerName" placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="币种">
+            <el-select v-model="form.currency" size="small" filterable placeholder="请选择">
+              <el-option v-for="item in currences" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="申请时间" class="date">
-            <Daterange />
+            <Daterange @data='watchTime' :resetDataReg='resetData' />
           </el-form-item>
-          <el-form-item label="计划入账时间" class="date">
-            <Daterange />
-          </el-form-item>
-          <el-form-item :label="checkedCities.length==0 ?'' : ' '">
+          <el-form-item label=" ">
             <el-button size='small' type='primary' plain @click="search">搜索</el-button>
-            <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
+            <el-button @click='reset' size='small' type='primary' plain>重置</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -58,28 +57,32 @@
           <el-table :data="tableData" border style="width: 100%" height="100%" @row-click='rowClick'>
             <el-table-column type="index" width='100' label="编号" :index='q'>
             </el-table-column>
-            <el-table-column prop="type" show-overflow-tooltip label="类别">
+            <el-table-column prop="type" show-overflow-tooltip label="类别" width="150">
+              <template slot-scope='scope'>
+                <span v-if="scope.row.type==1">保价</span>
+                <span v-if="scope.row.type==2">差价补偿</span>
+                <span v-if="scope.row.type==3">退换货</span>
+              </template>
             </el-table-column>
-            <el-table-column prop="2" label="发货方编号" show-overflow-tooltip>
+            
+            <el-table-column prop="shipperCode" label="发货方编号" show-overflow-tooltip width="150">
             </el-table-column>
 
-            <el-table-column prop="3" label="公司" show-overflow-tooltip>
+            <el-table-column prop="company" label="公司" show-overflow-tooltip width="150">
             </el-table-column>
-            <el-table-column prop="4" label="申请时间" show-overflow-tooltip sortable="">
+            <el-table-column prop="applyTime" label="申请时间" show-overflow-tooltip sortable="" width="150">
             </el-table-column>
-            <el-table-column prop="5" label="币种" show-overflow-tooltip>
+            <el-table-column prop="currency" label="币种" show-overflow-tooltip width="150">
             </el-table-column>
-            <el-table-column prop="5" label="CR金额" show-overflow-tooltip>
+            <el-table-column prop="crAmount" label="CR金额" show-overflow-tooltip width="150">
             </el-table-column>
-            <el-table-column prop="5" label="计划入账时间" width="150" show-overflow-tooltip sortable="">
+            <el-table-column prop="inCustomerName" label="内部客户" show-overflow-tooltip width="150">
             </el-table-column>
-            <el-table-column prop="5" label="内部客户" show-overflow-tooltip >
+            <el-table-column prop="outCustomerName" label="外部客户" show-overflow-tooltip width="150">
             </el-table-column>
-            <el-table-column prop="5" label="外部客户" show-overflow-tooltip >
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" width='150' label="操作" fixed='right'>
-              <template scope-slot='scope'>
-                <el-button type='text'  @click='mx'>明细</el-button>
+            <el-table-column width='150' label="操作" fixed='right'>
+              <template slot-scope='scope'>
+                <el-button type='text'  @click='mx(scope.row)'>明细</el-button>
                 <el-button type='text'  @click='report'>上传</el-button>
                 <!-- <el-button type='text'  @click='del'>删除</el-button> -->
               </template>
@@ -90,7 +93,7 @@
           </el-table>
           <div class="block">
             <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-              :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+              :page-sizes="[10,20,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
             </el-pagination>
           </div>
         </div> 
@@ -100,7 +103,7 @@
     <el-dialog
         title="搜索"
         :visible.sync="dialogVisible2"
-        width="300px"
+        width="400px"
         top="10vh"
         >
         当前客户不存在，是否进行报备
@@ -112,11 +115,11 @@
     <el-dialog
         title="上传"
         :visible.sync="dialogVisible3"
-        width="300px"
+        width="400px"
         top="10vh"
         >
           <el-form ref="form" :model="form1" class="form1" label-width="auto" label-position='top' :inline='true' >
-          <el-form-item label="CR金额" v-if="rowData.type==1">
+          <el-form-item label="CR金额" v-if="rowData.type==3">
             <el-input size='small' v-model="form1.cr" placeholder="请输入" > </el-input>
           </el-form-item>
           <el-form-item label="附件">
@@ -144,6 +147,7 @@
 <script>
 import formTest from "../../assets/js/formTest";
 import Daterange from "../com/date";
+import {getList} from "@/api/business/idr.js";
 
 export default {
   components:{
@@ -152,100 +156,121 @@ export default {
   name: "theme",
   data() {
     return {
+      resetData:true,
       fileList:[],
       dialogVisible2:false,
       dialogVisible3:false,
-      form:{},
+      form:{
+        // 类别
+        type:'',
+        // 发货方编号
+        shipperCode	:'',
+        // 公司
+        company	:'',
+        // cr金额
+        crAmount	:'',
+        //申请时间 开始时间
+        applyStartTime	:'',
+        //申请结束时间
+        applyEndTime	:'',
+        //币种
+        currency	:'',
+        //内部客户名
+        inCustomerName	:'',
+        //w外部客户名
+        outCustomerName:''
+      },
       form1:{
         cr:''
       },
-      total:0,
-      options: [
+      types:[
         {
-          value: "1",
-          label: "Mass Market"
+          value: 1,
+          label: "保价"
         },
         {
-          value: "2",
-          label: "Account Market"
+          value: 2,
+          label: "差价补偿"
+        },
+        {
+          value: 3,
+          label: "退换货"
+        }
+      ],
+      currences: [
+        {
+          value: 'CNY',
+          label: "CNY"
+        },
+        {
+          value: "USD",
+          label: "USD"
         }
       ],
       value: "",
-      options1: [
-        {
-          value: "1",
-          label: "审批通过"
-        },
-        {
-          value: "2",
-          label: "审批驳回"
-        },
-        {
-          value: "3",
-          label: "审批中"
-        },
-        {
-          value: "4",
-          label: "草稿"
-        }
-      ],
-      value1: "",
-      checkAll: false,
-      checkedCities: [1, 2],
-      conditions: [
-        {
-          label: "客户名称",
-          value: 1
-        },
-        {
-          label: "英文名称",
-          value: 2
-        },
-        {
-          label: "客户号",
-          value: 3
-        },
-        {
-          label: "代理商",
-          value: 4
-        },
-        {
-          label: "客户类别",
-          value: 5
-        },
-        {
-          label: "报备日期",
-          value: 6
-        }
-      ],
-      isIndeterminate: false,
       dialogVisible: false,
-      tableData: [
-        {type:1},
-        {type:2},
-        {type:3},
-      ],
+      tableData: [],
       //第几页
       currentPage: 1,
       //每页的容量
       pageSize: 10,
+      total:0,
       rowData:{}
     };
   },
   computed: {
-    shopId() {
-      return this.$store.state.shopId.shopId;
-    }
+    
   },
-  created() {},
+  created() {
+    this.getList()
+  },
   watch: {},
   methods: {
+    watchTime(data){
+      console.log(data)
+      this.form.applyStartTime = data.startTime
+      this.form.applyEndTime = data.endTime
+      this.resetData = false
+    },
+    search(){
+      this.getList()
+    },
+    reset(){
+      this.form = {
+         // 类别
+        type:'',
+        // 发货方编号
+        shipperCode	:'',
+        // 公司
+        company	:'',
+        // cr金额
+        crAmount	:'',
+        //申请时间 开始时间
+        applyStartTime	:'',
+        //申请结束时间
+        applyEndTime	:'',
+        //币种
+        currency	:'',
+        //内部客户名
+        inCustomerName	:'',
+        //w外部客户名
+        outCustomerName:''
+      }
+      this.resetData = true
+      this.getList()
+    },
+    async getList(){
+      const res = await getList(this.form);
+      console.log('差价、保价、退换货列表',res)
+      if(res){
+        this.tableData = res.data.data.list
+        this.total = res.data.data.total
+      }
+    },
     rowClick(row){
       this.rowData=row
     },
-    search(){
-      this.dialogVisible2 = true ;
-    },
+    
     sure1(){
       this.dialogVisible2 = false;
       this.$router.push({
@@ -281,25 +306,7 @@ export default {
     change() {
       this.dialogVisible = !this.dialogVisible;
     },
-    handleCheckAllChange(val) {
-      console.log(val);
-      this.checkedCities = val ? [1, 2, 3, 4, 5, 6] : [];
-      this.isIndeterminate = false;
-    },
-    handleCheckedCitiesChange(value) {
-      console.log(value);
-      let checkedCount = value.length;
-      this.checkAll = checkedCount === this.conditions.length;
-      this.isIndeterminate =
-        checkedCount > 0 && checkedCount < this.conditions.length;
-    },
-    handleClose(done) {
-      this.$confirm("确认关闭？")
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
-    },
+   
     q(index) {
       return this.pageSize * (this.currentPage - 1) + index + 1;
     },
@@ -308,19 +315,25 @@ export default {
         name: "cbtadd"
       });
     },
-    mx() {
+    mx(row) {
       this.$router.push({
-        name: "cbtmx"
+        name: "cbtmx",
+        query:{
+          id:row.id,
+          type:row.type
+        }
       });
     },
     // 分页
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageSize = val;
+      this.getList()
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.currentPage = val;
+      this.getList()
     }
   }
 };

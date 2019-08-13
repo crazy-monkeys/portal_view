@@ -250,7 +250,7 @@ export default new Router({
                     component: resolve => require(['@/components/sales/shipment-upload'], resolve),
                 },
                 {
-                    path: 'cbt',
+                    path: 'business/idr/list',
                     name: 'cbt',
                     component: resolve => require(['@/components/customer/cbt'], resolve),
                 },

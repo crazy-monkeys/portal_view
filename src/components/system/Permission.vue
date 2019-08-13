@@ -148,13 +148,13 @@ export default {
       console.log(val)
       this.form.resource =  this.$refs['tree'].getCheckedKeys().filter(item=>{return item})
       console.log(this.form.resource)
-      this.addArr = this.form.resource.filter(item=>{
-           return this.defaultCheckedKeys.indexOf(item)==-1
-      })
-      this.reArr= this.defaultCheckedKeys.filter(item=>{
-           return this.form.resource.indexOf(item)==-1
-      })
-      console.log(this.addArr,this.reArr)
+      // this.addArr = this.form.resource.filter(item=>{
+      //      return this.defaultCheckedKeys.indexOf(item)==-1
+      // })
+      // this.reArr= this.defaultCheckedKeys.filter(item=>{
+      //      return this.form.resource.indexOf(item)==-1
+      // })
+      // console.log(this.addArr,this.reArr)
     },
      rowClick(row){
       this.rowData = row
@@ -247,8 +247,9 @@ export default {
     async setPermission(){
       var data ={
         roleCode:this.rowData.roleCode,
-        addPermissionIds:this.addArr,
-        rmPermissionIds:this.reArr,
+        // addPermissionIds:this.addArr,
+        // rmPermissionIds:this.reArr,
+        permissionIds:this.form.resource
       }
       const res = await modRolePermission(data);
       console.log('修改角色权限结果',res)
