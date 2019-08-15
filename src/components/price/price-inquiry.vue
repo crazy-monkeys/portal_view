@@ -67,8 +67,8 @@
           <el-button class="add" size='small' type='primary' @click='create' >新建</el-button>
         </div>
         <div class="tab">
-          <el-table :data="tableData" style="width: 100%" border="" height="100%">
-            <el-table-column type="index" width='100' label="编号" :index='q'>
+          <el-table :data="tableData" border style="width: 100%" height="100%">
+            <el-table-column type="index" width='100' label="序号" :index='q'>
             </el-table-column>
             <el-table-column prop="1"  width='100' show-overflow-tooltip label="申请时间">
             </el-table-column>
@@ -76,34 +76,40 @@
             </el-table-column>
             <el-table-column prop="3"  width='100' label="审批意见" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="4"  width='100' show-overflow-tooltip label="BU">
+            <el-table-column prop="t1" width='80' show-overflow-tooltip label="状态">
             </el-table-column>
-            <el-table-column prop="5"  width='100' label="PDT" show-overflow-tooltip>
+            <el-table-column prop="t1" width='80' show-overflow-tooltip label="BU">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="7"  width='100' label="产品状态">
+            <el-table-column prop="t2" width='80' label="PDT" show-overflow-tooltip>
             </el-table-column>
-             <el-table-column show-overflow-tooltip prop="8"  width='100' label="产品归属">
+            <el-table-column prop="t3" width='150' label="Product Type" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="9"  width='100' label="产品型号">
+            <el-table-column prop="t4" width='100' show-overflow-tooltip label="平台">
+            </el-table-column>
+            <el-table-column prop="t5" width='150' label="产品型号" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column show-overflow-tooltip width='150' prop="t7" label="目录价格">
+            </el-table-column>
+             <el-table-column show-overflow-tooltip width='150' prop="t8" label="内部客户">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="t9" width='150' label="生效时间">
             </el-table-column>
 
 
-            <el-table-column show-overflow-tooltip prop="6"  width='100' label="数量上限">
+            <el-table-column show-overflow-tooltip prop="t10" width='150' label="失效时间">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6"  width='100' label="数量下限">
+            <el-table-column show-overflow-tooltip prop="t11" width='150' label="更新时间">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6"  width='100' label="标准价">
+            <el-table-column show-overflow-tooltip prop="t12" width='150' label="备注">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6"  width='100' label="关联产品">
+            <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
+              <template scope-slot='scope'>
+                <el-button type='text' size='small' @click='create'>生成报价单</el-button>
+              </template>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6"  width='100' label="生效时间">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6"  width='100' label="失效时间">
-            </el-table-column>
-            
             <div slot="empty">
 
-              <p>未查询到客户信息</p>
+              <p>无数据</p>
             </div>
           </el-table>
           <div class="block">

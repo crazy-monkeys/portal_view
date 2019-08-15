@@ -1,10 +1,10 @@
 <template>
-  <div class="price-actual">
+  <div class="productPrice">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to='/home/price/actual'>价格管理</el-breadcrumb-item>
-          <el-breadcrumb-item>实际价格查询</el-breadcrumb-item>
+          <el-breadcrumb-item to='/home/price/list'>价格管理</el-breadcrumb-item>
+          <el-breadcrumb-item>产品价格策略</el-breadcrumb-item>
         </el-breadcrumb>
         <!-- <h1>客户查询</h1> -->
       </div>
@@ -27,32 +27,25 @@
           <el-form-item label="PDT">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
+          <el-form-item label="产品类型">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="平台">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="产品状态">
+            <el-select v-model="value" size="small" filterable placeholder="请选择">
+              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="产品归属">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
           <el-form-item label="产品型号">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="关联产品">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="关联公司">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="核算类型">
-            <el-select v-model="value" size="small" filterable placeholder="请选择">
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item label="客户">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="状态">
-            <el-select v-model="value" size="small" filterable placeholder="请选择">
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="申请人">
+          <el-form-item label="限制客户">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="生效时间" class="date">
@@ -69,51 +62,54 @@
 
       <!-- </transition-group> -->
       <div class="box">
+        <!-- <div class="btns clear">
+          <el-button class="add" @click='create' size='small' type='primary'>生成报价单</el-button>
+        </div> -->
         <div class="tab">
           <el-table :data="tableData" border style="width: 100%" height="100%">
-            <el-table-column type="index" width='80' label="编号" :index='q'>
+            <el-table-column type="index" width='100' label="序号" :index='q'>
             </el-table-column>
-            <el-table-column prop="1" width='100' show-overflow-tooltip label="序号">
+            <el-table-column prop="t1" width='80' show-overflow-tooltip label="状态">
             </el-table-column>
-            <el-table-column prop="1" width='100' show-overflow-tooltip label="状态">
+            <el-table-column prop="t1" width='80' show-overflow-tooltip label="BU">
             </el-table-column>
-            <el-table-column prop="1" width='100' show-overflow-tooltip label="内部客户号">
+            <el-table-column prop="t2" width='80' label="PDT" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="2" width='100' label="内部客户" show-overflow-tooltip>
+            <el-table-column prop="t3" width='150' label="Product Type" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="1" width='100' show-overflow-tooltip label="外部客户号">
+            <el-table-column prop="t4" width='100' show-overflow-tooltip label="平台">
             </el-table-column>
-            <el-table-column prop="2" width='100' label="外部客户" show-overflow-tooltip>
+            <el-table-column prop="t5" width='150' label="产品型号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="3" width='150' label="BU" show-overflow-tooltip>
+            <el-table-column show-overflow-tooltip width='150' prop="t7" label="数量下限">
             </el-table-column>
-            <el-table-column prop="4" width='150'  show-overflow-tooltip label="PDT">
+             <el-table-column show-overflow-tooltip width='150' prop="t8" label="数量上限">
             </el-table-column>
-            <el-table-column prop="5" width='150'  label="产品型号" show-overflow-tooltip>
+            <el-table-column show-overflow-tooltip prop="t9" width='150' label="目录价格">
             </el-table-column>
-             <el-table-column show-overflow-tooltip prop="8"  width='150' label="实际价格">
+
+
+            <el-table-column show-overflow-tooltip prop="t10" width='150' label="权限价格">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="9"  width='150' label="数量下限">
+            <el-table-column show-overflow-tooltip prop="t11" width='150' label="底线价格">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6"  width='150' label="数量上限">
+            <el-table-column show-overflow-tooltip prop="t12" width='150' label="标准成本">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" width='150'  label="结算类型">
+            <el-table-column show-overflow-tooltip prop="t12" width='150' label="减值成本">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" width='150'  label="生效时间">
+            <el-table-column show-overflow-tooltip prop="t12" width='150' label="内部客户">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" width='150'  label="失效时间">
+            <el-table-column show-overflow-tooltip prop="t12" width='150' label="失效时间">
             </el-table-column>
-            <el-table-column prop="1" width='150' show-overflow-tooltip label="关联外部客户号">
+            <el-table-column show-overflow-tooltip prop="t12" width='150' label="生效时间">
             </el-table-column>
-            <el-table-column prop="2" width='150' label="关联外部客户" show-overflow-tooltip>
+            <el-table-column show-overflow-tooltip prop="t12" width='150' label="更新时间">
             </el-table-column>
-            <el-table-column prop="1" width='150' show-overflow-tooltip label="关联产品型号">
+            <el-table-column show-overflow-tooltip prop="t12" width='150' label="产品状态">
             </el-table-column>
-            <el-table-column prop="2" width='150' label="执行方式" show-overflow-tooltip>
+            <el-table-column show-overflow-tooltip prop="t12" width='150' label="产品归属">
             </el-table-column>
-            <el-table-column prop="1" width='150' show-overflow-tooltip label="价格申请人">
-            </el-table-column>
-            <el-table-column prop="2" width='150' label="出货类型" show-overflow-tooltip>
+            <el-table-column show-overflow-tooltip prop="t12" width='150' label="备注">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" width="100" label="操作" fixed='right'>
               <template scope-slot='scope'>
@@ -131,7 +127,7 @@
             </el-pagination>
           </div>
         </div>
-       
+        
       </div>
     </div>
     <!-- <el-dialog
@@ -149,11 +145,10 @@
 </template>
 
 <script>
-  import formTest from '../../assets/js/formTest'
   import Daterange from "../com/date";
-
+  import formTest from '../../assets/js/formTest'
   export default {
-    name: 'priceActual',
+    name: 'productPrice',
     components:{
       Daterange
     },
@@ -162,10 +157,24 @@
         form: {},
         total: 0,
         d1: [],
-        options: [{
-          value: '1',
-          label: '---'
-        }],
+        options: [
+          {
+            value: '1',
+            label: '新产品'
+          },
+          {
+            value: '1',
+            label: '主流在售'
+          },
+          {
+            value: '1',
+            label: '衰退期'
+          },
+          {
+            value: '1',
+            label: '以退市'
+          },
+        ],
         value: '',
         checkAll: false,
         checkedCities: [
@@ -184,7 +193,27 @@
         isIndeterminate: false,
         dialogVisible: false,
         tableData: [
-
+            {
+              t1:'Connectivity Device',
+              t2:'WCN',
+              t3:'WIFI',
+              t4:'',
+              t5:'新产品',
+              t6:'BU',
+              t7:'BL0908',
+              t8:'',
+              t9:'',
+              t10:'0.0908',
+              t11:'0.7800',
+              t12:'0.5750',
+              t13:'0.4569',
+              t14:'',
+              t15:'',
+              t16:'2019/5/1',
+              t17:'2019/5/1',
+              t18:'2020/5/1',
+              t1:''
+            }
         ],
         //第几页
         currentPage: 1,
@@ -202,6 +231,7 @@
     watch: {
     },
     methods: {
+      
       change() {
         this.dialogVisible = !this.dialogVisible
       },
@@ -252,7 +282,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
   $sc:12;
-.price-actual{
+.productPrice{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;
@@ -338,4 +368,5 @@
     }
   }
 }
+
 </style>

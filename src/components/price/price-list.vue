@@ -4,7 +4,7 @@
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item to='/home/price/list'>价格管理</el-breadcrumb-item>
-          <el-breadcrumb-item>价格查询</el-breadcrumb-item>
+          <el-breadcrumb-item>目录价格查询</el-breadcrumb-item>
         </el-breadcrumb>
         <!-- <h1>客户查询</h1> -->
       </div>
@@ -67,7 +67,9 @@
         </div> -->
         <div class="tab">
           <el-table :data="tableData" border style="width: 100%" height="100%">
-            <el-table-column type="index" width='100' label="编号" :index='q'>
+            <el-table-column type="index" width='100' label="序号" :index='q'>
+            </el-table-column>
+            <el-table-column prop="t1" width='80' show-overflow-tooltip label="状态">
             </el-table-column>
             <el-table-column prop="t1" width='80' show-overflow-tooltip label="BU">
             </el-table-column>
@@ -77,33 +79,21 @@
             </el-table-column>
             <el-table-column prop="t4" width='100' show-overflow-tooltip label="平台">
             </el-table-column>
-            <el-table-column prop="t5" width='150' label="产品状态" show-overflow-tooltip>
+            <el-table-column prop="t5" width='150' label="产品型号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column show-overflow-tooltip width='150' prop="t7" label="产品归属">
+            <el-table-column show-overflow-tooltip width='150' prop="t7" label="目录价格">
             </el-table-column>
-             <el-table-column show-overflow-tooltip width='150' prop="t8" label="产品型号">
+             <el-table-column show-overflow-tooltip width='150' prop="t8" label="内部客户">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t9" width='150' label="数量上限">
+            <el-table-column show-overflow-tooltip prop="t9" width='150' label="生效时间">
             </el-table-column>
 
 
-            <el-table-column show-overflow-tooltip prop="t10" width='150' label="数量下限">
+            <el-table-column show-overflow-tooltip prop="t10" width='150' label="失效时间">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t11" width='150' label="标准价">
+            <el-table-column show-overflow-tooltip prop="t11" width='150' label="更新时间">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t12" width='150' label="权限价">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t13" width='150' label="底线价">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t14" width='150' label="成本价">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t15" width='150' label="增值后成本">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t16" width='150' label="生效时间">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t17" width='150' label="失效时间">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t18" width='150' label="更新时间">
+            <el-table-column show-overflow-tooltip prop="t12" width='150' label="备注">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
               <template scope-slot='scope'>

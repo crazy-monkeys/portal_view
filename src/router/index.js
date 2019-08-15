@@ -83,6 +83,12 @@ export default new Router({
                     component: resolve => require(['@/components/order/list'], resolve),
                     // meta: {keepAlive: true}
                 },
+                {
+                    path: 'order/approve',
+                    name: 'approve',
+                    component: resolve => require(['@/components/order/approve'], resolve),
+                    // meta: {keepAlive: true}
+                },
                 //公告管理
                 {
                     path: 'system/announcement',
@@ -109,6 +115,11 @@ export default new Router({
                     path: 'price/list',
                     name: 'PriceList',
                     component: resolve => require(['@/components/price/price-list'], resolve),
+                },
+                {
+                    path: 'price/productPrice',
+                    name: 'productPrice',
+                    component: resolve => require(['@/components/price/productPrice'], resolve),
                 },
                 {
                     path: 'price/actual',

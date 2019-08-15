@@ -159,6 +159,13 @@ export default {
               children: []
             },
             {
+              resourceId: "35",
+              resourceName: "产品价格策略",
+              resourceUrl: "/home/price/productPrice",
+              iconClass: "el-icon-s-123",
+              children: []
+            },
+            {
               resourceId: "33",
               resourceName: "询价",
               resourceUrl: "/home/price/inquiry",
@@ -172,6 +179,7 @@ export default {
               iconClass: "el-icon-s-123",
               children: []
             },
+            
           ]
         },
         {
@@ -208,7 +216,15 @@ export default {
               resourceUrl: "/home/order/list",
               iconClass: "el-icon-s-123",
               children: []
+            },
+            {
+              resourceId: "43",
+              resourceName: "订单审批",
+              resourceUrl: "/home/order/approve",
+              iconClass: "el-icon-s-123",
+              children: []
             }
+            
           ]
         },
         {
