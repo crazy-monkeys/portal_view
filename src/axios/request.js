@@ -88,6 +88,7 @@ export const request = (method, url, data = {}, header = {}) => {
     return axios(options)
         .then(result => {
             if (result.data && result.data.code === 1) {
+                console.log(result)
                 return result
             }
             Message.error(result.data.msg)

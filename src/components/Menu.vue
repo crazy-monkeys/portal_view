@@ -5,7 +5,7 @@
         <img class="smalllogo" src="../assets/img/logo.png" alt="" v-if="isCollapse">
       </div>
         <el-menu :key='2' text-color='#B161BF' class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
-          :collapse="isCollapse" :unique-opened="true" :router='true' :default-active='$route.path'>
+          :collapse="isCollapse" :unique-opened="true"  :router='true' :default-active='$route.path'>
 
           <template v-for="item1 in list">
             <template v-if="item1.children.length !=0">
@@ -376,6 +376,10 @@ $sc: 12;
     min-height: 400px;
   }
   .el-menu {
+    .el-menu-item.is-active{
+        outline: 0;
+        background-color: #f7eff9;
+    }
     height: 100%;
     overflow: hidden;
     border: none;

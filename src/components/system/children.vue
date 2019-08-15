@@ -48,7 +48,7 @@
       </div>
     </div>
 
-    <el-dialog :title="edit?'编辑':'新建'" :visible.sync="dialogVisible" width="400px" :close-on-click-modal='false' :close-on-press-escape='false' :show-close='false'>
+    <el-dialog :title="edit?'编辑':'新建'" :visible.sync="dialogVisible" width="400px" :close-on-click-modal='false' :before-close="cancel">
       <el-form :model="form" :rules="rules" ref="form" size="small">
         <el-form-item label="客户名称" prop="userName">
           <el-input v-model="form.userName"></el-input>

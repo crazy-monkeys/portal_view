@@ -16,7 +16,7 @@
         </div>
         <el-form ref="selForm" :model="selForm" class="selForm" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible1'>
           <el-form-item label="模块">
-            <el-select  size="small" v-model="selForm.model" filterable>
+            <el-select  size="small" clearable v-model="selForm.model" filterable>
               <el-option
                 v-for="item in models"
                 :key="item.value"
@@ -26,7 +26,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="功能">
-            <el-select  size="small" v-model="selForm.func" filterable>
+            <el-select  size="small" clearable v-model="selForm.func" filterable>
               <el-option
                 v-for="item in funcs"
                 :key="item.value"
@@ -36,7 +36,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="状态">
-            <el-select size='small' v-model="selForm.active" placeholder="请输入">
+            <el-select size='small' clearable v-model="selForm.active" placeholder="请输入">
               <el-option 
               v-for="item in types" 
               :key='item.value'
@@ -282,6 +282,7 @@
         const res = await addAndEdit(data)
         console.log('新增或者编辑结果',res)
         if(res){
+          this.$message.success('操作成功')
           this.dialogVisible = false;
           this.resetForm('form')
           this.clearForm()

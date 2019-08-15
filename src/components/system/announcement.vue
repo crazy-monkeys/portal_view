@@ -93,7 +93,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="附件" prop="fileList">
-            <el-upload class="upload-demo" accept=".pdf" name='files' :on-success='uploadSuccess' :action='serverUrl+"/announcement/file"' :headers="{'Authorization': data,}" :file-list="fileList">
+            <el-upload class="upload-demo" accept=".pdf" name='files' :before-upload='beforeUpload' :on-success='uploadSuccess' :action='serverUrl+"/announcement/file"' :headers="{'Authorization': data,}" :file-list="fileList">
               <el-button size="mini" type="" >上传文件</el-button>
             </el-upload>
           </el-form-item>
@@ -174,6 +174,15 @@
       }
     },
     methods: {
+      beforeUpload(val){
+        console.log(val)
+        if(val.type=='application/pdf'){
+          return true
+        }else{
+          this.$message.error('请上传pdf文件')
+          return false
+        }
+      },
       async getType(){
         var data ={
           model:1,

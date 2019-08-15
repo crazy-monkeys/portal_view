@@ -20,6 +20,11 @@
             </el-table-column>
             <el-table-column prop="roleName" label="角色名称" width="200">
             </el-table-column>
+            <el-table-column prop="" label="角色类型" width="200">
+              <template slot-scope="scope">
+                {{scope.row.roleType==1?'账号角色' :'子账号角色'}}
+              </template>
+            </el-table-column>
             <el-table-column prop="createTime" label="创建时间" width="200">
             </el-table-column>
             <el-table-column label="操作" width="150" fixed="right">
@@ -145,8 +150,9 @@ export default {
   methods: {
     
     checkChange(val){
-      console.log(val)
-      this.form.resource =  this.$refs['tree'].getCheckedKeys().filter(item=>{return item})
+      console.log(this.$refs['tree'].getCheckedKeys())
+      console.log(this.$refs['tree'].getHalfCheckedKeys())
+      this.form.resource =  this.$refs['tree'].getCheckedKeys()
       console.log(this.form.resource)
       // this.addArr = this.form.resource.filter(item=>{
       //      return this.defaultCheckedKeys.indexOf(item)==-1
@@ -164,6 +170,7 @@ export default {
       // this.getResource()
       this.findRoleResource(id)
       this.dialogVisible1 = true
+      
     },
     mod(id){
       this.findRole(id)
@@ -210,14 +217,16 @@ export default {
       this.dialogVisible = true;
     },
     close(){
+      if(this.$refs['tree']){
+        this.$refs['tree'].setCheckedKeys([])
+        for(var i=0;i<this.$refs.tree.store._getAllNodes().length;i++){
+          this.$refs.tree.store._getAllNodes()[i].expanded=this.isexpand;
+        }
+      }
       this.dialogVisible1 = false;
       this.dialogVisible = false;
       this.resetForm('roleForm')
       this.resetForm('form')
-      if(this.$refs['tree']){
-      this.$refs['tree'].setCheckedKeys([])
-
-      }
     },
      // 分页
     handleSizeChange(val) {
@@ -237,7 +246,7 @@ export default {
     submitForm(formName,type) {
       if(type==1){
       this.$formTest.submitForm(this.$refs[formName],this.edit ? this.updateRole: this.saveRole)
-
+      
       }else{
       this.$formTest.submitForm(this.$refs[formName],this.setPermission)
 
@@ -249,7 +258,8 @@ export default {
         roleCode:this.rowData.roleCode,
         // addPermissionIds:this.addArr,
         // rmPermissionIds:this.reArr,
-        permissionIds:this.form.resource
+        permissionIds:this.$refs['tree'].getCheckedKeys().concat(this.$refs['tree'].getHalfCheckedKeys()).filter(item=>{if(item){return item}})
+        
       }
       const res = await modRolePermission(data);
       console.log('修改角色权限结果',res)
@@ -258,6 +268,7 @@ export default {
         this.$refs['tree'].setCheckedKeys([])
         this.resetForm('form')
         this.getRoles()
+        this.close()
         this.dialogVisible1 = false;
       }
     },
