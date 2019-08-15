@@ -79,7 +79,7 @@
               <div>
                 <img src="../../assets/img/none.png" alt="" width="140" height="140" />
               </div>
-              <p>未查询到客户信息</p>
+              <p>无数据</p>
             </div>
           </el-table>
         </div>

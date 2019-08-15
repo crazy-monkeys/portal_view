@@ -53,75 +53,61 @@
 
       <!-- </transition-group> -->
       <div class="box">
+        <div class="btns">
+          <el-button type='primary' size='small' @click='th'>提货</el-button>
+          <el-button type='primary' size='small' @click='cancel'>取消</el-button>
+          <el-button type='primary' size='small' @click='changeTime'>变更交期</el-button>
+        </div>
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" height="700">
-            <el-table-column type="expand">
-              <template slot-scope="props">
-                <el-table size='small' :data="props.row.children" border style="width: 100%" height="100%">
-                  <el-table-column label="客户属性" prop='0' show-overflow-tooltip> 
+            <el-table-column
+      type="selection"
+      width="50">
+    </el-table-column>
+              <el-table-column width="150" label="订单号" prop='0' show-overflow-tooltip> 
                   </el-table-column>
-                  <el-table-column label="订单类型" prop='1' show-overflow-tooltip>
+                  <el-table-column width="150" label="SO号" prop='1' show-overflow-tooltip>
                   </el-table-column>
-                  <el-table-column label="规格型号" prop='2' show-overflow-tooltip>
+                  <el-table-column width="150" label="状态" prop='2' show-overflow-tooltip>
                   </el-table-column>
-                  <el-table-column label="单位" prop='3' show-overflow-tooltip>
+                  <el-table-column width="150" label="下单类型" prop='3' show-overflow-tooltip>
                   </el-table-column>
-                  <el-table-column label="单价" prop='4' show-overflow-tooltip>
+                  <el-table-column width="150" label="下单日期" prop='4' show-overflow-tooltip>
                   </el-table-column>
-                  <el-table-column label="数量" prop='5' show-overflow-tooltip>
+                  <el-table-column width="150" label="客户属性" prop='5' show-overflow-tooltip>
                   </el-table-column>
-                  <el-table-column label="交货日期" prop='6' show-overflow-tooltip>
+                  <el-table-column width="150" label="订单类型" prop='6' show-overflow-tooltip>
                   </el-table-column>
-                  <el-table-column label="提货数量" prop='7' show-overflow-tooltip>
+                  <el-table-column width="150" label="规格型号" prop='7' show-overflow-tooltip>
                   </el-table-column>
-                  <el-table-column width="200" prop=""  label="操作" >
+                  <el-table-column width="150" label="单位" prop='7' show-overflow-tooltip>
+                  </el-table-column>
+                  <el-table-column width="150" label="单价" prop='7' show-overflow-tooltip>
+                  </el-table-column>
+                  <el-table-column width="150" label="数量" prop='7' show-overflow-tooltip>
+                  </el-table-column>
+                  <el-table-column width="150" label="总金额" prop='7' show-overflow-tooltip>
+                  </el-table-column>
+                  <el-table-column width="150" label="已交付数量" prop='7' show-overflow-tooltip>
+                  </el-table-column>
+                  <el-table-column width="150" label="未交付数量" prop='7' show-overflow-tooltip>
+                  </el-table-column>
+                  <el-table-column width="150" label="本次提货数量" prop='7' show-overflow-tooltip>
+                  </el-table-column>
+                  <el-table-column width="150" label="本次提货日期" prop='7' show-overflow-tooltip>
+                    
+                  </el-table-column>
+                  <el-table-column width="150" label="备注" prop='7' show-overflow-tooltip>
+                  </el-table-column>
+                  <el-table-column width="80" prop="" fixed="right"  label="操作" >
                 <template slot-scope='scope'>
-                  <el-button type='text' size='mini' @click='th'>提货</el-button>
-                  <el-button type='text' size='mini' @click='cancel'>取消</el-button>
-                  <el-button type='text' size='mini' @click='changeTime'>变更交期</el-button>
-                </template>
-              </el-table-column>
-                </el-table>
-              </template>
-            </el-table-column>
-            <el-table-column type="index" width='100' show-overflow-tooltip label="编号"  :index="q">
-            </el-table-column>
-            <el-table-column prop="1" width='100' label="订单号">
-            </el-table-column>
-            <el-table-column prop="2" show-overflow-tooltip label="状态">
-            </el-table-column>
-            <el-table-column prop="3" label="下单人" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="4" label="总金额" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="5" show-overflow-tooltip label="开户银行">
-            </el-table-column>
-            <el-table-column prop="6" label="付款方式" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="7" label="发票种类">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="7" label="委托代表人">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="8" label="业务联系人">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="9" label="电话">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="10" label="传真">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="11" label="swiftcode">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="12" label="下单日期">
-            </el-table-column>
-            <!-- <el-table-column show-overflow-tooltip prop="13" label="交货日期">
-            </el-table-column> -->
-              <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
-                <template slot-scope='scope'>
-                  <el-button type='text' size='mini' @click='detail'>明细</el-button>
+                  <el-button type='text' size='small' @click='detail'>明细</el-button>
+                
                 </template>
               </el-table-column>
             <div slot="empty">
 
-              <p>未查询到客户信息</p>
+              <p>无数据</p>
             </div>
           </el-table>
           <div class="block">
@@ -183,15 +169,12 @@
             <el-input size='small'  resize="none"  ></el-input>
             
           </el-form-item>
+          
           <el-form-item label="授信额度剩余值" >
             <el-input size='small'  resize="none"  ></el-input>
             
           </el-form-item>
           <el-form-item label="授信额度可用值" >
-            <el-input size='small'  resize="none"  ></el-input>
-            
-          </el-form-item>
-          <el-form-item label="提货数量" >
             <el-input size='small'  resize="none"  ></el-input>
             
           </el-form-item>
@@ -202,7 +185,6 @@
           </span>
     </el-dialog>
 
-     </el-dialog>
         <el-dialog
         title="变更交期"
         :visible.sync="dialogVisible6"

@@ -10,76 +10,80 @@
     <div class="content">
       <div class="selBox">
         <el-form ref="form" :model="form" class="form" label-position='top' :inline='true'>
-          <el-form-item label="甲方单位（章）">
-            <el-select v-model="value1" size="small" filterable placeholder="公司A">
+          <el-form-item label="下单类型">
+            <el-select v-model="value1" size="small"  placeholder="公司A">
             </el-select>
           </el-form-item>
-          <el-form-item label="授权委托代表人">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v2'></el-input>
-          </el-form-item>
-          <el-form-item label="业务联系人">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v3'></el-input>
-          </el-form-item>
-          <el-form-item label="电话">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v4'></el-input>
-          </el-form-item>
-          <el-form-item label="传真">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v5'></el-input>
-          </el-form-item>
-          <el-form-item label="SwiftCode">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v6'></el-input>
-          </el-form-item>
-          <el-form-item label="开户银行">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v7'></el-input>
-          </el-form-item>
-          <el-form-item label="账号">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v8'></el-input>
-          </el-form-item>
-          <el-form-item label="开票地址">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v9'></el-input>
-          </el-form-item>
-          <el-form-item label="付款方式">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v10'></el-input>
-          </el-form-item>
-          <el-form-item label="交货地址">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v11'></el-input>
-          </el-form-item>
-          <el-form-item label="发票种类">
+          <el-form-item label="销售组织">
             <el-select v-model="value1" size="small" filterable placeholder="出口发票">
             </el-select>
           </el-form-item>
-          <el-form-item label="发票传递">
+          <el-form-item label="分销渠道">
+            <el-input size='small'  placeholder="" disabled v-model='v3'></el-input>
+          </el-form-item>
+          <el-form-item label="产品组">
+            <el-input size='small' placeholder="" disabled v-model='v4'></el-input>
+          </el-form-item>
+          <el-form-item label="销售部门">
+            <el-input size='small' placeholder="" disabled v-model='v5'></el-input>
+          </el-form-item>
+          <el-form-item label="销售组">
+            <el-input size='small' placeholder=""  v-model='v6'></el-input>
+          </el-form-item>
+          <el-form-item label="售达方">
+           <el-select v-model="value1" size="small" filterable placeholder="出口发票">
+            </el-select>
+          </el-form-item>
+          <el-form-item label="送达方">
+            <el-select v-model="value1" size="small" filterable placeholder="出口发票">
+            </el-select>
+          </el-form-item>
+          <el-form-item label="采购订单编号">
+            <el-input size='small' placeholder=""  v-model='v9'></el-input>
+          </el-form-item>
+          <el-form-item label="采购订单日期">
+            <el-input size='small' placeholder=""  v-model='v10'></el-input>
+          </el-form-item>
+          <el-form-item label="客户属性">
+            <el-select v-model="value1" size="small" filterable placeholder="出口发票">
+            </el-select>
+          </el-form-item>
+          <el-form-item label="订单类型">
+            <el-select v-model="value1" size="small" filterable placeholder="出口发票">
+            </el-select>
+          </el-form-item>
+          <el-form-item label="交货日期">
+            <el-select v-model="value1" size="small" filterable placeholder="出口发票">
+            </el-select>
+          </el-form-item>
+          <!-- <el-form-item label="发票传递">
             <el-radio-group v-model='radio'>
               <el-radio label="1">随货</el-radio>
               <el-radio label='2'>办公地址或  <el-input size='small' placeholder="" v-model='v11'></el-input></el-radio>
             </el-radio-group>
-          </el-form-item>
+          </el-form-item> -->
         </el-form>
       </div>
       <div class="tab">
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="订单信息" name="first">
             <div class="tabBox">
-              <el-table :data="tableData" style="width: 100%" height="300">
+              <el-table :data="tableData" show-summary style="width: 100%" height="300">
                 <el-table-column prop="" label="ID" v-if="false">
                 </el-table-column>
-                <el-table-column prop="t1" label="客户属性" show-overflow-tooltip>
+                <el-table-column prop="t1" label="物料号" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t2" label="订单类型" show-overflow-tooltip>
-                    <el-select v-model="value" size="small" filterable placeholder="请选择">
+                <el-table-column prop="t2" label="单价" show-overflow-tooltip>
+                    <!-- <el-select v-model="value" size="small" filterable placeholder="请选择">
                       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                       </el-option>
-                    </el-select>
+                    </el-select> -->
                 </el-table-column>
-                <el-table-column prop="t3" label="规格型号" show-overflow-tooltip>
+                <el-table-column prop="t3" label="单位" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t4" label="单位" show-overflow-tooltip>
+                <el-table-column prop="t4" label="数量" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="t5" label="单位（USD）" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t6" label="数量" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="t7" label="交货日期" show-overflow-tooltip>
+                <el-table-column prop="t5" label="价格" show-overflow-tooltip>
                 </el-table-column>
                 <div slot="empty">
                   无数据

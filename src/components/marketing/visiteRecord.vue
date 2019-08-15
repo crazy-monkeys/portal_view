@@ -87,7 +87,7 @@
             <el-table-column prop="12" width='180'  label="参与人员:客户" show-overflow-tooltip></el-table-column>
             <el-table-column prop="13" width="180" label="参与人员:代理" show-overflow-tooltip></el-table-column>
             <div slot="empty">
-              <p>未查询到客户信息</p>
+              <p>无数据</p>
             </div>
           </el-table>
           <div class="block">

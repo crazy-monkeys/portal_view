@@ -69,7 +69,7 @@
             <el-table-column prop="" label="截止日期" width="100" show-overflow-tooltip></el-table-column>
             <el-table-column prop="" label="未完成专货库存" width="180" show-overflow-tooltip></el-table-column>
                 <div slot="empty">
-                  <p>未查询到客户信息</p>
+                  <p>无数据</p>
                 </div>
               </el-table>
               <div class="block">
@@ -143,7 +143,7 @@
                 <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
                 <div slot="empty">
-                  <p>未查询到客户信息</p>
+                  <p>无数据</p>
                 </div>
               </el-table>
               <div class="block">
@@ -208,7 +208,7 @@
                 <el-table-column prop="16" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="17" width='100'  label="备注" show-overflow-tooltip></el-table-column>
                 <div slot="empty">
-                  <p>未查询到客户信息</p>
+                  <p>无数据</p>
                 </div>
               </el-table>
               <div class="block">
