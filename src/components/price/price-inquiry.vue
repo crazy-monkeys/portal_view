@@ -4,7 +4,7 @@
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item to='/home/price/inquiry'>价格管理</el-breadcrumb-item>
-          <el-breadcrumb-item>询价单</el-breadcrumb-item>
+          <el-breadcrumb-item>询价</el-breadcrumb-item>
         </el-breadcrumb>
         <!-- <h1>客户查询</h1> -->
       </div>
@@ -21,22 +21,10 @@
         </div>
         <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
-          <el-form-item label="BU">
+          <el-form-item label="留下产品型号">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="PDT">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="Product Type">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="平台">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="产品型号">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="产品归属">
+          <el-form-item label="客户名称">
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="审批状态">
@@ -45,13 +33,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="申请时间" class="date">
-            <Daterange />
-          </el-form-item>
-          <el-form-item label="生效时间" class="date">
-            <Daterange />
-          </el-form-item>
-          <el-form-item :label="checkedCities.length==0 ?'' : ' '">
+          <el-form-item label=" ">
             <el-button size='small' type='primary' plain>查询</el-button>
             <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
             
@@ -156,9 +138,17 @@
       d1: [],
       options: [
         {
-          value: "1",
-          label: "---"
-        }
+          value: "pending",
+          label: "待审批"
+        },
+        {
+          value: "pass",
+          label: "通过"
+        },
+        {
+          value: "reject",
+          label: "驳回"
+        },
       ],
       value: "",
       checkAll: false,

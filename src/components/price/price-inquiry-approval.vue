@@ -3,23 +3,16 @@
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to='/home/price/inquiry-approval'>价格管理</el-breadcrumb-item>
-          <el-breadcrumb-item>询价单审批</el-breadcrumb-item>
+          <el-breadcrumb-item >价格管理</el-breadcrumb-item>
+          <el-breadcrumb-item>询价审批</el-breadcrumb-item>
         </el-breadcrumb>
-        <!-- <h1>客户查询</h1> -->
       </div>
 
       <div class="sels clear">
-        <!-- <el-button @click='change'  size='small' type='primary' plain>{{!dialogVisible ? '展开筛选条件' :'收起筛选条件'}}
-          </el-button> -->
         <div class="lineBox">
           <i class="el-icon-arrow-down" v-if='!dialogVisible' @click='change'> 展开</i>
-
           <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
-
-          <!-- <div class="line"></div> -->
         </div>
-        <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <el-form-item label="申请人">
             <el-input size='small' placeholder="请输入"></el-input>
@@ -30,19 +23,12 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="生效时间" class="date">
-            <Daterange />
-          </el-form-item>
-          <el-form-item :label="checkedCities.length==0 ?'' : ' '">
+          <el-form-item label=" ">
             <el-button size='small' type='primary' plain>查询</el-button>
             <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
           </el-form-item>
         </el-form>
-        <!-- </transition-group> -->
-
       </div>
-
-      <!-- </transition-group> -->
       <div class="box">
         <div class="btns">
               <el-button class="add" size='small' type='primary' @click='add1(1)' >通过</el-button>
@@ -136,12 +122,19 @@ export default {
       label:'',
       form: {},
       total: 0,
-      d1: [],
       options: [
         {
-          value: "1",
-          label: "---"
-        }
+          value: "pending",
+          label: "待审批"
+        },
+        {
+          value: "pass",
+          label: "通过"
+        },
+        {
+          value: "reject",
+          label: "驳回"
+        },
       ],
       value: "",
       checkAll: false,
