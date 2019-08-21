@@ -83,7 +83,7 @@
             <el-table-column width='150' label="操作" fixed='right'>
               <template slot-scope='scope'>
                 <el-button type='text'  @click='mx(scope.row)'>明细</el-button>
-                <el-button type='text'  @click='report'>上传</el-button>
+                <el-button type='text'  @click='report(scope.row)'>上传</el-button>
                 <!-- <el-button type='text'  @click='del'>删除</el-button> -->
               </template>
             </el-table-column>
@@ -117,28 +117,23 @@
         :visible.sync="dialogVisible3"
         width="400px"
         top="10vh"
+        :before-close="cancel"
         >
-          <el-form ref="form" :model="form1" class="form1" label-width="auto" label-position='top' :inline='true' >
+          <el-form ref="form1" :model="form1" class="form1" label-width="auto" label-position='top' :inline='true' >
           <el-form-item label="CR金额" v-if="rowData.type==3">
             <el-input size='small' v-model="form1.cr" placeholder="请输入" > </el-input>
           </el-form-item>
           <el-form-item label="附件">
-            <el-upload
-              class="upload-demo"
-              action=""
-              multiple
-              :limit="3"
-              :file-list="fileList"
-              >
-              <el-button size="small" type="primary">点击上传</el-button>
-              <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
+            <el-upload class="upload-demo" :before-upload="beforeUpload" ref='upload' name='file' :auto-upload="false" :data="data"  :on-success='uploadSuccess' :action='serverUrl+"/business/idr/upload"' :file-list="fileList">
+              <el-button size="mini" type="" >上传文件</el-button>
+              
             </el-upload>
           </el-form-item>
           </el-form>
 
           <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible3= false" size="small" type="primary" plain>取 消</el-button>
-            <el-button type="primary" @click="sure3"  size="small">确 定</el-button>
+            <el-button @click="cancel" size="small" type="primary" plain>取 消</el-button>
+            <el-button type="primary" @click="submitForm('form1')"  size="small">确 定</el-button>
           </span>
     </el-dialog>
   </div>
@@ -148,6 +143,7 @@
 import formTest from "../../assets/js/formTest";
 import Daterange from "../com/date";
 import {getList} from "@/api/business/idr.js";
+  import {serverUrl} from "@/axios/request.js";
 
 export default {
   components:{
@@ -156,6 +152,9 @@ export default {
   name: "theme",
   data() {
     return {
+      auth:sessionStorage.getItem('data'),
+      serverUrl: serverUrl,
+      data:{},
       resetData:true,
       fileList:[],
       dialogVisible2:false,
@@ -219,13 +218,64 @@ export default {
     };
   },
   computed: {
-    
+    userType() {
+      if(this.$store.state.loginUser.loginInfo.userType=='agent'){
+        return '代理商'
+      }else if(
+        this.$store.state.loginUser.loginInfo.userType=='subAgent'
+      ){
+        return '子代理商'
+      }else{
+        return '内部客户'
+      }
+    }
   },
   created() {
     this.getList()
   },
   watch: {},
   methods: {
+    cancel(){
+      this.resetForm('form1') 
+      this.form1.cr= ''
+      this.fileList = []
+      this.dialogVisible3= false
+    },
+    resetForm(formName){
+      this.$formTest.resetForm(this.$refs[formName])
+    },
+    submitForm(formName){
+      this.$formTest.submitForm(this.$refs[formName],this.sure3)
+    },
+    beforeUpload(file){
+      let data = new FormData()
+      data.append('file',file)
+      data.append('id',this.rowData.id)
+      data.append('idrType',this.rowData.type)
+      data.append('crAmount',this.form1.cr)
+      data.append('fileType',this.userType=='内部客户' ? 3:2)
+      this.$http({
+        method: 'post',
+        url: this.serverUrl+"/business/idr/upload",
+        headers:{'Authorization': this.auth},
+        timeout: 20000,
+        data: data
+      }).then(res=>{
+        console.log(res)
+        if(res.data.code==1){
+          this.$message.success('上传成功')
+          this.fileList =[res.data.data]
+          this.cancel('form1')
+        }else{
+          this.$message.error(res.data.msg)
+        }
+      }).catch(err=>{
+        console.log(err)
+      })
+      return false
+    },
+    uploadSuccess(res, file, fileList){
+    },
     watchTime(data){
       console.log(data)
       this.form.applyStartTime = data.startTime
@@ -268,6 +318,7 @@ export default {
       }
     },
     rowClick(row){
+      console.log(row)
       this.rowData=row
     },
     
@@ -278,7 +329,7 @@ export default {
       })
     },
     sure3(){
-      this.dialogVisible3 = false;
+      this.$refs.upload.submit(this.data);
     },
     del(){
       this.$confirm('是否删除该条报备信息', '删除', {
@@ -302,7 +353,6 @@ export default {
     report(){
       this.dialogVisible3 = true
     },
-
     change() {
       this.dialogVisible = !this.dialogVisible;
     },
