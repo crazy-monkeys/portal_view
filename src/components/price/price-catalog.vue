@@ -1,10 +1,10 @@
 <template>
-  <div class="price-list">
+  <div class="price-catalog">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to='/home/price/list'>价格管理</el-breadcrumb-item>
-          <el-breadcrumb-item>价格查询</el-breadcrumb-item>
+          <el-breadcrumb-item >价格管理</el-breadcrumb-item>
+          <el-breadcrumb-item>目录价格查询</el-breadcrumb-item>
         </el-breadcrumb>
         <!-- <h1>客户查询</h1> -->
       </div>
@@ -142,7 +142,7 @@
   import Daterange from "../com/date";
   import formTest from '../../assets/js/formTest'
   export default {
-    name: 'PriceQuery',
+    name: 'priceCatalog',
     components:{
       Daterange
     },
@@ -276,7 +276,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
   $sc:12;
-.price-list{
+.price-catalog{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;

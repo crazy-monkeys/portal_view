@@ -120,9 +120,9 @@ export default new Router({
 
                 //价格管理
                 {
-                    path: 'price/list',
-                    name: 'PriceList',
-                    component: resolve => require(['@/components/price/price-list'], resolve),
+                    path: 'price/catalog',
+                    name: 'priceCatalog',
+                    component: resolve => require(['@/components/price/price-catalog'], resolve),
                 },
                 {
                     path: 'price/actual',

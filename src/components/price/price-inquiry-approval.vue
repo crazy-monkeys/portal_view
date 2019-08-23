@@ -3,23 +3,16 @@
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to='/home/price/inquiry-approval'>价格管理</el-breadcrumb-item>
-          <el-breadcrumb-item>询价单审批</el-breadcrumb-item>
+          <el-breadcrumb-item >价格管理</el-breadcrumb-item>
+          <el-breadcrumb-item>询价审批</el-breadcrumb-item>
         </el-breadcrumb>
-        <!-- <h1>客户查询</h1> -->
       </div>
 
       <div class="sels clear">
-        <!-- <el-button @click='change'  size='small' type='primary' plain>{{!dialogVisible ? '展开筛选条件' :'收起筛选条件'}}
-          </el-button> -->
         <div class="lineBox">
           <i class="el-icon-arrow-down" v-if='!dialogVisible' @click='change'> 展开</i>
-
           <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
-
-          <!-- <div class="line"></div> -->
         </div>
-        <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <el-form-item label="申请人">
             <el-input size='small' placeholder="请输入"></el-input>
@@ -30,19 +23,12 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="生效时间" class="date">
-            <Daterange />
-          </el-form-item>
-          <el-form-item :label="checkedCities.length==0 ?'' : ' '">
+          <el-form-item label=" ">
             <el-button size='small' type='primary' plain>查询</el-button>
             <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
           </el-form-item>
         </el-form>
-        <!-- </transition-group> -->
-
       </div>
-
-      <!-- </transition-group> -->
       <div class="box">
         <div class="btns">
               <el-button class="add" size='small' type='primary' @click='add1(1)' >通过</el-button>
@@ -51,44 +37,46 @@
         </div>
         <div class="tab">
           <el-table :data="tableData" border style="width: 100%" height="100%">
-            <el-table-column type="selection" width='40' label="" >
+            <el-table-column type="index" width='100' label="序号" :index='q'>
             </el-table-column>
-            <el-table-column type="index" width='100' label="编号" :index='q'>
+            <el-table-column prop="1"  width='100' show-overflow-tooltip label="申请人">
             </el-table-column>
-            <el-table-column prop="1" width='100' show-overflow-tooltip label="申请人">
+            <el-table-column prop="2"  width='100' label="审批说明" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="2" width='150' label="申请说明" show-overflow-tooltip>
+            <el-table-column prop="t1" width='80' show-overflow-tooltip label="状态">
             </el-table-column>
-            <el-table-column prop="3" width='150' label="产品型号" show-overflow-tooltip>
+            <el-table-column prop="t1" width='80' show-overflow-tooltip label="BU">
             </el-table-column>
-            <el-table-column prop="4"  width='100' show-overflow-tooltip label="BU">
+            <el-table-column prop="t2" width='80' label="PDT" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="5" width='100'  label="PDT" show-overflow-tooltip>
+            <el-table-column prop="t3" width='150' label="Product Type" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="7" width='150'  label="Product Type">
+            <el-table-column prop="t4" width='100' show-overflow-tooltip label="平台">
             </el-table-column>
-             <el-table-column show-overflow-tooltip prop="8" width='150'  label="平台">
+            <el-table-column prop="t5" width='150' label="产品型号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="9" width='150'  label="产品状态">
+            <el-table-column show-overflow-tooltip width='150' prop="t7" label="目录价格">
+            </el-table-column>
+             <el-table-column show-overflow-tooltip width='150' prop="t8" label="内部客户">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="t9" width='150' label="生效时间">
             </el-table-column>
 
 
-            <el-table-column show-overflow-tooltip prop="6" width='150'  label="产品归属">
+            <el-table-column show-overflow-tooltip prop="t10" width='150' label="失效时间">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" width='150'  label="产品型号">
+            <el-table-column show-overflow-tooltip prop="t11" width='150' label="更新时间">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" width='150' label="数量上限">
+            <el-table-column show-overflow-tooltip prop="t12" width='150' label="备注">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" width='150' label="数量下限">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" width='150' label="标准价">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" width='150' label="生效时间">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="6" width='150' label="失效时间">
+            <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
+              <template scope-slot='scope'>
+                <el-button type='text' size='small' @click='create'>生成报价单</el-button>
+              </template>
             </el-table-column>
             <div slot="empty">
-              <p>未查询到客户信息</p>
+
+              <p>无数据</p>
             </div>
           </el-table>
           <div class="block">
@@ -134,12 +122,19 @@ export default {
       label:'',
       form: {},
       total: 0,
-      d1: [],
       options: [
         {
-          value: "1",
-          label: "---"
-        }
+          value: "pending",
+          label: "待审批"
+        },
+        {
+          value: "pass",
+          label: "通过"
+        },
+        {
+          value: "reject",
+          label: "驳回"
+        },
       ],
       value: "",
       checkAll: false,
