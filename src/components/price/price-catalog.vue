@@ -22,38 +22,26 @@
         <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <el-form-item label="BU">
-            <el-input size='small' placeholder="请输入"></el-input>
+            <el-input size='small' v-model='form.bu' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="PDT">
-            <el-input size='small' placeholder="请输入"></el-input>
+            <el-input size='small' v-model='form.pdt' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="产品类型">
-            <el-input size='small' placeholder="请输入"></el-input>
+            <el-input size='small' v-model='form.productType' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="平台">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="产品状态">
-            <el-select v-model="value" size="small" filterable placeholder="请选择">
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="产品归属">
-            <el-input size='small' placeholder="请输入"></el-input>
+            <el-input size='small' v-model='form.platform' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="产品型号">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="限制客户">
-            <el-input size='small' placeholder="请输入"></el-input>
+            <el-input size='small' v-model='form.productModel' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="生效时间" class="date">
-            <Daterange />
+            <Daterange @data='watchTime' :resetDataReg='resetData' />
           </el-form-item>
-          <el-form-item :label="checkedCities.length==0 ?'' : ' '">
-            <el-button size='small' type='primary' plain>搜索</el-button>
-            <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
+          <el-form-item label=" ">
+            <el-button size='small' type='primary' @click='search' plain>搜索</el-button>
+            <el-button @click='reset' size='small' type='primary' plain>重置</el-button>
           </el-form-item>
         </el-form>
         <!-- </transition-group> -->
@@ -62,85 +50,60 @@
 
       <!-- </transition-group> -->
       <div class="box">
-        <!-- <div class="btns clear">
-          <el-button class="add" @click='create' size='small' type='primary'>生成报价单</el-button>
-        </div> -->
         <div class="tab">
           <el-table :data="tableData" border style="width: 100%" height="100%">
-            <el-table-column type="index" width='100' label="编号" :index='q'>
+            <el-table-column type="index" width='100' label="序号" :index='q'>
             </el-table-column>
-            <el-table-column prop="t1" width='80' show-overflow-tooltip label="BU">
+            <el-table-column prop="status" width='80' show-overflow-tooltip label="状态">
             </el-table-column>
-            <el-table-column prop="t2" width='80' label="PDT" show-overflow-tooltip>
+            <el-table-column prop="bu" width='80' show-overflow-tooltip label="BU">
             </el-table-column>
-            <el-table-column prop="t3" width='150' label="Product Type" show-overflow-tooltip>
+            <el-table-column prop="pdt" width='80' label="PDT" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="t4" width='100' show-overflow-tooltip label="平台">
+            <el-table-column prop="productType" width='150' label="Product Type" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="t5" width='150' label="产品状态" show-overflow-tooltip>
+            <el-table-column prop="platform" width='100' show-overflow-tooltip label="平台">
             </el-table-column>
-            <el-table-column show-overflow-tooltip width='150' prop="t7" label="产品归属">
+            <el-table-column show-overflow-tooltip width='150' prop="productModel" label="产品型号">
             </el-table-column>
-             <el-table-column show-overflow-tooltip width='150' prop="t8" label="产品型号">
+            <el-table-column show-overflow-tooltip width='150' prop="catalogPrice" label="目录价格">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t9" width='150' label="数量上限">
+            <el-table-column show-overflow-tooltip width='150' prop="insideCustomer" label="内部客户">
             </el-table-column>
-
-
-            <el-table-column show-overflow-tooltip prop="t10" width='150' label="数量下限">
+            <el-table-column show-overflow-tooltip prop="effectiveTime" width='150' label="生效时间">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t11" width='150' label="标准价">
+            <el-table-column show-overflow-tooltip prop="deadTime" width='150' label="失效时间">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t12" width='150' label="权限价">
+            <el-table-column show-overflow-tooltip prop="modifyTime" width='150' label="更新时间">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t13" width='150' label="底线价">
+            <el-table-column show-overflow-tooltip prop="remark" width='150' label="备注">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t14" width='150' label="成本价">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t15" width='150' label="增值后成本">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t16" width='150' label="生效时间">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t17" width='150' label="失效时间">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t18" width='150' label="更新时间">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
+            <el-table-column show-overflow-tooltip prop="" width="100" label="操作" fixed='right'>
               <template scope-slot='scope'>
                 <el-button type='text' size='small' @click='create'>生成报价单</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
 
-              <p>未查询到客户信息</p>
+              <p>无数据</p>
             </div>
           </el-table>
           <div class="block">
             <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-              :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+              :page-sizes="[10, 20,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
             </el-pagination>
           </div>
         </div>
         
       </div>
     </div>
-    <!-- <el-dialog
-        title="筛选条件选取"
-        :visible.sync="dialogVisible"
-        width="600px"
-        >
-        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
-          <div style="margin: 15px 0;"></div>
-          <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
-            <el-checkbox v-for="con in conditions" :label="con.value" :key="con.value">{{con.label}}</el-checkbox>
-        </el-checkbox-group>
-    </el-dialog> -->
   </div>
 </template>
 
 <script>
   import Daterange from "../com/date";
-  import formTest from '../../assets/js/formTest'
+  import {getList} from "@/api/price/priceCatalog.js";
+
   export default {
     name: 'priceCatalog',
     components:{
@@ -148,107 +111,77 @@
     },
     data() {
       return {
-        form: {},
-        total: 0,
-        d1: [],
-        options: [
-          {
-            value: '1',
-            label: '新产品'
-          },
-          {
-            value: '1',
-            label: '主流在售'
-          },
-          {
-            value: '1',
-            label: '衰退期'
-          },
-          {
-            value: '1',
-            label: '以退市'
-          },
-        ],
-        value: '',
-        checkAll: false,
-        checkedCities: [
-          1, 2
-        ],
-        conditions: [
-          {
-            label: '客户名称',
-            value: 1
-          },
-          {
-            label: '英文名称',
-            value: 2
-          }
-        ],
-        isIndeterminate: false,
+        resetData:false,
+        form: {
+          bu:'',
+          pdt:'',
+          productType:'',
+          platform:'',
+          productModel:'',
+          effectBeginTime:'',
+          effectEndTime:'',
+        },
         dialogVisible: false,
-        tableData: [
-            {
-              t1:'Connectivity Device',
-              t2:'WCN',
-              t3:'WIFI',
-              t4:'',
-              t5:'新产品',
-              t6:'BU',
-              t7:'BL0908',
-              t8:'',
-              t9:'',
-              t10:'0.0908',
-              t11:'0.7800',
-              t12:'0.5750',
-              t13:'0.4569',
-              t14:'',
-              t15:'',
-              t16:'2019/5/1',
-              t17:'2019/5/1',
-              t18:'2020/5/1',
-              t1:''
-            }
-        ],
+        tableData: [],
         //第几页
         currentPage: 1,
         //每页的容量
         pageSize: 10,
-      }
-    },
-    computed: {
-      shopId() {
-        return this.$store.state.shopId.shopId
+        total: 0,
+
       }
     },
     created() {
-    },
-    watch: {
+      this.getList()
     },
     methods: {
-      
+      search(){
+        this.currentPage = 1
+        this.getList()
+      },
+      watchTime(data){
+        console.log(data)
+        this.form.effectBeginTime = data.startTime
+        this.form.effectEndTime = data.endTime
+        this.resetData = false
+      },
+      async getList(){
+        const data ={
+           pageIndex:this.currentPage,
+           pageSize:this.pageSize,
+           bu:this.form.bu,
+           pdt:this.form.pdt,
+           productType:this.form.productType,
+           platform:this.form.platform,
+           productModel:this.form.productModel,
+           effectBeginTime:this.form.effectBeginTime,
+           effectEndTime:this.form.effectEndTime
+        } 
+        const res = await getList(data);
+        console.log('目录价格查询列表',res);
+        if(res){
+          this.tableData = res.data.data.list
+          this.total = res.data.data.total
+        }
+      },
+      create(){},
+      reset(){
+        this.currentPage=1
+        this.pageSize=10
+        this.form = {
+          bu:'',
+          pdt:'',
+          productType:'',
+          platform:'',
+          productModel:'',
+          effectBeginTime:'',
+          effectEndTime:'',
+        }
+        this.resetData = true
+        this.getList()
+      },
       change() {
         this.dialogVisible = !this.dialogVisible
-      },
-      handleCheckAllChange(val) {
-        console.log(val)
-        this.checkedCities = val ? [1, 2, 3, 4, 5, 6] : [];
-        this.isIndeterminate = false;
-      },
-      handleCheckedCitiesChange(value) {
-        console.log(value)
-        let checkedCount = value.length;
-        this.checkAll = checkedCount === this.conditions.length;
-        this.isIndeterminate = checkedCount > 0 && checkedCount < this.conditions.length;
-      },
-      sure() {
-        this.dialogVisible = false
-      },
-      handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => { });
       },
       q(index) {
         return this.pageSize * (this.currentPage - 1) + index + 1
@@ -264,10 +197,12 @@
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
         this.pageSize = val;
+        this.getList()
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
         this.currentPage = val;
+        this.getList()
       },
     }
   }

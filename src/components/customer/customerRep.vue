@@ -212,6 +212,7 @@ export default {
       this.resetData1 = false
     },
     search(){
+      this,currentPage = 1
       this.getList(this.form)
     },
     sure1(){

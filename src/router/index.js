@@ -125,8 +125,13 @@ export default new Router({
                     component: resolve => require(['@/components/price/price-catalog'], resolve),
                 },
                 {
+                    path: 'price/strategy',
+                    name: 'priceStrategy',
+                    component: resolve => require(['@/components/price/price-strategy'], resolve),
+                },
+                {
                     path: 'price/actual',
-                    name: 'PriceActual',
+                    name: 'priceActual',
                     component: resolve => require(['@/components/price/price-actual'], resolve),
                 },
                 {
@@ -135,14 +140,14 @@ export default new Router({
                     component: resolve => require(['@/components/price/price-sales-actual'], resolve),
                 },
                 {
-                    path: 'price/inquiry',
-                    name: 'PriceInquiry',
-                    component: resolve => require(['@/components/price/price-inquiry'], resolve),
+                    path: 'price/enquiry',
+                    name: 'priceEnquiry',
+                    component: resolve => require(['@/components/price/price-enquiry'], resolve),
                 },
                 {
-                    path: 'price/inquiry/approval',
-                    name: 'PriceInquiryApproval',
-                    component: resolve => require(['@/components/price/price-inquiry-approval'], resolve),
+                    path: 'price/enquiry/approval',
+                    name: 'priceEnquiryApproval',
+                    component: resolve => require(['@/components/price/price-enquiry-approval'], resolve),
                 },
                 {
                     path: 'sample/list',

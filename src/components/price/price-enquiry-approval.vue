@@ -1,5 +1,5 @@
 <template>
-  <div class="price-inquiry-approval">
+  <div class="price-enquiry-approval">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
@@ -112,7 +112,7 @@ import formTest from "../../assets/js/formTest";
   import Daterange from "../com/date";
 
 export default {
-  name: "PriceApproval",
+  name: "priceEnquiryApproval",
   components:{
       Daterange
     },
@@ -229,7 +229,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
 $sc: 12;
-.price-inquiry-approval{
+.price-enquiry-approval{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;
