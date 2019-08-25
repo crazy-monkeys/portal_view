@@ -2,7 +2,7 @@
   <!-- 添加新增控件 -->
   <div class="add">
     <div class="head clear">
-     <el-page-header @back="goBack" content="">
+     <el-page-header @back="goBack" content="个人信息查看">
     </el-page-header>
     </div>
     
@@ -15,22 +15,22 @@
                 <h3 style="padding:10px 0;color:purple">基本信息</h3>
               </template>
               <el-form-item label="编码">
-              <el-input type="text" size="small" v-model="form.dealerCode"></el-input>
+              <el-input type="text" size="small" v-model="form.outCode"></el-input>
               </el-form-item>
               <el-form-item label="名称">
-              <el-input type="text" size="small" v-model="form.dealerName"></el-input>
+              <el-input type="text" size="small" v-model="form.custName"></el-input>
               </el-form-item>
               <el-form-item label="简称">
-                <el-input type="text" size="small" v-model="form.dealerSName"></el-input>
+                <el-input type="text" size="small" v-model="form.custAbbreviation"></el-input>
               </el-form-item>
               <el-form-item label="电话">
-                <el-input type="text" size="small" v-model="form.mobile"></el-input>
+                <el-input type="text" size="small" v-model="form.custMobile"></el-input>
               </el-form-item>
               <el-form-item label="E-mail">
-                <el-input type="text" size="small" v-model="form.email"></el-input>
+                <el-input type="text" size="small" v-model="form.custEmail"></el-input>
               </el-form-item>
               <el-form-item label="网站">
-                <el-input type="text" size="small" v-model="form.dealerWeb"></el-input>
+                <el-input type="text" size="small" v-model="form.custWeb"></el-input>
               </el-form-item>
             </el-collapse-item>
             <el-collapse-item name='2'>
@@ -38,16 +38,19 @@
                 <h3 style="padding:10px 0;color:purple">背景信息</h3>
               </template>
               <el-form-item label="公司资产" >
-              <el-input type="text" size="small" v-model="form.corporateAssets"> </el-input>
+              <el-input type="text" size="small" v-model="form.corportaeAssets"> </el-input>
               </el-form-item>
               <el-form-item label="注册日期">
-                <el-input type="text" size="small" v-model="form.registerTime"></el-input>
+                <el-input type="text" size="small" v-model="form.registTime"></el-input>
               </el-form-item>
               <el-form-item label="公司人数">
-                <el-input type="text" size="small" v-model="form.corporateNumber"></el-input>
+                <el-input type="text" size="small" v-model="form.staffNumber"></el-input>
               </el-form-item>
-              <el-form-item label="上级公司">
-                <el-input type="text" size="small" v-model="form.corporateParents"></el-input>
+              <el-form-item label="注册地址" class="txt">
+                <el-input type="text" size="small" v-model="form.registAdress"></el-input>
+              </el-form-item>
+              <el-form-item label="办公地址" class="txt">
+                <el-input type="text" size="small" v-model="form.workAdress"></el-input>
               </el-form-item>
             </el-collapse-item>
             <el-collapse-item name="3">
@@ -55,16 +58,16 @@
                 <h3 style="padding:10px 0;color:purple" >开户行信息</h3>
               </template>
               <el-form-item label="银行名称">
-                <el-input type="text" size="small" v-model="form.bankName"></el-input>
+                <el-input type="text" size="small" v-model="form.custBankInfo.bankName"></el-input>
               </el-form-item>
               <el-form-item label="银行地址">
-                <el-input type="text" size="small" v-model="form.bankAddress"></el-input>
+                <el-input type="text" size="small" v-model="form.custBankInfo.bankDetailInfo"></el-input>
               </el-form-item>
               <el-form-item label="账号">
-                <el-input type="text" size="small" v-model="form.bankAccount"></el-input>
+                <el-input type="text" size="small" v-model="form.custBankInfo.bankAccount"></el-input>
               </el-form-item>
               <el-form-item label="银行识别码">
-                <el-input type="text" size="small" v-model="form.bankBIC"></el-input>
+                <el-input type="text" size="small" v-model="form.custBankInfo.bankBic"></el-input>
               </el-form-item>
             </el-collapse-item>
             <el-collapse-item name="4">
@@ -86,13 +89,7 @@
                 <h3 style="padding:10px 0;color:purple">介绍</h3>
               </template>
                <el-form-item class="txt" label="优势价值">
-              <el-input type="textarea" size="small"   rows='4' v-model="form.advantageValue"> </el-input>
-            </el-form-item>
-            <el-form-item  class="txt" label="优势介绍">
-              <el-input type="textarea" size="small"  rows='4' v-model="form.advantageIntroduction"></el-input>
-            </el-form-item>
-            <el-form-item class="txt" label="业务介绍">
-              <el-input type="textarea" size="small"  rows='4' v-model="form.businessIntroduction"></el-input>
+              <el-input type="textarea" size="small"   rows='4' v-model="form.advantagesIntroduction"> </el-input>
             </el-form-item>
             </el-collapse-item>
           </el-collapse>
@@ -100,12 +97,52 @@
       </div>
       <div class="tab">
         <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="关系" name="first">
+          <el-tab-pane label="资产信息" name="first">
             <div class="tabBox">
-               <el-table :data="form.ships" style="width: 100%" height="300">
-                <el-table-column prop="shipName" label="名称" show-overflow-tooltip>
+               <el-table :data="form.assetsInformations" style="width: 100%" height="300">
+                <el-table-column prop="assetsYear" label="年份" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="shipType" label="关系类型" show-overflow-tooltip>
+                <el-table-column prop="assetsSeason" label="季度" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="assetsTotal" label="总资产" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="assetsNet" label="净资产" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="revenue" label="营业额" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="totalStaff" label="总人数" show-overflow-tooltip>
+                </el-table-column>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="业务介绍" name="six">
+            <div class="tabBox">
+               <el-table :data="form.businessInformations" style="width: 100%" height="300">
+                <el-table-column prop="businessYear" label="年份" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="productLine" label="产品线" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="revenuePlOne" label="月份一" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="revenuePlTwo" label="月份二" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="revenuePlThree" label="月份三" show-overflow-tooltip>
+                </el-table-column>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="关系" name="fifth">
+            <div class="tabBox">
+              <el-table :data="form.relationships" style="width: 100%" height="300">
+                <el-table-column prop="corporateName" label="名称" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="corporateType" label="关系类型" show-overflow-tooltip>
                 </el-table-column>
                 <div slot="empty">
                   无数据
@@ -115,25 +152,22 @@
           </el-tab-pane>
           <el-tab-pane label="联系人" name="third">
             <div class="tabBox">
-              <el-table :data="form.contacts" style="width: 100%" height="300">
-                <el-table-column prop="cName" label="姓名" show-overflow-tooltip>
+              <el-table :data="form.customerContacts" style="width: 100%" height="300">
+                <el-table-column prop="contactName" label="姓名" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="cMobile" label="电话" show-overflow-tooltip>
+                <el-table-column prop="mobile" label="电话" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="cEmail" label="邮箱" show-overflow-tooltip>
+                <el-table-column prop="email" label="邮箱" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="cDepartment" label="部门" show-overflow-tooltip>
+                <el-table-column prop="department" label="部门" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="cPosition" label="职位" show-overflow-tooltip>
+                <el-table-column prop="subDepartment" label="二级部门" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="" label="是否关键决策人" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                    {{form.contacts[scope.$index].isDecisionMaker ? '是':'否'}}
-                  </template>
+                <el-table-column prop="position" label="职位" show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column prop="" label="股权占比" show-overflow-tooltip>
                   <template slot-scope="scope">
-                    {{form.contacts[scope.$index].equityRatio +"%"}}
+                    {{scope.row.equityRatio  +"%"}}
                   </template>
                 </el-table-column>
                 <div slot="empty">
@@ -144,12 +178,12 @@
           </el-tab-pane>
           <el-tab-pane label="开票信息" name="second">
             <div class="tabBox">
-               <el-table :data="form.invoices" style="width: 100%" height="300">
+               <el-table :data="form.invoiceInfos" style="width: 100%" height="300">
                 <el-table-column prop="purchasingUnit" label="购货单位" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="shippingAddress" label="收货地址" show-overflow-tooltip>
+                <el-table-column prop="shippingAddress" label="交货地址" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="shippingMobile" label="收货手机" show-overflow-tooltip>
+                <el-table-column prop="shippingMobile" label="手机号" show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column prop="taxpayerRegistrationNumber" label="纳税人登记号" show-overflow-tooltip>
                 </el-table-column>
@@ -164,11 +198,26 @@
           <el-tab-pane label="附件" name="fourth">
             <div class="tabBox">
               <el-table :data="form.files" style="width: 100%" height="300">
-                <el-table-column prop="fileType" label="附件类型" show-overflow-tooltip>
+                <el-table-column prop="title" label="标题" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="fileName" label="附件信息" show-overflow-tooltip>
+                <el-table-column prop="type" label="类型" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="createTime" label="上传时间" show-overflow-tooltip>
+                <el-table-column prop="uploadTime" label="上传时间" show-overflow-tooltip>
+                </el-table-column>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="销售数据" name="seven">
+            <div class="tabBox">
+              <el-table :data="form.sales" style="width: 100%" height="300">
+                <el-table-column prop="salesOrganize" label="公司代码" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="distributionChannel" label="分销渠道" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="deliveryPlant" label="交货工厂" show-overflow-tooltip>
                 </el-table-column>
                 <div slot="empty">
                   无数据
@@ -190,35 +239,10 @@
     data() {
       return {
         activeName1:['1','2','3','4','5'],
-        value:'',
         form: {
-          txt: '',
-          code:'',
+          custBankInfo:{}
         },
-        checked:true,
         activeName: 'first',
-        tableData: [
-          {
-            t1: '中国建设银行',
-            t2: '上海市静安区XXXXXXX',
-            t3: 'test0000001',
-            t4: 'xxxxxxx'
-          }
-        ],
-        tableData1: [
-        
-        ],
-        tableData2: [
-       
-        ],
-        tableData3: [
-        ],
-        tableData4: [
-         
-        ],
-        currentPage: 1,
-        pageSize: 10,
-        total: 0
       }
     },
     created(){
