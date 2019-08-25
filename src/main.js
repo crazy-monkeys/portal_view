@@ -35,9 +35,11 @@ import './assets/css/animate.css'
 import './assets/iconfont/iconfont.css'
 import './assets/css/el.css'
 
-import Print from 'vue-print-nb'
+// import Print from 'vue-print-nb'
+import Print from '@/vendor/print.js'
 
 Vue.use(Print); //注册
+
 /* eslint-disable no-new */
 new Vue({
     el: '#app',

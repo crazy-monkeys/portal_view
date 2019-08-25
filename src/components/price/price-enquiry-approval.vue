@@ -15,73 +15,72 @@
         </div>
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <el-form-item label="申请人">
-            <el-input size='small' placeholder="请输入"></el-input>
+            <el-input size='small'  v-model="form.proposer" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="审批状态">
-            <el-select v-model="value" size="small" filterable placeholder="请选择">
+            <el-select v-model="form.approvalStatus" size="small" filterable placeholder="请选择">
               <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label=" ">
-            <el-button size='small' type='primary' plain>查询</el-button>
-            <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
+            <el-button size='small' type='primary' @click="search" plain>查询</el-button>
+            <el-button @click='reset' size='small' type='primary' plain>重置</el-button>
           </el-form-item>
         </el-form>
       </div>
       <div class="box">
         <div class="btns">
-              <el-button class="add" size='small' type='primary' @click='add1(1)' >通过</el-button>
-              <el-button class="add" size='small' type='primary' @click='add1(2)' >驳回</el-button>
+              <el-button class="add" size='small' type='primary'  :disabled="multipleSelection.length==0" @click='add1(1)' >通过</el-button>
+              <el-button class="add" size='small' type='primary'  :disabled="multipleSelection.length==0" @click='add1(2)' >驳回</el-button>
 
         </div>
         <div class="tab">
-          <el-table :data="tableData" border style="width: 100%" height="100%">
+          <el-table :data="tableData" border style="width: 100%" height="100%" @selection-change="handleSelectionChange">
+            <el-table-column type="selection" width='' label=" " >
+            </el-table-column>
             <el-table-column type="index" width='100' label="序号" :index='q'>
             </el-table-column>
-            <el-table-column prop="1"  width='100' show-overflow-tooltip label="申请人">
+            <el-table-column prop="proposer"  width='100' show-overflow-tooltip label="申请人">
             </el-table-column>
-            <el-table-column prop="2"  width='100' label="审批说明" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="t1" width='80' show-overflow-tooltip label="状态">
-            </el-table-column>
-            <el-table-column prop="t1" width='80' show-overflow-tooltip label="BU">
-            </el-table-column>
-            <el-table-column prop="t2" width='80' label="PDT" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="t3" width='150' label="Product Type" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="t4" width='100' show-overflow-tooltip label="平台">
-            </el-table-column>
-            <el-table-column prop="t5" width='150' label="产品型号" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column show-overflow-tooltip width='150' prop="t7" label="目录价格">
-            </el-table-column>
-             <el-table-column show-overflow-tooltip width='150' prop="t8" label="内部客户">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t9" width='150' label="生效时间">
-            </el-table-column>
-
-
-            <el-table-column show-overflow-tooltip prop="t10" width='150' label="失效时间">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t11" width='150' label="更新时间">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="t12" width='150' label="备注">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
-              <template scope-slot='scope'>
-                <el-button type='text' size='small' @click='create'>生成报价单</el-button>
+            <el-table-column prop=""  width='100' label="审批状态" show-overflow-tooltip>
+              <template slot-scope="scope">
+                {{scope.row.approvalStatus=='pass'?'通过':scope.row.approvalStatus=='reject'? '驳回':'待审批'}}
               </template>
             </el-table-column>
+            <el-table-column prop="applyRemark"  width='100' label="审批说明" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="status" width='80' show-overflow-tooltip label="状态">
+            </el-table-column>
+            <el-table-column prop="bu" width='80' show-overflow-tooltip label="BU">
+            </el-table-column>
+            <el-table-column prop="pdt" width='80' label="PDT" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="productType" width='150' label="Product Type" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="platform" width='100' show-overflow-tooltip label="平台">
+            </el-table-column>
+            <el-table-column prop="productModel" width='150' label="产品型号" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column show-overflow-tooltip width='150' prop="catalogPrice" label="目录价格">
+            </el-table-column>
+             <el-table-column show-overflow-tooltip width='150' prop="inCustomer" label="内部客户">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="effectTime" width='150' label="生效时间">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="deadTime" width='150' label="失效时间">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="modifyTime" width='150' label="更新时间">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="remark" width='150' label="备注">
+            </el-table-column>
             <div slot="empty">
-
               <p>无数据</p>
             </div>
           </el-table>
           <div class="block">
             <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-              :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+              :page-sizes="[10,20,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
             </el-pagination>
           </div>
         </div>
@@ -91,16 +90,16 @@
         :title="title"
         :visible.sync="dialogCreate"
         width="400px"
-        top="10vh"
+        :before-close="cancel"
         >
-        <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top'  >
-          <el-form-item :label="label">
-            <el-input size='small' rows='4' resize="none" type="textarea" placeholder="请输入"></el-input>
+        <el-form ref="form1" :rules='rules' :model="form1" size="small" class="form" label-width="auto" label-position='top'  >
+          <el-form-item :label="label" prop="approvalRemark">
+            <el-input size='small' v-model="form1.approvalRemark" rows='4' resize="none" type="textarea" placeholder="请输入"></el-input>
           </el-form-item>
         </el-form>
           <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogCreate= false" size="small" type="primary" plain>取 消</el-button>
-            <el-button type="primary" @click="dialogCreate= false" size="small">确 定</el-button>
+            <el-button @click="cancel" size="small" type="primary" plain>取 消</el-button>
+            <el-button type="primary" @click="submitForm('form1')" size="small">确 定</el-button>
           </span>
     </el-dialog>
    
@@ -108,20 +107,21 @@
 </template>
 
 <script>
-import formTest from "../../assets/js/formTest";
-  import Daterange from "../com/date";
-
+  import {getList,approve} from "@/api/price/priceApproval.js";
 export default {
   name: "priceEnquiryApproval",
-  components:{
-      Daterange
-    },
   data() {
     return {
+      form1:{
+        approvalRemark:'',
+        approvalStatus:'',
+      },
       title:'',
       label:'',
-      form: {},
-      total: 0,
+      form: {
+        proposer:'',
+        approvalStatus:'pending',
+      },
       options: [
         {
           value: "pending",
@@ -136,91 +136,113 @@ export default {
           label: "驳回"
         },
       ],
-      value: "",
-      checkAll: false,
-      checkedCities: [1, 2],
-      conditions: [
-        {
-          label: "客户名称",
-          value: 1
-        },
-        {
-          label: "英文名称",
-          value: 2
-        }
-      ],
-      isIndeterminate: false,
       dialogVisible: false,
       dialogCreate: false,
       tableData: [],
       //第几页
       currentPage: 1,
       //每页的容量
-      pageSize: 10
+      pageSize: 10,
+      total: 0,
+      multipleSelection:[],
+      rules:{
+        approvalRemark: [{ required: true, trigger: "change" ,message:'请输入审批信息'}],
+      },
     };
   },
   computed: {
-    shopId() {
-      return this.$store.state.shopId.shopId;
-    }
   },
-  created() {},
+  created() {
+    this.getList()
+  },
   watch: {},
   methods: {
-    add1(type) {
-        this.dialogCreate = true
-        if(type==1){
-          this.title = '审批'
-          this.label = '审批信息'
-        }else{
-          this.title = '驳回'
-          this.label = '驳回信息'
-        }
+    handleSelectionChange(val) {
+        this.multipleSelection = val;
       },
+    cancel(){
+      this.dialogCreate=false
+      this.form1 = {
+        approvalRemark :'',
+        approvalStatus :'',
+      }
+      this.resetForm('form1')
+    },
+    submitForm(formName){
+      this.$formTest.submitForm(this.$refs[formName],this.commit)
+    },
+    resetForm(formName){
+      this.$formTest.resetForm(this.$refs[formName])
+    },
+    search(){
+        this.currentPage = 1
+        this.getList()
+      },
+    reset(){
+      this.currentPage=1
+      this.pageSize=10
+      this.form = {
+        approvalStatus:'pending',
+        proposer:''
+      }
+      this.resetData = true
+      this.getList()
+    },
+    async commit(){
+      const data ={
+        applyIds:this.multipleSelection.map(item=>item.id),
+        approvalRemark:this.form1.approvalRemark,
+        approvalStatus:this.form1.approvalStatus,
+      }
+      const res = await approve(data);
+      console.log('审批结果',res);
+      if(res){
+        this.cancel()
+        this.getList()
+      }
+    },
+    async getList(){
+      const data ={
+        pageIndex:this.currentPage,
+        pageSize:this.pageSize,
+        proposer:this.form.proposer,
+        approvalStatus:this.form.approvalStatus
+      } 
+      const res = await getList(data);
+      console.log('审批列表',res);
+      if(res){
+        this.tableData = res.data.data.list
+        this.total = res.data.data.total
+      }
+    },
+    add1(type) {
+      this.dialogCreate = true
+      if(type==1){
+        this.form1.approvalStatus ='pass'
+        this.title = '审批'
+        this.label = '审批信息'
+      }else{
+        this.form1.approvalStatus ='reject'
+        this.title = '驳回'
+        this.label = '驳回信息'
+      }
+    },
     change() {
       this.dialogVisible = !this.dialogVisible;
     },
-    handleCheckAllChange(val) {
-      console.log(val);
-      this.checkedCities = val ? [1, 2, 3, 4, 5, 6] : [];
-      this.isIndeterminate = false;
-    },
-    handleCheckedCitiesChange(value) {
-      console.log(value);
-      let checkedCount = value.length;
-      this.checkAll = checkedCount === this.conditions.length;
-      this.isIndeterminate =
-        checkedCount > 0 && checkedCount < this.conditions.length;
-    },
-    sure() {
-      this.dialogVisible = false;
-    },
-    handleClose(done) {
-      this.$confirm("确认关闭？")
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
-    },
     q(index) {
       return this.pageSize * (this.currentPage - 1) + index + 1;
-    },
-    create() {
-      this.dialogCreate = true;
-    },
-    add() {
-      this.$router.push({
-        name: "Addprice-query"
-      });
     },
     // 分页
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageSize = val;
+      this.getList()
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.currentPage = val;
+      this.getList()
     }
   }
 };

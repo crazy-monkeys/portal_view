@@ -35,7 +35,7 @@
         <div class="btns">
           <el-button class="add" size='small' type='primary' @click='create' >新建</el-button>
         </div>
-        <div class="tab">
+        <div class="tab"  ref="print">
           <el-table :data="tableData" border style="width: 100%" height="100%">
             <el-table-column type="index" width='100' label="序号" :index='q'>
             </el-table-column>
@@ -43,11 +43,14 @@
             </el-table-column>
             <el-table-column prop="applyRemark"  width='100' show-overflow-tooltip label="申请说明">
             </el-table-column>
-            <el-table-column prop="approvalStatus"  width='100' label="审批状态" show-overflow-tooltip>
+            <el-table-column prop=""  width='100' label="审批状态" show-overflow-tooltip>
+              <template slot-scope="scope">
+                {{scope.row.approvalStatus=='pass'?'通过':scope.row.approvalStatus=='reject'? '驳回':'待审批'}}
+              </template>
             </el-table-column>
             <el-table-column prop="approvalRemark"  width='100' label="审批意见" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="t1" width='80' show-overflow-tooltip label="状态">
+            <el-table-column prop="status" width='80' show-overflow-tooltip label="状态">
             </el-table-column>
             <el-table-column prop="bu" width='80' show-overflow-tooltip label="BU">
             </el-table-column>
@@ -65,8 +68,6 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="effectTime" width='150' label="生效时间">
             </el-table-column>
-
-
             <el-table-column show-overflow-tooltip prop="deadTime" width='150' label="失效时间">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="modifyTime" width='150' label="更新时间">
@@ -75,8 +76,8 @@
             </el-table-column>
             <el-table-column width="150" label="操作" fixed='right'>
               <template slot-scope='scope'>
-                <el-button type='text' size='small' @click='create'>生成报价单</el-button>
-                <el-button type='text' size='small' @click='del'>删除</el-button>
+                <el-button type='text'  size='small' @click="add">生成报价单</el-button>
+                <el-button type='text' size='small' @click='del(scope.row.id)'>删除</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -84,6 +85,8 @@
               <p>无数据</p>
             </div>
           </el-table>
+        <!-- 2 -->
+
           <div class="block">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
             :page-sizes="[10, 20,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
@@ -92,7 +95,7 @@
         </div>
       </div>
     </div>
-<el-dialog title="新建询价单" :visible.sync="dialogCreate" width="400px" :before-close="cancel">
+    <el-dialog title="新建询价单" :visible.sync="dialogCreate" width="400px" :before-close="cancel">
       <div class="sels clear">
         <el-form ref="addForm" :model="addForm" class="form" :rules='rules' label-width="auto" label-position='top' :inline='true'>
           <el-form-item label="产品型号" prop="productModel"  class="inp">
@@ -115,7 +118,7 @@
 </template>
 
 <script>
-  import {getList,addEnquiry} from "@/api/price/priceEnquiry.js";
+  import {getList,addEnquiry,delEnquiry} from "@/api/price/priceEnquiry.js";
 
   export default {
     name: 'priceEnquiry',
@@ -164,7 +167,29 @@
 
   },
   methods: {
-    del(){},
+    async delEnquiry(id){
+      const data ={
+        id:id
+      }
+      const res = await delEnquiry(data);
+      console.log('删除结果',res)
+      if(res){
+        this.getList()
+      }
+    },
+    del(id){
+      this.$confirm('确定要删除该询价单？', '删除', {
+        distinguishCancelAndClose: true,
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      })
+        .then(() => {
+          this.delEnquiry(id)
+        })
+        .catch(action => {
+          
+        });
+    },
     cancel(){
       this.dialogCreate=false
       this.addForm = {
@@ -214,9 +239,12 @@
         const res = await getList(data);
         console.log('询价列表',res);
         if(res){
-          this.tableData = res.data.data
-          this.total = res.data.total
+          this.tableData = res.data.data.list
+          this.total = res.data.data.total
         }
+      },
+      add(){
+        this.$print(this.$refs.print)
       },
       create(){
         this.dialogCreate = true
@@ -237,11 +265,6 @@
     },
     q(index) {
       return this.pageSize * (this.currentPage - 1) + index + 1;
-    },
-    add() {
-      this.$router.push({
-        name: "Addprice-query"
-      });
     },
     // 分页
     handleSizeChange(val) {

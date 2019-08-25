@@ -10,3 +10,8 @@ export const getList = data => {
 export const addEnquiry = data => {
     return request('post', `${serverUrl}/price/enquiry/apply`, data).then(result => result)
 }
+
+//新建询价
+export const delEnquiry = data => {
+    return request('delete', `${serverUrl}/price/enquiry/delete/${data.id}`).then(result => result)
+}
