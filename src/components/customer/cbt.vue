@@ -83,7 +83,7 @@
             <el-table-column width='150' label="操作" fixed='right'>
               <template slot-scope='scope'>
                 <el-button type='text'  @click='mx(scope.row)'>明细</el-button>
-                <el-button type='text'  @click='report(scope.row)'>上传</el-button>
+                <el-button type='text' :disabled="scope.row.status!=2"  @click='report(scope.row)'>上传</el-button>
                 <!-- <el-button type='text'  @click='del'>删除</el-button> -->
               </template>
             </el-table-column>
@@ -253,7 +253,7 @@ export default {
       data.append('id',this.rowData.id)
       data.append('idrType',this.rowData.type)
       data.append('crAmount',this.form1.cr)
-      data.append('fileType',this.userType=='内部客户' ? 3:2)
+      data.append('fileType',3)
       this.$http({
         method: 'post',
         url: this.serverUrl+"/business/idr/upload",
@@ -266,6 +266,7 @@ export default {
           this.$message.success('上传成功')
           this.fileList =[res.data.data]
           this.cancel('form1')
+          this.getList()
         }else{
           this.$message.error(res.data.msg)
         }

@@ -139,7 +139,7 @@
                     <a :href="scope.row.filePath" :download="scope.row.filePath"> {{scope.row.fileName}}</a>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="上传时间" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="createTime" label="上传时间" show-overflow-tooltip></el-table-column>
                 <div slot="empty">无数据</div>
               </el-table>
             </div>
