@@ -2,7 +2,7 @@
   <div class="announcelist">
    
     <el-tabs tab-position="left" v-model="aciveName" style="height: 100%;"   @tab-click="handleClick">
-      <el-tab-pane :label="type.zhName" :name='type.id+""' v-for="type in types" :key="type.id" >
+      <el-tab-pane :label="type.zhName" :name='type.pValue+""' v-for="type in types" :key="type.pValue" >
         <div class="tab">
           <div class="filter">
             <el-input
@@ -85,7 +85,7 @@
         if(res){
           this.types = res.data.data
           this.types.unshift({
-            id: 0,
+            pValue: 0,
             zhName: "所有公告"
           })
         }
