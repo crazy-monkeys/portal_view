@@ -245,12 +245,12 @@ export default new Router({
                     component: resolve => require(['@/components/sales/shipment-index'], resolve),
                 },
                 {
-                    path: 'sales/shouhuo/upload',
-                    name: 'shouhuoUpload',
-                    component: resolve => require(['@/components/sales/shouhuo-upload'], resolve),
+                    path: 'handover/receive/upload',
+                    name: 'receiveUpload',
+                    component: resolve => require(['@/components/sales/receive-upload'], resolve),
                 },
                 {
-                    path: 'handover/upload',
+                    path: 'handover/deliver/upload',
                     name: 'shipmentUpload',
                     component: resolve => require(['@/components/sales/shipment-upload'], resolve),
                 },

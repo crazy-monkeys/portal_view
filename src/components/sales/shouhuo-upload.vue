@@ -44,7 +44,6 @@
             <div class="tab">
               <el-table :data="tableData" border style="width: 100%" height="100%">
                 <el-table-column type="selection"  show-overflow-tooltip></el-table-column>
-
                 <el-table-column prop="0" width='150' label="上传时间" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="0" width='150' label="产品型号" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="0" width='150' label="库存类别" show-overflow-tooltip></el-table-column>

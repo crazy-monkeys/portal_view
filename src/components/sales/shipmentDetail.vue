@@ -4,8 +4,7 @@
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item >交付管理</el-breadcrumb-item>
-          <el-breadcrumb-item>出货数据查询</el-breadcrumb-item>
-          <el-breadcrumb-item>明细</el-breadcrumb-item>
+          <el-breadcrumb-item>交付数据明细</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="sels clear">
@@ -45,6 +44,8 @@
         <div class="tab">
           
           <el-table :data="tableData" border height="100%" style="width:100%">
+<div v-if='type=="deliver"'>
+
             <el-table-column prop="customerExternalNumber" width='150' label="客户外部号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="customerFullName" width='150' label="客户全称" show-overflow-tooltip></el-table-column>
             <el-table-column prop="sales" width='150' label="销售" show-overflow-tooltip></el-table-column>
@@ -63,6 +64,19 @@
             <el-table-column prop="orderMonth" width='150' label="订单月份" show-overflow-tooltip></el-table-column>
             <el-table-column prop="deliveryCompany" width='150' label="发货公司" show-overflow-tooltip></el-table-column>
             <el-table-column prop="remark" width='150' label="备注"  show-overflow-tooltip></el-table-column>
+            </div>
+<div v-if='type=="receive"'>
+                  <el-table-column prop="productModel" width='150' label="产品型号" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="inventoryCategory" width='150' label="库存类别" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="inventoryUnitPrice" width='150' label="库存单价" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="warehouse" width='150' label="仓储地" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="deliveryTime" width='150' label="提货时间" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="invoiceNumber" width='150' label="提货发票号" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="deliveryNum" width='150' label="提货数量" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="deliveryCompany" width='150' label="发货公司" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="purchaseNumber" width='150' label="采购单号" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="remark" width='150' label="备注" show-overflow-tooltip></el-table-column>
+                  </div>
             <div slot="empty">
               <p>无数据</p>
             </div>

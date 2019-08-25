@@ -4,7 +4,7 @@
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item >交付管理</el-breadcrumb-item>
-          <el-breadcrumb-item>{{type==1 ?  '出货数据查询' :'收货数据查询'}}</el-breadcrumb-item>
+          <el-breadcrumb-item>交付数据查询</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
 
@@ -125,19 +125,12 @@
       }
     },
     computed: {
-      type(){
-        return this.$route.query.type
-      }
     },
     created() {
       this.getList()
     },
     watch: {
-      type:{
-        handler:function(n,o){
-          this.getList()
-        }
-      }
+      
     },
     methods: {
       rowClick(row){

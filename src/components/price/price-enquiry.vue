@@ -35,7 +35,7 @@
         <div class="btns">
           <el-button class="add" size='small' type='primary' @click='create' >新建</el-button>
         </div>
-        <div class="tab"  ref="print">
+        <div class="tab"  >
           <el-table :data="tableData" border style="width: 100%" height="100%">
             <el-table-column type="index" width='100' label="序号" :index='q'>
             </el-table-column>
@@ -114,14 +114,19 @@
         </el-form>
       </div>
     </el-dialog>
+    <Tem ref='print' ></Tem>
   </div>
 </template>
 
 <script>
   import {getList,addEnquiry,delEnquiry} from "@/api/price/priceEnquiry.js";
+  import Tem from "./com/tem";
 
   export default {
     name: 'priceEnquiry',
+    components:{
+      Tem
+    },
   data() {
     return {
       rules:{
@@ -286,6 +291,7 @@
 <style lang='scss'>
 $sc: 12;
 .price-enquiry{
+  position: relative;
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;

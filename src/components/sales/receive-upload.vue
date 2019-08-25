@@ -1,10 +1,10 @@
 <template>
-  <div class="shipmentUpload">
+  <div class="receive-upload">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item>交付管理</el-breadcrumb-item>
-          <el-breadcrumb-item>出货数据上传</el-breadcrumb-item>
+          <el-breadcrumb-item>收货数据上传</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -50,25 +50,16 @@
             <div class="tab">
               <el-table :data="queryList" border style="width: 100%" height="100%">
                 <el-table-column type="selection"  show-overflow-tooltip></el-table-column>
-                <!-- <el-table-column prop="uploadTime" width='150' label="上传时间" show-overflow-tooltip></el-table-column> -->
-                <el-table-column prop="customerExternalNumber" width='150' label="客户外部号" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="customerFullName" width='150' label="客户全称" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="sales" width='150' label="销售" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="类别一(类型)" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryTow" width='150' label="类别二(子类)" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryThree" width='150' label="类别三(平台)" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="productModel" width='150' label="产品型号" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="deliveryDate" width='150' label="出货日期" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="deliverNumber" width='150' label="数量" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="salePrice" width='150' label="Sale Price" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="poPrice" width='150' label="Po Price" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="margin" width='150' label="Margin" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="currency" width='150' label="币种" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="customerOrderNumber" width='150' label="客户订单号" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="deliveryType" width='150' label="出货类型" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="orderMonth" width='150' label="订单月份" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="inventoryCategory" width='150' label="库存类别" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="inventoryUnitPrice" width='150' label="库存单价" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="warehouse" width='150' label="仓储地" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="deliveryTime" width='150' label="提货时间" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="invoiceNumber" width='150' label="提货发票号" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="deliveryNum" width='150' label="提货数量" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="deliveryCompany" width='150' label="发货公司" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="remark" width='150'  label="备注"  show-overflow-tooltip></el-table-column>
+                <el-table-column prop="purchaseNumber" width='150' label="采购单号" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="remark" width='150' label="备注" show-overflow-tooltip></el-table-column>
                 <div slot="empty">
                   <p>无数据</p>
                 </div>
@@ -121,24 +112,16 @@
             <div class="tab">
               <el-table :data="tableData" border style="width: 100%" height="100%">
                   <el-table-column prop="errorMsg" width='150' label="错误信息" show-overflow-tooltip></el-table-column>
-                  <el-table-column prop="customerExternalNumber" width='150' label="客户外部号" show-overflow-tooltip></el-table-column>
-                  <el-table-column prop="customerFullName" width='150' label="客户全称" show-overflow-tooltip></el-table-column>
-                  <el-table-column prop="sales" width='150' label="销售" show-overflow-tooltip></el-table-column>
-                  <el-table-column prop="categoryOne" width='150' label="类别一(类型)" show-overflow-tooltip></el-table-column>
-                  <el-table-column prop="categoryTow" width='150' label="类别二(子类)" show-overflow-tooltip></el-table-column>
-                  <el-table-column prop="categoryThree" width='150' label="类别三(平台)" show-overflow-tooltip></el-table-column>
                   <el-table-column prop="productModel" width='150' label="产品型号" show-overflow-tooltip></el-table-column>
-                  <el-table-column prop="deliveryDate" width='150' label="出货日期" show-overflow-tooltip></el-table-column>
-                  <el-table-column prop="deliverNumber" width='150' label="数量" show-overflow-tooltip></el-table-column>
-                  <el-table-column prop="salePrice" width='150' label="Sale Price" show-overflow-tooltip></el-table-column>
-                  <el-table-column prop="poPrice" width='150' label="Po Price" show-overflow-tooltip></el-table-column>
-                  <el-table-column prop="margin" width='150' label="Margin" show-overflow-tooltip></el-table-column>
-                  <el-table-column prop="currency" width='150' label="币种" show-overflow-tooltip></el-table-column>
-                  <el-table-column prop="customerOrderNumber" width='150' label="客户订单号" show-overflow-tooltip></el-table-column>
-                  <el-table-column prop="deliveryType" width='150' label="出货类型" show-overflow-tooltip></el-table-column>
-                  <el-table-column prop="orderMonth" width='150' label="订单月份" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="inventoryCategory" width='150' label="库存类别" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="inventoryUnitPrice" width='150' label="库存单价" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="warehouse" width='150' label="仓储地" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="deliveryTime" width='150' label="提货时间" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="invoiceNumber" width='150' label="提货发票号" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="deliveryNum" width='150' label="提货数量" show-overflow-tooltip></el-table-column>
                   <el-table-column prop="deliveryCompany" width='150' label="发货公司" show-overflow-tooltip></el-table-column>
-                  <el-table-column prop="remark" width='150'  label="备注"  show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="purchaseNumber" width='150' label="采购单号" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="remark" width='150' label="备注" show-overflow-tooltip></el-table-column>
                 <div slot="empty">
                   <p>无数据</p>
                 </div>
@@ -182,7 +165,7 @@
   import {download,sub,upload,downloadError,getReject,getList} from '@/api/handover/upload.js'
   import {serverUrl} from '../../axios/request'
   export default {
-    name: 'shipmentUpload',
+    name: 'receiveUpload',
     components:{
       Daterange
     },
@@ -217,12 +200,9 @@
       }
     },
     computed: {
-      type(){
-        return this.$route.query.type
-      },
       da(){
         return {
-          type : 'deliver'
+          type :'receive'
         }
       },
       dealerId(){
@@ -255,7 +235,7 @@
       async getReject(){
         var data = {
           dealerId:this.dealerId,
-          type: 'deliver' ,
+          type:'receive',
           pageSize:this.pageSize1,
           pageNum:this.currentPage1,
         }
@@ -269,7 +249,7 @@
       async getList(){
         var data = {
           dealerId:this.dealerId,
-          type:'deliver',
+          type: 'receive',
           pageSize:this.pageSize,
           pageNum:this.currentPage,
         }
@@ -283,7 +263,7 @@
       downloadReject(row){
         this.$http({
             method: "get",
-            url: "" + process.env.API_ROOT + "/handover/dealer/reject/download?recordId="+row.id+'&type=deliver',
+            url: "" + process.env.API_ROOT + "/handover/dealer/reject/download?recordId="+row.id+'&type=receive',
             responseType: "arraybuffer",
             headers:{
               'Authorization': sessionStorage.getItem('data'),
@@ -311,7 +291,7 @@
       downloadError(){
         this.$http({
             method: "get",
-            url: "" + process.env.API_ROOT + "/handover/error?type=deliver"+"&fileName=" + this.fileName,
+            url: "" + process.env.API_ROOT + "/handover/error?type=receive"+"&fileName=" + this.fileName,
             responseType: "arraybuffer",
             headers:{
               'Authorization': sessionStorage.getItem('data'),
@@ -354,11 +334,11 @@
           this.fileName = val.data.errorFileName
           
           this.da1={
-            type:'deliver' ,
+            type:'receive',
             recordId:this.recordId,
             fileName:this.fileName,
           },
-          this.tableData = val.data.deliverDetails 
+          this.tableData = val.data.receiveDetails
           console.log(this.tableData)
 
           console.log(this.recordId,this.fileName)
@@ -373,7 +353,7 @@
             this.$message.error(val.data.msg)
             this.fileName = val.data.errorFileName
             this.da1={
-              type:'deliver' ,
+              type:'receive',
               recordId:this.recordId,
               fileName:this.fileName,
             }
@@ -381,7 +361,7 @@
             this.isError2 = false
             this.$message.success('上传成功')
           }
-          this.tableData =val.data.deliverDetails
+          this.tableData =val.data.receiveDetails
         }
       },
       submitUpload() {
@@ -390,7 +370,7 @@
       async upload(val){
         var param = new FormData()
         param.append('excel',val.file)
-        param.append('type','deliver' )
+        param.append('type','receive')
         const res = await upload(data);
         if(res){
 
@@ -399,7 +379,7 @@
       async sub(){
         var param= new FormData()
         param.append('recordId' ,this.recordId)
-        param.append('type' ,'deliver' )
+        param.append('type' ,'receive')
         const res = await sub(param);
         if(res.data.isError){
           this.$message.error(res.data.msg)
@@ -418,7 +398,7 @@
       download() {
           this.$http({
             method: "get",
-            url: "" + process.env.API_ROOT + "/handover/template?type=deliver",
+            url: "" + process.env.API_ROOT + "/handover/template?type=receive",
             responseType: "arraybuffer",
             headers:{
               'Authorization': sessionStorage.getItem('data'),
@@ -433,7 +413,7 @@
               const a = document.createElement("a");
               document.body.appendChild(a);
               a.style.display = "none";
-              a.download = "deliver_template.xlsx";
+              a.download = "receive_template.xlsx";
               a.href = blobUrl;
               a.click();
               document.body.removeChild(a);
@@ -481,7 +461,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
   $sc:12;
-.shipmentUpload{
+.receive-upload{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;
