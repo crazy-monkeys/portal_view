@@ -1,7 +1,7 @@
 // import 'babel-polyfill';
 require('es6-promise').polyfill();
 import axios from 'axios'
-import { Message, Loading } from 'element-ui';
+import { Message, Loading, MessageBox } from 'element-ui';
 
 // 配置API接口地址
 // used environment variable
@@ -89,6 +89,7 @@ export const request = (method, url, data = {}, header = {}) => {
         .then(result => {
             if (result.data && result.data.code === 1) {
                 console.log(result)
+
                 return result
             }
             Message.error(result.data.msg)
@@ -99,6 +100,18 @@ export const request = (method, url, data = {}, header = {}) => {
                 // that falls out of the range of 2xx
                 console.log(err.response.data);
                 Message.error(err.response.data.msg)
+                MessageBox.alert('会话已经过期', '提示', {
+                        showClose: false,
+                        distinguishCancelAndClose: true,
+                        confirmButtonText: '确定',
+                        // cancelButtonText: '取消'
+                    })
+                    .then(() => {
+                        window.location.href(serverUrl)
+                    })
+                    .catch(action => {
+
+                    });
             } else if (err.request) {
                 // The request was made but no response was received
                 // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
