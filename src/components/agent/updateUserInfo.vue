@@ -4,7 +4,6 @@
      <el-page-header @back="goBack" content="个人信息修改">
     </el-page-header>
     </div>
-    
     <div class="content">
       <div class="selBox">
         <el-form ref="form"  :model="form" class="form" label-position='top' :inline='true'>
@@ -129,7 +128,7 @@
                     <el-input size="small" v-model="scope.row.totalStaff"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="t4" label="" show-overflow-tooltip>
+                <el-table-column prop="" label="" width="100">
                   <template slot="header">
                     <el-button type="primary" size="small" @click="add(1)">新增</el-button>
                   </template>
@@ -146,15 +145,38 @@
           <el-tab-pane label="业务介绍" name="six">
             <div class="tabBox">
                <el-table :data="form.businessInformations" style="width: 100%" height="300">
-                <el-table-column prop="businessYear" label="年份" show-overflow-tooltip>
+                <el-table-column prop="" label="年份" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.businessYear"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="productLine" label="产品线" show-overflow-tooltip>
+                <el-table-column prop="" label="产品线" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.productLine"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="revenuePlOne" label="月份一" show-overflow-tooltip>
+                <el-table-column prop="" label="月份一" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.revenuePlOne"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="revenuePlTwo" label="月份二" show-overflow-tooltip>
+                <el-table-column prop="" label="月份二" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.revenuePlTwo"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="revenuePlThree" label="月份三" show-overflow-tooltip>
+                <el-table-column prop="" label="月份三" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.revenuePlThree"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="" width="100">
+                  <template slot="header">
+                    <el-button type="primary" size="small" @click="add(2)">新增</el-button>
+                  </template>
+                  <template slot-scope='scope'>
+                    <el-button type="text" size="small" @click="del(2,scope.$index)">删除</el-button>
+                  </template>
                 </el-table-column>
                 <div slot="empty">
                   无数据
@@ -165,9 +187,23 @@
           <el-tab-pane label="关系" name="fifth">
             <div class="tabBox">
               <el-table :data="form.relationships" style="width: 100%" height="300">
-                <el-table-column prop="corporateName" label="名称" show-overflow-tooltip>
+                <el-table-column prop="" label="名称" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.corporateName"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="corporateType" label="关系类型" show-overflow-tooltip>
+                <el-table-column prop="" label="关系类型" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.corporateType"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="" width="100">
+                  <template slot="header">
+                    <el-button type="primary" size="small" @click="add(3)">新增</el-button>
+                  </template>
+                  <template slot-scope='scope'>
+                    <el-button type="text" size="small" @click="del(3,scope.$index)">删除</el-button>
+                  </template>
                 </el-table-column>
                 <div slot="empty">
                   无数据
@@ -178,21 +214,47 @@
           <el-tab-pane label="联系人" name="third">
             <div class="tabBox">
               <el-table :data="form.customerContacts" style="width: 100%" height="300">
-                <el-table-column prop="contactName" label="姓名" show-overflow-tooltip>
+                <el-table-column prop="" label="姓名" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.contactName"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="mobile" label="电话" show-overflow-tooltip>
+                <el-table-column prop="" label="电话" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.mobile"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="email" label="邮箱" show-overflow-tooltip>
+                <el-table-column prop="" label="邮箱" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.email"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="department" label="部门" show-overflow-tooltip>
+                <el-table-column prop="" label="部门" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.department"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="subDepartment" label="二级部门" show-overflow-tooltip>
+                <el-table-column prop="" label="二级部门" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.subDepartment"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="position" label="职位" show-overflow-tooltip>
+                <el-table-column prop="" label="职位" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.position"></el-input>
+                  </template>
                 </el-table-column>
                 <el-table-column prop="" label="股权占比" show-overflow-tooltip>
                   <template slot-scope="scope">
-                    {{scope.row.equityRatio  +"%"}}
+                    <el-input size="small" v-model="scope.row.equityRatio"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="" width="100">
+                  <template slot="header">
+                    <el-button type="primary" size="small" @click="add(4)">新增</el-button>
+                  </template>
+                  <template slot-scope='scope'>
+                    <el-button type="text" size="small" @click="del(4,scope.$index)">删除</el-button>
                   </template>
                 </el-table-column>
                 <div slot="empty">
@@ -204,15 +266,38 @@
           <el-tab-pane label="开票信息" name="second">
             <div class="tabBox">
                <el-table :data="form.invoiceInfos" style="width: 100%" height="300">
-                <el-table-column prop="purchasingUnit" label="购货单位" show-overflow-tooltip>
+                <el-table-column prop="" label="购货单位" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.purchasingUnit"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="shippingAddress" label="交货地址" show-overflow-tooltip>
+                <el-table-column prop="" label="交货地址" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.shippingAddress"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="shippingMobile" label="手机号" show-overflow-tooltip>
+                <el-table-column prop="" label="手机号" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.shippingMobile"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="taxpayerRegistrationNumber" label="纳税人登记号" show-overflow-tooltip>
+                <el-table-column prop="" label="纳税人登记号" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.taxpayerRegistrationNumber"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="currency" label="币种" show-overflow-tooltip>
+                <el-table-column prop="" label="币种" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.currency"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="" width="100">
+                  <template slot="header">
+                    <el-button type="primary" size="small" @click="add(5)">新增</el-button>
+                  </template>
+                  <template slot-scope='scope'>
+                    <el-button type="text" size="small" @click="del(5,scope.$index)">删除</el-button>
+                  </template>
                 </el-table-column>
                 <div slot="empty">
                   无数据
@@ -223,11 +308,28 @@
           <el-tab-pane label="附件" name="fourth">
             <div class="tabBox">
               <el-table :data="form.files" style="width: 100%" height="300">
-                <el-table-column prop="title" label="标题" show-overflow-tooltip>
+                <el-table-column prop="" label="标题" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.title"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="type" label="类型" show-overflow-tooltip>
+                <el-table-column prop="" label="类型" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.type"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="uploadTime" label="上传时间" show-overflow-tooltip>
+                <el-table-column prop="" label="上传时间" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.uploadTime"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="" width="100">
+                  <template slot="header">
+                    <el-button type="primary" size="small" @click="add(6)">新增</el-button>
+                  </template>
+                  <template slot-scope='scope'>
+                    <el-button type="text" size="small" @click="del(6,scope.$index)">删除</el-button>
+                  </template>
                 </el-table-column>
                 <div slot="empty">
                   无数据
@@ -238,11 +340,28 @@
           <el-tab-pane label="销售数据" name="seven">
             <div class="tabBox">
               <el-table :data="form.sales" style="width: 100%" height="300">
-                <el-table-column prop="salesOrganize" label="公司代码" show-overflow-tooltip>
+                <el-table-column prop="" label="公司代码" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.salesOrganize"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="distributionChannel" label="分销渠道" show-overflow-tooltip>
+                <el-table-column prop="" label="分销渠道" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.distributionChannel"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="deliveryPlant" label="交货工厂" show-overflow-tooltip>
+                <el-table-column prop="" label="交货工厂" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.deliveryPlant"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="" width="100">
+                  <template slot="header">
+                    <el-button type="primary" size="small" @click="add(7)">新增</el-button>
+                  </template>
+                  <template slot-scope='scope'>
+                    <el-button type="text" size="small" @click="del(7,scope.$index)">删除</el-button>
+                  </template>
                 </el-table-column>
                 <div slot="empty">
                   无数据
@@ -254,14 +373,12 @@
       </div>
       <div class="sub">
         <el-button type="primary" size="small"  @click="commit" plain>提交</el-button>
-        <el-button type="primary" size="small" plain>取消</el-button>
+        <el-button type="primary" size="small" plain @click="goBack">取消</el-button>
       </div>
     </div>
   </div>
 </template>
-
 <script>
-  import formTest from "../../assets/js/formTest";
   import {getDealerInfo,updateDealerInfo} from '@/api/banner/banner.js'
   export default {
     name: "updateUserInfo",
@@ -278,33 +395,35 @@
       this.getDealerInfo()
     },
     methods: {
+      //删除行数据
       del(type,index){
         switch (type) {
           case 1:
             this.form.assetsInformations.splice(index,1)
             break;
           case 2:
-            this.form.basicContact.splice(index,1)
+            this.form.businessInformations.splice(index,1)
             break;
             case 3:
-            this.form.basicStructure.splice(index,1)
+            this.form.relationships.splice(index,1)
             break;
             case 4:
-            this.form.salesTeam.splice(index,1)
+            this.form.customerContacts.splice(index,1)
             break;
             case 5:
-            this.form.basicShip.splice(index,1)
+            this.form.invoiceInfos.splice(index,1)
             break;
             case 6:
-            this.form.sales.splice(index,1)
+            this.form.files.splice(index,1)
             break;
             case 7:
-            this.form.basicFile.splice(index,1)
+            this.form.sales.splice(index,1)
             break;
           default:
             break;
         }
       },
+      //新增行数据
       add(type){
         switch (type) {
           case 1:
@@ -317,9 +436,80 @@
               totalStaff:'',
             })
             break;
-        
+          case 2:
+            this.form.businessInformations.unshift({
+              businessYear:'',
+              productLine:'',
+              revenuePlOne:'',
+              revenuePlTwo:'',
+              revenuePlThree:'',
+            })
+            break;
+          case 3:
+            this.form.relationships.unshift({
+              corporateName:'',
+              corporateType:'',
+            })
+            break;
+          case 4:
+            this.form.customerContacts.unshift({
+              contactName:'',
+              mobile:'',
+              email:'',
+              department:'',
+              subDepartment:'',
+              position:'',
+            })
+            break;
+          case 5:
+            this.form.invoiceInfos.unshift({
+              purchasingUnit:'',
+              shippingAddress:'',
+              shippingMobile:'',
+              taxpayerRegistrationNumber:'',
+              currency:'',
+            })
+            break;
+          case 6:
+            this.form.files.unshift({
+              title:'',
+              type:'',
+              uploadTime:'',
+            })
+            break;
+          case 7:
+            this.form.sales.unshift({
+              salesOrganize:'',
+              distributionChannel:'',
+              deliveryPlant:'',
+            })
+            break;
           default:
             break;
+        }
+      },
+      //监听col展开
+      handleChange(val){
+        console.log(val)
+      },
+      //返回按钮
+      goBack(){
+        window.history.go(-1)
+      },
+      //切换tab
+      handleClick(tab, event) {
+        console.log(tab, event);
+      },
+      // 表单验证
+      submitForm(formName) { },
+      resetForm(formName) { },
+      //提交
+      async commit() {
+        const res = await updateDealerInfo(this.form)
+        console.log('修改结果',res);
+        if(res){
+          this.$message.success('新增成功')
+          this.goBack()
         }
       },
       async getDealerInfo(){
@@ -329,79 +519,11 @@
           this.form = res.data.data 
         }
       },
-      handleChange(val){
-        console.log(val)
-      },
-      goBack(){
-        window.history.go(-1)
-      },
-      handleClick(tab, event) {
-        console.log(tab, event);
-      },
-      changeCon() { },
-      changeSign(val) { },
-      // 表单验证
-      submitForm(formName) { },
-      submitForm1(formName) { },
-      resetForm(formName) { },
-      resetForm1(formName) { },
-      qx() { },
-      //发送测试短信
-      send(shopInfoId, mobiles, content, noticeRegisterId) { },
-      // 清空表单
-      clear() { },
-      //获取主题列表
-      getTheme(shopid) { },
-      //新增营销活动
-      submit() { },
-      change() { },
-      //roi时间选择事件
-      selRuleFormTime() { },
-      //获取短信签名列表
-      getSignatures(shopInfoId) { },
-      getSnapshots(id) { },
-
-      //获取用户店铺列表
-      getShopList() { },
-
-      // 点击弹出测试短信框
-      cs() {
-        this.csdialogVisible = true;
-      },
-      handleSelect(item) {
-        console.log(item);
-      },
-      //创建主题按钮
-      create() {
-        this.dialogVisible = true;
-      },
-      // 点击返回按钮
-      back() {
-        window.history.back();
-      },
-      back1() {
-        this.dialogVisible = false;
-      },
-
-      // 创建主题和测试短信关闭
-      close() {
-        this.dialogVisible = false;
-        this.csdialogVisible = false;
-      },
-      //提交
-      async commit() {
-        const res = await updateDealerInfo(this.form)
-        console.log('修改结果',res);
-        
-      }
     }
   };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
   $sc: 12;
-
   .updateUserInfo {
     overflow-y: auto;
     height: 100%;
