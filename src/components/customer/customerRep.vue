@@ -251,13 +251,31 @@ export default {
           // })
         });
     },
+    
+    check(value,rule,callback){
+      console.log(value,rule,callback)
+      if(!value){
+        return '请输入客户名'
+      }else{
+        return true
+      }
+    },
     report(row){
-      this.$router.push({
-        name:'rep',
-        query:{
-          id:row.id
-        }
-      })
+      this.$prompt('请输入报备客户名', '报备检查', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputValidator:this.check,
+        }).then(({ value }) => {
+          this.$router.push({
+            name:'rep',
+            query:{
+              name:value
+            }
+          })
+        }).catch(() => {
+            
+        });
+      
     },
 
     change() {

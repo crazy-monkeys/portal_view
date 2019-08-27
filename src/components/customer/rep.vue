@@ -484,7 +484,7 @@
 </template>
 
 <script>
-import {detail,add} from "@/api/customer/query.js";
+import {detail,add,checkCust} from "@/api/customer/query.js";
 import {stringify} from "qs";
 
 export default {
@@ -563,9 +563,10 @@ export default {
   },
   created(){
     this.getCity()
-    if(this.queryId){
-      this.getDetail()
-    }
+    // if(this.queryId){
+    //   this.getDetail()
+    // }
+    this.checkCust()
   },
   watch:{
     workAddress:{
@@ -581,11 +582,26 @@ export default {
     },
   },
   computed:{
+    name(){
+      return this.$route.query.name
+    },
     queryId(){
       return this.$route.query.id
     },
   },
   methods: {
+    async checkCust(){
+      const data ={
+        name:this.name
+      }
+       const res = await checkCust(data);
+       if(res){
+         this.form = res.data.data
+       }else{
+         this.$router.push({name:'customerRep'})
+       }
+
+    },
     httpReq1(val){
       console.log(val)
       // console.log(this.form.basicFile.length - this.rowData.index-1)

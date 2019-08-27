@@ -32,3 +32,10 @@ export const ret = data => {
         return request('get', `${serverUrl}/customer/reject?${stringify(data)}`).then(result => result)
     }
     // boundary=----WebKitFormBoundaryooHyQ87B5UJFDb9I
+
+
+
+//新增客户
+export const checkCust = data => {
+    return request('get', `${serverUrl}/customer/check/${data.name}`).then(result => result)
+}
