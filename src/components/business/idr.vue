@@ -363,12 +363,12 @@ export default {
     },
     add() {
       this.$router.push({
-        name: "cbtadd"
+        name: "idradd"
       });
     },
     mx(row) {
       this.$router.push({
-        name: "cbtmx",
+        name: "idrmx",
         query:{
           id:row.id,
           type:row.type

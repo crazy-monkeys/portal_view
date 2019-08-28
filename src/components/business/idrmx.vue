@@ -1,6 +1,6 @@
 <template>
   <!-- 添加新增控件 -->
-  <div class="cbtadd">
+  <div class="idrmx">
     <div class="head clear">
       <el-page-header @back="back" content="明细"></el-page-header>
     </div>
@@ -155,7 +155,7 @@ import formTest from "../../assets/js/formTest";
 import { detail } from "@/api/business/idr.js";
 
 export default {
-  name: "cbtadd",
+  name: "idrmx",
   data() {
     return {
       activeName: "first",
@@ -229,7 +229,7 @@ export default {
 <style lang='scss'>
 $sc: 12;
 
-.cbtadd {
+.idrmx {
   height: 100%;
   overflow-y: auto;
   padding: 0 20px;

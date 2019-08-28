@@ -196,14 +196,14 @@ export default new Router({
                     component: resolve => require(['@/components/sales/agentRateDefend'], resolve),
                 },
                 {
-                    path: 'sales/sales-index',
-                    name: 'SalesList',
-                    component: resolve => require(['@/components/sales/sales-index'], resolve),
+                    path: 'business/rebate/list',
+                    name: 'customerRebate',
+                    component: resolve => require(['@/components/business/customerRebate'], resolve),
                 },
                 {
-                    path: 'sales/rebateDetail',
+                    path: 'business/rebateDetail',
                     name: 'rebateDetail',
-                    component: resolve => require(['@/components/sales/rebateDetail'], resolve),
+                    component: resolve => require(['@/components/business/rebateDetail'], resolve),
                 },
 
                 {
@@ -256,18 +256,24 @@ export default new Router({
                 },
                 {
                     path: 'business/idr/list',
-                    name: 'cbt',
-                    component: resolve => require(['@/components/customer/cbt'], resolve),
+                    name: 'idr',
+                    component: resolve => require(['@/components/business/idr'], resolve),
                 },
                 {
-                    path: 'cbtadd',
-                    name: 'cbtadd',
-                    component: resolve => require(['@/components/customer/cbtadd'], resolve),
+                    path: 'business/idr/add',
+                    name: 'idradd',
+                    component: resolve => require(['@/components/business/idradd'], resolve),
+                },
+
+                {
+                    path: 'business/idr/detail',
+                    name: 'idrmx',
+                    component: resolve => require(['@/components/business/idrmx'], resolve),
                 },
                 {
-                    path: 'cbtmx',
-                    name: 'cbtmx',
-                    component: resolve => require(['@/components/customer/cbtmx'], resolve),
+                    path: 'business/rebate/query',
+                    name: 'rebateQuery',
+                    component: resolve => require(['@/components/business/rebateQuery'], resolve),
                 },
                 //样本管理
                 //短信营销

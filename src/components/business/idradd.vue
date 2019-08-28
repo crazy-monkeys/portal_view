@@ -1,6 +1,6 @@
 <template>
   <!-- 添加新增控件 -->
-  <div class="cbtadd">
+  <div class="idradd">
     <div class="head clear">
       <el-page-header @back="back" content="新建">
     </el-page-header>
@@ -178,6 +178,7 @@
         <el-button size="small" type="primary" @click="back" plain>取消</el-button>
       </div>
     </div>
+    
   </div>
 </template>
 
@@ -185,7 +186,7 @@
   import {serverUrl} from "@/axios/request.js";
 import { getIn,getCode,commit} from '@/api/business/idr.js'
 export default {
-  name: "cbtadd",
+  name: "idradd",
   data() {
     return {
       serverUrl:serverUrl,
@@ -365,7 +366,7 @@ export default {
 <style lang='scss'>
 $sc: 12;
 
-.cbtadd {
+.idradd {
   height: 100%;
   overflow-y: auto;
   padding: 0 20px ;
