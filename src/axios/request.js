@@ -53,8 +53,6 @@ axios.interceptors.request.use(
         return config
     },
     (error, response) => {
-        endLoading()
-        cancelPending(response.config)
         console.log(error)
         console.log(response)
     }
@@ -100,7 +98,9 @@ export const request = (method, url, data = {}, header = {}) => {
             if (err.response) {
                 // The request was made and the server responded with a status code
                 // that falls out of the range of 2xx
-                endLoading()
+                if (err.status == 404) {
+                    Message.error('错误的请求')
+                }
                 console.log(err.response.data);
                 Message.error(err.response.data.msg)
                 MessageBox.alert('会话已经过期', '提示', {
@@ -110,7 +110,8 @@ export const request = (method, url, data = {}, header = {}) => {
                         // cancelButtonText: '取消'
                     })
                     .then(() => {
-                        window.location.href(serverUrl)
+                        console.log(window)
+                        window.location.href = '/'
                     })
                     .catch(action => {
 

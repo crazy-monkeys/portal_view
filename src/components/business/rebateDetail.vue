@@ -32,10 +32,10 @@
                 <el-table-column prop="shipmentYearMonth" width='150' label="出货年月" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="shipmentDate" width='150' label="出货日期" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="orderMonth" width='150' label="订单年月" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150'  label="出货序号"  show-overflow-tooltip></el-table-column>
+                <el-table-column prop="salesReportId" width='150'  label="出货序号"  show-overflow-tooltip></el-table-column>
                 <el-table-column prop="priceStrategyNumber" width='150'  label="价格策略序号"  show-overflow-tooltip></el-table-column>
                 <el-table-column prop="shipmentCompany" width='150'  label="出货公司"  show-overflow-tooltip></el-table-column>
-                <el-table-column prop="" width='150'  label="Rebate 计算类型"  show-overflow-tooltip></el-table-column>
+                <el-table-column prop="rebateType" width='150'  label="Rebate 计算类型"  show-overflow-tooltip></el-table-column>
                 <div slot="empty">
                   <p>无数据</p>
                 </div>

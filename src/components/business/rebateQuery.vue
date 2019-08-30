@@ -19,6 +19,18 @@
           <el-form-item label="客户">
             <el-input size='small' v-model="form.customerName" placeholder="请输入"></el-input>
           </el-form-item>
+          <el-form-item label="执行方">
+            <el-input size='small' v-model="form.executor" placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="执行方式">
+            <el-select v-model="form.executeStyle" size="small"> 
+              <el-option label="方式1" value='1'></el-option> 
+              <el-option label="方式2" value='2'></el-option> 
+            </el-select>
+          </el-form-item>
+          <el-form-item label="通知日期" class="date">
+            <Daterange @data='watchTime' :resetDataCreate='resetData' />
+          </el-form-item>
           <el-form-item label="状态">
             <el-select v-model="form.status" size="small"> 
               <el-option label="审核中" value='1'></el-option> 
@@ -101,12 +113,18 @@
 </template>
 
 <script>
+import Daterange from "../com/date";
+
 import {serverUrl} from "@/axios/request.js";
 import {queryList,send} from '@/api/business/rebate.js'
   export default {
     name: 'rebateQuery',
+    components:{
+      Daterange
+    },
     data() {
       return {
+      resetData:false,
       auth:sessionStorage.getItem('data'),
         serverUrl:serverUrl,
         rules:{},
@@ -120,6 +138,10 @@ import {queryList,send} from '@/api/business/rebate.js'
           dealerName:'',
           customerName:'',
           status:'',
+          executor:'',
+          executeStyle:'',
+          noticeBeginDate:'',
+          noticeEndDate:''
         },
         dialogVisible: false,
         sendVis: false,
@@ -140,6 +162,12 @@ import {queryList,send} from '@/api/business/rebate.js'
     watch: {
     },
     methods: {
+      watchTime(data){
+        console.log(data)
+        this.form.noticeBeginDate= data.startTime
+        this.form.noticeEndDate = data.endTime
+        this.resetData = false
+      },
       uploadSuccess(res, file, fileList){
         console.log(res)
         if(res.data.code==1){
@@ -190,6 +218,10 @@ import {queryList,send} from '@/api/business/rebate.js'
           customerName:this.form.customerName,
         //状态
           status:this.form.status,
+           executor:this.form.executor,
+          executeStyle:this.form.executeStyle,
+          noticeBeginDate:this.form.noticeBeginDate,
+          noticeEndDate:this.form.noticeEndDate,
         }
         const res = await queryList(data);
         console.log('rebate查询列表',res);
@@ -214,7 +246,10 @@ import {queryList,send} from '@/api/business/rebate.js'
           customerName:'',
         //状态
           status:'',
+           executor:'',
+          executeStyle:'',
         }
+        this.resetData = true
         this.search()
       },
       change() {

@@ -30,7 +30,7 @@
             <el-input size="small" v-model="form.company" disabled></el-input>
           </el-form-item>
           <el-form-item label="申请时间" class="date">
-            <el-date-picker size="small" v-model="form.applyTime" type="date" placeholder="选择日期"></el-date-picker>
+            <el-date-picker size="small" v-model="form.applyTime" type="date"  placeholder="选择日期"></el-date-picker>
           </el-form-item>
           <el-form-item label="币种">
             <el-select v-model="form.currency" size="small" filterable placeholder="请选择">

@@ -80,6 +80,10 @@
             </el-table-column>
             <el-table-column prop="outCustomerName" label="外部客户" show-overflow-tooltip width="150">
             </el-table-column>
+            <el-table-column prop="currentReviewer" label="当前审批人" show-overflow-tooltip width="150">
+            </el-table-column>
+            <el-table-column prop="reviewedPeople" label="下一位审批人" show-overflow-tooltip width="150">
+            </el-table-column>
             <el-table-column width='150' label="操作" fixed='right'>
               <template slot-scope='scope'>
                 <el-button type='text'  @click='mx(scope.row)'>明细</el-button>

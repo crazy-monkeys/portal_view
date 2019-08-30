@@ -38,17 +38,36 @@
               <el-form-item label="公司资产" >
               <el-input type="text" size="small" v-model="form.corportaeAssets"> </el-input>
               </el-form-item>
-              <el-form-item label="注册日期">
-                <el-input type="text" size="small" v-model="form.registTime"></el-input>
+              <el-form-item label="注册日期" class="date">
+                <el-date-picker size="small" v-model="form.registTime" type="date" format='yyyy-MM-dd' value-format="timestamp"   placeholder="选择日期"></el-date-picker>
               </el-form-item>
               <el-form-item label="公司人数">
+
                 <el-input type="text" size="small" v-model="form.staffNumber"></el-input>
               </el-form-item>
               <el-form-item label="注册地址" class="txt">
-                <el-input type="text" size="small" v-model="form.registAdress"></el-input>
+                <el-cascader
+                  style="width:200"
+                  v-model="form.reg"
+                  :options="address"
+                  separator='-'
+                  size="small"
+                  :props="prop"
+                  placeholder="请选择省市区">
+                </el-cascader>
+                <el-input type="text" size="small" class="address" v-model="form.registAddress"></el-input>
               </el-form-item>
               <el-form-item label="办公地址" class="txt">
-                <el-input type="text" size="small" v-model="form.workAdress"></el-input>
+                <el-cascader
+                  style="width:200"
+                  v-model="form.work"
+                  :options="address"
+                  separator='-'
+                  size="small"
+                  :props="prop"
+                  placeholder="请选择省市区">
+                </el-cascader>
+                <el-input type="text" size="small" class="address" v-model="form.workAddress"></el-input>
               </el-form-item>
             </el-collapse-item>
             <el-collapse-item name="3">
@@ -58,14 +77,23 @@
               <el-form-item label="银行名称">
                 <el-input type="text" size="small" v-model="form.custBankInfo.bankName"></el-input>
               </el-form-item>
-              <el-form-item label="银行地址">
-                <el-input type="text" size="small" v-model="form.custBankInfo.bankDetailInfo"></el-input>
-              </el-form-item>
               <el-form-item label="账号">
                 <el-input type="text" size="small" v-model="form.custBankInfo.bankAccount"></el-input>
               </el-form-item>
               <el-form-item label="银行识别码">
                 <el-input type="text" size="small" v-model="form.custBankInfo.bankBic"></el-input>
+              </el-form-item>
+              <el-form-item label="银行地址" class="txt">
+                <el-cascader
+                  style="width:200"
+                  v-model="form.custBankInfo.bankCountry"
+                  :options="address"
+                  separator='-'
+                  size="small"
+                  :props="prop"
+                  placeholder="请选择省市区">
+                </el-cascader>
+                <el-input type="text" size="small" class="address" v-model="form.custBankInfo.bankDetailInfo"></el-input>
               </el-form-item>
             </el-collapse-item>
             <el-collapse-item name="4">
@@ -384,6 +412,12 @@
     name: "updateUserInfo",
     data() {
       return {
+        prop:{
+        label:'name',
+        value:'name',
+        children:'list',
+      },
+        address:[],
         activeName1:['1','2','3','4','5'],
         form: {
           custBankInfo:{}
@@ -392,9 +426,29 @@
       }
     },
     created(){
+      this.getCity()
       this.getDealerInfo()
+      
     },
     methods: {
+      getCity() {
+      this.$http({
+        method: "get",
+        url: "static/cityL3.json"
+      })
+        .then(res => {
+          console.log("城市list", res);
+          this.address = res.data;
+            
+        })
+        .catch(error => {
+          console.log(error);
+          alert("系统异常");
+        });
+    },
+      handleChange(value) {
+        console.log(value);
+      },
       //删除行数据
       del(type,index){
         switch (type) {
@@ -505,6 +559,10 @@
       resetForm(formName) { },
       //提交
       async commit() {
+        this.form.addresses=[
+          {country:this.form.work,addressDetail:this.form.workAddress,addressType:'A02'},
+          {country:this.form.reg,addressDetail:this.form.registAddress,addressType:'A01'}
+        ]
         const res = await updateDealerInfo(this.form)
         console.log('修改结果',res);
         if(res){
@@ -517,6 +575,16 @@
         console.log('代理商信息',res)
         if(res){
           this.form = res.data.data 
+          this.form.custBankInfo.bankCountry = JSON.parse(res.data.data.custBankInfo.bankCountry)
+          res.data.data.addresses.forEach(item=>{
+            if(item.addressType=='A02'){
+              this.form.work = JSON.parse(item.country)
+              this.form.workAddress = item.addressDetail
+            }else{
+              this.form.reg = JSON.parse(item.country)
+              this.form.registAddress= item.addressDetail
+            }
+          })
         }
       },
     }
@@ -556,6 +624,13 @@
           }
           .txt{
             width: 100%;
+            .el-cascader{
+              width: 200px;
+              margin-right: 10px;
+            }
+            .address{
+              width: 414px;
+            }
           }
 
         }
