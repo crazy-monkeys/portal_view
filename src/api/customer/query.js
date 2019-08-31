@@ -18,7 +18,7 @@ export const del = data => {
 
 //新增客户
 export const add = data => {
-    return request('post', `${serverUrl}/customer/info`, data, { 'Content-Type': 'multipart/form-data' }).then(result => result)
+    return request('post', `${serverUrl}/customer/report`, data, { 'Content-Type': 'multipart/form-data' }).then(result => result)
 }
 
 
