@@ -12,8 +12,7 @@
       
       <div class="box">
         <div class="btns">
-          <!-- <el-button size="small" type="primary" @click="download">下载模版</el-button> -->
-          <!-- <el-button size="small" type="primary" @click="upload">上传</el-button> -->
+          <el-button size="small" type="primary" @click="download">下载模版</el-button>
           <el-upload
           style="display:inline-block"
                 class="upload-demo"
@@ -80,12 +79,42 @@
     watch: {
     },
     methods: {
+       download() {
+          this.$http({
+            method: "get",
+            url: "" + process.env.API_ROOT + "/agencyRate/download",
+            responseType: "arraybuffer",
+            headers:{
+              'Authorization': sessionStorage.getItem('data'),
+            }
+          })
+            .then(res => {
+              console.log(res.data);
+              const blob = new Blob([res.data], {
+                type: "application/vnd.ms-excel"
+              });
+              const blobUrl = window.URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              document.body.appendChild(a);
+              a.style.display = "none";
+              a.download = "代理商费率模版.xlsx";
+              a.href = blobUrl;
+              a.click();
+              document.body.removeChild(a);
+            })
+            .catch(err => {
+              console.log(err);
+              alert("网络异常");
+            });
+      },
       suc(val){
         console.log(val)
-        this.$message.success('上传成功')
         if(val.code==1){
+          this.$message.success('上传成功')
           this.isEmpty = false
           this.tableData = val.data
+        }else{
+          this.$message.error(val.msg)
         }
       },
       async sure(){
