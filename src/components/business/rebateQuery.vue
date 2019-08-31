@@ -170,10 +170,17 @@ import {queryList,send} from '@/api/business/rebate.js'
       },
       uploadSuccess(res, file, fileList){
         console.log(res)
-        if(res.data.code==1){
+        if(res.code==1){
           this.search()
+          this.$message({
+            type:'success',
+            message:'上传成功'
+          })
         }else{
-          this.$message.error(res.data.msg)
+          this.$message({
+            type:'error',
+            message:res.msg
+          })
         }
       },
       submitForm(formName){
