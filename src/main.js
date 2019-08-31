@@ -3,6 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import moment from 'moment'
+Vue.use(moment)
+Vue.prototype.$moment = moment;
+
 //引入echarts
 import VCharts from 'v-charts'
 import echarts from "echarts"
