@@ -475,7 +475,7 @@
         </el-tabs>
       </div>
       <div class="sub">
-        <el-button type="primary" size="small" plain @click="save">保存</el-button>
+        <!-- <el-button type="primary" size="small" plain @click="save">保存</el-button> -->
         <el-button type="primary" size="small" plain @click="sub">提交</el-button>
         <el-button type="primary" size="small" plain @click="cancel">取消</el-button>
       </div>
@@ -498,7 +498,7 @@ export default {
         children:'list',
       },
       form:{
-        
+        custName:'',
         advantageIntroduction: "",
         advantageValue: "",
         basicAddress: [],
@@ -595,8 +595,9 @@ export default {
         name:this.name
       }
        const res = await checkCust(data);
+       console.log('检查客户',res)
        if(res){
-         this.form = res.data.data
+         this.form.custName = res.data.data.custName
        }else{
          this.$router.push({name:'customerRep'})
        }
@@ -711,7 +712,6 @@ export default {
           })
           break;
           case 7:
-            
           this.form.basicFile.push({
             'index':this.form.basicFile.length,
             "fileType":'',
