@@ -42,7 +42,6 @@
                 <el-date-picker size="small" v-model="form.registTime" type="date" format='yyyy-MM-dd' value-format="timestamp"   placeholder="选择日期"></el-date-picker>
               </el-form-item>
               <el-form-item label="公司人数">
-
                 <el-input type="text" size="small" v-model="form.staffNumber"></el-input>
               </el-form-item>
               <el-form-item label="注册地址" class="txt">
