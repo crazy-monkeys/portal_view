@@ -34,9 +34,12 @@
       <div class="box">
         <div class="btns">
           <el-button class="add" size='small' type='primary' @click='create' >新建</el-button>
+          <el-button class="add" size='small' type='primary' @click='add' :disabled="multipleSelection.length==0 ? true: false" >生成报价单</el-button>
         </div>
         <div class="tab"  >
-          <el-table :data="tableData" border style="width: 100%" height="100%">
+          <el-table :data="tableData" border style="width: 100%" height="100%" @row-click='rowClick' @selection-change="handleSelectionChange">
+            <el-table-column type="selection" width='60' >
+            </el-table-column>
             <el-table-column type="index" width='100' label="序号" :index='q'>
             </el-table-column>
             <el-table-column prop="applyTime"  width='100' show-overflow-tooltip label="申请时间">
@@ -76,7 +79,7 @@
             </el-table-column>
             <el-table-column width="150" label="操作" fixed='right'>
               <template slot-scope='scope'>
-                <el-button type='text'  size='small' @click="add">生成报价单</el-button>
+                <!-- <el-button type='text'  size='small' @click="add">生成报价单</el-button> -->
                 <el-button type='text' size='small' @click='del(scope.row.id)'>删除</el-button>
               </template>
             </el-table-column>
@@ -114,7 +117,7 @@
         </el-form>
       </div>
     </el-dialog>
-    <Tem ref='print' ></Tem>
+    <Tem ref='print' :table='multipleSelection' :queryPrice='queryPrice'></Tem>
   </div>
 </template>
 
@@ -129,6 +132,9 @@
     },
   data() {
     return {
+      queryPrice:'',
+      multipleSelection:[],
+      rowData:{},
       rules:{
         productModel: [{ required: true, trigger: "change" ,message:'请输入产品型号'}],
       },
@@ -172,6 +178,13 @@
 
   },
   methods: {
+    handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
+    rowClick(row){
+      console.log(row)
+      this.rowData = row
+    },
     async delEnquiry(id){
       const data ={
         id:id
@@ -248,8 +261,34 @@
           this.total = res.data.data.total
         }
       },
+      check(value,rule,callback){
+      console.log(value,rule,callback)
+        if(!value){
+          return '请输入询价方'
+        }else{
+          return true
+        }
+      },
       add(){
-        this.$print(this.$refs.print)
+        if(this.multipleSelection.filter(item=>{return item.approvalStatus!='pass'}).length!=0){
+          this.$message.error('只能生成审批通过的报价单')
+        }else{
+          this.$prompt('请输入询价方', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            inputValidator:this.check,
+          }).then(({ value }) => {
+            this.queryPrice = value
+            this.$nextTick(()=>{
+            this.$print(this.$refs.print)
+
+            })
+          }).catch(() => {
+              
+          });
+        }
+       
+      
       },
       create(){
         this.dialogCreate = true
