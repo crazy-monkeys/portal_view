@@ -66,7 +66,7 @@
             <el-input type="textarea" v-model="form.remark" :rows="2" placeholder resize="none"></el-input>
           </el-form-item>
           <el-form-item label="附件" class="txt">
-            <el-upload style='display:inline-block' class="upload-demo" :before-upload="beforeUpload1" ref='upload' name='file'  :on-success='uploadSuccess' :action='serverUrl+"/business/idr/upload"' :file-list="form.files">
+            <el-upload style='display:inline-block' class="upload-demo" :before-upload="beforeUpload1" ref='upload' name='file'  :on-success='uploadSuccess' :action='serverUrl+"/business/idr/upload"' :file-list="fileList" :on-remove='remove'>
             <el-button size="small" type="primary" >上传文件</el-button>
           </el-upload>
           </el-form-item>
@@ -189,6 +189,7 @@ export default {
   name: "idradd",
   data() {
     return {
+      fileList:[],
       serverUrl:serverUrl,
       auth:sessionStorage.getItem('data'),
       tableData:[
@@ -228,12 +229,22 @@ export default {
       handler:function(n,o){
         this.form.company = this.options2.filter(item=>{if(item.groupCode==n){return item}})[0].groupName
       }
+    },
+    'form.files':{
+      handler:function(n,o){
+        this.fileList = n.map(item=>{return {name:item.fileName,path:item.filePath,fileType:item.fileType}})
+      },
+      deep:true
     }
   },
   created(){
     this.getData()
   },
   methods: {
+    remove(file,fileList){
+      console.log(file,fileList)
+      this.form.files=fileList.map(item=>{return {fileName:item.name,filePath:item.path,fileType:item.fileType}})
+    },
     beforeUpload1(file){
       let data = new FormData()
       data.append('file',file)
@@ -251,7 +262,8 @@ export default {
         console.log(res)
         if(res.data.code==1){
           this.$message.success('上传成功')
-          this.form.files = [res.data.data].map(item=>{return {name:item.fileName,path:item.filePath,fileType:1}})
+          this.form.files.push(res.data.data)
+          console.log(this.form.file)
         }else{
           this.$message.error(res.data.msg)
         }
@@ -286,6 +298,8 @@ export default {
           if(this.form.type==3){
             this.form.rList = res.data.data.idrList
           }
+          this.form.files = this.form.files.filter((item)=>{return item.fileType==1})
+          this.form.files.push(res.data.data)
         }else{
           this.$message.error(res.data.msg)
         }
@@ -314,7 +328,15 @@ export default {
               const a = document.createElement("a");
               document.body.appendChild(a);
               a.style.display = "none";
-              a.download = "模版.xlsx";
+              if(this.form.type ==1){
+                a.download = "保价.xlsx";
+              }
+              if(this.form.type ==2){
+                a.download = "差价补偿.xlsx";
+              }
+              if(this.form.type ==3){
+                a.download = "退换货.xlsx";
+              }
               a.href = blobUrl;
               a.click();
               document.body.removeChild(a);
