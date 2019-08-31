@@ -15,19 +15,12 @@
           <el-row :gutter="22">
             <el-col :span="6">
               <el-form-item label="客户名称">
-            <el-input size="small" v-model="form.custName"></el-input>
+            <el-input size="small" v-model="form.custName" disabled></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="客户类型">
-            <el-select v-model="form.custType" size="small" filterable placeholder="请选择">
-              <el-option
-                v-for="item in businessTypes"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
+              <el-form-item label="客户英文名">
+            <el-input size="small" v-model="form.custEnName" ></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
@@ -58,8 +51,8 @@
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="传真">
-            <el-input size="small" v-model="form.custFax"></el-input>
+              <el-form-item label="研发人数">
+            <el-input size="small" v-model="form.developersNumber"></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
@@ -73,13 +66,7 @@
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="母公司">
-            <el-input size="small" v-model='form.corporateParents'></el-input>
-          </el-form-item>
-            </el-col>
-            
-            <el-col :span="6">
-              <el-form-item label="公司总机">
+              <el-form-item label="电话">
             <el-input size="small" v-model='form.custPhoneNo'></el-input>
           </el-form-item>
             </el-col>
@@ -144,35 +131,36 @@
           <el-form-item label="业务介绍" class="txt">
             <el-input type="textarea" v-model="form.businessIntroduction" :rows="2" placeholder resize="none"></el-input>
           </el-form-item>
+          
         </el-form>
       </div>
       <div class="tab">
         <el-tabs v-model="activeName"  @tab-click="handleClick">
           <el-tab-pane label="开票信息" name='first'>
             <div class="tabBox">
-              <el-table :data="form.basicInvoice" style="width: 100%" height="300">
+              <el-table :data="form.custInvoice" style="width: 100%" height="300">
 
-                <el-table-column  label="购货单位" show-overflow-tooltip>
+                <el-table-column  label="购货单位" >
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.purchasingUnit"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="收货地址" show-overflow-tooltip>
+                <el-table-column prop="" label="收货地址" >
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.shippingAddress"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="收货手机号" show-overflow-tooltip>
+                <el-table-column prop="" label="收货手机号" >
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.shippingMobile"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" show-overflow-tooltip label="纳税人登记号">
+                <el-table-column prop=""  label="纳税人登记号">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.taxpayerRegistrationNumber"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="currency" show-overflow-tooltip label="币种">
+                <el-table-column prop="currency"  label="币种">
                   <template slot-scope="scope">
                     <el-select size="small" v-model="scope.row.currency">
                       <el-option value="RMB" label="RMB"></el-option>
@@ -181,7 +169,7 @@
                     </el-select>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="" show-overflow-tooltip>
+                <el-table-column prop="" label="" >
                   <template slot="header">
                     <el-button type="primary" size="small" @click="addRow(1)">新增</el-button>
                   </template>
@@ -197,8 +185,8 @@
           </el-tab-pane>
           <el-tab-pane label="联系人" name='aa'>
             <div class="tabBox">
-              <el-table :data="form.basicContact" style="width: 100%" height="300">
-                <el-table-column prop="contactType" label="联系人类型" show-overflow-tooltip>
+              <el-table :data="form.custContact" style="width: 100%" height="300">
+                <el-table-column prop="contactType" label="联系人类型" >
                   <template slot-scope="scope">
                     <el-select size="small" v-model="scope.row.contactType">
                       <el-option value="C01" label="出货数据确认人"></el-option>
@@ -206,32 +194,32 @@
                     </el-select>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="姓名" show-overflow-tooltip>
+                <el-table-column prop="" label="姓名" >
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.contactName"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="部门" show-overflow-tooltip>
+                <el-table-column prop="" label="部门" >
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.contactDepartment"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" show-overflow-tooltip label="职位">
+                <el-table-column prop=""  label="职位">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.contactPosition"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" show-overflow-tooltip label="联系方式">
+                <el-table-column prop=""  label="联系方式">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.contactMobile"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" show-overflow-tooltip label="邮箱">
+                <el-table-column prop=""  label="邮箱">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.contactEmail"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column  show-overflow-tooltip label="是否关键决策人">
+                <el-table-column  label="是否关键决策人">
                   <template slot-scope="scope">
                     <el-select size="small" v-model="scope.row.isDecisionMaker">
                       <el-option :value="1" label="是"></el-option>
@@ -239,12 +227,8 @@
                     </el-select>
                   </template>
                 </el-table-column>
-                <el-table-column  show-overflow-tooltip label="股东占比">
-                  <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.equityRatio"></el-input>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="t4" label="" show-overflow-tooltip>
+               
+                <el-table-column prop="t4" label="" >
                   <template slot="header">
                     <el-button type="primary" size="small" @click="addRow(2)">新增</el-button>
                   </template>
@@ -258,22 +242,17 @@
               </el-table>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="客户层次结构" name="aaa">
+          <el-tab-pane label="股权结构" name="aaa">
             <div class="tabBox">
-              <el-table :data="form.basicStructure" style="width: 100%" height="300">
-                <el-table-column prop="" label="名称" show-overflow-tooltip>
+              <el-table :data="form.custStructure" style="width: 100%" height="300">
+                <el-table-column prop="" label="股东名称" >
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.corporateStructureName"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="地址" show-overflow-tooltip>
+                <el-table-column prop="" label="股东占比" show-overflow-tooltip>
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.corporateStructureAddress"></el-input>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="" label="主要联系人" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.isDefaultContact"></el-input>
                   </template>
                 </el-table-column>
                 <el-table-column label="" show-overflow-tooltip>
@@ -327,7 +306,7 @@
           </el-tab-pane>
           <el-tab-pane label="关系" name="zzz">
             <div class="tabBox">
-              <el-table :data="form.basicShip" style="width: 100%" height="300">
+              <el-table :data="form.custShip" style="width: 100%" height="300">
                 <el-table-column prop="corporateName" label="名称" show-overflow-tooltip>
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.corporateName"></el-input>
@@ -358,62 +337,76 @@
           <el-tab-pane label="销售数据" name="a">
             <div class="tabBox">
               <el-table :data="form.sales" style="width: 100%" height="300">
-                <el-table-column prop="" label="销售组织" show-overflow-tooltip>
+                <el-table-column prop="" label="公司代码" >
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.salesOrganize"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="分销渠道" show-overflow-tooltip>
+                <el-table-column prop="" label="分销渠道" >
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.distributionChannel"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="产品组" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.productGroup"></el-input>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="" label="货币" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.currency"></el-input>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="" label="装运条件" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.shippingConditions"></el-input>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="" label="交货工厂" show-overflow-tooltip>
+             
+                <el-table-column prop="" label="交货工厂">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.deliveryPlant"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="最大部分交货" show-overflow-tooltip>
+            
+                <el-table-column prop="t4" label=""  fixed="right" width="100">
+                  <template slot="header">
+                    <el-button type="primary" size="small" @click='addRow(6)'>新增</el-button>
+                  </template>
                   <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.maxPartialDelivery"></el-input>
+                    <el-button type="text" size="small" @click="delRow(6,scope.$index)">删除</el-button>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="内部客户" show-overflow-tooltip>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="展锐产品型号" name="a1111">
+            <div class="tabBox">
+              <el-table :data="form.sales" style="width: 100%" height="300">
+                <el-table-column prop="" label="物料" >
                   <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.internalCustomers"></el-input>
+                    <el-input size="small" v-model="scope.row.salesOrganize"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="账户分配组" show-overflow-tooltip>
+                <el-table-column prop="" label="月份一" >
                   <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.accountGroup"></el-input>
+                    <el-input size="small" v-model="scope.row.distributionChannel"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="客户组" show-overflow-tooltip>
+                <el-table-column prop="" label="月份二" >
                   <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.custGroup"></el-input>
+                    <el-input size="small" v-model="scope.row.distributionChannel"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="税分类" show-overflow-tooltip>
+                <el-table-column prop="" label="月份三" >
                   <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.taxClassification"></el-input>
+                    <el-input size="small" v-model="scope.row.distributionChannel"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="t4" label="" show-overflow-tooltip fixed="right" width="100">
+                <el-table-column prop="" label="月份四" >
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.distributionChannel"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="月份五" >
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.distributionChannel"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="月份六" >
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.distributionChannel"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="t4" label=""  fixed="right" width="100">
                   <template slot="header">
                     <el-button type="primary" size="small" @click='addRow(6)'>新增</el-button>
                   </template>
@@ -429,7 +422,7 @@
           </el-tab-pane>
            <el-tab-pane label="附件" name="fourth">
             <div class="tabBox">
-              <el-table :data="form.basicFile" style="width: 100%" height="300" @row-click='rowClick'>
+              <el-table :data="form.custFile" style="width: 100%" height="300" @row-click='rowClick'>
                 <el-table-column type="index"  label="" v-if='false' show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column  label="附件类型" show-overflow-tooltip>
@@ -501,14 +494,14 @@ export default {
         custName:'',
         advantageIntroduction: "",
         advantageValue: "",
-        basicAddress: [],
-        basicBank: {},
-        basicContact: [],
-        basicFile: [],
-        basicInvoice: [],
-        // basicLables: '',
-        basicShip: [],
-        basicStructure: [],
+        custAddress: [],
+        custBank: {},
+        custContact: [],
+        custFile: [],
+        custInvoice: [],
+        // custLables: '',
+        custShip: [],
+        custStructure: [],
         businessIntroduction: "",
         businessType: '',
         corporateAssets: '',
@@ -574,7 +567,7 @@ export default {
         console.log(n)
       }
     },
-    'form.basicFile':{
+    'form.custFile':{
       handler:function(n,o){
         console.log(n)
       },
@@ -605,11 +598,11 @@ export default {
     },
     httpReq1(val){
       console.log(val)
-      // console.log(this.form.basicFile.length - this.rowData.index-1)
-      this.form.basicFile[this.rowData.index].file = val.file
-      // this.form.basicFile[this.form.basicFile.length - this.rowData.index-1].fileList.push(val.file)
+      // console.log(this.form.custFile.length - this.rowData.index-1)
+      this.form.custFile[this.rowData.index].file = val.file
+      // this.form.custFile[this.form.custFile.length - this.rowData.index-1].fileList.push(val.file)
       console.log(val.file)
-          // this.form.basicFile[this.form.basicFile.length - this.rowData.index-1].fileList = fileList
+          // this.form.custFile[this.form.custFile.length - this.rowData.index-1].fileList = fileList
     },
     rowClick(row){
       // console.log(row)
@@ -617,11 +610,11 @@ export default {
     },
     changeFile(file,fileList){
       console.log(this.rowData.index)
-      console.log(this.form.basicFile.length -this.rowData.index)
-      // this.form.basicFile.forEach(item=>{
+      console.log(this.form.custFile.length -this.rowData.index)
+      // this.form.custFile.forEach(item=>{
         // if(item.index == this.rowData.index){
-          // this.form.basicFile[this.form.basicFile.length - this.rowData.index-1].file = file
-          // this.form.basicFile[this.form.basicFile.length - this.rowData.index-1].fileList = fileList
+          // this.form.custFile[this.form.custFile.length - this.rowData.index-1].file = file
+          // this.form.custFile[this.form.custFile.length - this.rowData.index-1].fileList = fileList
         // }
       // })
     },
@@ -629,25 +622,25 @@ export default {
       console.log(index)
       switch (type) {
         case 1:
-          this.form.basicInvoice.splice(index,1)
+          this.form.custInvoice.splice(index,1)
           break;
         case 2:
-          this.form.basicContact.splice(index,1)
+          this.form.custContact.splice(index,1)
           break;
           case 3:
-          this.form.basicStructure.splice(index,1)
+          this.form.custStructure.splice(index,1)
           break;
           case 4:
           this.form.salesTeam.splice(index,1)
           break;
           case 5:
-          this.form.basicShip.splice(index,1)
+          this.form.custShip.splice(index,1)
           break;
           case 6:
           this.form.sales.splice(index,1)
           break;
           case 7:
-          this.form.basicFile.splice(index,1)
+          this.form.custFile.splice(index,1)
           break;
         default:
           break;
@@ -656,7 +649,7 @@ export default {
     addRow(type){
       switch (type) {
         case 1:
-          this.form.basicInvoice.unshift({
+          this.form.custInvoice.unshift({
             "purchasingUnit":'',
             "shippingAddress" :'',
             "shippingMobile"  :'',
@@ -665,7 +658,7 @@ export default {
           })
           break;
         case 2:
-          this.form.basicContact.unshift({
+          this.form.custContact.unshift({
             "contactType":'',
             "contactName":'',
             "contactDepartment":'',
@@ -677,7 +670,7 @@ export default {
           })
           break;
         case 3:
-          this.form.basicStructure.unshift({
+          this.form.custStructure.unshift({
             "corporateStructureName":'',
             "corporateStructureAddress":'',
             "isDefaultContact":'',
@@ -691,7 +684,7 @@ export default {
           })
           break;
           case 5:
-          this.form.basicShip.unshift({
+          this.form.custShip.unshift({
             "corporateName":'',
             "corporateType":'',
           })
@@ -712,8 +705,8 @@ export default {
           })
           break;
           case 7:
-          this.form.basicFile.push({
-            'index':this.form.basicFile.length,
+          this.form.custFile.push({
+            'index':this.form.custFile.length,
             "fileType":'',
             "fileName":'',
             'file':'',
@@ -724,7 +717,7 @@ export default {
             'create_time'	:'',
             "create_user_name":''	
           })
-          // console.log(this.form.basicFile)
+          // console.log(this.form.custFile)
           break;
         default:
           break;
@@ -734,7 +727,7 @@ export default {
     async sub(){
       var data =this.form
       data.customerStatus =2
-      data.basicAddress = [{addressType: "注册地址",
+      data.custAddress = [{addressType: "注册地址",
         city: this.regAddress[1],
         country: "",
         custId: '',
@@ -790,7 +783,7 @@ export default {
     async save(){
       var data =this.form
       data.customerStatus =1
-      data.basicAddress = [{addressType: "注册地址",
+      data.custAddress = [{addressType: "注册地址",
         city: this.regAddress[1],
         country: "",
         custId: '',
@@ -869,7 +862,7 @@ export default {
       console.log('详情',res);
       if(res){
         this.form = res.data.data;
-        this.form.basicAddress.forEach(item=>{
+        this.form.custAddress.forEach(item=>{
           if(item.addressType=='办公地址'){
             this.workDetailAddress = item.detailInfo
             this.workAddress = []
