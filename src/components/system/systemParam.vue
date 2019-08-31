@@ -62,12 +62,15 @@
           </el-table-column>
           <el-table-column prop="" label="模块" >
             <template slot-scope="scope">
-              <span v-if="list[scope.$index].pModel==1">公告管理</span>
+              <span v-for="item in models" :key="item.value">{{ scope.row.pModel == item.value ? item.label :''}}</span>
             </template>
           </el-table-column>
           <el-table-column prop="" label="功能"  show-overflow-tooltip>
             <template slot-scope="scope">
-              <span v-if="list[scope.$index].pFunction==1">公告类型</span>
+              <span > </span>
+              <span v-for="item in models.filter(val=>{return val.value==scope.row.pModel})" :key="item.value">
+                <span v-for="children in item.children" :key="children.value">{{ scope.row.pFunction == children.value ? children.label :''}}</span>
+              </span>
             </template>
           </el-table-column>
           <el-table-column prop="zhName" show-overflow-tooltip label="中文名">
@@ -175,6 +178,64 @@
                 value:1,
               }
             ]
+          },
+          {
+            label:'客户管理',
+            value:2,
+            children:[
+              {
+                label:'客户属性',
+                value:1,
+              },
+              {
+                label:'客户区域',
+                value:2,
+              },
+              {
+                label:'分级分类BU',
+                value:3,
+              },
+              {
+                label:'分级分配PDT',
+                value:4,
+              },
+              {
+                label:'附件类型',
+                value:5,
+              },
+              {
+                label:'类型人类型',
+                value:6,
+              },
+              {
+                label:'客户部门',
+                value:7,
+              },
+              {
+                label:'代理商部门',
+                value:8,
+              } ,
+              {
+                label:'客户职位',
+                value:9,
+              },
+              {
+                label:'代理商职位',
+                value:10,
+              },
+              {
+                label:'客户关系',
+                value:11,
+              },
+              {
+                label:'地址类型',
+                value:12,
+              },
+              {
+                label:'展锐团队角色',
+                value:13,
+              }
+            ]
           }
         ],
         funcs:[],
@@ -229,7 +290,8 @@
         rowData: {},
         dialogVisible: false,
         dialogVisible1: false,
-        list: [],
+        list: [
+        ],
         currentPage: 1,
         pageSize: 10,
         total: 0,
