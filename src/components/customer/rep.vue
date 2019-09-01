@@ -7,7 +7,7 @@
           <el-breadcrumb-item >客户报备</el-breadcrumb-item>
           <el-breadcrumb-item >报备</el-breadcrumb-item>
         </el-breadcrumb>
-    </el-page-header>
+    </el-breadcrumb>
     </div>
     <div class="content">
       <div class="selBox">
@@ -441,7 +441,6 @@
                         :on-change='changeFile'
                         :limit="1"
                         :http-request="httpReq1"
-
                         >
                         <el-button size="small" type="primary">选择文件</el-button>
                       </el-upload>

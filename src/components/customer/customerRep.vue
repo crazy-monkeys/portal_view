@@ -80,7 +80,6 @@
             <el-table-column show-overflow-tooltip prop="" width='180' label="操作" fixed='right'>
               <template slot-scope='scope'>
                 <el-button type='text'  @click='add(scope.row)'>明细</el-button>
-                <el-button type='text'  @click='report(scope.row)'>重新报备</el-button>
                 <el-button type='text'  @click='del(scope.row)'>删除</el-button>
               </template>
             </el-table-column>

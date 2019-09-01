@@ -1,5 +1,13 @@
 <template>
     <div class="tem"  >
+        <h1 class="sy">
+            <div class="wat">
+                <div class="watword">
+                    UNISOC CONFIDENTIAL
+                </div>
+            </div>
+        </h1>
+        
         <div>
            <img class="lglogo" src="@/assets/img/logostr.png" alt="" >
            <div class="r line">
@@ -50,7 +58,7 @@
                 >
                 </el-table-column>
                 <el-table-column
-                v-if='true'
+                v-if='type==1 || type==2 || type==4'
                 prop="actualPrice"
                 label="实际价格"
                 width="100"
@@ -219,10 +227,30 @@
 </script>
 <style lang="scss">
     .tem{
+        height: 100%;
         font-size: 18px;
         position:absolute;
         top: 0;
         z-index: -1111;
+        .sy{
+            display: flex;
+            align-items: center;
+            position: absolute;
+            width: 100%;
+            height: 90%;
+            z-index: 1;
+            left: 0;
+            .wat{
+                color: rgba(128,0,128,0.1);
+                font-size: 100px;
+                margin: 0 auto;
+            }
+            .watword{
+                text-align: center;
+                transform: rotate(-40deg);
+            }
+
+        }
         .lglogo{
             width: 200px
         }
