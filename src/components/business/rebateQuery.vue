@@ -48,19 +48,23 @@
       <div class="box">
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" border height="100%" @row-click='rowClick'>
-            <el-table-column prop="dealerName" label="代理商" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="customerName" label="客户" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="rebateAmount" label="Rebate金额" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="noticeDate" label="通知日期" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="executor" label="执行方" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="executeStyle" label="执行方式" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-            <el-table-column  prop="status" label="状态" show-overflow-tooltip>
+            <el-table-column prop="dealerName" width="150"  label="代理商" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="customerName" width="150"  label="客户" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="rebateAmount" width="150"  label="Rebate金额" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="noticeDate" width="180"  label="通知日期" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="executor" width="150"  label="执行方" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="executeStyle" width="150"  label="执行方式" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="accountYearMonth" width="150" label="核算年月" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="shipmentYearMonth" width="150" label="出货年月" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="product" width="150" label="产品型号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="platform" width="150" label="平台" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="remark" width="150"  label="备注" show-overflow-tooltip></el-table-column>
+            <el-table-column  prop="status" width="150"  label="状态" show-overflow-tooltip>
               <template slot-scope="scope">
                 {{scope.row.status==1 ?'审核中':scope.row.status==2 ? '客户待确认' : scope.row.status==3 ?'客户已确认' :'执行完成'}}
               </template>
             </el-table-column>
-            <el-table-column  label="操作" width="160" fixed="right">
+            <el-table-column  label="操作" width="80" fixed="right">
               <template slot-scope="scope">
                 <el-upload style='display:inline-block' class="upload-demo" :headers="{'Authorization':auth}" :show-file-list="false" ref='upload' name='file'  :on-success='uploadSuccess' :action='serverUrl+"/business/rebate/upload/"+scope.row.id' >
                   <el-button size="small"  type="text" >上传</el-button>

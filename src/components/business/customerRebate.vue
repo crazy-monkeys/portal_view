@@ -34,12 +34,16 @@
       <div class="box">
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" border height="100%" @row-click='rowClick'>
-            <el-table-column prop="dealerName" label="代理商" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="customerName" label="客户" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="rebateAmount" label="Rebate金额" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="releaseAmount" label="释放金额" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="surplusRebateAmount" label="剩余释放金额" show-overflow-tooltip></el-table-column>
-            <el-table-column label="状态" show-overflow-tooltip>
+            <el-table-column prop="dealerName" width="150" label="代理商" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="customerName" width="150" label="客户" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="rebateAmount"  width="150" label="Rebate金额" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="releaseAmount" width="150" label="释放金额" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="surplusRebateAmount" width="150" label="剩余释放金额" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="accountYearMonth" width="150" label="核算年月" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="shipmentYearMonth" width="150" label="出货年月" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="product" width="150" label="产品型号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="platform" width="150" label="平台" show-overflow-tooltip></el-table-column>
+            <el-table-column label="状态" width="150" show-overflow-tooltip>
               <template slot-scope="scope">
                 {{scope.row.status==1 ?'客户未确认':'客户已确认' }}
               </template>
