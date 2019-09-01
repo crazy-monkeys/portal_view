@@ -13,8 +13,10 @@
                <span class="box-left" >报价方：北京紫光展锐科技有限公司</span>
                <span class="box-right">询价方：{{queryPrice}}</span> 
            </div>
-            <el-table
-                :data="table"
+           <div class="tab">
+               <el-table
+                style="width:100%"
+                :data="tableData"
                 >
                 <el-table-column
                 type="index"
@@ -25,28 +27,64 @@
                 <el-table-column
                 prop="productModel"
                 label="产品型号"
+                show-overflow-tooltip
                 >
                 </el-table-column>
                 <el-table-column
                 prop=""
-                label="单位">
+                label="单位"
+                width="100"
+                >
                 <template>套</template>
                 </el-table-column>
                 <el-table-column
                 prop=""
+                width="100"
                 label="数量">
                 <template>1</template>
                 </el-table-column>
                 <el-table-column
                 prop="catalogPrice"
-                label="PO价格">
+                label="PO价格"
+                width="100"
+                >
                 </el-table-column>
                 <el-table-column
                 prop="effectTime"
-                label="生效时间">
+                label="生效时间"
+                width="120"
+                >
                 </el-table-column>
             </el-table>
-           <div class="desc">
+           </div>
+            
+           <div class="desc" v-if="type=='all'">
+               客户
+                <h3>报价说明：</h3> 
+                <div><span> 一.</span><p>上述价格币别为美金</p></div>   
+                <div><span> 二.</span><p>上述价格人民币采购汇率为下达采购订单当日的中国人民银行美金中间价（仅限样品）</p></div>   
+                <div><span> 三.</span><p>上述价格若以人民币采购不包含相关税费（仅限样品）</p></div>   
+                <div><span> 四.</span><p>上述套片价格无拆分价格</p></div>   
+                <div><span> 五.</span><p>上述产品的交货周期为询价方提供准确有效的需求预测后十二周</p></div>   
+                <div><span> 六.</span><p>上述产品需以最小包装的整数倍向展锐或展锐代理商下单采购（样品除外）</p></div>   
+                <div><span> 七.</span><p>上述报价信息属高度机密，未经报价方事先书面同意，不得向贵司以外的任何第三方直接或间接透露</p></div>   
+                <div><span> 八.</span><p>本报价单取代展锐之前已向贵司发出的相同型号报价单</p></div>   
+                <div><span> 九.</span><p>报价有效期：年月日—年月日（一年）</p></div>   
+           </div>
+           <div class="desc" v-if="type=='empty'">
+               空
+                <h3>报价说明：</h3> 
+                <div><span> 一.</span><p>上述价格币别为美金</p></div>   
+                <div><span> 二.</span><p>上述价格人民币采购汇率为下达采购订单当日的中国人民银行美金中间价（仅限样品）</p></div>   
+                <div><span> 三.</span><p>上述价格若以人民币采购不包含相关税费（仅限样品）</p></div>   
+                <div><span> 四.</span><p>上述套片价格无拆分价格</p></div>   
+                <div><span> 五.</span><p>上述产品的交货周期为询价方提供准确有效的需求预测后十二周</p></div>   
+                <div><span> 六.</span><p>上述产品需以最小包装的整数倍向展锐下单采购（样品除外）</p></div>   
+                <div><span> 七.</span><p>本报价单取代展锐之前已向贵司发出的相同型号报价单</p></div>   
+                <div><span> 八.</span><p>报价有效期：年月日-年月日（一年）</p></div>   
+           </div>
+           <div class="desc" v-if="type=='noEmpty'">
+               非空
                 <h3>报价说明：</h3> 
                 <div><span> 一.</span><p>上述价格仅适用于代理商负责之最终客户XX（“最终客户”）</p></div>   
                 <div><span> 二.</span><p>上述价格币别为美金</p></div>   
@@ -68,10 +106,10 @@
 <script>
   export default {
     name: 'tem',
-    props:['table','queryPrice'],
+    props:['table','queryPrice','type'],
     data(){
         return {
-            tableData:[],
+            
             desc:[
                 {
                     value:1,
@@ -123,10 +161,18 @@
             this.$moment(new Date().getTime()).format('YYYY-MM-DD').split('-')[1]+'月'+
             this.$moment(new Date().getTime()).format('YYYY-MM-DD').split('-')[2]+'日'
             return  res
+        },
+        tableData(){
+            return this.table
         }
     },
     created(){
         console.log(this.table)
+        console.log(this.type)
+    },
+    updated(){
+        console.log(this.table)
+        console.log(this.type)
     }
   }
 </script>
