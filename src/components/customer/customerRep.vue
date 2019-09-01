@@ -54,9 +54,9 @@
           <el-table :data="tableData" border style="width: 100%" height="100%">
             <el-table-column type="index" width='100' label="编号" :index='q'>
             </el-table-column>
-            <el-table-column prop="customerStatus" width="150" show-overflow-tooltip label="审批状态">
+            <el-table-column prop="approveStatus" width="150" show-overflow-tooltip label="审批状态">
               <template slot-scope="scope">
-                {{scope.row.customerStatus==1?'待提交':'已驳回'}}
+                {{scope.row.approveStatus==2?'审批中':scope.row.custType==3?'审批通过 ':'审批驳回'}}
               </template>
             </el-table-column>
             <el-table-column prop="custName" width="150" label="客户名称" show-overflow-tooltip>
@@ -65,16 +65,17 @@
             </el-table-column>
             <el-table-column prop="custOutCode" width="150" label="客户外部编号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="" width="150" label="客户类型" show-overflow-tooltip>
-              <template slot-scope="scope">
-                {{scope.row.businessType==1?'代理商':'客户'}}
-              </template>
+            <el-table-column prop="businessType" width="150" label="客户类型" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="dealerName" width="150" label="代理商" show-overflow-tooltip>
+            <el-table-column prop="reportDealerName" width="150" label="负责代理商" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="salesName" width="150" label="销售" show-overflow-tooltip>
+            <el-table-column prop="reportSalesName" width="150" label="负责销售" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="createTime" width="180" label="报备时间" show-overflow-tooltip sortable="">
+            <el-table-column prop="approveUser" width="150" label="审批人" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="approveRemark" width="150" label="审批意见" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="approveTime" width="150" label="审批时间" show-overflow-tooltip>
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" width='180' label="操作" fixed='right'>
               <template slot-scope='scope'>
@@ -191,6 +192,7 @@ export default {
         createStartDate:form.createStartDate,
         createEndDate:form.createEndDate,
         customerStatus:1,
+        queryType:3,
       }
       const res = await getList(data);
       console.log('客户列表',res)

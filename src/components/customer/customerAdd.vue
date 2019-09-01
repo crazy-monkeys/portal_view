@@ -14,6 +14,11 @@
             <el-input size="small" v-model="form.custName"></el-input>
           </el-form-item>
             </el-col>
+             <el-col :span="6">
+              <el-form-item label="客户英文名">
+            <el-input size="small" v-model="form.custEnName" ></el-input>
+          </el-form-item>
+            </el-col>
             <el-col :span="6">
               <el-form-item label="客户类型">
             <el-select v-model="form.businessType" size="small" filterable placeholder="请选择">
@@ -45,17 +50,17 @@
             </el-col>
             <el-col :span="6">
               <el-form-item label="公司资产">
-            <el-input size="small" v-model="form.corporateAssets"></el-input>
+            <el-input size="small" v-model="form.corportaeAssets"></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="员工人数">
-            <el-input size="small" v-model="form.corporateNumber"></el-input>
+            <el-input size="small" v-model="form.staffNumber"></el-input>
           </el-form-item>
             </el-col>
-            <el-col :span="6">
-              <el-form-item label="传真">
-            <el-input size="small" v-model="form.custFax"></el-input>
+             <el-col :span="6">
+              <el-form-item label="研发人数">
+            <el-input size="small" v-model="form.developersNumber"></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
@@ -69,19 +74,13 @@
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="母公司">
-            <el-input size="small" v-model='form.corporateParents'></el-input>
-          </el-form-item>
-            </el-col>
-            
-            <el-col :span="6">
-              <el-form-item label="公司总机">
-            <el-input size="small" v-model='form.custPhoneNo'></el-input>
+              <el-form-item label="电话">
+            <el-input size="small" v-model='form.custMobile'></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="注册时间" size="small" class="date">
-            <el-input v-model="form.registerTimeStr"></el-input>
+            <el-input v-model="form.registTime"></el-input>
             <!-- <el-date-picker v-model="form.registerTime" type="date" placeholder="选择日期"></el-date-picker> -->
           </el-form-item>
             </el-col>
@@ -146,7 +145,7 @@
         <el-tabs v-model="activeName"  @tab-click="handleClick">
           <el-tab-pane label="开票信息" name='first'>
             <div class="tabBox">
-              <el-table :data="form.basicInvoice" style="width: 100%" height="300">
+              <el-table :data="form.invoiceInfos" style="width: 100%" height="300">
                 <el-table-column prop="purchasingUnit" label="购货单位" show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column prop="shippingAddress" label="收货地址" show-overflow-tooltip>
@@ -165,7 +164,7 @@
           </el-tab-pane>
           <el-tab-pane label="联系人" name='aa'>
             <div class="tabBox">
-              <el-table :data="form.basicContact" style="width: 100%" height="300">
+              <el-table :data="form.customerContacts" style="width: 100%" height="300">
                 <el-table-column prop="contactType" label="联系人类型" show-overflow-tooltip>
                  
                 </el-table-column>
@@ -212,7 +211,7 @@
           </el-tab-pane>
           <el-tab-pane label="展锐销售团队" name="third">
             <div class="tabBox">
-              <el-table :data="form.salesTeam" style="width: 100%" height="300">
+              <el-table :data="form.accountTeams" style="width: 100%" height="300">
                 <el-table-column prop="roleName" label="角色类型" show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column prop="name" label="名称" show-overflow-tooltip>
@@ -227,7 +226,7 @@
           </el-tab-pane>
           <el-tab-pane label="关系" name="zzz">
             <div class="tabBox">
-              <el-table :data="form.basicShip" style="width: 100%" height="300">
+              <el-table :data="form.relationships" style="width: 100%" height="300">
                 <el-table-column prop="corporateName" label="名称" show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column prop="corporateType" label="关系类型" show-overflow-tooltip>
@@ -269,6 +268,7 @@
               </el-table>
             </div>
           </el-tab-pane>
+          
            <el-tab-pane label="附件" name="fourth">
             <div class="tabBox">
               
@@ -317,7 +317,7 @@ export default {
       form:{
         advantageIntroduction: "",
         advantageValue: "",
-        basicAddress: [],
+        addresses: [],
         basicBank: {},
         basicContact: [],
         basicFile: [],
@@ -418,15 +418,15 @@ export default {
       console.log('详情',res);
       if(res){
         this.form = res.data.data;
-        this.form.basicAddress.forEach(item=>{
+        this.form.addresses.forEach(item=>{
           if(item.addressType=='办公地址'){
-            this.workDetailAddress = item.detailInfo
+            this.workDetailAddress = item.addressDetail
             this.workAddress = []
             this.workAddress.push(item.province)
             this.workAddress.push(item.city)
             this.workAddress.push(item.district)
           }else{
-            this.regDetailAddress = item.detailInfo
+            this.regDetailAddress = item.addressDetail
             this.regAddress = []
             this.regAddress.push(item.province)
             this.regAddress.push(item.city)

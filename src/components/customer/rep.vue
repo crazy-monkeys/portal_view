@@ -42,12 +42,12 @@
             </el-col>
             <el-col :span="6">
               <el-form-item label="公司资产">
-            <el-input size="small" v-model="form.corporateAssets"></el-input>
+            <el-input size="small" v-model="form.corportaeAssets"></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="员工人数">
-            <el-input size="small" v-model="form.corporateNumber"></el-input>
+            <el-input size="small" v-model="form.staffNumber"></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
@@ -67,13 +67,12 @@
             </el-col>
             <el-col :span="6">
               <el-form-item label="电话">
-            <el-input size="small" v-model='form.custPhoneNo'></el-input>
+            <el-input size="small" v-model='form.custMobile'></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="注册时间" size="small" class="date">
-            <!-- <el-input v-model="form.registerTimeStr"></el-input> -->
-            <el-date-picker v-model="form.registerTimeStr" value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
+            <el-date-picker v-model="form.registTime" value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
           </el-form-item>
             </el-col>
             <el-col :span="12">
@@ -138,7 +137,7 @@
         <el-tabs v-model="activeName"  @tab-click="handleClick">
           <el-tab-pane label="开票信息" name='first'>
             <div class="tabBox">
-              <el-table :data="form.custInvoice" style="width: 100%" height="300">
+              <el-table :data="form.invoiceInfos" style="width: 100%" height="300">
 
                 <el-table-column  label="购货单位" >
                   <template slot-scope="scope">
@@ -185,7 +184,7 @@
           </el-tab-pane>
           <el-tab-pane label="联系人" name='aa'>
             <div class="tabBox">
-              <el-table :data="form.custContact" style="width: 100%" height="300">
+              <el-table :data="form.customerContacts" style="width: 100%" height="300">
                 <el-table-column prop="contactType" label="联系人类型" >
                   <template slot-scope="scope">
                     <el-select size="small" v-model="scope.row.contactType">
@@ -271,7 +270,7 @@
           </el-tab-pane>
           <el-tab-pane label="展锐销售团队" name="third">
             <div class="tabBox">
-              <el-table :data="form.salesTeam" style="width: 100%" height="300">
+              <el-table :data="form.accountTeams" style="width: 100%" height="300">
                 <el-table-column  label="角色类型" show-overflow-tooltip>
                   <template slot-scope="scope">
                      <el-select size="small" v-model="scope.row.roleId">
@@ -306,7 +305,7 @@
           </el-tab-pane>
           <el-tab-pane label="关系" name="zzz">
             <div class="tabBox">
-              <el-table :data="form.custShip" style="width: 100%" height="300">
+              <el-table :data="form.relationships" style="width: 100%" height="300">
                 <el-table-column prop="corporateName" label="名称" show-overflow-tooltip>
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.corporateName"></el-input>
@@ -422,7 +421,7 @@
           </el-tab-pane>
            <el-tab-pane label="附件" name="fourth">
             <div class="tabBox">
-              <el-table :data="form.custFile" style="width: 100%" height="300" @row-click='rowClick'>
+              <el-table :data="form.files" style="width: 100%" height="300" @row-click='rowClick'>
                 <el-table-column type="index"  label="" v-if='false' show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column  label="附件类型" show-overflow-tooltip>
@@ -494,18 +493,19 @@ export default {
         custName:'',
         advantageIntroduction: "",
         advantageValue: "",
-        custAddress: [],
+        addresses: [],
         custBank: {},
-        custContact: [],
-        custFile: [],
-        custInvoice: [],
+        customerContacts: [],
+        files: [],
+        invoiceInfos: [],
         // custLables: '',
-        custShip: [],
+        relationships: [],
         custStructure: [],
         businessIntroduction: "",
         businessType: '',
-        corporateAssets: '',
-        corporateNumber: '',
+        corportaeAssets: '',
+        staffNumber: '',
+        developersNumber:'',
         corporateParents: "",
         creditEngagedValue: '',
         creditInitalValue: '',
@@ -517,7 +517,6 @@ export default {
         custInCode: "",
         custMobile: "",
         custOutCode: "",
-        custPhoneNo: "",
         custRole: '',
         custType: '',
         custWeb: "",
@@ -527,10 +526,9 @@ export default {
         id: '',
         isLicense: '',
         isWhiteList: '',
-        registerTime: '',
-        registerTimeStr: "",
+        registTime: '',
         sales: [],
-        salesTeam: [],
+        accountTeams: [],
       },
       businessTypes: [
         {
@@ -567,7 +565,7 @@ export default {
         console.log(n)
       }
     },
-    'form.custFile':{
+    'form.files':{
       handler:function(n,o){
         console.log(n)
       },
@@ -599,7 +597,7 @@ export default {
     httpReq1(val){
       console.log(val)
       // console.log(this.form.custFile.length - this.rowData.index-1)
-      this.form.custFile[this.rowData.index].file = val.file
+      this.form.files[this.rowData.index].file = val.file
       // this.form.custFile[this.form.custFile.length - this.rowData.index-1].fileList.push(val.file)
       console.log(val.file)
           // this.form.custFile[this.form.custFile.length - this.rowData.index-1].fileList = fileList
@@ -610,7 +608,7 @@ export default {
     },
     changeFile(file,fileList){
       console.log(this.rowData.index)
-      console.log(this.form.custFile.length -this.rowData.index)
+      console.log(this.form.files.length -this.rowData.index)
       // this.form.custFile.forEach(item=>{
         // if(item.index == this.rowData.index){
           // this.form.custFile[this.form.custFile.length - this.rowData.index-1].file = file
@@ -622,25 +620,25 @@ export default {
       console.log(index)
       switch (type) {
         case 1:
-          this.form.custInvoice.splice(index,1)
+          this.form.invoiceInfos.splice(index,1)
           break;
         case 2:
-          this.form.custContact.splice(index,1)
+          this.form.customerContacts.splice(index,1)
           break;
           case 3:
           this.form.custStructure.splice(index,1)
           break;
           case 4:
-          this.form.salesTeam.splice(index,1)
+          this.form.accountTeams.splice(index,1)
           break;
           case 5:
-          this.form.custShip.splice(index,1)
+          this.form.relationships.splice(index,1)
           break;
           case 6:
           this.form.sales.splice(index,1)
           break;
           case 7:
-          this.form.custFile.splice(index,1)
+          this.form.files.splice(index,1)
           break;
         default:
           break;
@@ -649,7 +647,7 @@ export default {
     addRow(type){
       switch (type) {
         case 1:
-          this.form.custInvoice.unshift({
+          this.form.invoiceInfos.unshift({
             "purchasingUnit":'',
             "shippingAddress" :'',
             "shippingMobile"  :'',
@@ -658,7 +656,7 @@ export default {
           })
           break;
         case 2:
-          this.form.custContact.unshift({
+          this.form.customerContacts.unshift({
             "contactType":'',
             "contactName":'',
             "contactDepartment":'',
@@ -677,14 +675,14 @@ export default {
           })
           break;
         case 4:
-          this.form.salesTeam.unshift({
+          this.form.accountTeams.unshift({
             "roleId":'',
             "name":'',
             "mobile":'',
           })
           break;
           case 5:
-          this.form.custShip.unshift({
+          this.form.relationships.unshift({
             "corporateName":'',
             "corporateType":'',
           })
@@ -705,8 +703,8 @@ export default {
           })
           break;
           case 7:
-          this.form.custFile.push({
-            'index':this.form.custFile.length,
+          this.form.files.push({
+            'index':this.form.files.length,
             "fileType":'',
             "fileName":'',
             'file':'',
@@ -727,11 +725,11 @@ export default {
     async sub(){
       var data =this.form
       data.customerStatus =2
-      data.custAddress = [{addressType: "注册地址",
+      data.addresses = [{addressType: "注册地址",
         city: this.regAddress[1],
         country: "",
         custId: '',
-        detailInfo: this.regDetailAddress,
+        addressDetail: this.regDetailAddress,
         district: this.regAddress[2],
         id: '',
         isDefault: 1,
@@ -740,7 +738,7 @@ export default {
         city: this.workAddress[1],
         country: "",
         custId: '',
-        detailInfo: this.workDetailAddress,
+        addressDetail: this.workDetailAddress,
         district: this.workAddress[2],
         id: '',
         isDefault: 1,
@@ -783,11 +781,11 @@ export default {
     async save(){
       var data =this.form
       data.customerStatus =1
-      data.custAddress = [{addressType: "注册地址",
+      data.addresses = [{addressType: "注册地址",
         city: this.regAddress[1],
         country: "",
         custId: '',
-        detailInfo: this.regDetailAddress,
+        addressDetail: this.regDetailAddress,
         district: this.regAddress[2],
         id: '',
         isDefault: 1,
@@ -796,7 +794,7 @@ export default {
         city: this.workAddress[1],
         country: "",
         custId: '',
-        detailInfo: this.workDetailAddress,
+        addressDetail: this.workDetailAddress,
         district: this.workAddress[2],
         id: '',
         isDefault: 1,
@@ -862,15 +860,15 @@ export default {
       console.log('详情',res);
       if(res){
         this.form = res.data.data;
-        this.form.custAddress.forEach(item=>{
+        this.form.addresses.forEach(item=>{
           if(item.addressType=='办公地址'){
-            this.workDetailAddress = item.detailInfo
+            this.workDetailAddress = item.addressDetail
             this.workAddress = []
             this.workAddress.push(item.province)
             this.workAddress.push(item.city)
             this.workAddress.push(item.district)
           }else{
-            this.regDetailAddress = item.detailInfo
+            this.regDetailAddress = item.addressDetail
             this.regAddress = []
             this.regAddress.push(item.province)
             this.regAddress.push(item.city)
