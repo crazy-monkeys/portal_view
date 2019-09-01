@@ -21,7 +21,7 @@
           </el-form-item>
           <el-form-item label="审批状态">
             <el-select v-model="form.approvalStatus" size="small" filterable placeholder="请选择">
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+              <el-option v-for="item in status" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
@@ -77,7 +77,7 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="remark" width='150' label="备注">
             </el-table-column>
-            <el-table-column width="150" label="操作" fixed='right'>
+            <el-table-column width="80" label="操作" fixed='right'>
               <template slot-scope='scope'>
                 <!-- <el-button type='text'  size='small' @click="add">生成报价单</el-button> -->
                 <el-button type='text' size='small' @click='del(scope.row.id)'>删除</el-button>
@@ -117,7 +117,25 @@
         </el-form>
       </div>
     </el-dialog>
-    <Tem ref='print' :table='multipleSelection' :queryPrice='queryPrice'></Tem>
+    <el-dialog
+      title="请选择询价方"
+      :visible.sync="dialogVisible1"
+      width="400px"
+      :before-close="cancel1">
+      <el-form ref="form1" :model="form1" :rules="rules" class="form" label-width="auto" label-position='top' >
+          <el-form-item label="询价方" prop="inquirer">
+            <el-select  size='small' v-model='form1.inquirer' placeholder="请选择询价方">
+              <el-option v-for="item in options" :key="item.name" :label="item.name" :value='item.name+","+item.type'></el-option>
+            </el-select>
+          </el-form-item>
+          
+        </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button size="small" plain @click="cancel1">取 消</el-button>
+        <el-button size="small"  type="primary" @click="submitForm1('form1')">确 定</el-button>
+      </span>
+    </el-dialog>
+    <Tem ref='print' :table='multipleSelection' :queryPrice='queryPrice' :type='type'></Tem>
   </div>
 </template>
 
@@ -132,6 +150,29 @@
     },
   data() {
     return {
+      rules:{
+          inquirer:[
+            {required:true,triggle:'change',message:'请选择询价方'}
+          ]
+        },
+        options:[
+          {
+            name:'代理商1',
+            type:'agent',
+          },
+          {
+            name:'代理商2',
+            type:'agent',
+          },
+          {
+            name:'客户',
+            type:'customer',
+          }
+        ],
+        form1:{
+          inquirer:''
+        },
+        type:'',
       queryPrice:'',
       multipleSelection:[],
       rowData:{},
@@ -148,7 +189,7 @@
         productModel:'',
         inCustomer:'',
       },
-      options: [
+      status: [
         {
           value: "pending",
           label: "待审批"
@@ -162,6 +203,7 @@
           label: "驳回"
         },
       ],
+      dialogVisible1: false,
       dialogVisible: false,
       dialogCreate: false,
       tableData: [],
@@ -261,34 +303,76 @@
           this.total = res.data.data.total
         }
       },
-      check(value,rule,callback){
-      console.log(value,rule,callback)
-        if(!value){
-          return '请输入询价方'
-        }else{
-          return true
+      cancel1(){
+        this.dialogVisible1 = false
+        this.form1 = {
+          inquirer:''
         }
+        this.resetForm('form1');
+      },
+      submitForm1(formName){
+        this.$formTest.submitForm(this.$refs[formName],this.sub)
+      },
+      resetForm(formName){
+        this.$formTest.resetForm(this.$refs[formName])
+      },
+      sub(){
+        var arr = this.multipleSelection.map(item=>{return item.inCustomer});
+        console.log('内部客户组成的数组',arr)
+        var noEmpty =  arr.filter(item=>{
+          if(item){
+            if(item.length!=0){
+              return item
+            }
+          }
+        })
+        var empty =  arr.filter(item=>{
+          if(item===null){
+            return true
+          }else{
+            if(item.length==0){
+              return item
+            }
+          }
+        })
+        console.log(empty)
+        console.log(this.form1.inquirer.split(',')[1]=='agent')
+        if(this.form1.inquirer.split(',')[1]=='agent'){
+          //询价方为代理商
+        console.log(empty.length)
+        console.log(arr.length)
+          if(noEmpty.length==arr.length || empty.length==arr.length){
+            //客户内部名称全不为空
+            if(noEmpty.length==arr.length){
+            this.type = 'noEmpty'
+              
+            }
+            //客户内部名称为空
+            if(empty.length==arr.length){
+            this.type = 'empty'
+
+            }
+            this.queryPrice = this.form1.inquirer.split(',')[0]
+            this.$nextTick(()=>{
+              this.$print(this.$refs.print)
+            })
+          }else{
+            this.$message.error('错误')
+          }
+        }else{
+          //询价方为客户
+            this.type = 'all'
+            this.queryPrice = this.form1.inquirer.split(',')[0]
+            console.log(this.form1.inquirer.split(',')[0])
+            this.$nextTick(()=>{
+              this.$print(this.$refs.print)
+            })
+        }
+        
       },
       add(){
-        if(this.multipleSelection.filter(item=>{return item.approvalStatus!='pass'}).length!=0){
-          this.$message.error('只能生成审批通过的报价单')
-        }else{
-          this.$prompt('请输入询价方', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            inputValidator:this.check,
-          }).then(({ value }) => {
-            this.queryPrice = value
-            this.$nextTick(()=>{
-            this.$print(this.$refs.print)
-
-            })
-          }).catch(() => {
-              
-          });
-        }
-       
-      
+        this.dialogVisible1 = true;
+        
       },
       create(){
         this.dialogCreate = true
