@@ -127,18 +127,37 @@
           <el-tab-pane label="资产信息" name="first">
             <div class="tabBox">
                <el-table :data="form.assetsInformations" style="width: 100%" height="300">
-                <el-table-column prop="assetsYear" label="年份" show-overflow-tooltip>
+                <el-table-column  prop="assetsYear" width="150" label="年份" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.assetsYear"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="assetsSeason" label="季度" show-overflow-tooltip>
+                <el-table-column prop="" width="150" label="季度" >
+                   <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.assetsSeason"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="assetsTotal" label="总资产" show-overflow-tooltip>
+                <el-table-column prop="" width="150" label="总资产" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.assetsTotal"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="assetsNet" label="净资产" show-overflow-tooltip>
+                <el-table-column prop="" width="150" label="净资产" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.assetsNet"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="revenue" label="营业额" show-overflow-tooltip>
+                <el-table-column prop="" width="150" label="营业额" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.revenue"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="totalStaff" label="总人数" show-overflow-tooltip>
+                <el-table-column prop="" width="150" label="总人数" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.totalStaff"></el-input>
+                  </template>
                 </el-table-column>
+                
                 <div slot="empty">
                   无数据
                 </div>
@@ -148,16 +167,32 @@
           <el-tab-pane label="业务介绍" name="six">
             <div class="tabBox">
                <el-table :data="form.businessInformations" style="width: 100%" height="300">
-                <el-table-column prop="businessYear" label="年份" show-overflow-tooltip>
+                <el-table-column prop="" width="150" label="年份" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.businessYear"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="productLine" label="产品线" show-overflow-tooltip>
+                <el-table-column prop="" width="150" label="产品线" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.productLine"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="revenuePlOne" label="月份一" show-overflow-tooltip>
+                <el-table-column prop="" width="150" label="月份一" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.revenuePlOne"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="revenuePlTwo" label="月份二" show-overflow-tooltip>
+                <el-table-column prop="" width="150" label="月份二" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.revenuePlTwo"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="revenuePlThree" label="月份三" show-overflow-tooltip>
+                <el-table-column prop="" width="150" label="月份三" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.revenuePlThree"></el-input>
+                  </template>
                 </el-table-column>
+            
                 <div slot="empty">
                   无数据
                 </div>
@@ -167,10 +202,19 @@
           <el-tab-pane label="关系" name="fifth">
             <div class="tabBox">
               <el-table :data="form.relationships" style="width: 100%" height="300">
-                <el-table-column prop="corporateName" label="名称" show-overflow-tooltip>
+                <el-table-column prop=""  label="名称" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.corporateName"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="corporateType" label="关系类型" show-overflow-tooltip>
+                <el-table-column prop="" label="关系类型" >
+                  <template slot-scope="scope">
+                    <el-select size="small" disabled v-model="scope.row.corporateType" >
+                      <el-option v-for="item in corporateTypes" :key="item.id" :label="item.zhName" :value="item.pValue"></el-option>
+                    </el-select>
+                  </template>
                 </el-table-column>
+               
                 <div slot="empty">
                   无数据
                 </div>
@@ -180,23 +224,46 @@
           <el-tab-pane label="联系人" name="third">
             <div class="tabBox">
               <el-table :data="form.customerContacts" style="width: 100%" height="300">
-                <el-table-column prop="contactName" label="姓名" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="mobile" label="电话" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="email" label="邮箱" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="department" label="部门" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="subDepartment" label="二级部门" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="position" label="职位" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="" label="股权占比" show-overflow-tooltip>
+                <el-table-column prop="" width="150" label="姓名" >
                   <template slot-scope="scope">
-                    {{scope.row.equityRatio  +"%"}}
+                    <el-input size="small" disabled v-model="scope.row.contactName"></el-input>
                   </template>
                 </el-table-column>
+                <el-table-column prop=""  width="150" label="电话" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.mobile"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="150"  label="邮箱" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.email"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="150"  label="部门" >
+                  <template slot-scope="scope">
+                    <el-select size="small" disabled v-model="scope.row.department" >
+                      <el-option v-for="item in departments" :key="item.id" :label="item.zhName" :value="item.pValue"></el-option>
+                    </el-select>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="150"  label="二级部门" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.subDepartment"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="150"  label="职位" >
+                  <template slot-scope="scope">
+                    <el-select size="small" disabled v-model="scope.row.position" >
+                      <el-option v-for="item in positions" :key="item.id" :label="item.zhName" :value="item.pValue"></el-option>
+                    </el-select>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="150"  label="股权占比" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.equityRatio"></el-input>
+                  </template>
+                </el-table-column>
+              
                 <div slot="empty">
                   无数据
                 </div>
@@ -206,16 +273,34 @@
           <el-tab-pane label="开票信息" name="second">
             <div class="tabBox">
                <el-table :data="form.invoiceInfos" style="width: 100%" height="300">
-                <el-table-column prop="purchasingUnit" label="购货单位" show-overflow-tooltip>
+                <el-table-column prop="" width="150" label="购货单位" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.purchasingUnit"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="shippingAddress" label="交货地址" show-overflow-tooltip>
+                <el-table-column prop="" width="150" label="交货地址" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.shippingAddress"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="shippingMobile" label="手机号" show-overflow-tooltip>
+                <el-table-column prop="" width="150" label="手机号" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.shippingMobile"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="taxpayerRegistrationNumber" label="纳税人登记号" show-overflow-tooltip>
+                <el-table-column prop="" width="150" label="纳税人登记号" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.taxpayerRegistrationNumber"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="currency" label="币种" show-overflow-tooltip>
+                <el-table-column prop="" width="150" label="币种" >
+                  <template slot-scope="scope">
+                    <el-select size="small" disabled v-model="scope.row.currency" >
+                      <el-option v-for="item in currences" :key="item.id" :label="item.zhName" :value="item.pValue"></el-option>
+                    </el-select>
+                  </template>
                 </el-table-column>
+          
                 <div slot="empty">
                   无数据
                 </div>
@@ -224,13 +309,21 @@
           </el-tab-pane>
           <el-tab-pane label="附件" name="fourth">
             <div class="tabBox">
-              <el-table :data="form.files" style="width: 100%" height="300">
-                <el-table-column prop="title" label="标题" show-overflow-tooltip>
+              <el-table :data="form.files" style="width: 100%" height="300" class="file">
+                <el-table-column prop="" label="类型"  width="200">
+                  <template slot-scope="scope">
+                    <el-select size="small" disabled  v-model="scope.row.type" >
+                      <el-option v-for="item in types" :key="item.id" :label="item.zhName" :value="item.pValue"></el-option>
+                    </el-select>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="type" label="类型" show-overflow-tooltip>
+                <el-table-column prop="" width="400" label="文件" >
+                  <template slot-scope="scope">
+                      <a  :download="scope.row.filePath" :href="scope.row.filePath">{{scope.row.fileName}}</a>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="uploadTime" label="上传时间" show-overflow-tooltip>
-                </el-table-column>
+                
+        
                 <div slot="empty">
                   无数据
                 </div>
@@ -239,12 +332,25 @@
           </el-tab-pane>
           <el-tab-pane label="销售数据" name="seven">
             <div class="tabBox">
-              <el-table :data="form.sales" style="width: 100%" height="300">
-                <el-table-column prop="salesOrganize" label="公司代码" show-overflow-tooltip>
+              <el-table :data="form.sales"  style="width: 100%" height="300">
+                <el-table-column prop="" label="公司代码" >
+                  <template slot-scope="scope">
+                    <el-select size="small" disabled  v-model="scope.row.salesOrganize" >
+                      <el-option v-for="item in salesOrganizes" :key="item.id" :label="item.zhName" :value="item.pValue"></el-option>
+                    </el-select>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="distributionChannel" label="分销渠道" show-overflow-tooltip>
+                <el-table-column prop="" label="分销渠道" >
+                  <template slot-scope="scope">
+                    <el-select size="small" disabled  v-model="scope.row.distributionChannel" >
+                      <el-option v-for="item in distributionChannels" :key="item.id" :label="item.zhName" :value="item.pValue"></el-option>
+                    </el-select>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="deliveryPlant" label="交货工厂" show-overflow-tooltip>
+                <el-table-column prop=""  label="交货工厂" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.deliveryPlant"></el-input>
+                  </template>
                 </el-table-column>
                 <div slot="empty">
                   无数据
@@ -259,12 +365,55 @@
 </template>
 
 <script>
-  import formTest from "../../assets/js/formTest";
   import {getDealerInfo,updateDealerInfo} from '@/api/banner/banner.js'
+  import {getType} from '@/api/system/param.js'
+
   export default {
     name: "AddSell",
     data() {
       return {
+        distributionChannels:[
+          {
+            pValue:'10',
+            zhName:'直销'
+          },
+        ],
+        types:[],
+        corporateTypes:[],
+        departments:[],
+        positions:[],
+        currences:[
+          {
+            pValue:'RMB',
+            zhName:'RMB'
+          },
+          {
+            pValue:'USD',
+            zhName:'USD'
+          },
+          {
+            pValue:'HKD',
+            zhName:'HKD'
+          }
+        ],
+        salesOrganizes:[
+          {
+            pValue:'3000',
+            zhName:'PUBLIC SH销售组织'
+          },
+          {
+            pValue:'3001',
+            zhName:'上海展讯[国外销售]'
+          },
+          {
+            pValue:'4800',
+            zhName:'RDA HK'
+          },
+          {
+            pValue:'7100',
+            zhName:'Spreadtrum Hongkong'
+          },
+        ],
         prop:{
           label:'name',
           value:'name',
@@ -279,10 +428,41 @@
       }
     },
     created(){
+      this.getData()
       this.getCity()
       this.getDealerInfo()
     },
     methods: {
+      getData(){
+        this.getType(2,11)
+        this.getType(2,5)
+        this.getType(2,7)
+        this.getType(2,9)
+      },
+      async getType(model,func){
+        const data ={
+          model:model,
+          func:func,
+        }
+        const res = await getType(data);
+        console.log('关系类型',res)
+        if(res){
+          if(func==11){
+            this.corporateTypes = res.data.data
+
+          }
+          if(func==7){
+            this.departments = res.data.data
+          }
+          if(func==9){
+            this.positions = res.data.data
+          }
+          if(func==5){
+            this.types = res.data.data
+          }
+          
+        }
+      },
       getCity() {
       this.$http({
         method: "get",
