@@ -27,7 +27,7 @@
                 <el-table-column
                 prop="productModel"
                 label="产品型号"
-                show-overflow-tooltip
+                width="200"
                 >
                 </el-table-column>
                 <el-table-column
@@ -46,6 +46,13 @@
                 <el-table-column
                 prop="catalogPrice"
                 label="PO价格"
+                width="100"
+                >
+                </el-table-column>
+                <el-table-column
+                v-if='true'
+                prop="actualPrice"
+                label="实际价格"
                 width="100"
                 >
                 </el-table-column>
@@ -96,6 +103,40 @@
                 <div><span> 八.</span><p>上述报价信息属高度机密，未经报价方事先书面同意，不得向贵司以外的任何第三方直接或间接透露</p></div>   
                 <div><span> 九.</span><p>本报价单取代展锐之前已向贵司发出的相同型号报价单</p></div>   
                 <div><span> 十.</span><p>报价有效期：年月日-年月日（一年）</p></div>   
+           </div>
+
+           <div class="desc" v-if="type==1">
+               通用
+                <h3>报价说明：</h3> 
+                <div><span> 一.</span><p>上述价格币别为美金</p></div>   
+                <div><span> 二.</span><p>上述套片价格无拆分价格</p></div>   
+                <div><span> 三.</span><p>上述产品的交货周期为询价方提供准确有效的需求预测后十二周</p></div>   
+                <div><span> 四.</span><p>上述产品需以最小包装的整数倍向展锐或展锐代理商下单采购（样品除外）</p></div>   
+                <div><span> 五.</span><p>上述报价信息属高度机密，未经报价方事先书面同意，不得向贵司以外的任何第三方直接或间接透露</p></div>   
+                <div><span> 六.</span><p>本报价单取代展锐之前已向贵司发出的相同型号报价单</p></div>   
+                <div><span> 七.</span><p>报价有效期：年月日—年月日（一年）</p></div>   
+           </div>
+           <div class="desc" v-if="type==2">
+               阶梯
+                <h3>报价说明：</h3> 
+                <div><span> 一.</span><p>上述价格币别为美金</p></div>   
+                <div><span> 二.</span><p>上述套片价格无拆分价格</p></div>   
+                <div><span> 三.</span><p>上述产品的交货周期为询价方提供准确有效的需求预测后十二周</p></div>   
+                <div><span> 四.</span><p>上述产品需以最小包装的整数倍向展锐或展锐代理商下单采购（样品除外）</p></div>   
+                <div><span> 五.</span><p>上述报价信息属高度机密，未经报价方事先书面同意，不得向贵司以外的任何第三方直接或间接透露</p></div>   
+                <div><span> 六.</span><p>本报价单取代展锐之前已向贵司发出的相同型号报价单</p></div>   
+                <div><span> 七.</span><p>报价有效期：年月日—年月日（一年）</p></div>   
+           </div>
+           <div class="desc" v-if="type==4">
+               绑量
+                <h3>报价说明：</h3> 
+                <div><span> 一.</span><p>上述价格币别为美金</p></div>   
+                <div><span> 二.</span><p>上述套片价格无拆分价格</p></div>   
+                <div><span> 三.</span><p>上述产品的交货周期为询价方提供准确有效的需求预测后十二周</p></div>   
+                <div><span> 四.</span><p>上述产品需以最小包装的整数倍向展锐或展锐代理商下单采购（样品除外）</p></div>   
+                <div><span> 五.</span><p>上述报价信息属高度机密，未经报价方事先书面同意，不得向贵司以外的任何第三方直接或间接透露</p></div>   
+                <div><span> 六.</span><p>本报价单取代展锐之前已向贵司发出的相同型号报价单</p></div>   
+                <div><span> 七.</span><p>报价有效期：年月日—年月日（一年）</p></div>   
            </div>
            <div class="company">
                北京紫光展锐科技有限公司

@@ -35,8 +35,13 @@
         </el-form>
       </div>
       <div class="box">
+        <div class="btns">
+          <el-button class="add" size='small' type='primary' @click='add' :disabled="multipleSelection.length==0 ? true: false" >生成报价单</el-button>
+        </div>
         <div class="tab">
-          <el-table :data="tableData" border style="width: 100%" height="100%">
+          <el-table :data="tableData" border style="width: 100%" height="100%" @selection-change="handleSelectionChange">
+            <el-table-column type="selection" width='60' >
+            </el-table-column>
             <el-table-column type="index" width='80' label="序号" :index='q'>
             </el-table-column>
             <el-table-column prop="status" width='80' show-overflow-tooltip label="状态">
@@ -81,13 +86,7 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="shipmentType" width='150'  label="出货类型">
             </el-table-column>
-            <el-table-column  width="100" label="操作" fixed='right'>
-              <template scope-slot='scope'>
-                <el-button type='text' size='small' @click='create'>生成报价单</el-button>
-              </template>
-            </el-table-column>
             <div slot="empty">
-
               <p>无数据</p>
             </div>
           </el-table>
@@ -100,19 +99,65 @@
        
       </div>
     </div>
+     <el-dialog
+      title="请选择询价方"
+      :visible.sync="dialogVisible1"
+      width="400px"
+      :before-close="cancel">
+      <el-form ref="form1" :model="form1" :rules="rules" class="form" label-width="auto" label-position='top' >
+          <el-form-item label="询价方" prop="inquirer">
+            <el-select  size='small' v-model='form1.inquirer' placeholder="请选择询价方">
+              <el-option v-for="item in options" :key="item.name" :label="item.name" :value='item.name+","+item.type'></el-option>
+            </el-select>
+          </el-form-item>
+          
+        </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button size="small" plain @click="cancel">取 消</el-button>
+        <el-button size="small"  type="primary" @click="submitForm('form1')">确 定</el-button>
+      </span>
+    </el-dialog>
+    <Tem ref='print' :table='multipleSelection' :queryPrice='queryPrice' :type='type'></Tem>
+
   </div>
 </template>
 
 <script>
   import Daterange from "../com/date";
+  import Tem from "./com/tem";
   import {getList} from "@/api/price/priceActual.js";
   export default {
     name: 'priceActual',
     components:{
-      Daterange
+      Daterange,Tem
     },
     data() {
       return {
+        rules:{
+          inquirer:[
+            {required:true,triggle:'change',message:'请选择询价方'}
+          ]
+        },
+        options:[
+          {
+            name:'代理商1',
+            type:'agent',
+          },
+          {
+            name:'代理商2',
+            type:'agent',
+          },
+          {
+            name:'客户',
+            type:'customer',
+          }
+        ],
+        form1:{
+          inquirer:''
+        },
+        type:'',
+        queryPrice:'',
+        multipleSelection:[],
         resetData:false,
         form: {
           bu:'',
@@ -126,21 +171,57 @@
           effectEndTime:'',
         },
         dialogVisible: false,
-        tableData: [
-
-        ],
+        dialogVisible1: false,
+        tableData: [],
         //第几页
         currentPage: 1,
         //每页的容量
         pageSize: 10,
         total: 0,
-
       }
     },
     created() {
       this.getList()
     },
     methods: {
+      cancel(){
+        this.dialogVisible1 = false
+        this.form1 = {
+          inquirer:''
+        }
+        this.resetForm('form1');
+      },
+      submitForm(formName){
+        this.$formTest.submitForm(this.$refs[formName],this.sub)
+      },
+      resetForm(formName){
+        this.$formTest.resetForm(this.$refs[formName])
+      },
+      sub(){
+        var arr = this.multipleSelection.map(item=>{return item.settlementType})
+        console.log(arr)
+        var filter =  arr.filter(item=>{
+          if(item == arr[0]){
+            return true
+          }
+        })
+        console.log(filter)
+        if(filter.length == arr.length){
+          this.type=filter[0]
+          console.log(this.type)
+          this.queryPrice = this.form1.inquirer.split(',')[0]
+          console.log(this.queryPrice)
+
+          this.$nextTick(()=>{
+            this.$print(this.$refs.print)
+          })
+        }else{
+          this.$message.error('只能生成同一结算类型的报价单')
+        }
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
       search(){
         this.currentPage = 1
         this.getList()
@@ -197,11 +278,7 @@
         return this.pageSize * (this.currentPage - 1) + index + 1
       },
       add() {
-        this.$router.push(
-          {
-            name: 'Addprice-query'
-          }
-        )
+        this.dialogVisible1 = true
       },
       // 分页
       handleSizeChange(val) {
