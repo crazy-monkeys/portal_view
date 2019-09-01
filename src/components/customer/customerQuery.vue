@@ -57,19 +57,18 @@
             </el-table-column>
             <el-table-column prop="custOutCode" width="150" label="客户外部编号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="" width="150" show-overflow-tooltip label="License客户" >
+            <el-table-column prop="isLicense" width="150" show-overflow-tooltip label="License客户" >
               <template slot-scope="scope">
                 {{scope.row.isLicense==1?'是':'否'}}
               </template>
             </el-table-column>
-            <el-table-column prop="" width="150"  label="客户类型" show-overflow-tooltip>
-              <template slot-scope="scope">
-                {{scope.row.businessType==1?'massMarket':'accountMarket'}}
-              </template>
+            <el-table-column prop="businessType" width="150" label="客户类型" show-overflow-tooltip>
+            </el-table-column>
+             <el-table-column prop="reportDealerName" width="150" label="报备代理商" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="reportSalesName" width="150" label="报备销售" show-overflow-tooltip>
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="createTime" width="180" label="报备日期" sortable> 
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="registerTimeStr" width="180" label="创建日期" sortable>
             </el-table-column>
             <el-table-column show-overflow-tooltip label="操作" fixed='right' width="120">
               <template slot-scope="scope">
@@ -190,6 +189,7 @@ export default {
         createStartDate:form.createStartDate,
         createEndDate:form.createEndDate,
         customerStatus:3,
+        queryType:1,
       }
       const res = await getList(data);
       console.log('客户列表',res)
