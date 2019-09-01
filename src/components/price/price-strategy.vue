@@ -58,17 +58,21 @@
           ></el-table-column>
           <el-table-column prop="platform" width="100" show-overflow-tooltip label="平台"></el-table-column>
           <el-table-column prop="productModel" width="150" label="产品型号" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="upperNumber" width="150" label="数量上限" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="lowerNumber" width="150" label="数量下限" show-overflow-tooltip></el-table-column>
+          	
           <el-table-column show-overflow-tooltip prop="catalogPrice" width="150" label="目录价格"></el-table-column>
+
+          <el-table-column show-overflow-tooltip prop="permissionPrice" width="150" label="权限价格"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="bottomLinePrice" width="150" label="底线价格"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="standardCost" width="150" label="标准成本"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="depreciationCost" width="150" label="减值成本"></el-table-column>
+          			
           <el-table-column show-overflow-tooltip prop="inCustomer" width="150" label="内部客户"></el-table-column>
           <el-table-column show-overflow-tooltip prop="deadTime" width="150" label="失效时间"></el-table-column>
           <el-table-column show-overflow-tooltip prop="effectTime" width="150" label="生效时间"></el-table-column>
           <el-table-column show-overflow-tooltip prop="modifyTime" width="150" label="更新时间"></el-table-column>
           <el-table-column show-overflow-tooltip prop="remark" width="150" label="备注"></el-table-column>
-          <el-table-column width="100" label="操作" fixed="right">
-            <template scope-slot="scope">
-              <el-button type="text" size="small" @click="create">生成报价单</el-button>
-            </template>
-          </el-table-column>
           <div slot="empty">
             <p>无数据</p>
           </div>
