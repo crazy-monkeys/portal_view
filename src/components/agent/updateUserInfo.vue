@@ -388,42 +388,6 @@
               </el-table>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="销售数据" name="seven">
-            <div class="tabBox">
-              <el-table :data="form.sales" style="width: 100%" height="300">
-                <el-table-column prop="" label="公司代码" >
-                  <template slot-scope="scope">
-                    <el-select size="small"  v-model="scope.row.salesOrganize" >
-                      <el-option v-for="item in salesOrganizes" :key="item.id" :label="item.zhName" :value="item.pValue"></el-option>
-                    </el-select>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="" label="分销渠道" >
-                  <template slot-scope="scope">
-                    <el-select size="small"  v-model="scope.row.distributionChannel" >
-                      <el-option v-for="item in distributionChannels" :key="item.id" :label="item.zhName" :value="item.pValue"></el-option>
-                    </el-select>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="" label="交货工厂" >
-                  <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.deliveryPlant"></el-input>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="" label="" width="100">
-                  <template slot="header">
-                    <el-button type="primary" size="small" @click="add(7)">新增</el-button>
-                  </template>
-                  <template slot-scope='scope'>
-                    <el-button type="text" size="small" @click="del(7,scope.$index)">删除</el-button>
-                  </template>
-                </el-table-column>
-                <div slot="empty">
-                  无数据
-                </div>
-              </el-table>
-            </div>
-          </el-tab-pane>
         </el-tabs>
       </div>
       <div class="sub">
@@ -441,30 +405,6 @@
     name: "updateUserInfo",
     data() {
       return {
-        distributionChannels:[
-          {
-            pValue:'10',
-            zhName:'直销'
-          },
-        ],
-        salesOrganizes:[
-          {
-            pValue:'3000',
-            zhName:'PUBLIC SH销售组织'
-          },
-          {
-            pValue:'3001',
-            zhName:'上海展讯[国外销售]'
-          },
-          {
-            pValue:'4800',
-            zhName:'RDA HK'
-          },
-          {
-            pValue:'7100',
-            zhName:'Spreadtrum Hongkong'
-          },
-        ],
         data:{
 
         },
