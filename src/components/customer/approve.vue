@@ -52,14 +52,13 @@
             </el-table-column>
             <el-table-column prop="custOutCode" width="150" label="客户外部编号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="" width="150"  label="客户类型" show-overflow-tooltip>
-              <template slot-scope="scope">
-                {{scope.row.businessType==1?'massMarket':'accountMarket'}}
-              </template>
+           <el-table-column prop="businessType" width="150" label="客户类型" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="reportDealerName" width="150" label="报备代理商" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="reportSalesName" width="150" label="报备销售" show-overflow-tooltip>
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="createTime" width="180" label="报备日期" sortable> 
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="registerTimeStr" width="180" label="创建日期" sortable>
             </el-table-column>
             <el-table-column  prop="" width='160' label="操作" fixed='right'>
               <template slot-scope="scope">
@@ -239,6 +238,7 @@ export default {
         reportStartDate:this.form.reportStartDate,
         reportEndDate:this.form.reportEndDate,
         customerStatus:2,
+        queryType:2,
       }
       const res = await getList(data);
       console.log('报备审批列表',res)
