@@ -88,7 +88,7 @@
                 <el-row :gutter="22">
                   <el-col :span="12">
                     <el-cascader
-                      v-model="regAddress"
+                      v-model="reg"
                       :options="province"
                       separator="-"
                       size="small"
@@ -97,7 +97,7 @@
                     ></el-cascader>
                   </el-col>
                   <el-col :span="12">
-                    <el-input size="small" v-model="regDetailAddress" placeholder="详细地址"></el-input>
+                    <el-input size="small" v-model="regAddress" placeholder="详细地址"></el-input>
                   </el-col>
                 </el-row>
               </el-form-item>
@@ -107,7 +107,7 @@
                 <el-row :gutter="22">
                   <el-col :span="12">
                     <el-cascader
-                      v-model="workAddress"
+                      v-model="work"
                       :options="province"
                       size="small"
                       separator="-"
@@ -116,7 +116,7 @@
                     ></el-cascader>
                   </el-col>
                   <el-col :span="12">
-                    <el-input size="small" v-model="workDetailAddress" placeholder="详细地址"></el-input>
+                    <el-input size="small" v-model="workAddress" placeholder="详细地址"></el-input>
                   </el-col>
                 </el-row>
               </el-form-item>
@@ -135,19 +135,36 @@
         </el-form>
       </div>
       <div class="tab">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="开票信息" name='first'>
+        <el-tabs v-model="activeName"  @tab-click="handleClick">
+          <el-tab-pane label="开票信息" name="first">
             <div class="tabBox">
-              <el-table :data="form.invoiceInfos" style="width: 100%" height="300">
-                <el-table-column  prop="purchasingUnit" label="购货单位" >
+               <el-table :data="form.invoiceInfos" style="width: 100%" height="300">
+                <el-table-column prop="" width="150" label="购货单位" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.purchasingUnit"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="shippingAddress" label="收货地址" >
+                <el-table-column prop="" width="150" label="交货地址" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.shippingAddress"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="shippingMobile" label="收货手机号" >
+                <el-table-column prop="" width="150" label="手机号" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.shippingMobile"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="taxpayerRegistrationNumber"  label="纳税人登记号">
+                <el-table-column prop="" width="150" label="纳税人登记号" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.taxpayerRegistrationNumber"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="currency"  label="币种">
+                <el-table-column prop="" width="150" label="币种" >
+                  <template slot-scope="scope">
+                    <el-select size="small" disabled v-model="scope.row.currency" >
+                      <el-option v-for="item in currences" :key="item.id" :label="item.zhName" :value="item.pValue"></el-option>
+                    </el-select>
+                  </template>
                 </el-table-column>
                 <div slot="empty">
                   无数据
@@ -155,58 +172,81 @@
               </el-table>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="联系人" name='aa'>
+          <el-tab-pane label="联系人" name="second">
             <div class="tabBox">
               <el-table :data="form.customerContacts" style="width: 100%" height="300">
-                <el-table-column prop="contactType" label="联系人类型" >
+                <el-table-column prop=""  width="150" label="姓名" >
                   <template slot-scope="scope">
-                    {{scope.row.type =='C01'?'出货数据确认人' :'Rebate确认人'}}
+                    <el-input size="small" disabled v-model="scope.row.contactName"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="contactName" label="姓名" >
-                </el-table-column>
-                <el-table-column prop="department" label="部门" >
-                 
-                </el-table-column>
-                <el-table-column prop="contactPosition"  label="职位">
-                 
-                </el-table-column>
-                <el-table-column prop="contactMobile"  label="联系方式">
-               
-                </el-table-column>
-                <el-table-column prop="contactEmail"  label="邮箱">
-               
-                </el-table-column>
-                <el-table-column  label="是否关键决策人">
+                <el-table-column prop=""  width="150" label="电话" >
                   <template slot-scope="scope">
-                    {{scope.row.isDecisionMaker ==1?'是' :'否'}}
+                    <el-input size="small" disabled v-model="scope.row.mobile"></el-input>
                   </template>
                 </el-table-column>
+                <el-table-column prop="" width="150"  label="邮箱" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.email"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="150"  label="部门" >
+                  <template slot-scope="scope">
+                    <el-select size="small" disabled v-model="scope.row.department" >
+                      <el-option v-for="item in departments" :key="item.id" :label="item.zhName" :value="item.pValue"></el-option>
+                    </el-select>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="150"  label="二级部门" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.subDepartment"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="150"  label="职位" >
+                  <template slot-scope="scope">
+                    <el-select size="small" disabled v-model="scope.row.position" >
+                      <el-option v-for="item in positions" :key="item.id" :label="item.zhName" :value="item.pValue"></el-option>
+                    </el-select>
+                  </template>
+                </el-table-column>
+                <el-table-column prop=""  width="150"  label="股权占比" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.equityRatio"></el-input>
+                  </template>
+                </el-table-column>
+               
                 <div slot="empty">
                   无数据
                 </div>
               </el-table>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="股权结构" name="aaa">
+          <el-tab-pane label="股权结构" name="third">
             <div class="tabBox">
               <el-table :data="form.custStructure" style="width: 100%" height="300">
-                <el-table-column prop="1" label="股东名称" >
+                <el-table-column prop="" label="股东名称" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.strName"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="1" label="股东占比(%)" show-overflow-tooltip>
+                <el-table-column prop="" label="股东占比" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.strValue"></el-input>
+                  </template>
                 </el-table-column>
+                
                 <div slot="empty">
                   无数据
                 </div>
               </el-table>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="展锐销售团队" name="third">
+          <el-tab-pane label="展锐销售团队" name="fourth">
             <div class="tabBox">
               <el-table :data="form.accountTeams" style="width: 100%" height="300">
                 <el-table-column  label="角色类型" show-overflow-tooltip>
                   <template slot-scope="scope">
-                    <el-select size="small" disabled v-model="scope.row.roleId" >
+                     <el-select size="small"  disabled v-model="scope.row.roleType">
                       <el-option :value="1" label="类型1"></el-option>
                       <el-option :value="2" label="类型2"></el-option>
                     </el-select>
@@ -214,111 +254,111 @@
                 </el-table-column>
                 <el-table-column prop="" label="名称" show-overflow-tooltip>
                   <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.name"></el-input>
+                    <el-input size="small" disabled v-model="scope.row.accountName"></el-input>
                   </template>
                 </el-table-column>
                 <el-table-column prop="" label="手机号" show-overflow-tooltip>
                   <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.mobile"></el-input>
+                    <el-input size="small" disabled v-model="scope.row.accountMobile"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="t4" label="" show-overflow-tooltip>
-                  <template slot="header">
-                    <el-button type="primary" size="small" @click="addRow(4)">新增</el-button>
-                  </template>
-                  <template slot-scope="scope">
-                    <el-button type="text" size="small" @click="delRow(4,scope.$index)">删除</el-button>
-                  </template>
-                </el-table-column>
+                
                 <div slot="empty">
                   无数据
                 </div>
               </el-table>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="关系" name="zzz">
+          <el-tab-pane label="关系" name="fifth">
             <div class="tabBox">
               <el-table :data="form.relationships" style="width: 100%" height="300">
-                <el-table-column prop="corporateName" label="名称" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="" label="关系类型" show-overflow-tooltip>
+                <el-table-column prop=""  label="名称" >
                   <template slot-scope="scope">
-                     <el-select size="small" disabled v-model="scope.row.corporateType">
-                      <el-option :value="1" label="类型1"></el-option>
-                      <el-option :value="2" label="类型2"></el-option>
+                    <el-input size="small" disabled v-model="scope.row.corporateName"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="关系类型" >
+                  <template slot-scope="scope">
+                    <el-select size="small" disabled v-model="scope.row.corporateType" >
+                      <el-option v-for="item in corporateTypes" :key="item.id" :label="item.zhName" :value="item.pValue"></el-option>
                     </el-select>
                   </template>
                 </el-table-column>
+               
                 <div slot="empty">
                   无数据
                 </div>
               </el-table>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="销售数据" name="a">
+          <el-tab-pane label="展锐产品型号" name="sixth">
             <div class="tabBox">
-              <el-table :data="form.sales" style="width: 100%" height="300">
-                <el-table-column prop="salesOrganize" label="公司代码" >
+              <el-table :data="form.customerProducts" style="width: 100%" height="300">
+                <el-table-column prop="" label="物料" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.product"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="distributionChannel" label="分销渠道" >
+                <el-table-column prop="" label="月份一" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.pNumberOne"></el-input>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="deliveryPlant" label="交货工厂">
+                <el-table-column prop="" label="月份二" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.pNumberTwo"></el-input>
+                  </template>
                 </el-table-column>
+                <el-table-column prop="" label="月份三" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.pNumberThree"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="月份四" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.pNumberFour"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="月份五" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.pNumberFive"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="月份六" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.pNumberSix"></el-input>
+                  </template>
+                </el-table-column>
+               
                 <div slot="empty">
                   无数据
                 </div>
               </el-table>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="展锐产品型号" name="a1111">
+          <el-tab-pane label="附件" name="seventh">
             <div class="tabBox">
-              <el-table :data="form.sales" style="width: 100%" height="300">
-                <el-table-column prop="salesOrganize" label="物料" >
-                 
+              <el-table :data="form.files" style="width: 100%" height="300" >
+                <el-table-column type="index"  label="" v-if='false' show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="distributionChannel" label="月份一" >
-                 
+                <el-table-column  label="附件类型" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-select size="small" disabled  v-model="scope.row.type" >
+                      <el-option v-for="item in types" :key="item.id" :label="item.zhName" :value="item.pValue"></el-option>
+                    </el-select>
+                  </template>
                 </el-table-column>
-                <el-table-column prop="distributionChannel" label="月份二" >
-                 
-                </el-table-column>
-                <el-table-column prop="distributionChannel" label="月份三" >
-                 
-                </el-table-column>
-                <el-table-column prop="distributionChannel" label="月份四" >
-                 
-                </el-table-column>
-                <el-table-column prop="distributionChannel" label="月份五" >
-                 
-                </el-table-column>
-                <el-table-column prop="distributionChannel" label="月份六" >
+                <el-table-column  label="附件" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                      <a  :download="scope.row.filePath" :href="scope.row.filePath">{{scope.row.fileName}}</a>
+                  </template>
                   
                 </el-table-column>
                 <div slot="empty">
                   无数据
                 </div>
               </el-table>
-            </div>
-          </el-tab-pane>
-           <el-tab-pane label="附件" name="fourth">
-            <div class="tabBox">
-              <el-table :data="form.files" style="width: 100%" height="300" @row-click='rowClick'>
-                <el-table-column type="index"  label="" v-if='false' show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column  label="附件类型" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                    <el-select size="small" disabled v-model="scope.row.fileType">
-                      <el-option :value="1" label='营业执照'></el-option>
-                      <el-option :value="2" label='银行开户证明'></el-option>
-                    </el-select>
-                  </template>
-                </el-table-column>
-                <el-table-column  label="附件" prop='fileName' show-overflow-tooltip>
-                </el-table-column>
-                <div slot="empty">
-                  无数据
-                </div>
-              </el-table>
+          
             </div>
           </el-tab-pane>
         </el-tabs>
@@ -329,11 +369,30 @@
 
 <script>
 import { detail } from "@/api/customer/query.js";
+import {getType} from '@/api/system/param.js'
 
 export default {
   name: "customerAdd",
   data() {
     return {
+      types:[],
+        corporateTypes:[],
+        departments:[],
+        positions:[],
+      currences:[
+        {
+          pValue:'RMB',
+          zhName:'RMB'
+        },
+        {
+          pValue:'USD',
+          zhName:'USD'
+        },
+        {
+          pValue:'HKD',
+          zhName:'HKD'
+        }
+      ],
       prop: {
         label: "name",
         value: "name",
@@ -391,8 +450,8 @@ export default {
         }
       ],
       province: [],
-      regDetailAddress: "",
-      workDetailAddress: "",
+      reg: "",
+      work: "",
       regAddress: "",
       workAddress: "",
       activeName: "first",
@@ -402,6 +461,7 @@ export default {
     };
   },
   created() {
+    this.getData()
     this.getCity();
     this.getDetail();
   },
@@ -418,6 +478,36 @@ export default {
     }
   },
   methods: {
+    getData(){
+        this.getType(2,11)
+        this.getType(2,5)
+        this.getType(2,7)
+        this.getType(2,9)
+      },
+      async getType(model,func){
+        const data ={
+          model:model,
+          func:func,
+        }
+        const res = await getType(data);
+        console.log('关系类型',res)
+        if(res){
+          if(func==11){
+            this.corporateTypes = res.data.data
+
+          }
+          if(func==7){
+            this.departments = res.data.data
+          }
+          if(func==9){
+            this.positions = res.data.data
+          }
+          if(func==5){
+            this.types = res.data.data
+          }
+          
+        }
+      },
     getCity() {
       this.$http({
         method: "get",
@@ -440,22 +530,31 @@ export default {
       console.log("详情", res);
       if (res) {
         this.form = res.data.data;
-        this.form.addresses.forEach(item => {
-          if (item.addressType == "办公地址") {
-            this.workDetailAddress = item.addressDetail;
-            this.workAddress = [];
-            this.workAddress.push(item.province);
-            this.workAddress.push(item.city);
-            this.workAddress.push(item.district);
-          } else {
-            this.regDetailAddress = item.addressDetail;
-            this.regAddress = [];
-            this.regAddress.push(item.province);
-            this.regAddress.push(item.city);
-            this.regAddress.push(item.district);
-            console.log(this.regAddress);
-          }
-        });
+        res.data.data.addresses.forEach(item=>{
+            if(item.addressType=='A02'){
+              this.work = item.country.split(',')
+              this.workAddress = item.addressDetail
+            }else{
+              this.reg = item.country.split(',')
+              this.regAddress= item.addressDetail
+            }
+          })
+        // this.form.addresses.forEach(item => {
+        //   if (item.addressType == "办公地址") {
+        //     this.workDetailAddress = item.addressDetail;
+        //     this.workAddress = [];
+        //     this.workAddress.push(item.province);
+        //     this.workAddress.push(item.city);
+        //     this.workAddress.push(item.district);
+        //   } else {
+        //     this.regDetailAddress = item.addressDetail;
+        //     this.regAddress = [];
+        //     this.regAddress.push(item.province);
+        //     this.regAddress.push(item.city);
+        //     this.regAddress.push(item.district);
+        //     console.log(this.regAddress);
+        //   }
+        // });
       }
     },
     handleClick(tab, event) {
@@ -534,6 +633,9 @@ $sc: 12;
     .tab {
       background: #fff;
       padding: 20px;
+      .el-select{
+        width: 100%;
+      }
       .block {
         background: #fff;
         padding: 10px;
