@@ -3,7 +3,7 @@
     <div class="sellBox"> 
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to='/home/sell'>客户管理</el-breadcrumb-item>
+          <el-breadcrumb-item >客户管理</el-breadcrumb-item>
           <el-breadcrumb-item to=''>报备审批</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -68,12 +68,12 @@
               </template>
             </el-table-column>
             <div slot="empty">
-              <p>未查询到客户信息</p>
+              <p>无数据</p>
             </div>
           </el-table>
           <div class="block">
             <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-              :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+              :page-sizes="[10, 20,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
             </el-pagination>
           </div>
         </div> 
@@ -86,23 +86,14 @@
         top="10vh"
         >
         <el-form ref="form1" :model="form1" :rules='rules' size="small" class="form1" label-width="auto" label-position='top'  >
-          <el-form-item :label="userType.indexOf('代理商')!=-1 ? '销售':'代理商'" v-if="title=='审批'" prop='value'>
+          <el-form-item :label="rowData.reportDealerName ? '销售':'代理商'" v-if="title=='审批'" prop='value'>
             <el-select v-model="form1.value" placeholder="请选择" > 
               <el-option
-                label="label1"
-                value="1">
-              </el-option>
-              <el-option
-                label="label2"
-                value="2">
-              </el-option>
-              <el-option
-                label="label3"
-                value="3">
-              </el-option>
-              <el-option
-                label="label4"
-                value="4">
+                v-for='item in rowData.reportDealerName ? salers  : delears '
+                :key='item.value'
+                :label='item.label'
+                :value='item.value'
+                >
               </el-option>
             </el-select>
           </el-form-item>
@@ -128,6 +119,18 @@ export default {
   },
   data() {
     return {
+      salers:[
+        {
+          label:'销售',
+          value:1
+        }
+      ],
+      delears:[
+        {
+          label:'代理商',
+          value:1
+        }
+      ],
       rules: {
         value: [{ required: true, trigger: "blur" ,message:'请选择'}],
         msg: [{ required: true, trigger: "blur" ,message:'请输入'}],
@@ -148,7 +151,6 @@ export default {
       },
       title:'',
       label:'',
-      total:0,
       dialogVisible1:false,
       businessTypes: [
         {
@@ -167,7 +169,9 @@ export default {
       //第几页
       currentPage: 1,
       //每页的容量
-      pageSize: 10
+      pageSize: 10,
+      total:0,
+
     };
   },
   computed: {
@@ -212,6 +216,7 @@ export default {
       this.resetData = false
     },
     search(){
+      this.currentPage = 1
       this.getList()
     },
     reset(){
@@ -224,9 +229,9 @@ export default {
         reportEndDate:'',
       }
       this.resetData = true
-      this.getList()
+      this.search()
     },
-    async getList(form){
+    async getList(){
       var data ={
         pageIndex:this.currentPage,
         pageSize:this.pageSize,
@@ -289,14 +294,16 @@ export default {
     
     async ret() {
       var data ={
-        id:this.rowData.id,
+        custId:this.rowData.id,
         // dealerId:this.userType.indexOf('代理商')==-1?this.form1.value :'',
         // salesId:this.userType.indexOf('代理商')!=-1?this.form1.value :'',
         approvalRemark:this.form1.msg,
+        approvalType:0
       }
       const res = await ret(data);
       console.log('驳回结果',res);
       if(res){
+        this.$message.success('已驳回')
         this.close()
         this.dialogVisible1 = false
         this.getList()
@@ -304,10 +311,16 @@ export default {
     },
     async sure() {
       var data ={
-        id:this.rowData.id,
-        dealerId:this.userType.indexOf('代理商')==-1?this.form1.value :'',
-        salesId:this.userType.indexOf('代理商')!=-1?this.form1.value :'',
+        custId:this.rowData.id,
+        dealerId:'',
+        salesId:'',
         approvalRemark:this.form1.msg,
+        approvalType:1
+      }
+      if(this.rowData.reportDealerName){
+        data.salesId = this.form1.value
+      }else{
+        data.dealerId= this.form1.value
       }
       const res = await approve(data);
       console.log('审批结果',res);
@@ -342,10 +355,12 @@ export default {
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageSize = val;
+      this.getList()
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.currentPage = val;
+      this.getList()
     }
   }
 };

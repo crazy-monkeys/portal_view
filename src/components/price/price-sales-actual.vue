@@ -96,7 +96,7 @@
 
             <div slot="empty">
 
-              <p>未查询到客户信息</p>
+              <p>无数据</p>
             </div>
           </el-table>
         </div>

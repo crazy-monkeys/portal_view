@@ -43,7 +43,7 @@
             <el-table-column prop="12" label="发货公司" show-overflow-tooltip></el-table-column>
             <el-table-column prop="12" label="备注" show-overflow-tooltip></el-table-column>
             <div slot="empty">
-              <p>未查询到客户信息</p>
+              <p>无数据</p>
             </div>
           </el-table>
         </div>

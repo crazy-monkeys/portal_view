@@ -28,6 +28,13 @@
               <el-option  label="否" value="0"></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="报备状态">
+            <el-select v-model="form.customerStatus" size="small"  placeholder="请选择">
+              <el-option  label="审批中" :value="2"></el-option>
+              <el-option  label="审批通过" :value="3"></el-option>
+              <el-option  label="审批驳回" :value="4"></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="客户类型">
             <el-select v-model="form.businessType" size="small"  placeholder="请选择">
               <el-option v-for="item in businessTypes" :key="item.value" :label="item.label" :value="item.value">
@@ -56,7 +63,7 @@
             </el-table-column>
             <el-table-column prop="approveStatus" width="150" show-overflow-tooltip label="审批状态">
               <template slot-scope="scope">
-                {{scope.row.approveStatus==2?'审批中':scope.row.custType==3?'审批通过 ':'审批驳回'}}
+                {{scope.row.approveStatus==2?'审批中':scope.row.approveStatus==3?'审批通过 ':'审批驳回'}}
               </template>
             </el-table-column>
             <el-table-column prop="custName" width="150" label="客户名称" show-overflow-tooltip>
@@ -84,7 +91,7 @@
               </template>
             </el-table-column>
             <div slot="empty">
-              <p>未查询到客户信息</p>
+              <p>无数据</p>
             </div>
           </el-table>
           <div class="block">
@@ -135,6 +142,7 @@ export default {
         reportEndDate:'',
         createStartDate:'',
         createEndDate:'',
+        customerStatus:''
       },
       time:[],
       businessTypes: [
@@ -190,7 +198,7 @@ export default {
         reportEndDate:form.reportEndDate,
         createStartDate:form.createStartDate,
         createEndDate:form.createEndDate,
-        customerStatus:1,
+        customerStatus:form.customerStatus,
         queryType:3,
       }
       const res = await getList(data);
@@ -213,7 +221,7 @@ export default {
       this.resetData1 = false
     },
     search(){
-      this,currentPage = 1
+      this.currentPage = 1
       this.getList(this.form)
     },
     sure1(){

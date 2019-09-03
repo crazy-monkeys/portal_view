@@ -3,7 +3,7 @@
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to=''>客户管理</el-breadcrumb-item>
+          <el-breadcrumb-item >客户管理</el-breadcrumb-item>
           <el-breadcrumb-item>拜访记录上传</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -40,38 +40,9 @@
           <el-button   size='small' type='primary' @click="download">下载模版</el-button>
           <el-button   size='small' type='primary'>上传</el-button>
           <el-button   size='small' type='primary' @click="sub">提交</el-button>
-          <!-- <el-button   size='small' type='primary'>新建</el-button> -->
         </div>
         <div class="tab">
           <el-table :data="tableData" border style="width: 100%" height="100%">
-             <!--<el-table-column   label="" width="60">
-              <template slot="header" >
-                <el-dropdown :hide-on-click='false' placement='bottom-start' trigger="click">
-                  <span class="el-dropdown-link">
-                    <i class="el-icon-arrow-down el-icon--right"></i>
-                  </span>
-                  <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>
-                      <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">
-                        全选</el-checkbox>
-                        </el-dropdown-item>
-                    <el-dropdown-item divided>批量删除</el-dropdown-item>
-                    <el-dropdown-item>批量验证</el-dropdown-item>
-                    <el-dropdown-item >批量保存</el-dropdown-item>
-                    <el-dropdown-item >批量提交</el-dropdown-item>
-                  </el-dropdown-menu>
-                </el-dropdown>
-              </template>
-              <template >
-                 <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">
-                        全选</el-checkbox>
-                <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
-                  <el-checkbox v-for="city in cities" :label="city" :key="city"></el-checkbox>
-                </el-checkbox-group> 
-                <el-checkbox></el-checkbox>
-              </template>
-                
-            </el-table-column>-->
             <el-table-column prop="errorMessage" width='100' label="错误信息" show-overflow-tooltip></el-table-column>
             <el-table-column prop="visitDate" width='100' label="拜访日期" show-overflow-tooltip></el-table-column>
             <el-table-column prop="customerLocation" width='100' label="客户所在地" show-overflow-tooltip></el-table-column>
@@ -88,12 +59,12 @@
             <el-table-column prop="participantsCt" width='180'  label="参与人员:客户" show-overflow-tooltip></el-table-column>
             <el-table-column prop="participantsDl" width="180" label="参与人员:代理" show-overflow-tooltip></el-table-column>
             <div slot="empty">
-              <p>未查询到客户信息</p>
+              <p>无数据</p>
             </div>
           </el-table>
           <div class="block">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-            :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+            :page-sizes="[10, 20,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
           </el-pagination>
         </div>
         </div>
@@ -114,16 +85,8 @@ import Daterange from "../com/date";
     },
     data() {
       return {
-        status:'',
         dialogVisible:false,
-        cities:['上海','北京','杭州'],
-        checkAll: false,
-        checkedCities: [
-        ],
-        conditions: [
-        ],
         resetData:false,
-        isIndeterminate: false,
         //表格数据
         tableData: [
          
@@ -184,6 +147,7 @@ import Daterange from "../com/date";
             });
       },
       search(){
+        this.currentPage =1
         this.getList()
       },
       reset(){
@@ -195,7 +159,7 @@ import Daterange from "../com/date";
           createEndDate:'',
         }
         this.resetData = true
-        this.getList()
+        this.search()
       },
       watchCreatTime(data){
         console.log(data)
@@ -222,18 +186,6 @@ import Daterange from "../com/date";
       },
       change(){
         this.dialogVisible = !this.dialogVisible
-      },
-      handleCheckAllChange(val) {
-        console.log(val)
-        this.checkedCities = val ? this.cities : [];
-        this.isIndeterminate = false;
-      },
-      handleCheckedCitiesChange(value) {
-        console.log(value)
-        console.log(this.checkedCities)
-        let checkedCount = value.length;
-        this.checkAll = checkedCount === this.cities.length;
-        this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
       },
       q(index) {
         return this.pageSize * (this.currentPage - 1) + index + 1

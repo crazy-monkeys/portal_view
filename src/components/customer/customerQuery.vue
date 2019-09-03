@@ -34,6 +34,12 @@
               </el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="客户状态">
+            <el-select v-model="form.custType" size="small"  placeholder="请选择">
+              <el-option v-for="item in custTypes" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="报备日期" class="date">
             <Daterange @data='watchRepTime' :resetDataReg='resetData1' />
           </el-form-item>
@@ -64,11 +70,16 @@
             </el-table-column>
             <el-table-column prop="businessType" width="150" label="客户类型" show-overflow-tooltip>
             </el-table-column>
-             <el-table-column prop="reportDealerName" width="150" label="报备代理商" show-overflow-tooltip>
+             <el-table-column prop="reportDealerName" width="150" label="负责代理商" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="reportSalesName" width="150" label="报备销售" show-overflow-tooltip>
+            <el-table-column prop="reportSalesName" width="150" label="负责销售" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="createTime" width="180" label="报备日期" sortable> 
+            <el-table-column prop="" width="150" show-overflow-tooltip label="客户状态" >
+              <template slot-scope="scope">
+                {{scope.row.custType==1?'未报备':scope.row.custType==2?'已报备':scope.row.custType===0?'潜在客户':scope.row.custType==4?'open客户':''}}
+              </template>
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="approveTime" width="180" label="报备日期" sortable> 
             </el-table-column>
             <el-table-column show-overflow-tooltip label="操作" fixed='right' width="120">
               <template slot-scope="scope">
@@ -78,7 +89,7 @@
             </el-table-column>
             <div slot="empty">
 
-              <p>未查询到客户信息</p>
+              <p>无数据</p>
             </div>
           </el-table>
           <div class="block">
@@ -106,6 +117,7 @@ export default {
       resetData:false,
       resetData1:false,
       form: {
+        custType:'',
         businessType:'',
         customerName:'',
         customerOutCode:'',
@@ -127,6 +139,24 @@ export default {
           label: "Account Market"
         }
       ],
+      custTypes:[
+        {
+          value: 0,
+          label: "潜在客户"
+        },
+        {
+          value: 1,
+          label: "未报备"
+        },
+        {
+          value: 2,
+          label: "已报备"
+        },
+        {
+          value: 4,
+          label: "open客户"
+        }
+      ],
       dialogVisible: false,
       tableData: [],
       //第几页
@@ -146,6 +176,7 @@ export default {
   methods: {
     reset(){
       this.form = {
+        custType:'',
         businessType:'',
         customerName:'',
         customerInCode:'',
@@ -188,7 +219,8 @@ export default {
         reportEndDate:form.reportEndDate,
         createStartDate:form.createStartDate,
         createEndDate:form.createEndDate,
-        customerStatus:3,
+        custType:form.custType,
+        // customerStatus:3,
         queryType:1,
       }
       const res = await getList(data);
