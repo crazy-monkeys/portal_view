@@ -22,23 +22,23 @@
                 <Daterange />
               </el-form-item>
               <el-form-item label="客户">
-                <el-input size='small' placeholder="请输入"></el-input>
+                <el-input size='small' placeholder="请输入" v-model='form.customer'></el-input>
               </el-form-item>
               <el-form-item label="产品型号">
-                <el-input size='small' placeholder="请输入"></el-input>
+                <el-input size='small' placeholder="请输入" v-model='form.productType'></el-input>
               </el-form-item>
               <el-form-item label="出货类型">
-                <el-input size='small' placeholder="请输入"></el-input>
+                <el-input size='small' placeholder="请输入" v-model='form.shipType'></el-input>
               </el-form-item>
               <el-form-item label="订单号">
-                <el-input size='small' placeholder="请输入"></el-input>
+                <el-input size='small' placeholder="请输入" v-model='form.orderNum'></el-input>
               </el-form-item>
               <el-form-item label="订单月份">
-                <el-input size='small' placeholder="请输入"></el-input>
+                <el-input size='small' placeholder="请输入" v-model='form.orderMonth'></el-input>
               </el-form-item>
               <el-form-item :label="' '">
                 <el-button size='small' type='primary' plain>查询</el-button>
-                <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
+                <el-button @click='reset' size='small' type='primary' plain>重置</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -182,7 +182,13 @@
         },
         da1:{
         },
-        form: {},
+        form: {
+          customer:'',
+          shipType:'',
+          orderMonth:'',
+          orderNum:'',
+          productType:'',
+        },
         total: 0,
         dialogVisible: false,
         tableData: [],
@@ -232,6 +238,15 @@
       }
     },
     methods: {
+      reset(){
+        this.form={
+          customer:'',
+          shipType:'',
+          orderMonth:'',
+          orderNum:'',
+          productType:'',
+        }
+      },
       async getReject(){
         var data = {
           dealerId:this.dealerId,

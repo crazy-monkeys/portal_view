@@ -483,31 +483,29 @@ export default {
         this.getType(2,5)
         this.getType(2,7)
         this.getType(2,9)
-      },
-      async getType(model,func){
-        const data ={
-          model:model,
-          func:func,
+    },
+    async getType(model,func){
+      const data ={
+        model:model,
+        func:func,
+      }
+      const res = await getType(data);
+      console.log('关系类型',res)
+      if(res){
+        if(func==11){
+          this.corporateTypes = res.data.data
         }
-        const res = await getType(data);
-        console.log('关系类型',res)
-        if(res){
-          if(func==11){
-            this.corporateTypes = res.data.data
-
-          }
-          if(func==7){
-            this.departments = res.data.data
-          }
-          if(func==9){
-            this.positions = res.data.data
-          }
-          if(func==5){
-            this.types = res.data.data
-          }
-          
+        if(func==7){
+          this.departments = res.data.data
         }
-      },
+        if(func==9){
+          this.positions = res.data.data
+        }
+        if(func==5){
+          this.types = res.data.data
+        }
+      }
+    },
     getCity() {
       this.$http({
         method: "get",

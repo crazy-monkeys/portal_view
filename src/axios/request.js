@@ -111,7 +111,7 @@ export const request = (method, url, data = {}, header = {}) => {
                     })
                     .then(() => {
                         console.log(window)
-                        window.location.href = '/'
+                        window.location.href = '/portal'
                     })
                     .catch(action => {
 

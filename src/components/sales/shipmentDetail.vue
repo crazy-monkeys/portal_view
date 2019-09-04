@@ -2,10 +2,7 @@
   <div class="shipmentDetail">
     <div class="sellBox">
       <div class="head clear">
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item >交付管理</el-breadcrumb-item>
-          <el-breadcrumb-item>交付数据明细</el-breadcrumb-item>
-        </el-breadcrumb>
+          <el-page-header @back="back" content="交付数据查询明细"></el-page-header>
       </div>
       <div class="sels clear">
         <div class="lineBox">
@@ -128,6 +125,9 @@
     watch: {
     },
     methods: {
+      back() {
+      window.history.back();
+    },
       async getMore(){
         var data ={
           

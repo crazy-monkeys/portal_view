@@ -273,6 +273,7 @@
 
             }
             this.queryPrice = this.form1.inquirer.split(',')[0]
+            this.dialogVisible1 = false
             this.$nextTick(()=>{
               this.$print(this.$refs.print)
             })

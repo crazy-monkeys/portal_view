@@ -61,7 +61,7 @@
           </el-table-column>
           <el-table-column prop="status" show-overflow-tooltip label="操作" fixed="right" width="80">
             <template slot-scope="scope">
-              <el-button type="text" size="small" @click="cancel(list[scope.$index].id)">撤销</el-button>
+              <el-button type="text" size="small" @click="del(list[scope.$index].id)">撤销</el-button>
             </template>
           </el-table-column>
           <div slot="empty">
@@ -199,6 +199,18 @@
       this.selForm.startTime = data.startTime
       this.selForm.endTime = data.endTime
       this.resetData = false
+    },
+    del(id){
+      this.$confirm('是否确认操作', '撤销', {
+          distinguishCancelAndClose: true,
+          confirmButtonText: '确认',
+          cancelButtonText: '取消'
+        })
+        .then(() => { 
+         this.cancel(id)
+        })
+        .catch(action => {
+        });
     },
       async cancel(id){
         var data ={

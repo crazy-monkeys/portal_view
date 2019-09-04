@@ -34,12 +34,12 @@
       <div class="box">
         <div class="btns">
           <el-button class="add" size='small' type='primary' @click='create' >新建</el-button>
-          <el-button class="add" size='small' type='primary' @click='add' :disabled="multipleSelection.length==0 ? true: false" >生成报价单</el-button>
+          <!-- <el-button class="add" size='small' type='primary' @click='add' :disabled="multipleSelection.length==0 ? true: false" >生成报价单</el-button> -->
         </div>
         <div class="tab"  >
-          <el-table :data="tableData" border style="width: 100%" height="100%" @row-click='rowClick' @selection-change="handleSelectionChange">
-            <el-table-column type="selection" width='60' >
-            </el-table-column>
+          <el-table :data="tableData" border style="width: 100%" height="100%" @row-click='rowClick' >
+            <!-- <el-table-column type="selection" width='60' >
+            </el-table-column> -->
             <el-table-column type="index" width='100' label="序号" :index='q'>
             </el-table-column>
             <el-table-column prop="applyTime"  width='100' show-overflow-tooltip label="申请时间">

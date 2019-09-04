@@ -211,7 +211,7 @@
           console.log(this.type)
           this.queryPrice = this.form1.inquirer.split(',')[0]
           console.log(this.queryPrice)
-
+          this.dialogVisible1 = false
           this.$nextTick(()=>{
             this.$print(this.$refs.print)
           })

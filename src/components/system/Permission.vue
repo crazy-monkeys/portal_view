@@ -54,11 +54,11 @@
     <el-dialog :title="edit? '修改角色' :'新建角色'"  :visible.sync="dialogVisible" width="400px" :before-close="close"
       :close-on-click-modal="false" >
       <el-form label-position="top" label-width="auto" :model="roleForm" :rules='rules' size="small" ref='roleForm' class="roleForm">
-        <el-form-item label="角色编码" prop='code'>
-          <el-input  v-model="roleForm.code" maxlength='50'></el-input>
+        <el-form-item label="角色编码" prop='code' >
+          <el-input  v-model="roleForm.code" maxlength='20'></el-input>
         </el-form-item>
         <el-form-item label="角色名称" prop='name'>
-          <el-input v-model="roleForm.name" maxlength='10' ></el-input>
+          <el-input v-model="roleForm.name" maxlength='20' ></el-input>
         </el-form-item>
         <el-form-item label="角色类型" prop='roleType'>
           <el-select v-model="roleForm.roleType">
@@ -66,8 +66,6 @@
              <el-option label="子账号角色" :value="2"></el-option>
           </el-select>
         </el-form-item>
-       
-        
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="close" size="small">取消</el-button>
@@ -80,7 +78,7 @@
       <el-form label-position="top" label-width="auto" :model="form" :rules='rules' size="small" ref='form' class="form">
         <el-form-item label="角色权限" prop=''>
           <el-tree :data="resource" @check-change="checkChange" show-checkbox node-key="id" :props="defaultProps" :filter-node-method="filterNode"
-              :default-checked-keys="form.resource" ref="tree" >
+              :default-checked-keys="form.resource" ref="tree" :default-expanded-keys='[0]'>
             </el-tree>
         </el-form-item>
       </el-form>

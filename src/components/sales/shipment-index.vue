@@ -17,13 +17,13 @@
         </div>
         <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <el-form-item label="代理商">
-            <el-input size='small' placeholder="请输入" v-model="form.dealerName"></el-input>
+            <el-input size='small' placeholder="请输入" clearable v-model="form.dealerName"></el-input>
           </el-form-item>
-          <el-form-item label="上传日期"  class="date">
+          <el-form-item label="上传日期"  class="date" >
             <Daterange @data='watchTime' :resetDataReg='resetData' />
           </el-form-item>
           <el-form-item label="类型" >
-            <el-select v-model="form.status">
+            <el-select v-model="form.status" clearable>
               <el-option v-for="item in options" :key="item.value" :value="item.value" :label='item.label'></el-option>
             </el-select>
           </el-form-item>
