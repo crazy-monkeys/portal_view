@@ -43,11 +43,25 @@
         </div>
         <div class="tab">
           <el-table :data="tableData" border style="width: 100%" height="100%"  @selection-change="handleSelectionChange">
+            <el-table-column type="expand">
+              <template slot-scope="props">
+                <el-table :data="props.row.list" border style="width: 90%">
+                  <el-table-column prop="type"  show-overflow-tooltip label="产品型号">
+                  </el-table-column>
+                  <el-table-column prop="num" show-overflow-tooltip label="数量">
+                  </el-table-column>
+                  <el-table-column prop="price"  show-overflow-tooltip label="目录价格">
+                  </el-table-column>
+                </el-table>
+              </template>
+            </el-table-column>
             <el-table-column type="selection" width='60' >
             </el-table-column>
             <el-table-column type="index" width='100' label="序号" :index='q'>
             </el-table-column>
             <el-table-column prop="status" width='80' show-overflow-tooltip label="状态">
+            </el-table-column>
+            <el-table-column prop="status" width='80' show-overflow-tooltip label="物料号">
             </el-table-column>
             <el-table-column prop="bu" width='80' show-overflow-tooltip label="BU">
             </el-table-column>
@@ -156,7 +170,29 @@
         },
         dialogVisible: false,
         dialogVisible1: false,
-        tableData: [],
+        tableData: [
+  {        bu: "SKU001",
+catalogPrice: 500,
+createTime: 1566571384000,
+deadTime: "2019-08-23",
+effectTime: "2019-08-14",
+id: 1,
+inCustomer: "jack",
+modifyTime: "2019-08-23 22:42:59",
+pdt: "SKU001",
+platform: "1",
+productModel: "1",
+productType: "1",
+remark: "test",
+status: "1",
+list:[
+{type:'类型1',
+num:'数量',
+price:123
+}
+]
+}
+        ],
         //第几页
         currentPage: 1,
         //每页的容量
@@ -205,7 +241,7 @@
         const res = await getList(data);
         console.log('目录价格查询列表',res);
         if(res){
-          this.tableData = res.data.data.list
+          // this.tableData = res.data.data.list
           this.total = res.data.data.total
         }
       },
