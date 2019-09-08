@@ -22,7 +22,7 @@ export const getIn = data => {
     }
     //获取发货方编码
 export const getCode = data => {
-    return request('get', `${serverUrl}/sys/param/list`).then(result => result)
+    return request('get', `${serverUrl}/param/list`).then(result => result)
 }
 
 //下载模版
