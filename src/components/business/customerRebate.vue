@@ -32,17 +32,38 @@
         </el-form>
       </div>
       <div class="box">
+        <div class="btns">
+          <el-button type="primary" size="small" @click="send" :disabled="multipleSelection.length==0">发送确认函</el-button>
+        </div>
         <div class="tab">
-          <el-table :data="tableData" style="width: 100%" border height="100%" @row-click='rowClick'>
-            <el-table-column prop="dealerName" width="150" label="代理商" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="customerName" width="150" label="客户" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="rebateAmount"  width="150" label="Rebate金额" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="releaseAmount" width="150" label="释放金额" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="surplusRebateAmount" width="150" label="剩余释放金额" show-overflow-tooltip></el-table-column>
+          <el-table :data="tableData" style="width: 100%" border height="100%" @row-click='rowClick' @selection-change="handleSelectionChange">
+            <el-table-column type="selection" width="60"  show-overflow-tooltip></el-table-column>
+            <el-table-column prop="" width="150" label="释放金额" show-overflow-tooltip>
+              <template slot-scope="scope">
+                <el-input v-model="scope.row.money" size="small"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column prop="agencyName" width="150" label="代理商" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="customerShortName" width="150" label="客户简称" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="customerType" width="150" label="客户类型" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="salesName" width="150" label="销售名称" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="amebaHeader" width="150" label="阿米巴队长" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="amebaDepartment" width="150" label="阿米巴部门" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="shipmentCompany" width="150" label="出货公司" show-overflow-tooltip></el-table-column>
             <el-table-column prop="accountYearMonth" width="150" label="核算年月" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="orderMonth" width="150" label="订单年月" show-overflow-tooltip></el-table-column>
             <el-table-column prop="shipmentYearMonth" width="150" label="出货年月" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="bu" width="150" label="BU" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip></el-table-column>
             <el-table-column prop="product" width="150" label="产品型号" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="qty" width="150" label="数量" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="salesPrice" width="150" label="Sales Price" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="poPrice" width="150" label="Old Price" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="actualPrice" width="150" label="Actual Price" show-overflow-tooltip></el-table-column>
             <el-table-column prop="platform" width="150" label="平台" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="rebateAmount"  width="150" label="Rebate金额" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="releaseAmount" width="150" label="已释放金额" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="surplusRebateAmount" width="150" label="剩余可释放金额" show-overflow-tooltip></el-table-column>
             <el-table-column label="状态" width="150" show-overflow-tooltip>
               <template slot-scope="scope">
                 {{scope.row.status==1 ?'客户未确认':'客户已确认' }}
@@ -50,7 +71,7 @@
             </el-table-column>
             <el-table-column  label="操作" width="160" fixed="right">
               <template slot-scope="scope">
-                <el-button type='text' @click="send(scope.row.id)">发送确认函</el-button>
+                <!-- <el-button type='text' @click="send(scope.row.id)">发送确认函</el-button> -->
                 <el-button type='text' @click="mx(scope.row.id)">明细</el-button>
               </template>
             </el-table-column>
@@ -77,9 +98,9 @@
               <el-option v-for="item in executors" :key='item.id' :value="item.custName" :label="item.custName"> </el-option> 
             </el-select>
           </el-form-item>
-          <el-form-item label="释放金额">
+          <!-- <el-form-item label="释放金额">
             <el-input size='small' v-model="sendForm.surplusRebateAmount" placeholder="请输入"></el-input>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="执行方式">
             <el-select v-model="sendForm.executeStyle" size="small"> 
               <el-option label="方式1" value='1'></el-option> 
@@ -104,6 +125,8 @@ import {getList,send,getAll,detail} from '@/api/business/rebate.js'
     name: 'customerRebate',
     data() {
       return {
+        success:false,
+        multipleSelection:[],
         rules:{},
         sendForm:{
           executor:'',
@@ -137,6 +160,9 @@ import {getList,send,getAll,detail} from '@/api/business/rebate.js'
     watch: {
     },
     methods: {
+       handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
       submitForm(formName){
         this.$formTest.submitForm(this.$refs[formName],this.commit)
       },
@@ -161,13 +187,24 @@ import {getList,send,getAll,detail} from '@/api/business/rebate.js'
         }
       },
       send(){
-        this.sendVis = true
+         var re= /^0\.\d+$|^[1-9]+(\.\d+)?$/
+         var sucArr =  this.multipleSelection.filter(item=>{
+           if(re.test(item.money)){
+             return item
+           }
+         })
+         if(sucArr.length==this.multipleSelection.length){
+          this.success = true
+          this.sendVis = true
+         }else{
+          this.success = false
+          this.$message.error('请输入正确的有效金额')
+         }
       },
       async commit(){
         const data ={
-          id:this.rowData.id,
+          rebates:this.multipleSelection.map(item=>{return {id:item.id,releaseAmount:item.money}}),
           executor:this.sendForm.executor,
-          surplusRebateAmount:this.sendForm.surplusRebateAmount,
           executeStyle:this.sendForm.executeStyle,
           remark:this.sendForm.remark,
         }
@@ -190,7 +227,9 @@ import {getList,send,getAll,detail} from '@/api/business/rebate.js'
         const res = await getList(data);
         console.log('客户rebate列表',res);
         if(res){
-          this.tableData = res.data.data.list
+          this.tableData = res.data.data.list.map(item=>{
+            return {money:'',...item}
+          })
           this.total = res.data.data.total
         }
       },

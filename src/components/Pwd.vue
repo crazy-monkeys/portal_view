@@ -36,8 +36,8 @@ export default {
     sid(){
       return this.$route.query.sid
     },
-    userId(){
-      return this.$route.query.userId*1
+    loginName(){
+      return this.$route.query.loginName
     }
   },
   methods:{
@@ -69,17 +69,31 @@ export default {
               message:'请确认两次输入的密码是否一致'
             })
           }else{
-            this.$http.post("" + process.env.API_ROOT + "/login/resetPwd",data)
+            this.$http.post("" + process.env.API_ROOT + "/user/forgetPwd/modifyPwd/"+this.loginName +"?sid="+this.sid +"&newPwd="+this.form.newPwd)
             .then(res => {
               console.log("修改密码结果", res);
               if (res.data.code == 1) {
-                  this.$message({
-                    type:'success',
-                    message:'修改密码成功'
-                  })
+                
+                this.$alert('密码修改成功,前往登陆页', '提示', {
+                        showClose: false,
+                        distinguishCancelAndClose: true,
+                        confirmButtonText: '确定',
+                        // cancelButtonText: '取消'
+                    })
+                    .then(() => {
+                        console.log(window)
+                        window.location.href = '/portal'
+                    })
+                    .catch(action => {
+
+                    });
+                  // this.$message({
+                  //   type:'success',
+                  //   message:'修改密码成功'
+                  // })
                   this.form.newPwd = '';
                   this.form.rePwd = '';
-                  this.$router.push('/')
+                  // this.$router.push('/')
               } else {
                   this.$message({
                     type:'error',

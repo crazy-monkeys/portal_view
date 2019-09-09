@@ -14,5 +14,5 @@ export const addAndEdit = data => {
 
 //获取类型
 export const getType = data => {
-    return request('get', `${serverUrl}/param/selectByMAndF/${data.model}/${data.func}`).then(result => result)
+    return request('get', `${serverUrl}/sys/selectByMAndF/${data.model}/${data.func}`).then(result => result)
 }

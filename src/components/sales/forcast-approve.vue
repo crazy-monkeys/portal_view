@@ -1,5 +1,5 @@
 <template>
-  <div class="approve">
+  <div class="forcastApprove">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
@@ -202,7 +202,7 @@
   import Daterange from "../com/date";
 
   export default {
-    name: 'approve',
+    name: 'forcastApprove',
     components:{
       Daterange
     },
@@ -489,7 +489,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
   $sc:12;
-.approve{
+.forcastApprove{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;

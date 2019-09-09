@@ -13,14 +13,17 @@ export const detail = data => {
 
 //删除报备
 export const del = data => {
-    return request('delete', `${serverUrl}/customer/info/${data.id}`).then(result => result)
+    return request('get', `${serverUrl}/customer/delete/${data.id}`).then(result => result)
 }
 
 //新增客户
 export const add = data => {
-    return request('post', `${serverUrl}/customer/report`, data, { 'Content-Type': 'multipart/form-data' }).then(result => result)
+        return request('post', `${serverUrl}/customer/report`, data, { 'Content-Type': 'multipart/form-data' }).then(result => result)
+    }
+    //新增客户
+export const update = data => {
+    return request('post', `${serverUrl}/customer/update`, data, { 'Content-Type': 'multipart/form-data' }).then(result => result)
 }
-
 
 //新增客户
 export const approve = data => {

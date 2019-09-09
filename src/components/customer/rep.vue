@@ -7,7 +7,6 @@
           <el-breadcrumb-item >客户报备</el-breadcrumb-item>
           <el-breadcrumb-item >报备</el-breadcrumb-item>
         </el-breadcrumb>
-    </el-breadcrumb>
     </div>
     <div class="content">
       <div class="selBox">

@@ -2,11 +2,7 @@
   <div class="agentRateDefend">
     <div class="sellBox">
       <div class="head clear">
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item to='/home/sell'>代理商费率管理</el-breadcrumb-item>
-          <el-breadcrumb-item>代理商费率查询</el-breadcrumb-item>
-          <el-breadcrumb-item>维护</el-breadcrumb-item>
-        </el-breadcrumb>
+            <el-page-header @back="back" content="代理商费率维护"></el-page-header>
       </div>
 
       
@@ -118,7 +114,13 @@
         }
       },
       async sure(){
-        const res = await approve();
+        const data={
+          ids:this.tableData.map((item)=>{
+            return item.id
+          }).join(',')
+        }
+        console.log(data)
+        const res = await approve(data);
         if(res){
           this.$message.success('发布成功')
           this.$router.push({
@@ -145,6 +147,9 @@
       },
       change() {
         this.dialogVisible = !this.dialogVisible
+      },
+      back(){
+        window.history.back()
       },
     }
   }

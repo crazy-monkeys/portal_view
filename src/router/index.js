@@ -161,7 +161,7 @@ export default new Router({
                 },
                 //销售管理
                 {
-                    path: 'sales/forcast-index',
+                    path: 'forcast/index',
                     name: 'SalesList',
                     component: resolve => require(['@/components/sales/forcast-index'], resolve),
                 },
@@ -176,9 +176,14 @@ export default new Router({
                     component: resolve => require(['@/components/sales/kucun-upload'], resolve),
                 },
                 {
-                    path: 'sales/forcast-upload',
+                    path: 'forcast/upload',
                     name: 'SalesList',
                     component: resolve => require(['@/components/sales/forcast-upload'], resolve),
+                },
+                {
+                    path: 'forcast/approval',
+                    name: 'forcastApprove',
+                    component: resolve => require(['@/components/sales/forcast-approve'], resolve),
                 },
                 {
                     path: 'customer/visiteRecord',
@@ -204,12 +209,6 @@ export default new Router({
                     path: 'business/rebateDetail',
                     name: 'rebateDetail',
                     component: resolve => require(['@/components/business/rebateDetail'], resolve),
-                },
-
-                {
-                    path: 'sales/approve',
-                    name: 'SalesList',
-                    component: resolve => require(['@/components/sales/approve'], resolve),
                 },
                 {
                     path: 'sales/reset',
