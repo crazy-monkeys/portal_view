@@ -7,6 +7,6 @@ export const getList = data => {
 }
 
 //代理商费率列表
-export const approve = () => {
-    return request('get', `${serverUrl}/agencyRate/approve`).then(result => result)
+export const approve = data => {
+    return request('get', `${serverUrl}/agencyRate/approve/${data.ids}`).then(result => result)
 }

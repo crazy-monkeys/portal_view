@@ -17,26 +17,26 @@
         </div>
         <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <el-form-item label="客户分类">
-            <el-select v-model="form.customerType">
+            <el-select v-model="form.customerType" clearable>
               <el-option v-for="item in customerTypes" :key="item.value" :label='item.label' :value='item.value'> </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="产品类型" >
-             <el-input v-model="form.productType">
+             <el-input v-model="form.productType" clearable>
             </el-input>
           </el-form-item>
           <el-form-item label="产品层次一"  >
-             <el-input v-model="form.productLevelOne">
+             <el-input v-model="form.productLevelOne" clearable>
             
             </el-input>
           </el-form-item>
           <el-form-item label="产品层次二"  >
-             <el-input v-model="form.productLevelTwo">
+             <el-input v-model="form.productLevelTwo" clearable>
               
             </el-input>
           </el-form-item>
           <el-form-item label="产品层次三"  >
-             <el-input v-model="form.productLevelThree">
+             <el-input v-model="form.productLevelThree" clearable>
              
             </el-input>
           </el-form-item>

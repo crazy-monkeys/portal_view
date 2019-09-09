@@ -41,6 +41,22 @@
 使用中有任何技术问题，请发送邮件到 <a  href="mailto:ITServiceDesk@unisoc.com">ITServiceDesk@unisoc.com</a> ，我们会尽快回复。
 <!-- 使用中有任何技术问题，请发送邮件到 <a  href="">xxxxxxx@xxx.com</a> ，我们会尽快回复。 -->
       </div>
+      <!-- 找回密码 -->
+    <el-dialog
+      :show-close='false'
+      :close-on-click-modal="false"
+      title="找回密码申请"
+      :close-on-press-escape='false'
+      :visible.sync="dialogVisible"
+      width="400px"
+      :before-close="handleClose">
+      <p>请输入您的用户名<el-input v-model="value" :disabled="doing" size="small"></el-input></p>
+        <p v-if="doing"> 正在处理,请稍候...</p>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="handleClose" size="small" :disabled="doing">返回登陆</el-button>
+        <el-button type="primary" size="small" @click="pwd" :disabled="doing">提交申请</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -51,12 +67,19 @@ export default {
     return {
       loginName: "",
       loginPwd: "",
-      url:process.env.API_ROOT
+      url:process.env.API_ROOT,
+       dialogVisible : false,
+       doing:false,
+      value:'',
     };
   },
   created() {},
   
   methods: {
+     handleClose(){
+       this.dialogVisible = false
+       this.value= ''
+      },
     // sub1(params){
     //     loginServer.getTestData(params).then(res =>{
     //             //处理数据
@@ -64,6 +87,37 @@ export default {
     //             //提示错误
     //     })
     // },
+    pwd(){
+          if(this.value.length!=0){
+          this.doing = true;
+             this.$http.post(''+process.env.API_ROOT+'/user/forgetPwd/sendEmail/'+this.value).then((res)=>{
+              console.log('修改密码申请',res)
+              if(res.data.code==1){
+                this.$message({
+                  type:'success',
+                  message:'修改密码申请提交成功,请查收邮件'
+                })
+                this.dialogVisible = false;
+                this.value = ''
+              }else{
+                this.$message({
+                  type:'error',
+                  message:res.data.msg
+                })
+              }
+                this.doing = false;
+          }).catch((err)=>{
+            console.log(err);
+            alert('网络异常')
+          })
+          }else{
+            this.$message({
+                  type:'error',
+                  message:'用户名不能为空'
+                })
+          }
+
+      },
     dd(){
       this.$http({
               method : 'get',
@@ -169,7 +223,10 @@ export default {
           }
         }
       },   
-    forget() {}
+    forget(){
+       this.dialogVisible = true
+        console.log('找回密码')
+      },
   }
 };
 </script>

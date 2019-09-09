@@ -84,7 +84,7 @@
             <el-table-column show-overflow-tooltip label="操作" fixed='right' width="120">
               <template slot-scope="scope">
                 <el-button type='text'  @click='add(scope.row.id)'>明细</el-button>
-                <el-button type='text'  @click='mod'>修改</el-button>
+                <el-button type='text'  @click='mod(scope.row.id)'>修改</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -230,9 +230,14 @@ export default {
         this.total = res.data.data.total;
       }
     },
-    mod(){
+    mod(id){
       this.$router.push(
-        {name:'customerUpdate'}
+        {
+          name:'customerUpdate',
+          query:{
+            id:id
+          }
+        }
       )
     },
     change() {

@@ -51,9 +51,9 @@
               <el-table :data="queryList" border style="width: 100%" height="100%">
                 <el-table-column type="selection"  show-overflow-tooltip></el-table-column>
                 <!-- <el-table-column prop="uploadTime" width='150' label="上传时间" show-overflow-tooltip></el-table-column> -->
-                <el-table-column prop="customerExternalNumber" width='150' label="客户外部号" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="customerFullName" width='150' label="客户全称" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="sales" width='150' label="销售" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="customerExternalNumber" width='100' label="客户外部号" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="customerFullName" width='250' label="客户全称" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="sales" width='100' label="销售" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="categoryOne" width='150' label="类别一(类型)" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="categoryTow" width='150' label="类别二(子类)" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="categoryThree" width='150' label="类别三(平台)" show-overflow-tooltip></el-table-column>
@@ -122,8 +122,8 @@
               <el-table :data="tableData" border style="width: 100%" height="100%">
                   <el-table-column prop="errorMsg" width='150' label="错误信息" show-overflow-tooltip></el-table-column>
                   <el-table-column prop="customerExternalNumber" width='150' label="客户外部号" show-overflow-tooltip></el-table-column>
-                  <el-table-column prop="customerFullName" width='150' label="客户全称" show-overflow-tooltip></el-table-column>
-                  <el-table-column prop="sales" width='150' label="销售" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="customerFullName" width='200' label="客户全称" show-overflow-tooltip></el-table-column>
+                  <el-table-column prop="sales" width='100' label="销售" show-overflow-tooltip></el-table-column>
                   <el-table-column prop="categoryOne" width='150' label="类别一(类型)" show-overflow-tooltip></el-table-column>
                   <el-table-column prop="categoryTow" width='150' label="类别二(子类)" show-overflow-tooltip></el-table-column>
                   <el-table-column prop="categoryThree" width='150' label="类别三(平台)" show-overflow-tooltip></el-table-column>

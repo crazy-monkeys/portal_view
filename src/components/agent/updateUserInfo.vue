@@ -622,7 +622,7 @@
         const res = await updateDealerInfo(this.form)
         console.log('修改结果',res);
         if(res){
-          this.$message.success('新增成功')
+          this.$message.success('修改成功')
           this.goBack()
         }
       },
