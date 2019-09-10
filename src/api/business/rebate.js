@@ -21,5 +21,5 @@ export const send = data => {
 
 //详情
 export const getAll = data => {
-    return request('get', `${serverUrl}/customer/all`).then(result => result)
+    return request('get', `${serverUrl}/sys/customer/all`).then(result => result)
 }
