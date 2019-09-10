@@ -66,7 +66,7 @@
             <el-table-column prop="surplusRebateAmount" width="150" label="剩余可释放金额" show-overflow-tooltip></el-table-column>
             <el-table-column label="状态" width="150" show-overflow-tooltip>
               <template slot-scope="scope">
-                {{scope.row.status==1 ?'客户未确认':'客户已确认' }}
+                {{scope.row.status==1 ?'客户已确认':'客户未确认' }}
               </template>
             </el-table-column>
             <el-table-column  label="操作" width="160" fixed="right">
@@ -217,6 +217,8 @@ import {getList,send,getAll,detail} from '@/api/business/rebate.js'
       },
       async getList(){
         const data ={
+          pageIndex:this.currentPage,
+          pageSize:this.pageSize,
           //代理名称
           dealerName:this.form.dealerName,
         //客户名称

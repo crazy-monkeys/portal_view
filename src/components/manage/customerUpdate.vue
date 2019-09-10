@@ -380,7 +380,7 @@
                 </el-table-column>
                 <el-table-column  label="附件类型" show-overflow-tooltip>
                   <template slot-scope="scope">
-                    <el-select size="small" disabled  v-model="scope.row.type" >
+                    <el-select size="small" :disabled='scope.row.fileId ? true:false'  v-model="scope.row.type" >
                       <el-option v-for="item in types" :key="item.id" :label="item.zhName" :value="item.pValue"></el-option>
                     </el-select>
                   </template>

@@ -39,7 +39,7 @@
             <el-input size='small' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="类型">
-            <el-select v-model="status" size="small">
+            <el-select v-model="form.type" size="small">
               <el-option value='1' label="延期提交"></el-option>
               <el-option value='2' label="删除"></el-option>
               <el-option value='3' label="修改"></el-option>
@@ -47,7 +47,6 @@
           </el-form-item>
             
           <el-form-item label="渠道" >
-            
             <el-select v-model="value" size="small">
               <el-option :value='1' label='职工客户'></el-option>
               <el-option :value='2' label='代理客户'></el-option>
@@ -109,6 +108,11 @@
                   </el-table-column>
                   <el-table-column label="首代备注" prop='8' show-overflow-tooltip>
                   </el-table-column>
+                  <el-table-column  label="操作" width="100"  fixed="left" >
+                    <template>
+                      <el-button size="small" type="text" @click="adjust">预测调整</el-button>
+                    </template>
+                  </el-table-column>
                 </el-table>
               </template>
             </el-table-column>
@@ -135,11 +139,6 @@
             <el-table-column prop="10" label="产品型号" width="100" show-overflow-tooltip></el-table-column>
             <el-table-column prop="11" label="截止日期" width="100" show-overflow-tooltip></el-table-column>
             <el-table-column prop="12" label="未完成专货库存" width="180" show-overflow-tooltip></el-table-column>
-            <!-- <el-table-column  label="操作" width="100"  v-if="s==1" fixed="right" >
-              <template>
-                <el-button size="small" type="text" @click="adjust">预测调整</el-button>
-              </template>
-            </el-table-column> -->
             <div slot="empty">
               <p>无数据</p>
             </div>
@@ -156,21 +155,24 @@
     <el-dialog
         title="预测调整"
         :visible.sync="dialogVisible1"
-        width="80%"
+        width="400px"
         >
-        <el-table :data="tableData1" style="width: 100%" >
-            <el-table-column  label="月份" show-overflow-tooltip></el-table-column>
-            <el-table-column  label="原预测值" show-overflow-tooltip></el-table-column>
-            <el-table-column  label="调整值" show-overflow-tooltip>
-                <el-input size="small"></el-input>
-            </el-table-column>
-            <el-table-column  label="备注"   show-overflow-tooltip>
-              <template>
-                <el-input  size="small" :rows="1" type="textarea"></el-input>
-              </template>
-            </el-table-column>
-            
-          </el-table>
+          <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' >
+          <el-form-item label="上次填写">
+                        <el-input disabled size='small' placeholder="请输入"></el-input>
+
+          </el-form-item>
+          <el-form-item label="本地填写">
+                        <el-input size='small' placeholder="请输入"></el-input>
+
+          </el-form-item>
+          <el-form-item label="阿米巴队长">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="首代">
+            <el-input size='small' placeholder="请输入"></el-input>
+          </el-form-item>
+        </el-form>
           <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible1 = false" size="small">取 消</el-button>
           <el-button type="primary" @click="dialogVisible1 = false" size="small">提 交</el-button>
@@ -200,6 +202,7 @@
 <script>
   import formTest from '../../assets/js/formTest'
   import Daterange from "../com/date";
+  import {getList} from '@/api/forcast/approve.js'
 
   export default {
     name: 'forcastApprove',
@@ -208,8 +211,12 @@
     },
     data() {
       return {
+        title:'',
+        label:'',
         s:1,
-        form: {},
+        form: {
+          type:''
+        },
         total: 0,
         d1: [],
         options: [{
@@ -421,10 +428,23 @@
       }
     },
     created() {
+      this.getList()
     },
     watch: {
     },
     methods: {
+      async getList(){
+        const data ={
+          pageSize:this.pageSize,
+          pageNum:this.currentPage,
+        }
+        const res = await getList(data);
+        console.log('审批列表',res);
+        if(res){
+          this.tableData = res.data.data.list
+          this.total = res.data.data.total
+        }
+      },
       add1(type) {
         this.dialogVisible2 = true
         if(type==1){
