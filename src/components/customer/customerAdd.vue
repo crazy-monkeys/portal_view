@@ -23,9 +23,9 @@
                 <el-select v-model="form.businessType" size="small" filterable placeholder="请选择">
                   <el-option
                     v-for="item in businessTypes"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
+                    :key="item.pValue"
+                    :label="item.zhName"
+                    :value="item.pValue"
                   ></el-option>
                 </el-select>
               </el-form-item>
@@ -41,9 +41,9 @@
             <el-col :span="6">
               <el-form-item label="角色">
                 <el-select v-model="form.custRole" size="small" placeholder="请选择">
-                  <el-option label="中国客户" :value="1"></el-option>
-                  <el-option label="亚太客户" :value="2"></el-option>
-                  <el-option label="北美客户" :value="3"></el-option>
+                  <el-option label="中国客户" value="1"></el-option>
+                  <el-option label="亚太客户" value="2"></el-option>
+                  <el-option label="北美客户" value="3"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -284,7 +284,7 @@
                   <template slot-scope="scope">
                      <el-select size="small"  disabled v-model="scope.row.roleType">
                       <el-option value="001" label="PM"></el-option>
-                      <el-option value="002" label="Sales，"></el-option>
+                      <el-option value="002" label="Sales"></el-option>
                       <el-option value="003" label="FAE"></el-option>
                     </el-select>
                   </template>
@@ -312,24 +312,18 @@
                 <el-table-column  label="角色类型" show-overflow-tooltip>
                   <template slot-scope="scope">
                     <el-select size="small"  disabled v-model="scope.row.roleType">
-                      <el-option :value="142" label="负责销售"></el-option>
-                      <el-option :value="46" label="销售人员"></el-option>
+                      <el-option value="142" label="负责销售"></el-option>
+                      <el-option value="46" label="销售人员"></el-option>
                     </el-select>
                   </template>
                 </el-table-column>
                 <el-table-column prop="" label="销售" show-overflow-tooltip>
                   <template slot-scope="scope">
                     <el-select size="small"  disabled v-model="scope.row.employeeId">
-                      <el-option v-for="item in employeeIds" :key="item.employeeId" :label="item.employeeName" :value="item.employeeId"></el-option>
+                      <el-option v-for="item in employeeIds" :key="item.userNo" :label="item.userName" :value="item.userNo"></el-option>
                     </el-select>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="手机号" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                    <el-input size="small" disabled v-model="scope.row.accountMobile"></el-input>
-                  </template>
-                </el-table-column>
-                
                 <div slot="empty">
                   无数据
                 </div>
@@ -397,6 +391,42 @@
                   </template>
                 </el-table-column>
                
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="销售营业额" name="nine">
+            <div class="tabBox">
+              <el-table :data="form.quotas" style="width: 100%" height="300">
+                <el-table-column prop="" label="填报年份" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.salesYear"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="币种" >
+                  <template slot-scope="scope">
+                    <el-select size="small" disabled v-model="scope.row.currency" >
+                      <el-option  label="USD" value="USD"></el-option>
+                      <el-option  label="RMB" value="RMB"></el-option>
+                    </el-select>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="单位" >
+                  <template slot-scope="scope">
+                    <el-select size="small" disabled v-model="scope.row.unit" >
+                      <el-option  label="K/千" value="001"></el-option>
+                      <el-option  label="10K/万 " value="002"></el-option>
+                      <el-option  label="M/百万" value="003"></el-option>
+                    </el-select>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="销售额" >
+                  <template slot-scope="scope">
+                    <el-input size="small"  disabled v-model="scope.row.salesNumber"></el-input>
+                  </template>
+                </el-table-column>
                 <div slot="empty">
                   无数据
                 </div>
@@ -510,14 +540,7 @@ export default {
         salesTeam: []
       },
       businessTypes: [
-        {
-          value: 1,
-          label: "Mass Market"
-        },
-        {
-          value: 2,
-          label: "Account Market"
-        }
+      
       ],
       province: [],
       reg: "",
@@ -550,6 +573,7 @@ export default {
   methods: {
     getData(){
         this.getType(2,11)
+        this.getType(2,1)
         this.getType(2,6)
         this.getType(2,5)
         this.getType(2,7)
@@ -585,6 +609,9 @@ export default {
         }
         if(func==6){
           this.contactTypes = res.data.data
+        }
+        if(func==1){
+          this.businessTypes = res.data.data
         }
       }
     },

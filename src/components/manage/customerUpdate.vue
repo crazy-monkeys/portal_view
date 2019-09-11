@@ -240,47 +240,47 @@
           <el-tab-pane label="股权结构" name="third">
             <div class="tabBox">
               <el-table :data="form.custStructure" style="width: 100%" height="300">
-                <el-table-column prop="" label="上级公司" >
+                <el-table-column prop="" label="上级公司" width="150">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.strOne"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="股东名称" >
+                <el-table-column prop="" label="股东名称" width="150">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.strName"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="股东占比" show-overflow-tooltip>
+                <el-table-column prop="" label="股东占比"  width="150">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.strValue"></el-input></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="股东性质" >
+                <el-table-column prop="" label="股东性质" width="150">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.strTwo"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="公司性质" >
+                <el-table-column prop="" label="公司性质" width="150">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.strThree"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="是否公司管理层" >
+                <el-table-column prop="" label="是否公司管理层" width="150">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.strFour"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="职务" >
+                <el-table-column prop="" label="职务" width="150">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.strFive"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="部门" >
+                <el-table-column prop="" label="部门" width="150">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.strSix"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column label="" show-overflow-tooltip>
+                <el-table-column label="" width="100" fixed="right">
                   <template slot="header">
                     <el-button type="primary" size="small" @click="addRow(3)">新增</el-button>
                   </template>
@@ -299,9 +299,10 @@
               <el-table :data="form.accountTeams" style="width: 100%" height="300">
                 <el-table-column  label="角色类型" show-overflow-tooltip>
                   <template slot-scope="scope">
-                     <el-select size="small" v-model="scope.row.roleType">
-                      <el-option :value="1" label="类型1"></el-option>
-                      <el-option :value="2" label="类型2"></el-option>
+                     <el-select size="small"   v-model="scope.row.roleType">
+                      <el-option value="001" label="PM"></el-option>
+                      <el-option value="002" label="Sales"></el-option>
+                      <el-option value="003" label="FAE"></el-option>
                     </el-select>
                   </template>
                 </el-table-column>
@@ -321,6 +322,39 @@
                   </template>
                   <template slot-scope="scope">
                     <el-button type="text" size="small" @click="del(4,scope.$index)">删除</el-button>
+                  </template>
+                </el-table-column>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="展瑞销售团队" name="eight">
+            <div class="tabBox">
+              <el-table :data="form.zrAccountTeams" style="width: 100%" height="300">
+                <el-table-column  label="角色类型" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-select size="small"   v-model="scope.row.roleType">
+                      <el-option value="142" label="负责销售"></el-option>
+                      <el-option value="46" label="销售人员"></el-option>
+                    </el-select>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="销售" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-select size="small"   v-model="scope.row.employeeId">
+                      <el-option v-for="item in employeeIds" :key="item.userNo" :label="item.userName" :value="item.userNo"></el-option>
+                    </el-select>
+                  </template>
+                </el-table-column>
+                
+                <el-table-column prop="t4" label="" show-overflow-tooltip>
+                  <template slot="header">
+                    <el-button type="primary" size="small" @click="addRow(8)">新增</el-button>
+                  </template>
+                  <template slot-scope="scope">
+                    <el-button type="text" size="small" @click="del(8,scope.$index)">删除</el-button>
                   </template>
                 </el-table-column>
                 <div slot="empty">
@@ -361,37 +395,37 @@
           <el-tab-pane label="展锐产品型号" name="sixth">
             <div class="tabBox">
               <el-table :data="form.customerProducts" style="width: 100%" height="300">
-                <el-table-column prop="" label="物料" >
+                <el-table-column prop="" label="物料"  width="150">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.product"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="月份一" >
+                <el-table-column prop="" label="月份一" width="150">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.pNumberOne"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="月份二" >
+                <el-table-column prop="" label="月份二" width="150">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.pNumberTwo"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="月份三" >
+                <el-table-column prop="" label="月份三" width="150">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.pNumberThree"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="月份四" >
+                <el-table-column prop="" label="月份四" width="150">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.pNumberFour"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="月份五" >
+                <el-table-column prop="" label="月份五" width="150">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.pNumberFive"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="月份六" >
+                <el-table-column prop="" label="月份六" width="150">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.pNumberSix"></el-input>
                   </template>
@@ -402,6 +436,50 @@
                   </template>
                   <template slot-scope="scope">
                     <el-button type="text" size="small" @click="del(6,scope.$index)">删除</el-button>
+                  </template>
+                </el-table-column>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="销售营业额" name="nine">
+            <div class="tabBox">
+              <el-table :data="form.quotas" style="width: 100%" height="300">
+                <el-table-column prop="" label="填报年份" >
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.salesYear"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="币种" >
+                  <template slot-scope="scope">
+                    <el-select size="small" v-model="scope.row.currency" >
+                      <el-option  label="USD" value="USD"></el-option>
+                      <el-option  label="RMB" value="RMB"></el-option>
+                    </el-select>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="单位" >
+                  <template slot-scope="scope">
+                    <el-select size="small" v-model="scope.row.unit" >
+                      <el-option  label="K/千" value="001"></el-option>
+                      <el-option  label="10K/万 " value="002"></el-option>
+                      <el-option  label="M/百万" value="003"></el-option>
+                    </el-select>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="销售额" >
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.salesNumber"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="t4" label=""  fixed="right" width="100">
+                  <template slot="header">
+                    <el-button type="primary" size="small" @click='addRow(9)'>新增</el-button>
+                  </template>
+                  <template slot-scope="scope">
+                    <el-button type="text" size="small" @click="del(9,scope.$index)">删除</el-button>
                   </template>
                 </el-table-column>
                 <div slot="empty">
@@ -468,10 +546,13 @@
 import {detail,add,update,checkCust} from "@/api/customer/query.js";
 import {stringify} from "qs";
 import {getType} from '@/api/system/param.js'
+import {getEmployeeIds} from '@/api/customer/query.js'
+
 export default {
   name: "customerUpdate",
   data() {
     return {
+      employeeIds:[],
       contactTypes:[],
       types:[],
         corporateTypes:[],
@@ -591,12 +672,20 @@ export default {
     },
   },
   methods: {
+    async getEmployeeIds(){
+      const res = await getEmployeeIds();
+      console.log('销售列表',res)
+      if(res){
+       this.employeeIds = res.data.data
+      }
+    },
     getData(){
         this.getType(2,11)
         this.getType(2,6)
         this.getType(2,5)
         this.getType(2,7)
         this.getType(2,9)
+        this.getEmployeeIds()
       },
       async getType(model,func){
         const data ={
@@ -684,6 +773,12 @@ export default {
           case 7:
           this.form.files.splice(index,1)
           break;
+          case 8:
+          this.form.zrAccountTeams.splice(index,1)
+          break;
+          case 9:
+          this.form.quotas.splice(index,1)
+          break;
         default:
           break;
       }
@@ -763,6 +858,21 @@ export default {
             "create_user_name":''	
           })
           // console.log(this.form.custFile)
+          break;
+          case 8:
+          this.form.zrAccountTeams.push({
+            "roleType":'',
+            "employeeId":'',
+          })
+          // console.log(this.form.custFile)
+          break;
+          case 9:
+          this.form.quotas.push({
+            'salesYear':'',
+            'currency':'',
+            'unit':'',
+            'salesNumber':'',
+          })
           break;
         default:
           break;

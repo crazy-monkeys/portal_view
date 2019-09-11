@@ -303,9 +303,10 @@
               <el-table :data="form.accountTeams" style="width: 100%" height="300">
                 <el-table-column  label="角色类型" show-overflow-tooltip>
                   <template slot-scope="scope">
-                     <el-select size="small" v-model="scope.row.roleType">
-                      <el-option :value="1" label="类型1"></el-option>
-                      <el-option :value="2" label="类型2"></el-option>
+                     <el-select size="small"   v-model="scope.row.roleType">
+                      <el-option value="001" label="PM"></el-option>
+                      <el-option value="002" label="Sales"></el-option>
+                      <el-option value="003" label="FAE"></el-option>
                     </el-select>
                   </template>
                 </el-table-column>
@@ -414,12 +415,56 @@
               </el-table>
             </div>
           </el-tab-pane>
+          <el-tab-pane label="销售营业额" name="nine">
+            <div class="tabBox">
+              <el-table :data="form.quotas" style="width: 100%" height="300">
+                <el-table-column prop="" label="填报年份" >
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.salesYear"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="币种" >
+                  <template slot-scope="scope">
+                    <el-select size="small" v-model="scope.row.currency" >
+                      <el-option  label="USD" value="USD"></el-option>
+                      <el-option  label="RMB" value="RMB"></el-option>
+                    </el-select>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="单位" >
+                  <template slot-scope="scope">
+                    <el-select size="small" v-model="scope.row.unit" >
+                      <el-option  label="K/千" value="001"></el-option>
+                      <el-option  label="10K/万 " value="002"></el-option>
+                      <el-option  label="M/百万" value="003"></el-option>
+                    </el-select>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="销售额" >
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.salesNumber"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="t4" label=""  fixed="right" width="100">
+                  <template slot="header">
+                    <el-button type="primary" size="small" @click='addRow(9)'>新增</el-button>
+                  </template>
+                  <template slot-scope="scope">
+                    <el-button type="text" size="small" @click="del(9,scope.$index)">删除</el-button>
+                  </template>
+                </el-table-column>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+            </div>
+          </el-tab-pane>
           <el-tab-pane label="附件" name="seventh">
             <div class="tabBox">
               <el-table :data="form.files" style="width: 100%" height="300" @row-click='rowClick'>
                 <el-table-column  label="附件类型" show-overflow-tooltip>
                   <template slot-scope="scope">
-                    <el-select size="small"  v-model="scope.row.fileType" >
+                    <el-select size="small"  v-model="scope.row.type" >
                       <el-option v-for="item in types" :key="item.id" :label="item.zhName" :value="item.pValue"></el-option>
                     </el-select>
                   </template>
@@ -539,6 +584,7 @@ export default {
         registTime: '',
         sales: [],
         accountTeams: [],
+        quotas: [],
       },
       businessTypes: [
         {
@@ -685,6 +731,9 @@ export default {
           case 7:
           this.form.files.splice(index,1)
           break;
+          case 9:
+          this.form.quotas.splice(index,1)
+          break;
         default:
           break;
       }
@@ -753,7 +802,7 @@ export default {
           case 7:
           this.form.files.push({
             'index':this.form.files.length,
-            "fileType":'',
+            "type":'',
             "fileName":'',
             'file':'',
             // 'fileList':[],
@@ -765,6 +814,16 @@ export default {
           })
           // console.log(this.form.custFile)
           break;
+          case 9:
+          this.form.quotas.push({
+            'salesYear':'',
+            'currency':'',
+            'unit':'',
+            'salesNumber':'',
+          })
+          // console.log(this.form.custFile)
+          break;
+          
         default:
           break;
       }
@@ -807,19 +866,19 @@ export default {
             if(typeof(data[i][j]) == 'object'){
               for(let x in data[i][j]){
                 console.log(data[i][j][x])
-                if(data[i][j][x] ){
+                if(data[i][j][x] || data[i][j][x]===0){
                   params.append(i+'['+j+']'+'.'+x,data[i][j][x])
                 }
               }
             }else{
-                if(data[i][j] ){
+                if(data[i][j] || data[i][j]===0){
 
               params.append(data[i]+j,data[i][j])
                 }
             }
           }
         }else{
-          if(data[i]){
+          if(data[i] || data[i]===0){
           params.append(i,data[i])
 
           }

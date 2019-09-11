@@ -90,9 +90,9 @@
             <el-select v-model="form1.value" placeholder="请选择" > 
               <el-option
                 v-for='item in rowData.reportDealerName ? salers  : delears '
-                :key='item.value'
-                :label='item.label'
-                :value='item.value'
+                :key='rowData.reportDealerName ? item.userNo : item.id '
+                :label='rowData.reportDealerName ? item.userName : item.custName'
+                :value='rowData.reportDealerName ? item.userNo : item.id'
                 >
               </el-option>
             </el-select>
@@ -111,7 +111,8 @@
 
 <script>
 import Daterange from "../com/date";
-import {getList,approve,ret} from "@/api/customer/query.js";
+import {getList,approve,ret,getEmployeeIds,getDealers} from "@/api/customer/query.js";
+
 export default {
   name: "customerApprove",
   components:{
@@ -120,16 +121,10 @@ export default {
   data() {
     return {
       salers:[
-        {
-          label:'销售',
-          value:1
-        }
+        
       ],
       delears:[
-        {
-          label:'代理商',
-          value:1
-        }
+        
       ],
       rules: {
         value: [{ required: true, trigger: "blur" ,message:'请选择'}],
@@ -189,9 +184,25 @@ export default {
   },
   created() {
     this.getList()
+    this.getEmployeeIds()
+    this.getDealers()
   },
   watch: {},
   methods: {
+    async getEmployeeIds(){
+      const res = await getEmployeeIds();
+      console.log('销售列表',res)
+      if(res){
+       this.salers = res.data.data
+      }
+    },
+    async getDealers(){
+      const res = await getDealers();
+      console.log('代理商列表',res)
+      if(res){
+       this.delears = res.data.data
+      }
+    },
     rowClick(row){
       this.rowData = row
     },
