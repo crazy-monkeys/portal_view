@@ -32,3 +32,6 @@ export const findRoleResource = data => {
 export const modRolePermission = data => {
     return request('post', `${serverUrl}/permission/savePermission`, data).then(result => result)
 }
+export const delRow = data => {
+    return request('delete', `${serverUrl}/permission/delete/${data.id}`).then(result => result)
+}

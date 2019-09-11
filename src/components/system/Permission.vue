@@ -5,7 +5,7 @@
       <el-breadcrumb separator="/">
         <!-- <el-breadcrumb-item :to="{ path: '/home' }">客户营销</el-breadcrumb-item> -->
         <el-breadcrumb-item >系统管理</el-breadcrumb-item>
-        <el-breadcrumb-item>权限管理</el-breadcrumb-item>
+        <el-breadcrumb-item>角色管理</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="box clear">
@@ -27,13 +27,16 @@
             </el-table-column>
             <el-table-column prop="createTime" label="创建时间" width="200">
             </el-table-column>
-            <el-table-column label="操作" width="150" fixed="right">
+            <el-table-column label="操作" width="180" fixed="right">
               <template slot-scope="scope">
-                <el-button type="text" size="small" @click="mod(roles[scope.$index].roleCode)">
+                <el-button type="text"  @click="mod(roles[scope.$index].roleCode)">
                   修改
                 </el-button>
-                <el-button type="text" size="small" @click="permissionSet(roles[scope.$index].roleCode)">
+                <el-button type="text"  @click="permissionSet(roles[scope.$index].roleCode)">
                   权限配置
+                </el-button>
+                <el-button type="text"  @click="del(roles[scope.$index].roleCode)">
+                  删除
                 </el-button>
               </template>
             </el-table-column>
@@ -44,7 +47,7 @@
           </el-table>
           <div class="block">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-            :page-sizes="[10, 30,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
+            :page-sizes="[20, 30,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
           </el-pagination>
         </div>
         </div>
@@ -92,7 +95,7 @@
 </template>
 
 <script>
-import { getRoles,updateRole,saveRole,findRole,findRoleResource,modRolePermission} from '@/api/system/role.js'
+import { getRoles,updateRole,saveRole,findRole,findRoleResource,modRolePermission,delRow} from '@/api/system/role.js'
 import { getResource} from '@/api/system/resource.js'
 
 export default {
@@ -131,7 +134,7 @@ export default {
       form: {
         resource:[]
       },
-      pageSize:10,
+      pageSize:20,
       currentPage:1,
       total:0,
       addArr:[],
@@ -174,6 +177,33 @@ export default {
       this.findRole(id)
       this.edit = true
       this.dialogVisible = true;
+    },
+    async delRow(id){
+      const data ={
+        id:id
+      }
+      const res = await delRow(data);
+      console.log('删除结果',res)
+      if(res){
+        this.$message({
+            type: 'success',
+            message: '删除成功'
+          })
+        this.getRoles()
+      }
+    },
+    del(id){
+      this.$confirm('确定要删除该角色？', '删除', {
+          distinguishCancelAndClose: true,
+          confirmButtonText: '确认',
+          cancelButtonText: '取消'
+        })
+        .then(() => { 
+          this.delRow(id)
+        })
+        .catch(action => {
+          
+        });
     },
     //获取角色详情
     async findRole(id){
