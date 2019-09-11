@@ -18,7 +18,7 @@ export const commit = data => {
 
 //获取内部客户
 export const getIn = data => {
-        return request('get', `${serverUrl}/sys/ships`).then(result => result)
+        return request('get', `${serverUrl}/user/ships`).then(result => result)
     }
     //获取发货方编码
 export const getCode = data => {
