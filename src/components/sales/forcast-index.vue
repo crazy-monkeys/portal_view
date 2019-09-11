@@ -36,20 +36,19 @@
             <Daterange />
           </el-form-item>
           <el-form-item label="渠道" >
-            
-            <el-select v-model="value" size="small">
+            <el-select v-model="source" size="small">
               <el-option :value='1' label='职工客户'></el-option>
               <el-option :value='2' label='代理客户'></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="查询方式" >
-            <el-select v-model="value1">
+            <el-select v-model="way">
               <el-option :value='1' label='按年'></el-option>
               <el-option :value='2' label='按月'></el-option>
             </el-select>
           </el-form-item>
           
-          <el-form-item :label="checkedCities.length==0 ?'' : ' '">
+          <el-form-item label=" ">
             <el-button size='small' type='primary' plain>查询</el-button>
             <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
           </el-form-item>
@@ -64,10 +63,10 @@
           
         </div>
         <div class="tab">
-          <el-table :data="tableData" border style="width: 100%" height="100%" v-show="value1==2">
-            <el-table-column type="expand" v-if="value1==2">
-              <template slot-scope="props" v-if="value1==2">
-                <el-table size='small'  v-if="value1==2" :data="props.row.children" border style="width: 100%" height="100%">
+          <el-table :data="tableData" border style="width: 100%" height="100%" v-show="way==2">
+            <el-table-column type="expand" v-if="way==2">
+              <template slot-scope="props" v-if="way==2">
+                <el-table size='small'  v-if="way==2" :data="props.row.children" border style="width: 100%" height="100%">
                   <el-table-column label="月份" prop='0' show-overflow-tooltip> 
                   </el-table-column>
                   <el-table-column label="上次填写" prop='1' show-overflow-tooltip>
@@ -115,7 +114,7 @@
             </div>
           </el-table>
 
-          <el-table :data="tableData" border style="width: 100%" height="100%" v-show="value1==1">
+          <el-table :data="tableData" border style="width: 100%" height="100%" v-show="way==1">
             <el-table-column prop="" width='100' label="代理商" show-overflow-tooltip>
             </el-table-column>
             
@@ -182,7 +181,7 @@
           </el-table>
           <div class="block">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-            :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+            :page-sizes="[10, 20,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
           </el-pagination>
         </div>
         </div>
@@ -218,6 +217,7 @@
 <script>
   import Daterange from "../com/date";
   import formTest from '../../assets/js/formTest'
+  import {getList} from '@/api/forcast/query.js'
   export default {
     components:{
       Daterange
@@ -225,35 +225,9 @@
     name: 'index',
     data() {
       return {
-        value:'',
-        value1:1,
-        s:1,
+        source:'',
+        way:1,
         form: {},
-        total: 0,
-        d1: [],
-        options: [{
-          value: '选项1',
-          label: 'Mass Market'
-        }, {
-          value: '选项2',
-          label: 'Account Market'
-        }],
-        value: '',
-        checkAll: false,
-        checkedCities: [
-          1, 2
-        ],
-        conditions: [
-          {
-            label: '客户名称',
-            value: 1
-          },
-          {
-            label: '英文名称',
-            value: 2
-          }
-        ],
-        isIndeterminate: false,
         dialogVisible: false,
         dialogVisible1: false,
         tableData: [
@@ -265,70 +239,49 @@
         currentPage: 1,
         //每页的容量
         pageSize: 10,
+        total: 0,
+
       }
     },
     computed: {
-      shopId() {
-        return this.$store.state.shopId.shopId
-      }
     },
     created() {
+      this.getList()
     },
     watch: {
     },
     methods: {
-      adjust() {
-        this.dialogVisible1 = true
+      async getList(){
+        const data ={
+          pageSize:this.pageSize,
+          pageNum:this.currentPage,
+        }
+        const res = await getList(data);
+        console.log('查询列表',res);
+        if(res){
+          this.tableData = res.data.data.list
+          this.total = res.data.data.total
+        }
       },
       change(){
         this.dialogVisible = !this.dialogVisible
 
       },
-      handleCheckAllChange(val) {
-        console.log(val)
-        this.checkedCities = val ? [1, 2, 3, 4, 5, 6] : [];
-        this.isIndeterminate = false;
-      },
-      handleCheckedCitiesChange(value) {
-        console.log(value)
-        let checkedCount = value.length;
-        this.checkAll = checkedCount === this.conditions.length;
-        this.isIndeterminate = checkedCount > 0 && checkedCount < this.conditions.length;
-      },
-      sure() {
-        this.dialogVisible = false
-      },
-      handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => { });
-      },
-      q(index) {
-        return this.pageSize * (this.currentPage - 1) + index + 1
-      },
-      add() {
-        this.$router.push(
-          {
-            name: 'AddSell'
-          }
-        )
-      },
       // 分页
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
         this.pageSize = val;
+        this.getList()
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
         this.currentPage = val;
+        this.getList()
       },
     }
   }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
   $sc:12;
 .index{

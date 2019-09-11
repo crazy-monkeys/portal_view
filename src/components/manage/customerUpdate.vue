@@ -177,6 +177,13 @@
           <el-tab-pane label="联系人" name="second">
             <div class="tabBox">
               <el-table :data="form.customerContacts" style="width: 100%" height="300">
+                <el-table-column prop=""  width="150" label="联系人类型" >
+                  <template slot-scope="scope">
+                    <el-select size="small"  v-model="scope.row.type" >
+                      <el-option v-for="item in contactTypes" :key="item.id" :label="item.zhName" :value="item.pValue"></el-option>
+                    </el-select>
+                  </template>
+                </el-table-column>
                 <el-table-column prop="" width="150" label="姓名" >
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.contactName"></el-input>
@@ -233,6 +240,11 @@
           <el-tab-pane label="股权结构" name="third">
             <div class="tabBox">
               <el-table :data="form.custStructure" style="width: 100%" height="300">
+                <el-table-column prop="" label="上级公司" >
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.strOne"></el-input>
+                  </template>
+                </el-table-column>
                 <el-table-column prop="" label="股东名称" >
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.strName"></el-input>
@@ -241,6 +253,31 @@
                 <el-table-column prop="" label="股东占比" show-overflow-tooltip>
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.strValue"></el-input></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="股东性质" >
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.strTwo"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="公司性质" >
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.strThree"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="是否公司管理层" >
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.strFour"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="职务" >
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.strFive"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="部门" >
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.strSix"></el-input>
                   </template>
                 </el-table-column>
                 <el-table-column label="" show-overflow-tooltip>
@@ -257,7 +294,7 @@
               </el-table>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="展锐销售团队" name="fourth">
+          <el-tab-pane label="销售团队" name="fourth">
             <div class="tabBox">
               <el-table :data="form.accountTeams" style="width: 100%" height="300">
                 <el-table-column  label="角色类型" show-overflow-tooltip>
@@ -380,7 +417,7 @@
                 </el-table-column>
                 <el-table-column  label="附件类型" show-overflow-tooltip>
                   <template slot-scope="scope">
-                    <el-select size="small" disabled  v-model="scope.row.type" >
+                    <el-select size="small" :disabled='scope.row.fileId ? true:false'  v-model="scope.row.type" >
                       <el-option v-for="item in types" :key="item.id" :label="item.zhName" :value="item.pValue"></el-option>
                     </el-select>
                   </template>
@@ -435,6 +472,7 @@ export default {
   name: "customerUpdate",
   data() {
     return {
+      contactTypes:[],
       types:[],
         corporateTypes:[],
         departments:[],
@@ -555,6 +593,7 @@ export default {
   methods: {
     getData(){
         this.getType(2,11)
+        this.getType(2,6)
         this.getType(2,5)
         this.getType(2,7)
         this.getType(2,9)
@@ -580,7 +619,9 @@ export default {
           if(func==5){
             this.types = res.data.data
           }
-          
+          if(func==6){
+            this.contactTypes = res.data.data
+          }
         }
       },
     async checkCust(){
@@ -668,6 +709,7 @@ export default {
             "contactEmail"  :'',
             "isDecisionMaker"  :'',
             "equityRatio"  :'',
+            "type"  :'',
           })
           break;
         case 3:
@@ -675,6 +717,12 @@ export default {
             "corporateStructureName":'',
             "corporateStructureAddress":'',
             "isDefaultContact":'',
+            'strOne':'',
+            'strTwo':'',
+            'strThree':'',
+            'strFour':'',
+            'strFive':'',
+            'strSix':'',
           })
           break;
         case 4:

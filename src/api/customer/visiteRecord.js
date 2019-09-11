@@ -10,3 +10,8 @@ export const getList = data => {
 export const download = () => {
     return request('get', `${serverUrl}/customer/visitRecord/download`).then(result => result)
 }
+
+//
+export const submit = data => {
+    return request('post', `${serverUrl}/customer/visitRecord/approve`, data).then(result => result)
+}

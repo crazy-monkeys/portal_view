@@ -175,6 +175,13 @@
           <el-tab-pane label="联系人" name="second">
             <div class="tabBox">
               <el-table :data="form.customerContacts" style="width: 100%" height="300">
+                <el-table-column prop=""  width="150" label="联系人类型" >
+                  <template slot-scope="scope">
+                    <el-select size="small" disabled v-model="scope.row.type" >
+                      <el-option v-for="item in contactTypes" :key="item.id" :label="item.zhName" :value="item.pValue"></el-option>
+                    </el-select>
+                  </template>
+                </el-table-column>
                 <el-table-column prop=""  width="150" label="姓名" >
                   <template slot-scope="scope">
                     <el-input size="small" disabled v-model="scope.row.contactName"></el-input>
@@ -224,6 +231,11 @@
           <el-tab-pane label="股权结构" name="third">
             <div class="tabBox">
               <el-table :data="form.custStructure" style="width: 100%" height="300">
+                <el-table-column prop="" label="上级公司" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.strOne"></el-input>
+                  </template>
+                </el-table-column>
                 <el-table-column prop="" label="股东名称" >
                   <template slot-scope="scope">
                     <el-input size="small" disabled v-model="scope.row.strName"></el-input>
@@ -234,6 +246,59 @@
                     <el-input size="small" disabled v-model="scope.row.strValue"></el-input>
                   </template>
                 </el-table-column>
+                <el-table-column prop="" label="股东性质" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.strTwo"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="公司性质" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.strThree"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="是否公司管理层" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.strFour"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="职务" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.strFive"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="部门" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.strSix"></el-input>
+                  </template>
+                </el-table-column>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="销售团队" name="fourth">
+            <div class="tabBox">
+              <el-table :data="form.accountTeams" style="width: 100%" height="300">
+                <el-table-column  label="角色类型" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                     <el-select size="small"  disabled v-model="scope.row.roleType">
+                      <el-option value="001" label="PM"></el-option>
+                      <el-option value="002" label="Sales，"></el-option>
+                      <el-option value="003" label="FAE"></el-option>
+                    </el-select>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="名称" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.accountName"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="手机号" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.accountMobile"></el-input>
+                  </template>
+                </el-table-column>
                 
                 <div slot="empty">
                   无数据
@@ -241,20 +306,22 @@
               </el-table>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="展锐销售团队" name="fourth">
+          <el-tab-pane label="展瑞销售团队" name="eight">
             <div class="tabBox">
-              <el-table :data="form.accountTeams" style="width: 100%" height="300">
+              <el-table :data="form.zrAccountTeams" style="width: 100%" height="300">
                 <el-table-column  label="角色类型" show-overflow-tooltip>
                   <template slot-scope="scope">
-                     <el-select size="small"  disabled v-model="scope.row.roleType">
-                      <el-option :value="1" label="类型1"></el-option>
-                      <el-option :value="2" label="类型2"></el-option>
+                    <el-select size="small"  disabled v-model="scope.row.roleType">
+                      <el-option :value="142" label="负责销售"></el-option>
+                      <el-option :value="46" label="销售人员"></el-option>
                     </el-select>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="名称" show-overflow-tooltip>
+                <el-table-column prop="" label="销售" show-overflow-tooltip>
                   <template slot-scope="scope">
-                    <el-input size="small" disabled v-model="scope.row.accountName"></el-input>
+                    <el-select size="small"  disabled v-model="scope.row.employeeId">
+                      <el-option v-for="item in employeeIds" :key="item.employeeId" :label="item.employeeName" :value="item.employeeId"></el-option>
+                    </el-select>
                   </template>
                 </el-table-column>
                 <el-table-column prop="" label="手机号" show-overflow-tooltip>
@@ -370,11 +437,14 @@
 <script>
 import { detail } from "@/api/customer/query.js";
 import {getType} from '@/api/system/param.js'
+import {getEmployeeIds} from '@/api/customer/query.js'
 
 export default {
   name: "customerAdd",
   data() {
     return {
+      employeeIds:[],
+      contactTypes:[],
       types:[],
         corporateTypes:[],
         departments:[],
@@ -480,9 +550,18 @@ export default {
   methods: {
     getData(){
         this.getType(2,11)
+        this.getType(2,6)
         this.getType(2,5)
         this.getType(2,7)
         this.getType(2,9)
+        this.getEmployeeIds()
+    },
+    async getEmployeeIds(){
+      const res = await getEmployeeIds();
+      console.log('销售列表',res)
+      if(res){
+       this.employeeIds = res.data.data
+      }
     },
     async getType(model,func){
       const data ={
@@ -503,6 +582,9 @@ export default {
         }
         if(func==5){
           this.types = res.data.data
+        }
+        if(func==6){
+          this.contactTypes = res.data.data
         }
       }
     },

@@ -27,7 +27,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="开通日期" class="date">
-            <Daterange @data='watchTime' :resetData='resetData' />
+            <Daterange @data='watchTime' :resetDataReg='resetData' />
           </el-form-item>
           <el-form-item label=" ">
             <el-button size='small' type='primary' plain @click="search">搜索</el-button>
@@ -243,6 +243,7 @@ export default {
       this.form.userType='';
       this.form.roleName='';
       this.form.loginName='';
+      this.form.customerName='';
     },
     async getList(){
       var data ={

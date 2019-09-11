@@ -37,7 +37,7 @@
                 <Daterange />
               </el-form-item>
               <el-form-item label=" ">
-                <el-button  type='primary' plain>查询</el-button>
+                <el-button  type='primary' plain >查询</el-button>
                 <el-button   type='primary' plain>重置</el-button>
               </el-form-item>
             </el-form>
@@ -48,10 +48,10 @@
               <el-button   size='small' type='primary'>批量修改</el-button>
             </div>
             <div class="tab">
-              <el-table :data="tableData" border style="width: 100%" height="100%">
+              <el-table :data="list" border style="width: 100%" height="100%">
                 <el-table-column type="selection"  show-overflow-tooltip></el-table-column>
-                <el-table-column prop="0" width='100' label="错误信息" ></el-table-column>
-                <el-table-column prop="1" width='100' label="上传日期" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="errorMsg" width='100' label="错误信息" ></el-table-column>
+                <el-table-column prop="updateTime" width='100' label="上传日期" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="2" width='80' label="年月" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="3" width='100'  label="客户名称" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="4" width='100'  label="客户类别" show-overflow-tooltip></el-table-column>
@@ -104,7 +104,7 @@
               </el-table>
               <div class="block">
               <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-                :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+                :page-sizes="[10, 20,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
               </el-pagination>
             </div>
             </div>
@@ -129,7 +129,7 @@
                 >
                 <el-button size="small"  type="primary">上传</el-button>
               </el-upload>
-              <el-button class="add"  size='small' type='primary'  @click="downloadError">下载错误数据</el-button>
+              <el-button class="add"  size='small' type='primary'  @click="downloadError" :disabled="isError1">下载错误数据</el-button>
               <el-upload
                 class="upload-demo"
                 ref="upload"
@@ -141,10 +141,12 @@
                 :auto-upload="true"
                 :show-file-list="false"
                 :on-success="suc1"
+                :disabled="isError1"
+                :before-upload="beforeUpload"
                 >
-                <el-button size="small"  type="primary" >上传错误数据</el-button>
+                <el-button size="small"  type="primary" :disabled="isError1">上传错误数据</el-button>
               </el-upload>
-              <el-button class="add" @click='sub' size='small' type='primary' >提交</el-button>
+              <el-button class="add" @click='sub' size='small' type='primary' :disabled="isError2">提交</el-button>
 
             </div>
             <div class="tab">
@@ -201,7 +203,7 @@
         <el-tab-pane label="驳回记录" name="third">
           <div class="box">
             <div class="tab">
-              <el-table :data="tableData" border style="width: 100%" height="100%">
+              <el-table :data="rejects" border style="width: 100%" height="100%">
                 <el-table-column prop="0" width='100' label="错误信息" ></el-table-column>
                 <el-table-column prop="1" width='100' label="上传日期" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="2" width='80' label="年月" show-overflow-tooltip></el-table-column>
@@ -255,8 +257,8 @@
                 </div>
               </el-table>
               <div class="block">
-              <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-                :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+              <el-pagination @size-change="handleSizeChange1" @current-change="handleCurrentChange1" :current-page="currentPage1"
+                :page-sizes="[10, 20,50]" :page-size="pageSize1" layout="sizes,total, jumper, prev, pager, next" :total="total1">
               </el-pagination>
             </div>
             </div>
@@ -271,7 +273,7 @@
 <script>
   import Daterange from "../com/date";
   import {serverUrl} from '../../axios/request'
-
+  import{submit,queryList,rejectList} from '@/api/forcast/upload.js'
   export default {
     name: 'upload',
     components:{
@@ -282,7 +284,7 @@
         isError1:true,
         isError2:true,
         url:serverUrl + '/forecast/agency/template/upload',
-        url1:serverUrl+'/forecast/agency/template/upload',
+        url1:serverUrl+'/forecast/agency/error/upload',
         headers:{
           "Authorization": sessionStorage.getItem("data"),
         },
@@ -297,27 +299,102 @@
         batchNo:'',
         //表格数据
         tableData: [],
+        list:[],
+        rejects:[],
         //第几页
         currentPage: 1,
+        currentPage1: 1,
         //每页的容量
         pageSize: 10,
+        pageSize1: 10,
         //总量
         total: 0,
+        total1: 0,
       }
     },
     computed: {
-     
+      auth(){
+        return sessionStorage.getItem('data')
+      }
     },
     created() {
+      this.queryList()
     },
     watch: {
     },
     methods: {
-      sub(){},
+      sub(){
+        this.submit()
+      },
+      beforeUpload(file){
+      let data = new FormData()
+      data.append('excel',file)
+      data.append('batchNo',this.batchNo)
+      this.$http({
+        method: 'post',
+        url: this.url1,
+        headers:{'Authorization': this.auth},
+        timeout: 20000,
+        data: data
+      }).then(res=>{
+        console.log(res)
+        if(res.data.code==1){
+          if(res.data.data.success){
+            this.$message.success('上传成功')
+            this.tableData= res.data.data.data
+            this.isError2 = false
+          }else{
+            this.$message.error('请下载错误数据')
+          }
+        }else{
+          this.$message.error(res.data.msg)
+        }
+      }).catch(err=>{
+        console.log(err)
+      })
+      return false
+    },
+      async queryList(){
+        const data ={
+          pageSize:this.pageSize,
+          pageNum:this.currentPage,
+        }
+        console.log(data)
+        const res = await queryList(data);
+        console.log('上传部分查询列表',res);
+        if(res){
+          this.list = res.data.data.list
+          this.total = res.data.data.total
+        }
+      },
+      async rejectList(){
+        const data ={
+          pageSize:this.pageSize1,
+          pageNum:this.currentPage1,
+        }
+        console.log(data)
+        const res = await rejectList(data);
+        console.log('上传部分驳回列表',res);
+        if(res){
+          this.rejects = res.data.data.list
+          this.total1 = res.data.data.total
+        }
+      },
+      async submit(){
+        const data ={
+          batchNo : this.batchNo
+        }
+        console.log(data)
+        const res = await submit(data);
+        console.log('提交结果',res);
+        if(res){
+          this.$message.success('提交成功')
+        }
+      },
       downloadError(){
         this.$http({
             method: "get",
-            url: "" + process.env.API_ROOT + "/forecast/agency/error/download?batchNo=FAE74AA6-F095-4524-A607-76DB638D613A" +this.batchNo,
+            url: "" + process.env.API_ROOT + "/forecast/agency/error/download?batchNo=" +this.batchNo,
             responseType: "arraybuffer",
             headers:{
               'Authorization': sessionStorage.getItem('data'),
@@ -347,14 +424,17 @@
         if(val.code!=1){
           this.$message.error(val.msg)
         }else{
-          if(val.data.isError){
+          if(!val.data.success){
             this.isError1 = false
             this.isError2 = true
-            this.$message.error(val.data.msg)
+            this.$message({
+              type:'error',
+              message:'请下载错误数据'
+            })
           }else{
             this.$message.success('上传成功')
             this.da1={
-              batchNo :res.data.batchNo
+              batchNo :val.data.batchNo
             }
             this.isError1 = true
             this.isError2 = false
@@ -370,7 +450,7 @@
         if(val.code!=1){
           this.$message.error(val.msg)
         }else{
-          if(val.data.isError){
+          if(!val.data.success){
             this.$message.error(val.data.msg)
           }else{
             this.isError2 = false
@@ -414,7 +494,16 @@
         });
           
       },
-      handleClick(){},
+      handleClick(tab){
+        if(tab.name=='first'){
+          this.queryList()
+        }
+        if(tab.name=='second'){
+        }
+        if(tab.name=='third'){
+          this.rejectList()
+        }
+      },
       change(){
         this.dialogVisible = !this.dialogVisible
       },
@@ -426,6 +515,14 @@
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
         this.currentPage = val;
+      },
+      handleSizeChange1(val) {
+        console.log(`每页 ${val} 条`);
+        this.pageSize1 = val;
+      },
+      handleCurrentChange1(val) {
+        console.log(`当前页: ${val}`);
+        this.currentPage1 = val;
       },
     }
   }

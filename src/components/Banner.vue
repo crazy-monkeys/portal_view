@@ -29,169 +29,29 @@
         <i class="el-icon-document"></i>
       </el-tooltip>
     </div>
-
-    <el-dialog title="切换店铺" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
-      <el-select v-model="value" placeholder="请选择" @change="chooseShop">
-        <el-option
-          v-for="item in shopList"
-          :key="item.shop_info_id"
-          :label="item.shop_name"
-          :value="item.shop_info_id"
-        ></el-option>
-      </el-select>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="handleClose">取 消</el-button>
-        <el-button type="primary" @click="changeSuc">确 定</el-button>
-      </span>
-    </el-dialog>
-
-
-    <el-dialog title="新增子账号" :visible.sync="dialogVisible2" width="30%" :before-close="handleClose">
-      <el-form
-        :model="form"
-        :rules="rules"
-        ref="form"
-        label-position="top"
-        >
-            <el-form-item label="用户名">
-              <el-input size="small" ></el-input>
-            </el-form-item>
-            <el-form-item label="登录名">
-              <el-input size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="角色">
-              <el-input size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="邮箱">
-              <el-input size="small"></el-input>
-            </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible2 = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible2 = false" size="small">确 定</el-button>
-      </span>
-    </el-dialog>
-
-
     <el-dialog
-      title="子账号管理"
+      title="修改密码"
       :visible.sync="dialogVisible1"
-      width="60%"
+      width="400px"
       :close-on-click-modal="false"
-      :show-close="false"
+      :show-close='false'
       >
-      <!-- <el-form
-        :model="form"
-        :rules="rules"
-        ref="form"
-        label-position="top"
-        class="form"
-        :inline="true"
-      > -->
-        <!-- <el-tabs type="border-card"> -->
-          <!-- <el-tab-pane label="基本信息">
-            <el-form-item label="名称">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="简称">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="电话">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="E-mail">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="网站">
-              <el-input type="text" size="small"></el-input>
-            </el-form-item>
-            
-          </el-tab-pane> -->
-          <!-- <el-tab-pane label="联系人信息">
-            <el-form-item label="业务联系人">
-              <el-input size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="电话">
-              <el-input size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="传真">
-              <el-input size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="邮箱">
-              <el-input size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="swift code">
-              <el-input size="small"></el-input>
-            </el-form-item>
-            <div>
-              <el-form-item label="地址">
-                <el-select v-model="value4" size="small" filterable placeholder="省">
-                  <el-option
-                    v-for="item in options4"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label=" ">
-                <el-select v-model="value5" size="small" filterable placeholder="市">
-                  <el-option
-                    v-for="item in options5"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label=" ">
-                <el-select v-model="value6" size="small" filterable placeholder="区">
-                  <el-option
-                    v-for="item in options6"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label=" ">
-                <el-input type="text" size="small" placeholder="详细地址"></el-input>
-              </el-form-item>
-            </div>
-          </el-tab-pane> -->
-          <!-- <el-tab-pane label="子账号信息"> -->
-            <div class="tab">
-              <el-table :data="tableData" style="width: 100%" height="300">
-                <el-table-column prop="1" show-overflow-tooltip label="用户名"></el-table-column>
-                <el-table-column prop="2" label="登录名" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="3" label="角色" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="4" show-overflow-tooltip label="邮箱"></el-table-column>
-                <el-table-column prop="5" label="开通时间" show-overflow-tooltip></el-table-column>
-
-                <el-table-column show-overflow-tooltip prop label fixed="right">
-                  <template slot="header" slot-scope="scope">
-                    <el-button size="small" type="primary" @click="addChild">新增</el-button>
-                  </template>
-                  <!-- <template scope-slot='scope'>
-                <el-button type='primary' size='mini' >维护</el-button>
-                  </template>-->
-                </el-table-column>
-                <div slot="empty">
-                  <p>未查询到子账户信息</p>
-                </div>
-              </el-table>
-            </div>
-            <span slot="footer" class="dialog-footer">
-              <!-- <el-button @click="dialogVisible1 = false" size="small">取 消</el-button> -->
-              <el-button type="primary" @click="dialogVisible1 = false" size="small">确 定</el-button>
-            </span>
-          <!-- </el-tab-pane> -->
-        <!-- </el-tabs> -->
-        <!-- <el-form-item class="sub">
-          <el-button @click="close" size="small">取消</el-button>
-          <el-button type="primary" size="small" @click="submitForm('form')">提交</el-button>
-        </el-form-item> -->
-      <!-- </el-form> -->
+      <el-form :model="form"  :rules="rules" ref="form" label-width="100px" class="form" label-position="left" size="small">
+        <!-- <p class="danger"> <i class="el-icon-warning" style="color: #3366FF"></i>   密码需包含大小写字母、数字以及特殊字符且长度大于8</p> -->
+        <el-form-item label="旧密码：" prop="oldPwd">
+          <el-input v-model="form.oldPwd" class="" type='password' :show-password='true' @paste.native.capture.prevent="handlePaste"></el-input>
+        </el-form-item>
+        <el-form-item label="新密码：" prop="newPwd">
+          <el-input v-model="form.newPwd" class="" type='password' :show-password='true' @paste.native.capture.prevent="handlePaste"></el-input>
+        </el-form-item>
+        <el-form-item label="确认密码："  prop="rePwd">
+          <el-input v-model="form.rePwd" type='password' class="" :show-password='true' @paste.native.capture.prevent="handlePaste"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="close" >取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" >确定</el-button>
+        </el-form-item>
+      </el-form>
     </el-dialog>
   </div>
 </template>
@@ -212,9 +72,6 @@ export default {
       userId: "",
       shopId: "",
       form: {
-        count: "",
-        email: "",
-        phone: "",
         oldPwd: "",
         newPwd: "",
         rePwd: ""
@@ -230,17 +87,17 @@ export default {
             required: true,
             trigger: "blur",
             validator: (rule, value, callback) => {
-              var reg = /^(?=.*[0-9].*)(?=.*[a-z].*)(?=.*[A-Z].*)(?=.*[~!@#$%^&*_+=-].*).{8,}$/;
+              // var reg = /^(?=.*[0-9].*)(?=.*[a-z].*)(?=.*[A-Z].*)(?=.*[~!@#$%^&*_+=-].*).{8,}$/;
               if (!value) {
                 callback(new Error("旧密码不能为空"));
               } else {
-                if (!reg.test(value)) {
-                  callback(
-                    new Error("密码必须包含大小写字母、数字以及特殊字符")
-                  );
-                } else {
+                // if (!reg.test(value)) {
+                //   callback(
+                //     new Error("密码必须包含大小写字母、数字以及特殊字符")
+                //   );
+                // } else {
                   callback();
-                }
+                // }
               }
             }
           }
@@ -250,17 +107,17 @@ export default {
             required: true,
             trigger: "blur",
             validator: (rule, value, callback) => {
-              var reg = /^(?=.*[0-9].*)(?=.*[a-z].*)(?=.*[A-Z].*)(?=.*[~!@#$%^&*_+=-].*).{8,}$/;
+              // var reg = /^(?=.*[0-9].*)(?=.*[a-z].*)(?=.*[A-Z].*)(?=.*[~!@#$%^&*_+=-].*).{8,}$/;
               if (!value) {
                 callback(new Error("新密码不能为空"));
               } else {
-                if (!reg.test(value)) {
-                  callback(
-                    new Error("密码必须包含大小写字母、数字以及特殊字符")
-                  );
-                } else {
+                // if (!reg.test(value)) {
+                //   callback(
+                //     new Error("密码必须包含大小写字母、数字以及特殊字符")
+                //   );
+                // } else {
                   callback();
-                }
+                // }
               }
             }
           }
@@ -340,18 +197,55 @@ export default {
       if (command == 1) {
         this.$router.push('/home/agent/add');
       }
+      if (command == 2) {
+        this.dialogVisible1 = true
+      }
       if (command == 5) {
         this.$router.push('/home/agent/updateUserInfo');
       }
     },
 
     handlePaste() {},
-    submitForm() {},
-    resetForm() {},
+    submitForm(formName) {
+      this.$formTest.submitForm(this.$refs[formName],this.sub)
+    },
+    resetForm(formName) {
+      this.$formTest.resetForm(this.$refs[formName],this.sub)
+    },
     close() {
       this.dialogVisible1 = false;
+      this.form = {
+        oldPwd:'',
+        newPwd:'',
+        rePwd:'',
+      }
+      this.resetForm('form')
+      
     },
-    sub() {},
+    sub() {
+      this.$http({
+        method: "post",
+        url: process.env.API_ROOT + "/user/modifyPwd?loginName=" + this.loginName+'&newPwd='+this.form.newPwd +'&oldPwd='+this.form.oldPwd,
+        headers: {
+          authorization: sessionStorage.getItem("data")
+        }
+      })
+        .then(res => {
+          console.log("修改密码结果", res);
+          if(res.data.code==1){
+            this.$message.success('密码修改成功，请重新登陆')
+            sessionStorage.removeItem("data");
+            this.$router.push("/login");
+            this.resetForm('form')
+          }else{
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          alert("系统异常");
+        });
+    },
     handleClose() {
       this.dialogVisible = false;
       this.dialogVisible1 = false;
@@ -425,7 +319,6 @@ $sc: 12;
   .el-dialog {
     .form {
       .el-form-item {
-        width: 200px;
         .el-form-item__label {
           height: 30px;
         }
