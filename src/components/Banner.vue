@@ -15,7 +15,7 @@
         <el-dropdown-item :command="1" v-if="userType=='代理商' || userType=='子代理商'">基本信息</el-dropdown-item>
         <el-dropdown-item :command="5" v-if="userType=='代理商'">修改基本信息</el-dropdown-item>
         <!-- <el-dropdown-item :command="4">子账号管理</el-dropdown-item> -->
-        <el-dropdown-item :command="2" >修改密码</el-dropdown-item>
+        <el-dropdown-item v-if="userType!='内部客户'" :command="2" >修改密码</el-dropdown-item>
         <el-dropdown-item :command="3">退出登录</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>

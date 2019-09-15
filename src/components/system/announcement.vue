@@ -20,7 +20,7 @@
             <el-input size='small' v-model="selForm.title" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="类型">
-            <el-select size='small' v-model="selForm.typeId" placeholder="请输入">
+            <el-select size='small' v-model="selForm.typeId" clearable placeholder="请输入">
               <el-option 
               v-for="item in types" 
               :key='item.pValue'
@@ -58,6 +58,9 @@
           <el-table-column prop="createUserId" show-overflow-tooltip label="发布人">
           </el-table-column>
           <el-table-column prop="status" show-overflow-tooltip label="状态">
+            <template slot-scope='scope'>
+              {{scope.row.status==1?'已发布' : scope.row.status==0?'未发布' :scope.row.status==-1?'已撤销':''}}
+            </template>
           </el-table-column>
           <el-table-column prop="status" show-overflow-tooltip label="操作" fixed="right" width="80">
             <template slot-scope="scope">

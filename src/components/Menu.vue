@@ -371,6 +371,8 @@ $sc: 12;
 .menu {
   height: 100%;
   padding-top: 56px;
+  position: relative;
+  box-sizing: border-box;
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 240px;
     min-height: 400px;

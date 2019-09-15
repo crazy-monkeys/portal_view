@@ -2,11 +2,9 @@
   <div class="resource">
     <div class="head clear">
       <el-breadcrumb separator="/">
-        <!-- <el-breadcrumb-item :to="{ path: '/home' }">客户营销</el-breadcrumb-item> -->
         <el-breadcrumb-item>系统管理</el-breadcrumb-item>
         <el-breadcrumb-item>资源管理</el-breadcrumb-item>
       </el-breadcrumb>
-      <!-- <h1>资源管理</h1> -->
     </div>
     <div class="box">
       <div class="btns">
@@ -27,10 +25,9 @@
                 @node-drag-end="handleDragEnd"
                 @node-drop="handleDrop"
                 draggable
+                :default-expanded-keys='[0]'
                 :allow-drop="allowDrop"
               >
-                <!-- :allow-drag="allowDrag" -->
-
                 <span class="custom-tree-node" slot-scope="{ node }" >
                     <div style="width:100%" @mouseenter="mouseenter(node)" @mouseleave="mouseleave(node)">
                     <span>{{ node.label }}</span>

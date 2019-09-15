@@ -14,7 +14,7 @@
         </div>
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <el-form-item label="类别">
-            <el-select v-model="form.type" size="small" filterable placeholder="请选择">
+            <el-select v-model="form.type" size="small" clearable filterable placeholder="请选择">
               <el-option v-for="item in types" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
@@ -35,7 +35,7 @@
             <el-input size='small' v-model="form.outCustomerName" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="币种">
-            <el-select v-model="form.currency" size="small" filterable placeholder="请选择">
+            <el-select v-model="form.currency" size="small" clearable filterable placeholder="请选择">
               <el-option v-for="item in currences" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
@@ -82,7 +82,10 @@
             </el-table-column>
             <el-table-column prop="currentReviewer" label="当前审批人" show-overflow-tooltip width="150">
             </el-table-column>
-            <el-table-column prop="reviewedPeople" label="下一位审批人" show-overflow-tooltip width="150">
+            <el-table-column prop="" label="审批状态" show-overflow-tooltip width="150">
+              <template slot-scope="scope">
+              {{scope.row.status==1? '审批中':scope.row.status==2? '审批结束':scope.row.status==3? '已完结':scope.row.status==4? '已驳回':''}}
+              </template>
             </el-table-column>
             <el-table-column width='150' label="操作" fixed='right'>
               <template slot-scope='scope'>

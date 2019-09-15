@@ -12,3 +12,14 @@ export const rejectList = data => {
 export const submit = data => {
     return request('get', `${serverUrl}/forecast/agency/data/submit?${stringify(data)}`).then(result => result)
 }
+
+export const pass = data => {
+    return request('get', `${serverUrl}/forecast/approval/data/pass?${stringify(data)}`).then(result => result)
+}
+
+export const reject = data => {
+    return request('get', `${serverUrl}/forecast/approval/data/reject?${stringify(data)}`).then(result => result)
+}
+export const mod = data => {
+    return request('post', `${serverUrl}/forecast/approval/single/update`, data).then(result => result)
+}

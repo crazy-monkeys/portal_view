@@ -21,7 +21,7 @@
             </el-input>
           </el-form-item>
           <el-form-item label="用户类型">
-            <el-select v-model="form.userType" size='small' filterable placeholder="请选择">
+            <el-select v-model="form.userType" size='small' clearable filterable placeholder="请选择">
               <el-option v-for="item in userTypes" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>

@@ -12,3 +12,11 @@ export const rejectList = data => {
 export const submit = data => {
     return request('get', `${serverUrl}/forecast/agency/data/submit?${stringify(data)}`).then(result => result)
 }
+
+export const update = data => {
+    return request('post', `${serverUrl}/forecast/agency/data/update`, data).then(result => result)
+}
+
+export const del = data => {
+    return request('get', `${serverUrl}/forecast/agency/data/delete?${stringify(data)}`).then(result => result)
+}

@@ -40,8 +40,9 @@
               <el-form-item label="公司资产" >
               <el-input type="text" size="small" v-model="form.corportaeAssets"> </el-input>
               </el-form-item>
-              <el-form-item label="注册日期">
-                <el-input type="text" size="small" v-model="form.registTime"></el-input>
+              <el-form-item label="注册日期" class="date">
+                <!-- <el-input type="text" size="small" v-model="form.registTime"></el-input> -->
+                <el-date-picker size="small" v-model="form.registTime" type="date" format='yyyy-MM-dd' value-format="timestamp"   placeholder="选择日期"></el-date-picker>
               </el-form-item>
               <el-form-item label="公司人数">
                 <el-input type="text" size="small" v-model="form.staffNumber"></el-input>
@@ -557,7 +558,9 @@
           .el-form-item {
             margin-bottom: 0;
             width: 200px;
-
+.el-date-editor{
+            width: 200px;
+          }
             .el-form-item__label {
               height: 30px;
             }
