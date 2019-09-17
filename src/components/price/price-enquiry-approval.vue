@@ -48,17 +48,17 @@
                 {{scope.row.approvalStatus=='pass'?'通过':scope.row.approvalStatus=='reject'? '驳回':'待审批'}}
               </template>
             </el-table-column>
-            <el-table-column prop="applyRemark"  width='100' label="审批说明" show-overflow-tooltip>
+            <el-table-column prop="applyRemark"  width='150' label="审批说明" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="productModel" width='150' label="产品型号" show-overflow-tooltip>
+            <el-table-column prop="productModel" width='240' label="产品型号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="applyTime" width='150' label="申请时间" show-overflow-tooltip>
+            <el-table-column prop="applyTime" width='200' label="申请时间" show-overflow-tooltip>
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="remark" width='150' label="备注">
             </el-table-column>
-            <el-table-column width="80" label="操作" fixed='right'>
+            <el-table-column width="100" label="操作" fixed='right'>
               <template slot-scope='scope'>
-                <el-button type='text' size='small' @click='check(scope.row)'>详情</el-button>
+                <el-button type='text' size='small' @click='check(scope.row)'>查看目录价格</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -90,48 +90,91 @@
           </span>
     </el-dialog>
     <el-dialog
-        title="详情"
+    class='detailDialog'
+        title="目录价格信息"
         :visible.sync="dialogVisible1"
         width="600px"
         :before-close="close"
+        top="5vh"
         >
-        <div class="detail">
+        <el-form ref="detail" :model="detail"  class="detail" label-width="150"  label-position='left' >
+        <div class="detailBox">
           <el-row :gutter="20">
             <el-col :span="12">
-              <div class="detailBox"><div>bu : </div>{{detail.bu}}</div>
+              <el-form-item label="BU">
+                <el-input size='small'  v-model="detail.bu" :readonly="true" placeholder="请输入"></el-input>
+              </el-form-item>
+              <!-- <div class="detailBox"><div>bu : </div>{{detail.bu}}</div> -->
             </el-col>
             <el-col :span="12">
-              <div class="detailBox"><div>目录价格 : </div>{{detail.catalogPrice}}</div>
+              <el-form-item label="PDT">
+                <el-input size='small'  v-model="detail.pdt" :readonly="true" placeholder="请输入"></el-input>
+              </el-form-item>
+              <!-- <div class="detailBox"><div>bu : </div>{{detail.bu}}</div> -->
             </el-col>
             <el-col :span="12">
-              <div class="detailBox"><div>生效时间 : </div>{{detail.effectTime}}</div>
+              <el-form-item label="目录价格">
+                <el-input size='small'  v-model="detail.catalogPrice" :readonly="true" placeholder="请输入"></el-input>
+              </el-form-item>
+              <!-- <div class="detailBox"><div>目录价格 : </div>{{detail.catalogPrice}}</div> -->
             </el-col>
             <el-col :span="12">
-              <div class="detailBox"><div>内部客户 : </div>{{detail.inCustomer}}</div>
+              <el-form-item label="生效时间">
+                <el-input size='small'  v-model="detail.effectTime" :readonly="true" placeholder="请输入"></el-input>
+              </el-form-item>
+              <!-- <div class="detailBox"><div>生效时间 : </div>{{detail.effectTime}}</div> -->
             </el-col>
             <el-col :span="12">
-              <div class="detailBox"><div>平台 : </div>{{detail.platform}}</div>
+              <el-form-item label="内部客户">
+                <el-input size='small'  v-model="detail.inCustomer" :readonly="true" placeholder="请输入"></el-input>
+              </el-form-item>
+              <!-- <div class="detailBox"><div>内部客户 : </div>{{detail.inCustomer}}</div> -->
             </el-col>
             <el-col :span="12">
-              <div class="detailBox"><div>Price Type : </div>{{detail.priceType}}</div>
+              <el-form-item label="平台">
+                <el-input size='small'  v-model="detail.platform" :readonly="true" placeholder="请输入"></el-input>
+              </el-form-item>
+              <!-- <div class="detailBox"><div>平台 : </div>{{detail.platform}}</div> -->
             </el-col>
             <el-col :span="12">
-              <div class="detailBox"><div>Product Type : </div>{{detail.productType}}</div>
+              <el-form-item label="价格类型">
+                <el-input size='small'  v-model="detail.priceType" :readonly="true" placeholder="请输入"></el-input>
+              </el-form-item>
+              <!-- <div class="detailBox"><div>Price Type : </div>{{detail.priceType}}</div> -->
             </el-col>
             <el-col :span="12">
-              <div class="detailBox"><div>虚拟物料号 : </div>{{detail.sapCode}}</div>
+              <el-form-item label="产品类型">
+                <el-input size='small'  v-model="detail.productType" :readonly="true" placeholder="请输入"></el-input>
+              </el-form-item>
+              <!-- <div class="detailBox"><div>Product Type : </div>{{detail.productType}}</div> -->
             </el-col>
             <el-col :span="12">
-              <div class="detailBox"><div>状态 : </div>{{detail.status=='True' ?'生效':'失效'}}</div>
+              <el-form-item label="状态">
+                <el-input size='small'  v-model="status" :readonly="true" placeholder="请输入"></el-input>
+              </el-form-item>
+              
+              <!-- <div class="detailBox"><div>虚拟料号 : </div>{{detail.sapCode}}</div> -->
             </el-col>
             <el-col :span="12">
-              <div class="detailBox"><div>备注 : </div>{{detail.remark}}</div>
+              <el-form-item label="虚拟料号">
+                <el-input size='small'  v-model="detail.sapCode" :readonly="true" placeholder="请输入"></el-input>
+              </el-form-item>
+              <!-- <div class="detailBox"><div>状态 : </div>{{detail.status=='True' ?'生效':'失效'}}</div> -->
             </el-col>
-            <el-col :span="12">
-              <div class="detailBox"><div>Product Model : </div>{{detail.productModel}}</div>
+            <el-col :span="24">
+              <el-form-item label="备注">
+                <el-input size='small'  v-model="detail.remark" :readonly="true" placeholder="请输入"></el-input>
+              </el-form-item>
+              <!-- <div class="detailBox"><div>备注 : </div>{{detail.remark}}</div> -->
+            </el-col>
+            <el-col :span="24">
+              <el-form-item label="产品型号">
+                <el-input size='small'  v-model="detail.productModel" :readonly="true" placeholder="请输入"></el-input>
+              </el-form-item>
+              <!-- <div class="detailBox"><div>Product Model : </div>{{detail.productModel}}</div> -->
             </el-col>
           </el-row>
-          <el-table :data="detail.boms" border style="width: 100%">
+          <el-table class="tab" :data="detail.boms" border style="width: 100%">
             <el-table-column prop="bomName"  show-overflow-tooltip label="实体料号">
             </el-table-column>
             <el-table-column prop="inCustomer"  show-overflow-tooltip label="内部客户">
@@ -142,6 +185,8 @@
             </el-table-column>
           </el-table>
         </div>
+        </el-form>
+
           <span slot="footer" class="dialog-footer">
             <!-- <el-button  size="small" type="primary" plain>取 消</el-button> -->
             <el-button type="primary" @click="close" size="small">确 定</el-button>
@@ -206,6 +251,9 @@ export default {
     };
   },
   computed: {
+    status(){
+      return this.detail.status=='True' ?'生效':'失效'
+    },
   },
   created() {
     this.getList()
@@ -329,13 +377,21 @@ $sc: 12;
   box-sizing: border-box;
   padding: 0 20px 20px;
   
-  
-  .el-dialog{
+  .detailDialog{
+    .el-dialog__body{
+      padding: 0 20px;
+    }
     .detail{
-      .detailBox{
-        line-height: 30px;
+      .tab{
+        margin-top: 10px;
+      }
+      .el-form-item{
+        margin-bottom: 0
       }
     }
+  }
+  .el-dialog{
+    
     .form {
         .el-form-item__label {
           height: 30px;

@@ -61,11 +61,12 @@
             </el-table-column>
             <el-table-column type="index" width='100' label="序号" :index='q'>
             </el-table-column>
-            <el-table-column prop="status" width='80' show-overflow-tooltip label="状态">
+            <el-table-column prop="" width='80' show-overflow-tooltip label="状态">
+              <template slot-scope="scope">
+                {{scope.row.status=='True' ?'生效':'失效'}}
+              </template>
             </el-table-column>
-            <el-table-column prop="status" width='80' show-overflow-tooltip label="物料号">
-            </el-table-column>
-            <el-table-column prop="bu" width='80' show-overflow-tooltip label="BU">
+            <el-table-column prop="bu" width='200' show-overflow-tooltip label="BU">
             </el-table-column>
             <el-table-column prop="pdt" width='80' label="PDT" show-overflow-tooltip>
             </el-table-column>
@@ -75,13 +76,13 @@
             </el-table-column>
             <el-table-column prop="platform" width='100' show-overflow-tooltip label="平台">
             </el-table-column>
-            <el-table-column show-overflow-tooltip width='150' prop="productModel" label="产品型号">
+            <el-table-column show-overflow-tooltip width='240' prop="productModel" label="产品型号">
             </el-table-column>
             <el-table-column show-overflow-tooltip width='150' prop="catalogPrice" label="目录价格">
             </el-table-column>
             <el-table-column show-overflow-tooltip width='150' prop="inCustomer" label="内部客户">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="effectTime" width='150' label="生效时间">
+            <el-table-column show-overflow-tooltip prop="effectTime" width='200' label="生效时间">
             </el-table-column>
             <!-- <el-table-column show-overflow-tooltip prop="deadTime" width='150' label="失效时间">
             </el-table-column>

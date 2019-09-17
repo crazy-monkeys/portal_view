@@ -52,22 +52,25 @@
                 </el-table>
               </template>
             </el-table-column>
-            <el-table-column type="index" width='100' label="序号" :index='q'>
+            <el-table-column type="index" width='60' label="序号" :index='q'>
             </el-table-column>
-            <el-table-column prop="applyTime"  width='100' show-overflow-tooltip label="申请时间">
+            <el-table-column prop="applyTime"  width='200' show-overflow-tooltip label="申请时间">
             </el-table-column>
-            <el-table-column prop="applyRemark"  width='100' show-overflow-tooltip label="申请说明">
+            <el-table-column prop="applyRemark"  width='150' show-overflow-tooltip label="申请说明">
             </el-table-column>
             <el-table-column prop=""  width='100' label="审批状态" show-overflow-tooltip>
               <template slot-scope="scope">
                 {{scope.row.approvalStatus=='pass'?'通过':scope.row.approvalStatus=='reject'? '驳回':'待审批'}}
               </template>
             </el-table-column>
-            <el-table-column prop="approvalRemark"  width='100' label="审批意见" show-overflow-tooltip>
+            <el-table-column prop="approvalRemark"  width='150' label="审批意见" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="status" width='80' show-overflow-tooltip label="状态">
+            <el-table-column prop="" width='80' show-overflow-tooltip label="状态">
+              <template slot-scope="scope">
+                {{scope.row.status=='True' ?'生效':'失效'}}
+              </template>
             </el-table-column>
-            <el-table-column prop="bu" width='80' show-overflow-tooltip label="BU">
+            <el-table-column prop="bu" width='200' show-overflow-tooltip label="BU">
             </el-table-column>
             <el-table-column prop="pdt" width='80' label="PDT" show-overflow-tooltip>
             </el-table-column>
@@ -77,7 +80,7 @@
             </el-table-column>
             <el-table-column prop="platform" width='100' show-overflow-tooltip label="平台">
             </el-table-column>
-            <el-table-column prop="productModel" width='150' label="产品型号" show-overflow-tooltip>
+            <el-table-column prop="productModel" width='240' label="产品型号" show-overflow-tooltip>
             </el-table-column>
             <el-table-column show-overflow-tooltip width='150' prop="catalogPrice" label="目录价格">
             </el-table-column>
@@ -85,7 +88,7 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="effectTime" width='150' label="生效时间">
             </el-table-column>
-            <el-table-column prop="applyTime" width='150' label="申请时间" show-overflow-tooltip>
+            <el-table-column prop="applyTime" width='200' label="申请时间" show-overflow-tooltip>
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="remark" width='150' label="备注">
             </el-table-column>
