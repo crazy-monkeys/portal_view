@@ -83,10 +83,10 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="effectTime" width='150' label="生效时间">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="deadTime" width='150' label="失效时间">
+            <!-- <el-table-column show-overflow-tooltip prop="deadTime" width='150' label="失效时间">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="modifyTime" width='150' label="更新时间">
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column show-overflow-tooltip prop="remark" width='150' label="备注">
             </el-table-column>
             <div slot="empty">

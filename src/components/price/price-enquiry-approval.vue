@@ -37,20 +37,6 @@
         </div>
         <div class="tab">
           <el-table :data="tableData" border style="width: 100%" height="100%" @selection-change="handleSelectionChange">
-            <el-table-column type="expand">
-              <template slot-scope="props">
-                <el-table :data="props.row.boms" border style="width: 90%">
-                  <el-table-column prop="bomName"  show-overflow-tooltip label="实体料号">
-                  </el-table-column>
-                  <el-table-column prop="inCustomer"  show-overflow-tooltip label="内部客户">
-                  </el-table-column>
-                  <el-table-column prop="qty" show-overflow-tooltip label="数量">
-                  </el-table-column>
-                  <el-table-column prop="price"  show-overflow-tooltip label="目录价格">
-                  </el-table-column>
-                </el-table>
-              </template>
-            </el-table-column>
             <el-table-column type="selection" width='' label=" " >
             </el-table-column>
             <el-table-column type="index" width='100' label="序号" :index='q'>
@@ -64,31 +50,16 @@
             </el-table-column>
             <el-table-column prop="applyRemark"  width='100' label="审批说明" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="status" width='80' show-overflow-tooltip label="状态">
-            </el-table-column>
-            <el-table-column prop="bu" width='80' show-overflow-tooltip label="BU">
-            </el-table-column>
-            <el-table-column prop="pdt" width='80' label="PDT" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="productType" width='150' label="Product Type" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="priceType" width='150' label="Price Type" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="platform" width='100' show-overflow-tooltip label="平台">
-            </el-table-column>
             <el-table-column prop="productModel" width='150' label="产品型号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column show-overflow-tooltip width='150' prop="catalogPrice" label="目录价格">
-            </el-table-column>
-             <el-table-column show-overflow-tooltip width='150' prop="inCustomer" label="内部客户">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="effectTime" width='150' label="生效时间">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="deadTime" width='150' label="失效时间">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="modifyTime" width='150' label="更新时间">
+            <el-table-column prop="applyTime" width='150' label="申请时间" show-overflow-tooltip>
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="remark" width='150' label="备注">
+            </el-table-column>
+            <el-table-column width="80" label="操作" fixed='right'>
+              <template slot-scope='scope'>
+                <el-button type='text' size='small' @click='check(scope.row)'>详情</el-button>
+              </template>
             </el-table-column>
             <div slot="empty">
               <p>无数据</p>
@@ -118,16 +89,83 @@
             <el-button type="primary" @click="submitForm('form1')" size="small">确 定</el-button>
           </span>
     </el-dialog>
-   
+    <el-dialog
+        title="详情"
+        :visible.sync="dialogVisible1"
+        width="600px"
+        :before-close="close"
+        >
+        <div class="detail">
+          <el-row :gutter="20">
+            <el-col :span="12">
+              <div class="detailBox"><div>bu : </div>{{detail.bu}}</div>
+            </el-col>
+            <el-col :span="12">
+              <div class="detailBox"><div>目录价格 : </div>{{detail.catalogPrice}}</div>
+            </el-col>
+            <el-col :span="12">
+              <div class="detailBox"><div>生效时间 : </div>{{detail.effectTime}}</div>
+            </el-col>
+            <el-col :span="12">
+              <div class="detailBox"><div>内部客户 : </div>{{detail.inCustomer}}</div>
+            </el-col>
+            <el-col :span="12">
+              <div class="detailBox"><div>平台 : </div>{{detail.platform}}</div>
+            </el-col>
+            <el-col :span="12">
+              <div class="detailBox"><div>Price Type : </div>{{detail.priceType}}</div>
+            </el-col>
+            <el-col :span="12">
+              <div class="detailBox"><div>Product Type : </div>{{detail.productType}}</div>
+            </el-col>
+            <el-col :span="12">
+              <div class="detailBox"><div>虚拟物料号 : </div>{{detail.sapCode}}</div>
+            </el-col>
+            <el-col :span="12">
+              <div class="detailBox"><div>状态 : </div>{{detail.status=='True' ?'生效':'失效'}}</div>
+            </el-col>
+            <el-col :span="12">
+              <div class="detailBox"><div>备注 : </div>{{detail.remark}}</div>
+            </el-col>
+            <el-col :span="12">
+              <div class="detailBox"><div>Product Model : </div>{{detail.productModel}}</div>
+            </el-col>
+          </el-row>
+          <el-table :data="detail.boms" border style="width: 100%">
+            <el-table-column prop="bomName"  show-overflow-tooltip label="实体料号">
+            </el-table-column>
+            <el-table-column prop="inCustomer"  show-overflow-tooltip label="内部客户">
+            </el-table-column>
+            <el-table-column prop="qty" show-overflow-tooltip label="数量">
+            </el-table-column>
+            <el-table-column prop="price"  show-overflow-tooltip label="目录价格">
+            </el-table-column>
+          </el-table>
+        </div>
+          <span slot="footer" class="dialog-footer">
+            <!-- <el-button  size="small" type="primary" plain>取 消</el-button> -->
+            <el-button type="primary" @click="close" size="small">确 定</el-button>
+          </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-  import {getList,approve} from "@/api/price/priceApproval.js";
+  import {getList,approve,getDetail} from "@/api/price/priceApproval.js";
 export default {
   name: "priceEnquiryApproval",
   data() {
     return {
+      detail:{
+        boms:[
+          {
+            bomName:'111',
+            inCustomer:'111',
+            qty:'1111',
+            price:'111',
+          }
+        ]
+      },
       form1:{
         approvalRemark:'',
         approvalStatus:'',
@@ -154,6 +192,7 @@ export default {
       ],
       dialogVisible: false,
       dialogCreate: false,
+      dialogVisible1:false,
       tableData: [],
       //第几页
       currentPage: 1,
@@ -173,6 +212,24 @@ export default {
   },
   watch: {},
   methods: {
+    async getDetail(row){
+      const data ={
+        productModel:row.productModel,
+        inCustomer:row.inCustomer
+      }
+      const res = await getDetail(data);
+      console.log('详情',res);
+      if(res){
+        this.detail = res.data.data
+      }
+    },
+    close(){
+      this.dialogVisible1 = false
+    },
+    check(row){
+      this.dialogVisible1 = true;
+      this.getDetail(row)
+    },
     handleSelectionChange(val) {
         this.multipleSelection = val;
       },
@@ -271,7 +328,14 @@ $sc: 12;
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;
+  
+  
   .el-dialog{
+    .detail{
+      .detailBox{
+        line-height: 30px;
+      }
+    }
     .form {
         .el-form-item__label {
           height: 30px;

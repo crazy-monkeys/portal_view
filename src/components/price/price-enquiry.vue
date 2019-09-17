@@ -85,25 +85,19 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="effectTime" width='150' label="生效时间">
             </el-table-column>
-            <el-table-column show-overflow-tooltip prop="deadTime" width='150' label="失效时间">
-            </el-table-column>
-            <el-table-column show-overflow-tooltip prop="modifyTime" width='150' label="更新时间">
+            <el-table-column prop="applyTime" width='150' label="申请时间" show-overflow-tooltip>
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="remark" width='150' label="备注">
             </el-table-column>
             <el-table-column width="80" label="操作" fixed='right'>
               <template slot-scope='scope'>
-                <!-- <el-button type='text'  size='small' @click="add">生成报价单</el-button> -->
                 <el-button type='text' size='small' @click='del(scope.row.id)'>删除</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
-
               <p>无数据</p>
             </div>
           </el-table>
-        <!-- 2 -->
-
           <div class="block">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
             :page-sizes="[10, 20,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">

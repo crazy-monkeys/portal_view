@@ -8,5 +8,9 @@ export const getList = data => {
 
 //新建询价
 export const approve = data => {
-    return request('post', `${serverUrl}/price/enquiryApproval/approval`, data).then(result => result)
+        return request('post', `${serverUrl}/price/enquiryApproval/approval`, data).then(result => result)
+    }
+    //新建询价
+export const getDetail = data => {
+    return request('post', `${serverUrl}/price/catalog/detail`, data).then(result => result)
 }
