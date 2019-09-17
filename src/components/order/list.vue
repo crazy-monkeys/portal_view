@@ -1,6 +1,6 @@
 <template>
-  <div class="list">
-    <div>
+  <div class="orderList">
+    <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item to='/home/order/list'>订单管理</el-breadcrumb-item>
@@ -55,9 +55,9 @@
       <div class="box">
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" height="700">
-            <el-table-column prop="" width='30' show-overflow-tooltip label="">
+            <el-table-column prop="" width='20' show-overflow-tooltip label="">
             </el-table-column>
-            <el-table-column type="index" width='100' label="订单号" :index='q'>
+            <el-table-column type="index" width='80' label="订单号" :index='q'>
             </el-table-column>
             <el-table-column prop="1" show-overflow-tooltip label="状态">
             </el-table-column>
@@ -87,7 +87,7 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
               <template slot-scope='scope'>
-                <el-button type='primary' size='mini' @click='detail'>明细</el-button>
+                <el-button type='text' size='small' @click='detail'>明细</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -95,12 +95,13 @@
               <p>无数据</p>
             </div>
           </el-table>
-        </div>
-        <div class="block">
+          <div class="block">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
             :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
           </el-pagination>
         </div>
+        </div>
+        
       </div>
     </div>
     <el-dialog title="订单详情" :visible.sync="dialogVisible1" width="60%">
@@ -148,7 +149,7 @@
 <script>
 import formTest from "../../assets/js/formTest";
 export default {
-  name: "list",
+  name: "orderList",
   data() {
     return {
       form: {},
@@ -272,6 +273,7 @@ export default {
   created() {},
   watch: {},
   methods: {
+    handleClick(){},
     change() {
       this.dialogVisible = !this.dialogVisible;
     },
@@ -319,104 +321,120 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
 $sc: 12;
+.orderList{
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0 20px 20px;
 
-.list {
-  .head {
-    h1 {
-      opacity: 0.87;
-      font-size: 18px;
-      color: #000;
-      letter-spacing: 0;
-      line-height: 42px;
-      height: 42px;
-      /* font-weight: bold; */
-      padding: 0 50px;
-    }
-
-    .el-breadcrumb {
-      line-height: 30px;
-      margin-left: 50px;
-      margin-right: 20px;
-      font-size: 14px;
-    }
-  }
-
-  .sels {
-    background: #fff;
-    padding: 10px 30px;
-    margin: 0 20px 10px 20px;
-
-    .lineBox {
-      i {
-        color: #800080;
-        font-weight: bold;
-      }
-    }
-
-    .line {
-      height: 12px;
-      background: #800080;
-      margin-left: 20px;
-    }
-
+  .el-dialog{
     .form {
-      /* max-width: 1000px; */
-      .el-form-item__label {
-        height: 30px;
-      }
-
-      .el-form-item {
-        width: 200px;
-        margin-bottom: 0;
-      }
-
-      .date {
-        width: 414px;
-
-        .el-date-editor {
-          width: 414px;
+        .el-form-item__label {
+          height: 30px;
         }
-      }
+        .el-form-item {
+          .el-select{
+            width: 100%;
+          }
+        }
     }
   }
-
-  .box {
-    margin: 0 20px 20px 20px;
-    background: #ffffff;
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
-    border-radius: 2px;
+  .sellBox{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     position: relative;
-
-    .btns {
-      .add {
-        margin: 12px 0 12px 30px;
-      }
+    padding-top: 34px;
+    box-sizing: border-box;
+    .head{
+      padding: 10px 20px;
+      position: absolute;
+      top: 0;
+      // background: red;
     }
-
-    .tab {
-      .el-table {
-        td {
-          height: 64px;
-          line-height: 64px;
-
-          .cell {
-            font-size: 12px;
-            color: #333333;
-            letter-spacing: 0;
-            line-height: 18px;
+    // .el-tabs{
+    //   height: 100%;
+    //   position: relative;
+    //   box-sizing: border-box;
+    //   padding-top: 50px;
+    //   .el-tabs__header{
+    //     position: absolute;
+    //     top: 0;
+    //     width: 100%;
+    //     .el-tabs__nav-wrap {
+    //       padding:0 20px;
+    //     }
+    //   }
+    //   .el-tabs__content{
+    //     height: 100%;
+    //     .el-tab-pane{
+    //       height: 100%;
+    //       display: flex;
+    //       flex-direction: column;
+    //     }
+        .sels{
+          // margin: 20px 0;
+          padding:10px 20px;
+          background: #fff;
+          margin-bottom: 10px;
+          .lineBox{
+            color: #b161bf;
+          }
+        }
+        .form {
+            .el-form-item__label {
+              height: 30px;
+            }
+            .el-form-item {
+              width: 200px;
+              margin-bottom: 0;
+              .el-select{
+                width: 100%;
+              }
+            }
+            .date {
+              width: 414px;
+            }
+        }
+        .box{
+          height: 100%;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          background: #fff;
+          .btns{
+            padding: 10px 20px;
+            // background: pink;
+            .upload-demo{
+              display: inline-block;
+            }
+          }
+          .tab{
+            padding-bottom: 52px;
+            box-sizing: border-box;
+            height: 100%;
+            // background: orange;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            .el-table{
+              height: 100%;
+              position: relative;
+            }
+            .block{
+              position: absolute;
+              bottom:0;
+              padding:  10px 0 ;
+              width: 100%;
+              .el-pagination {
+                width: 100%;
+                padding: 0;
+                text-align: center;
+              }
+            }
           }
         }
       }
-    }
-
-    .block {
-      padding: 10px;
-
-      .el-pagination {
-        width: 100%;
-        text-align: center;
-      }
-    }
-  }
+  //   }
+  // }
 }
 </style>

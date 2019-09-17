@@ -10,6 +10,7 @@ export const serverUrl = process.env.API_ROOT; // 本地
 
 let loading
 let pending = []
+let loadingArr = []
 let CancelToken = axios.CancelToken
 
 let cancelPending = (config) => {
@@ -29,13 +30,16 @@ let cancelPending = (config) => {
 
 let startLoading = () => { // 使用Element loading-start 方法
     loading = Loading.service({
+        target: '.jobBox',
         lock: true,
         text: '加载中……',
         background: 'rgba(0, 0, 0, 0)'
     })
+    loadingArr.push(loading)
 }
 let endLoading = () => { // 使用Element loading-close 方法
-    loading.close()
+    // loading.close()
+    loadingArr.forEach(item => item.close())
 }
 
 // 自定义判断元素类型JS
@@ -64,6 +68,10 @@ axios.interceptors.response.use(
         endLoading()
         cancelPending(response.config)
             // }, 500);
+        console.log(response)
+        if (response.headers.Authorization) {
+            sessionStorage.setItem(data, response.headers.Authorization)
+        }
         return response
     }, error => {
         console.log(error)
@@ -102,7 +110,7 @@ export const request = (method, url, data = {}, header = {}) => {
                     Message.error('错误的请求')
                 }
                 console.log(err.response.data);
-                Message.error(err.response.data.msg)
+                // Message.error(err.response.data.msg)
                 MessageBox.alert('会话已经过期', '提示', {
                         showClose: false,
                         distinguishCancelAndClose: true,

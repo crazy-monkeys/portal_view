@@ -32,3 +32,8 @@ export const getList = data => {
 export const operat = (data, param) => {
     return request('get', `${serverUrl}/handover/operation/${data.id}?${stringify(param)}`).then(result => result)
 }
+
+//批量删除
+export const del = data => {
+    return request('get', `${serverUrl}/handover/detail/delete?ids=${data.ids}&type=${data.type}`).then(result => result)
+}

@@ -20,28 +20,29 @@
         </div>
         <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
         <el-form ref="form" size="small" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
-          <el-form-item label="客户简称">
-            <el-input size='small' placeholder="请输入" v-model="form.customerAbbreviation"></el-input>
-          </el-form-item>
-           <el-form-item label="代理商简称">
-            <el-input size='small' placeholder="请输入" v-model="form.agencyAbbreviation"></el-input>
-          </el-form-item>
-           <el-form-item label="销售">
-            <el-input size='small' placeholder="请输入" v-model="form.salePeople"></el-input>
-          </el-form-item>
-          <el-form-item label="上传日期" class="date">
-            <Daterange @data='watchTime' :resetDataReg='resetData' />
-          </el-form-item>
-          <el-form-item label="渠道" >
-            <el-input size='small' placeholder="请输入" v-model="form.channel"></el-input>
-          </el-form-item>
-          <el-form-item label="查询方式" >
+           <el-form-item label="查询方式" >
             <el-select v-model="way">
               <el-option :value='1' label='按年'></el-option>
               <el-option :value='2' label='按月'></el-option>
+              <el-option :value='3' label='按首代Buffer'></el-option>
             </el-select>
           </el-form-item>
-          
+          <el-form-item label="客户简称" v-if="way!=3">
+            <el-input size='small' placeholder="请输入" v-model="form.customerAbbreviation"></el-input>
+          </el-form-item>
+           <el-form-item label="代理商简称" v-if="way!=3">
+            <el-input size='small' placeholder="请输入" v-model="form.agencyAbbreviation"></el-input>
+          </el-form-item>
+           <el-form-item label="销售" v-if="way!=3">
+            <el-input size='small' placeholder="请输入" v-model="form.salePeople" ></el-input>
+          </el-form-item>
+         
+          <el-form-item label="上传日期" class="date" v-if="way!=3"> 
+            <Daterange @data='watchTime' :resetDataReg='resetData' />
+          </el-form-item>
+          <el-form-item label="渠道" v-if="way!=3">
+            <el-input size='small' placeholder="请输入" v-model="form.channel"></el-input>
+          </el-form-item>
           <el-form-item label=" ">
             <el-button size='small' type='primary' plain @click='search'>查询</el-button>
             <el-button @click='reset' size='small' type='primary' plain>重置</el-button>
@@ -77,6 +78,9 @@
                 </el-table>
               </template>
             </el-table-column>
+
+
+            
                 <el-table-column prop="createTimeStr" width='100' label="上传日期" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="operationYearMonth" width='80' label="年月" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="company" width='80' label="出货公司" show-overflow-tooltip></el-table-column>
@@ -164,6 +168,31 @@
               <p>无数据</p>
             </div>
           </el-table>
+          <el-table :data="sdTableData" border style="width: 100%" height="100%" v-show="way==3">
+                <el-table-column prop="operationYearMonth" width='80' label="年月" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="company" width='80' label="出货公司" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="vmNumber" width='80'  label="物料号" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="bu" width='80'  label="BU" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="pdt" width='80'  label="PDT" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="productType" width='150'  label="Product Type" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="platform" width='100'  label="Platform" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="productModel" width='100'  label="产品型号" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="sdAdjustmentOne" width='100'  label="首代调整一" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="sdRemarkOne" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="sdAdjustmentTwo" width='100'  label="首代调整二" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="sdRemarkTwo" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="sdAdjustmentThree" width='100'  label="首代调整三" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="sdRemarkThree" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="sdAdjustmentFour" width='100'  label="首代调整四" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="sdRemarkFour" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="sdAdjustmentFive" width='100'  label="首代调整五" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="sdRemarkFive" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="sdAdjustmentSix" width='100'  label="首代调整六" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="sdRemarkSix" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+            <div slot="empty">
+              <p>无数据</p>
+            </div>
+          </el-table>
           <div class="block">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
             :page-sizes="[10, 20,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
@@ -202,7 +231,7 @@
 <script>
   import Daterange from "../com/date";
   import formTest from '../../assets/js/formTest'
-  import {getList} from '@/api/forcast/query.js'
+  import {getList,getSdList} from '@/api/forcast/query.js'
   export default {
     components:{
       Daterange
@@ -225,8 +254,8 @@
         dialogVisible1: false,
         tableData: [
         ],
+        sdTableData:[],
         tableData1: [
-          {}
         ],
         //第几页
         currentPage: 1,
@@ -240,6 +269,7 @@
     },
     created() {
       this.getList()
+      this.getSdList()
     },
     watch: {
     },
@@ -364,6 +394,100 @@
               }
             ]
           })
+        }
+      },
+      async getSdList(){
+        const data ={
+          pageSize:this.pageSize,
+          pageNum:this.currentPage,
+        }
+        const res = await getSdList(data);
+        console.log('sd查询列表',res);
+        if(res){
+          this.sdTableData = res.data.data.list
+          this.total = res.data.data.total
+          // this.tableData.map((item,index)=>{
+          //   this.tableData[index].list = [
+          //     {
+          //       index:1,
+          //       lineId:item.line.lineId,
+          //       currentWrite:item.line.currentWriteOne,
+          //       ambRemark:item.line.ambRemarkOne,
+          //       ambAdjustment:item.line.ambAdjustmentOne,
+          //       forecastMonth:item.line.forecastMonthOne,
+          //       gap:item.line.gapOne,
+          //       lastWrite:item.line.lastWriteOne,
+          //       remark:item.line.remarkOne,
+          //       sdAdjustment:item.line.sdAdjustmentOne,
+          //       sdRemark:item.line.sdRemarkOne,
+          //     },
+          //     {
+          //       index:2,
+          //       lineId:item.line.lineId,
+          //       currentWrite:item.line.currentWriteTwo,
+          //       ambRemark:item.line.ambRemarkTwo,
+          //       ambAdjustment:item.line.ambAdjustmentTwo,
+          //       forecastMonth:item.line.forecastMonthTwo,
+          //       gap:item.line.gapOne,
+          //       lastWrite:item.line.lastWriteTwo,
+          //       remark:item.line.remarkOne,
+          //       sdAdjustment:item.line.sdAdjustmentTwo,
+          //       sdRemark:item.line.sdRemarkTwo,
+          //     },
+          //     {
+          //       index:3,
+          //       lineId:item.line.lineId,
+          //       currentWrite:item.line.currentWriteThree,
+          //       ambRemark:item.line.ambRemarkThree,
+          //       ambAdjustment:item.line.ambAdjustmentThree,
+          //       forecastMonth:item.line.forecastMonthThree,
+          //       gap:item.line.gapThree,
+          //       lastWrite:item.line.lastWriteThree,
+          //       remark:item.line.remarkThree,
+          //       sdAdjustment:item.line.sdAdjustmentThree,
+          //       sdRemark:item.line.sdRemarkThree,
+          //     },
+          //     {
+          //       index:4,
+          //       lineId:item.line.lineId,
+          //       currentWrite:item.line.currentWriteFour,
+          //       ambRemark:item.line.ambRemarkFour,
+          //       ambAdjustment:item.line.ambAdjustmentFour,
+          //       forecastMonth:item.line.forecastMonthFour,
+          //       gap:item.line.gapFour,
+          //       lastWrite:item.line.lastWriteFour,
+          //       remark:item.line.remarkFour,
+          //       sdAdjustment:item.line.sdAdjustmentFour,
+          //       sdRemark:item.line.sdRemarkFour,
+          //     },
+          //     {
+          //       index:5,
+          //       lineId:item.line.lineId,
+          //       currentWrite:item.line.currentWriteFive,
+          //       ambRemark:item.line.ambRemarkFive,
+          //       ambAdjustment:item.line.ambAdjustmentFive,
+          //       forecastMonth:item.line.forecastMonthFive,
+          //       gap:item.line.gapFive,
+          //       lastWrite:item.line.lastWriteFive,
+          //       remark:item.line.remarkFive,
+          //       sdAdjustment:item.line.sdAdjustmentFive,
+          //       sdRemark:item.line.sdRemarkFive,
+          //     },
+          //     {
+          //       index:6,
+          //       lineId:item.line.lineId,
+          //       currentWrite:item.line.currentWriteSix,
+          //       ambRemark:item.line.ambRemarkSix,
+          //       ambAdjustment:item.line.ambAdjustmentSix,
+          //       forecastMonth:item.line.forecastMonthSix,
+          //       gap:item.line.gapOne,
+          //       lastWrite:item.line.lastWriteSix,
+          //       remark:item.line.remarkSix,
+          //       sdAdjustment:item.line.sdAdjustmentSix,
+          //       sdRemark:item.line.sdRemarkSix,
+          //     }
+          //   ]
+          // })
         }
       },
       change(){

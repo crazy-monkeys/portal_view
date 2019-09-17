@@ -38,8 +38,20 @@
         </div>
         <div class="tab"  >
           <el-table :data="tableData" border style="width: 100%" height="100%" @row-click='rowClick' >
-            <!-- <el-table-column type="selection" width='60' >
-            </el-table-column> -->
+            <el-table-column type="expand">
+              <template slot-scope="props">
+                <el-table :data="props.row.boms" border style="width: 90%">
+                  <el-table-column prop="bomName"  show-overflow-tooltip label="实体料号">
+                  </el-table-column>
+                  <el-table-column prop="inCustomer"  show-overflow-tooltip label="内部客户">
+                  </el-table-column>
+                  <el-table-column prop="qty" show-overflow-tooltip label="数量">
+                  </el-table-column>
+                  <el-table-column prop="price"  show-overflow-tooltip label="目录价格">
+                  </el-table-column>
+                </el-table>
+              </template>
+            </el-table-column>
             <el-table-column type="index" width='100' label="序号" :index='q'>
             </el-table-column>
             <el-table-column prop="applyTime"  width='100' show-overflow-tooltip label="申请时间">
@@ -60,6 +72,8 @@
             <el-table-column prop="pdt" width='80' label="PDT" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="productType" width='150' label="Product Type" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="priceType" width='150' label="Price Type" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="platform" width='100' show-overflow-tooltip label="平台">
             </el-table-column>

@@ -19,8 +19,8 @@
           <el-form-item label="PDT">
             <el-input size='small' v-model='form.pdt' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="产品类型">
-            <el-input size='small' v-model='form.productType' placeholder="请输入"></el-input>
+          <el-form-item label="内部客户">
+            <el-input size='small' v-model='form.inCustomer' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="平台">
             <el-input size='small' v-model='form.platform' placeholder="请输入"></el-input>
@@ -45,10 +45,12 @@
           <el-table :data="tableData" border style="width: 100%" height="100%"  @selection-change="handleSelectionChange">
             <el-table-column type="expand">
               <template slot-scope="props">
-                <el-table :data="props.row.list" border style="width: 90%">
-                  <el-table-column prop="type"  show-overflow-tooltip label="产品型号">
+                <el-table :data="props.row.boms" border style="width: 90%">
+                  <el-table-column prop="bomName"  show-overflow-tooltip label="实体料号">
                   </el-table-column>
-                  <el-table-column prop="num" show-overflow-tooltip label="数量">
+                  <el-table-column prop="inCustomer"  show-overflow-tooltip label="内部客户">
+                  </el-table-column>
+                  <el-table-column prop="qty" show-overflow-tooltip label="数量">
                   </el-table-column>
                   <el-table-column prop="price"  show-overflow-tooltip label="目录价格">
                   </el-table-column>
@@ -68,6 +70,8 @@
             <el-table-column prop="pdt" width='80' label="PDT" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="productType" width='150' label="Product Type" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="priceType" width='150' label="Price Type" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="platform" width='100' show-overflow-tooltip label="平台">
             </el-table-column>
@@ -162,37 +166,15 @@
         form: {
           bu:'',
           pdt:'',
-          productType:'',
           platform:'',
           productModel:'',
           effectBeginTime:'',
           effectEndTime:'',
+          inCustomer:''
         },
         dialogVisible: false,
         dialogVisible1: false,
-        tableData: [
-  {        bu: "SKU001",
-catalogPrice: 500,
-createTime: 1566571384000,
-deadTime: "2019-08-23",
-effectTime: "2019-08-14",
-id: 1,
-inCustomer: "jack",
-modifyTime: "2019-08-23 22:42:59",
-pdt: "SKU001",
-platform: "1",
-productModel: "1",
-productType: "1",
-remark: "test",
-status: "1",
-list:[
-{type:'类型1',
-num:'数量',
-price:123
-}
-]
-}
-        ],
+        tableData: [],
         //第几页
         currentPage: 1,
         //每页的容量
@@ -232,7 +214,7 @@ price:123
            pageSize:this.pageSize,
            bu:this.form.bu,
            pdt:this.form.pdt,
-           productType:this.form.productType,
+           inCustomer:this.form.inCustomer,
            platform:this.form.platform,
            productModel:this.form.productModel,
            effectBeginTime:this.form.effectBeginTime,
@@ -241,7 +223,7 @@ price:123
         const res = await getList(data);
         console.log('目录价格查询列表',res);
         if(res){
-          // this.tableData = res.data.data.list
+          this.tableData = res.data.data.list
           this.total = res.data.data.total
         }
       },
@@ -251,11 +233,11 @@ price:123
         this.form = {
           bu:'',
           pdt:'',
-          productType:'',
           platform:'',
           productModel:'',
           effectBeginTime:'',
           effectEndTime:'',
+          inCustomer
         }
         this.resetData = true
         this.getList()

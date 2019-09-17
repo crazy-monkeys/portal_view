@@ -15,40 +15,46 @@
               <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
             </div>
             <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
-              <el-form-item label="上传时间"  class="date">
-                <Daterange />
-              </el-form-item>
-              <el-form-item label="出货日期"  class="date">
-                <Daterange />
-              </el-form-item>
               <el-form-item label="客户">
-                <el-input size='small' placeholder="请输入" v-model='form.customer'></el-input>
-              </el-form-item>
-              <el-form-item label="产品型号">
-                <el-input size='small' placeholder="请输入" v-model='form.productType'></el-input>
+                <el-input size='small' placeholder="请输入" v-model='form.customerFullName'></el-input>
               </el-form-item>
               <el-form-item label="出货类型">
-                <el-input size='small' placeholder="请输入" v-model='form.shipType'></el-input>
+                <el-input size='small' placeholder="请输入" v-model='form.deliveryType'></el-input>
               </el-form-item>
               <el-form-item label="订单号">
-                <el-input size='small' placeholder="请输入" v-model='form.orderNum'></el-input>
+                <el-input size='small' placeholder="请输入" v-model='form.customerOrderNumber'></el-input>
               </el-form-item>
               <el-form-item label="订单月份">
                 <el-input size='small' placeholder="请输入" v-model='form.orderMonth'></el-input>
               </el-form-item>
+              <el-form-item label="上传时间"  class="date">
+                <Daterange  @data='watchTime1' :resetDataReg='resetData1' />
+              </el-form-item>
+              <el-form-item label="出货日期"  class="date">
+                <Daterange @data='watchTime2' :resetDataReg='resetData2' />
+              </el-form-item>
+              <el-form-item label="产品型号">
+                <el-input size='small' placeholder="请输入" v-model='form.productModel'></el-input>
+              </el-form-item>
+              <el-form-item label="仓储地">
+                <el-input size='small' placeholder="请输入" v-model='form.warehouse'></el-input>
+              </el-form-item>
+              <el-form-item label="发货公司">
+                <el-input size='small' placeholder="请输入" v-model='form.deliveryCompany'></el-input>
+              </el-form-item>
               <el-form-item :label="' '">
-                <el-button size='small' type='primary' plain>查询</el-button>
+                <el-button size='small' type='primary' plain @click="search">查询</el-button>
                 <el-button @click='reset' size='small' type='primary' plain>重置</el-button>
               </el-form-item>
             </el-form>
           </div>
           <div class="box">
             <div class="btns clear">
-              <el-button class="add"  size='small' type='primary'>批量删除</el-button>
+              <el-button class="add"  size='small' type='primary' @click="deleteRows" :disabled="multipleSelection.length==0">批量删除</el-button>
               <el-button class="add"  size='small' type='primary'>批量修改</el-button>
             </div>
             <div class="tab">
-              <el-table :data="queryList" border style="width: 100%" height="100%">
+              <el-table :data="queryList" border style="width: 100%" height="100%" @selection-change="handleSelectionChange">
                 <el-table-column type="selection"  show-overflow-tooltip></el-table-column>
                 <el-table-column prop="productModel" width='150' label="产品型号" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="inventoryCategory" width='150' label="库存类别" show-overflow-tooltip></el-table-column>
@@ -162,7 +168,7 @@
 <script>
   import formTest from '../../assets/js/formTest'
   import Daterange from '../com/date'
-  import {download,sub,upload,downloadError,getReject,getList} from '@/api/handover/upload.js'
+  import {download,sub,upload,downloadError,getReject,getList,del} from '@/api/handover/upload.js'
   import {serverUrl} from '../../axios/request'
   export default {
     name: 'receiveUpload',
@@ -171,6 +177,9 @@
     },
     data() {
       return {
+        multipleSelection:[],
+        resetData1:true,
+        resetData2:true,
         fileName:'',
         recordId:'',
         isError1:true,
@@ -183,11 +192,26 @@
         da1:{
         },
         form: {
-          customer:'',
-          shipType:'',
           orderMonth:'',
-          orderNum:'',
           productType:'',
+          //上传时间
+          uploadStartTime:'',  
+          uploadEndTime:'',
+          //
+          handoverStartTime:'',  
+          handoverEndTime:'',
+          //客户
+          customerFullName:'',  
+          //产品型号
+          productModel:'', 
+          //出货类型 
+          deliveryType:'',
+          //订单月份
+          orderMonth:'',  
+          //订单号
+          customerOrderNumber:'',
+          warehouse:'',  
+          deliveryCompany:''
         },
         total: 0,
         dialogVisible: false,
@@ -238,14 +262,75 @@
       }
     },
     methods: {
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
+      async del(){
+        const data ={
+          ids:this.multipleSelection.map(item=>{
+            return item.id
+          }).join(','),
+          type:'receive'
+        }
+        const res = await del(data);
+        console.log('删除结果',res)
+        if(res){
+          this.$message.success('删除成功')
+          this.getList()
+        }
+      },
+      deleteRows(){
+       this.$confirm('确定要删除吗', '删除', {
+            distinguishCancelAndClose: true,
+            confirmButtonText: '确定',
+            cancelButtonText: '取消'
+          })
+            .then(() => {
+                this.del()
+            })
+            .catch(action => {
+              
+            });
+      },
+      watchTime1(data){
+        this.form.uploadStartTime = data.startTime 
+        this.form.uploadEndTime = data.endTime 
+        this.resetData1=false
+      },
+      watchTime2(data){
+        this.form.handoverStartTime = data.startTime 
+        this.form.handoverEndTime = data.endTime 
+        this.resetData2=false
+      },
       reset(){
         this.form={
-          customer:'',
-          shipType:'',
           orderMonth:'',
-          orderNum:'',
-          productType:'',
+          //上传时间
+          uploadStartTime:'',  
+          uploadEndTime:'',
+          //
+          handoverStartTime:'',  
+          handoverEndTime:'',
+          //客户
+          customerFullName:'',  
+          //产品型号
+          productModel:'', 
+          //出货类型 
+          deliveryType:'',
+          //订单月份
+          orderMonth:'',  
+          //订单号
+          customerOrderNumber:'',
+          warehouse:'',  
+          deliveryCompany:''
         }
+        this.resetData1=true
+        this.resetData2=true
+        this.search()
+      },
+      search(){
+        this.currentPage = 1
+        this.getList()
       },
       async getReject(){
         var data = {
@@ -267,6 +352,17 @@
           type: 'receive',
           pageSize:this.pageSize,
           pageNum:this.currentPage,
+          uploadStartTime:this.form.uploadStartTime,  
+          uploadEndTime:this.form.uploadEndTime,
+          handoverStartTime:this.form.handoverStartTime,  
+          handoverEndTime:this.form.handoverEndTime,
+          customerFullName:this.form.customerFullName,  
+          productModel:this.form.productModel,  
+          deliveryType:this.form.deliveryType,
+          orderMonth:this.form.orderMonth,  
+          customerOrderNumber:this.form.customerOrderNumber,
+          warehouse:this.form.warehouse,  
+          deliveryCompany:this.form.deliveryCompany
         }
         const res = await getList(data)
         console.log('上传查询部分列表',res)
