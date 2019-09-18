@@ -13,6 +13,7 @@
           <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
         </div>
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
+          <!-- BU，PDT，产品型号，客户限制，代理商或客户名称，生效时间，平台，产品状态 -->
           <el-form-item label="BU">
             <el-input size='small' v-model='form.bu' placeholder="请输入"></el-input>
           </el-form-item>

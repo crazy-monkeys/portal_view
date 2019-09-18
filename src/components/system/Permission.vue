@@ -14,6 +14,8 @@
         </div>
         <div class="tab">
           <el-table :data="roles"  highlight-current-row ref='tab' @row-click='rowClick' height="100%">
+            <el-table-column  label="编号" type='index' :index='q' width="80">
+            </el-table-column>
             <el-table-column prop='id' label="ID" v-if="false" width="80">
             </el-table-column>
             <el-table-column prop="roleCode" label="角色编码" show-overflow-tooltip>
@@ -149,7 +151,9 @@ export default {
    
   },
   methods: {
-    
+    q(index) {
+      return this.pageSize * (this.currentPage - 1) + index + 1;
+    },
     checkChange(val){
       console.log(this.$refs['tree'].getCheckedKeys())
       console.log(this.$refs['tree'].getHalfCheckedKeys())

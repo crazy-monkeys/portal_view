@@ -318,7 +318,7 @@ export default {
       this.getList()
     },
     async getList(){
-      const res = await getList(this.form);
+      const res = await getList({...this.form,pageSize:this.pageSize,pageIndex:this.currentPage});
       console.log('差价、保价、退换货列表',res)
       if(res){
         this.tableData = res.data.data.list

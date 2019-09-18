@@ -55,7 +55,7 @@
           </el-table-column>
           <el-table-column prop="createTimeStr" show-overflow-tooltip label="发布时间">
           </el-table-column>
-          <el-table-column prop="createUserId" show-overflow-tooltip label="发布人">
+          <el-table-column prop="createUserName" show-overflow-tooltip label="发布人">
           </el-table-column>
           <el-table-column prop="status" show-overflow-tooltip label="状态">
             <template slot-scope='scope'>

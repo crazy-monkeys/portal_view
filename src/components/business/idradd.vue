@@ -235,7 +235,14 @@ export default {
         this.fileList = n.map(item=>{return {name:item.fileName,path:item.filePath,fileType:item.fileType}})
       },
       deep:true
-    }
+    },
+    'form.type':{
+      handler:function(n,o){
+        if(n!=o){
+          this.form.shipperCode = ''
+        }
+      }
+    },
   },
   created(){
     this.getData()

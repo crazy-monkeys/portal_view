@@ -13,6 +13,7 @@
           <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
         </div>
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
+          <!-- BU，产品型号，内部客户，审批状态 -->
           <el-form-item label="产品型号">
             <el-input size='small'  v-model="form.productModel" placeholder="请输入"></el-input>
           </el-form-item>

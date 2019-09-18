@@ -14,6 +14,7 @@
           <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
         </div>
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
+          <!-- 产品型号，申请人，申请时间，审批状态 -->
           <el-form-item label="申请人">
             <el-input size='small'  v-model="form.proposer" placeholder="请输入"></el-input>
           </el-form-item>
