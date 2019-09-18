@@ -20,7 +20,7 @@
           <el-form-item label="PDT">
             <el-input size='small' v-model='form.pdt' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="内部客户">
+          <el-form-item label="客户限制">
             <el-input size='small' v-model='form.inCustomer' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="平台">
@@ -28,6 +28,19 @@
           </el-form-item>
           <el-form-item label="产品型号">
             <el-input size='small' v-model='form.productModel' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="产品状态">
+            <el-select  size="small"  v-model="form.status" clearable>
+              <el-option label='生效' value="True"></el-option>
+              <el-option label='失效' value="False"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="Price Type">
+            <el-select size="small" v-model="form.priceType" clearable>
+              <el-option label='客户' value="客户"></el-option>
+              <el-option label='代理' value="代理"></el-option>
+              <el-option label='直供' value="直供"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="生效时间" class="date">
             <Daterange @data='watchTime' :resetDataReg='resetData' />
@@ -39,7 +52,7 @@
         </el-form>
       </div>
       <div class="box">
-        <div class="btns">
+        <div class="btns" v-if="userType!='内部客户'">
           <el-button class="add" size='small' type='primary' @click='add' :disabled="multipleSelection.length==0 ? true: false" >生成报价单</el-button>
         </div>
         <div class="tab">
@@ -49,7 +62,7 @@
                 <el-table :data="props.row.boms" border style="width: 90%">
                   <el-table-column prop="bomName"  show-overflow-tooltip label="实体料号">
                   </el-table-column>
-                  <el-table-column prop="inCustomer"  show-overflow-tooltip label="内部客户">
+                  <el-table-column prop="inCustomer"  show-overflow-tooltip label="客户限制">
                   </el-table-column>
                   <el-table-column prop="qty" show-overflow-tooltip label="数量">
                   </el-table-column>
@@ -81,7 +94,7 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip width='150' prop="catalogPrice" label="目录价格">
             </el-table-column>
-            <el-table-column show-overflow-tooltip width='150' prop="inCustomer" label="内部客户">
+            <el-table-column show-overflow-tooltip width='150' prop="inCustomer" label="客户限制">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="effectTime" width='200' label="生效时间">
             </el-table-column>
@@ -172,7 +185,9 @@
           productModel:'',
           effectBeginTime:'',
           effectEndTime:'',
-          inCustomer:''
+          inCustomer:'',
+          priceType:'',
+          status:''
         },
         dialogVisible: false,
         dialogVisible1: false,
@@ -183,6 +198,19 @@
         pageSize: 10,
         total: 0,
 
+      }
+    },
+    computed: {
+      userType() {
+        if(this.$store.state.loginUser.loginInfo.userType=='agent'){
+          return '代理商'
+        }else if(
+          this.$store.state.loginUser.loginInfo.userType=='subAgent'
+        ){
+          return '子代理商'
+        }else{
+          return '内部客户'
+        }
       }
     },
     created() {
@@ -220,7 +248,9 @@
            platform:this.form.platform,
            productModel:this.form.productModel,
            effectBeginTime:this.form.effectBeginTime,
-           effectEndTime:this.form.effectEndTime
+           effectEndTime:this.form.effectEndTime,
+           priceType:this.form.priceType,
+           status:this.form.status,
         } 
         const res = await getList(data);
         console.log('目录价格查询列表',res);
@@ -239,7 +269,9 @@
           productModel:'',
           effectBeginTime:'',
           effectEndTime:'',
-          inCustomer
+          inCustomer:'',
+          priceType:'',
+          status:''
         }
         this.resetData = true
         this.getList()

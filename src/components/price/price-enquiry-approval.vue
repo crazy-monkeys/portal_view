@@ -15,6 +15,9 @@
         </div>
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <!-- 产品型号，申请人，申请时间，审批状态 -->
+          <el-form-item label="产品型号">
+            <el-input size='small'  v-model="form.productModel" placeholder="请输入"></el-input>
+          </el-form-item>
           <el-form-item label="申请人">
             <el-input size='small'  v-model="form.proposer" placeholder="请输入"></el-input>
           </el-form-item>
@@ -23,6 +26,9 @@
               <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item label="申请时间" class="date">
+            <Daterange @data='watchTime' :resetDataReg='resetData' />
           </el-form-item>
           <el-form-item label=" ">
             <el-button size='small' type='primary' @click="search" plain>查询</el-button>
@@ -197,11 +203,16 @@
 </template>
 
 <script>
+  import Daterange from "../com/date";
   import {getList,approve,getDetail} from "@/api/price/priceApproval.js";
 export default {
   name: "priceEnquiryApproval",
+  components:{
+      Daterange
+    },
   data() {
     return {
+      resetData:true,
       detail:{
         boms:[
           {
@@ -221,6 +232,7 @@ export default {
       form: {
         proposer:'',
         approvalStatus:'pending',
+        productModel:''
       },
       options: [
         {
@@ -261,6 +273,12 @@ export default {
   },
   watch: {},
   methods: {
+    watchTime(data){
+        console.log(data)
+        this.form.applyBeginTime = data.startTime
+        this.form.applyEndTime = data.endTime
+        this.resetData = false
+      },
     async getDetail(row){
       const data ={
         productModel:row.productModel,
@@ -305,7 +323,8 @@ export default {
       this.pageSize=10
       this.form = {
         approvalStatus:'pending',
-        proposer:''
+        proposer:'',
+        productModel:''
       }
       this.resetData = true
       this.getList()
@@ -328,7 +347,8 @@ export default {
         pageIndex:this.currentPage,
         pageSize:this.pageSize,
         proposer:this.form.proposer,
-        approvalStatus:this.form.approvalStatus
+        approvalStatus:this.form.approvalStatus,
+        productModel:this.form.productModel
       } 
       const res = await getList(data);
       console.log('审批列表',res);

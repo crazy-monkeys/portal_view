@@ -70,7 +70,7 @@
             <el-date-picker v-model="form.registTime" value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
           </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <!-- <el-col :span="12">
               <el-form-item label="注册地址" >
                 <el-row :gutter="22">
                   <el-col :span="12">
@@ -85,8 +85,6 @@
                   </el-col>
                 <el-col :span="12">
                 <el-input size="small"  v-model="regAddress"  placeholder="详细地址"></el-input>
-
-
                 </el-col>
                 </el-row>
               </el-form-item>
@@ -94,31 +92,31 @@
             <el-col :span="12">
               <el-form-item label="办公地址" >
                 <el-row :gutter="22">
-            <el-col :span="12">
-   <el-cascader
-              v-model="work"
-              :options="province"
-              size="small"
-              separator='-'
-              :props="prop"
-              placeholder="请选择省市区">
-              </el-cascader>
+                <el-col :span="12">
+                  <el-cascader
+                  v-model="work"
+                  :options="province"
+                  size="small"
+                  separator='-'
+                  :props="prop"
+                  placeholder="请选择省市区">
+                  </el-cascader>
 
 
-            </el-col>
-            <el-col :span="12">
-            <el-input size="small" v-model="workAddress" placeholder="详细地址"></el-input>
+                </el-col>
+                <el-col :span="12">
+                <el-input size="small" v-model="workAddress" placeholder="详细地址"></el-input>
 
-            </el-col>
-
-
-                </el-row>
-         
-          </el-form-item>
+                </el-col>
 
 
+                    </el-row>
+            
+              </el-form-item>
 
-            </el-col>
+
+
+            </el-col> -->
           </el-row>
           
           
@@ -130,6 +128,58 @@
       </div>
       <div class="tab">
         <el-tabs v-model="activeName"  @tab-click="handleClick">
+          <el-tab-pane label="地址" name="eighth">
+            <div class="tabBox">
+               <el-table :data="form.addresses" style="width: 100%" height="300">
+                <el-table-column prop="" width="300" label="地址类型" >
+                  <template slot-scope="scope">
+                    <el-select size="small" v-model="scope.row.addressType" >
+                      <el-option  label="注册地址" value="A01"></el-option>
+                      <el-option  label="办公地址" value="A02"></el-option>
+                    </el-select>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="300" label="地址" >
+                  <template slot-scope="scope">
+                    <el-cascader
+                      v-model="scope.row.country"
+                      :options="province"
+                      size="small"
+                      separator='-'
+                      :props="prop"
+                      placeholder="请选择省市区">
+                      </el-cascader>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="200" label="详细地址" >
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.district"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="200" label="手机号" >
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.mobile"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="200" label="邮箱" >
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.eamil"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="" fixed="right" width="100">
+                  <template slot="header">
+                    <el-button type="primary" size="small" @click="addRow(10)">新增</el-button>
+                  </template>
+                  <template slot-scope='scope'>
+                    <el-button type="text" size="small" @click="del(10,scope.$index)">删除</el-button>
+                  </template>
+                </el-table-column>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+            </div>
+          </el-tab-pane>
           <el-tab-pane label="开票信息" name="first">
             <div class="tabBox">
                <el-table :data="form.invoiceInfos" style="width: 100%" height="300">
@@ -177,6 +227,14 @@
           <el-tab-pane label="联系人" name="second">
             <div class="tabBox">
               <el-table :data="form.customerContacts" style="width: 100%" height="300">
+                <el-table-column prop=""  width="150" label="联系人归属" >
+                  <template slot-scope="scope">
+                    <el-select size="small"  v-model="scope.row.contactType" >
+                      <el-option value="客户联系人" label="客户联系人"></el-option>
+                      <el-option value="代理商联系人" label="代理商联系人"></el-option>
+                    </el-select>
+                  </template>
+                </el-table-column>
                 <el-table-column prop=""  width="150" label="联系人类型" >
                   <template slot-scope="scope">
                     <el-select size="small"  v-model="scope.row.type" >
@@ -196,7 +254,7 @@
                 </el-table-column>
                 <el-table-column prop="" width="150"  label="邮箱" >
                   <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.email"></el-input>
+                    <el-input size="small" v-model="scope.row.eamil"></el-input>
                   </template>
                 </el-table-column>
                 <el-table-column prop="" width="150"  label="部门" >
@@ -294,7 +352,7 @@
               </el-table>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="销售团队" name="fourth">
+          <!-- <el-tab-pane label="销售团队" name="fourth">
             <div class="tabBox">
               <el-table :data="form.accountTeams" style="width: 100%" height="300">
                 <el-table-column  label="角色类型" show-overflow-tooltip>
@@ -329,7 +387,7 @@
                 </div>
               </el-table>
             </div>
-          </el-tab-pane>
+          </el-tab-pane> -->
           <el-tab-pane label="展瑞销售团队" name="eight">
             <div class="tabBox">
               <el-table :data="form.zrAccountTeams" style="width: 100%" height="300">
@@ -575,7 +633,7 @@ export default {
       rowData:{},
       prop:{
         label:'name',
-        value:'name',
+        value:'code',
         children:'list',
       },
       form:{
@@ -636,7 +694,7 @@ export default {
       work:'',
       regAddress:'',
       workAddress:'',
-      activeName: "first",
+      activeName: "eighth",
       currentPage: 1,
       pageSize: 10,
       total: 0
@@ -779,6 +837,9 @@ export default {
           case 9:
           this.form.quotas.splice(index,1)
           break;
+          case 10:
+          this.form.addresses.splice(index,1)
+          break;
         default:
           break;
       }
@@ -874,6 +935,15 @@ export default {
             'salesNumber':'',
           })
           break;
+          case 10:
+          this.form.addresses.push({
+            'addressType':'',
+            'country':'',
+            'district':'',
+            'mobile':'',
+            'eamil':'',
+          })
+          break;
         default:
           break;
       }
@@ -887,27 +957,27 @@ export default {
       var data =this.form
       data.id = this.queryId
       data.customerStatus =2
-      data.addresses = [{addressType: "A01",
-        // city: this.regAddress[1],
-        country: this.reg,
-        // custId: '',
-        addressDetail: this.regAddress,
-        // district: this.regAddress[2],
-        id: '',
-        // isDefault: 1,
-        // province: this.regAddress[0]
-        },
-        {addressType: "A02",
-        // city: this.workAddress[1],
-        country: this.work,
-        // custId: '',
-        addressDetail: this.workAddress,
-        // district: this.workAddress[2],
-        id: '',
-        // isDefault: 1,
-        // province: this.workAddress[0]
-        }
-      ]
+      // data.addresses = [{addressType: "A01",
+      //   // city: this.regAddress[1],
+      //   country: this.reg,
+      //   // custId: '',
+      //   addressDetail: this.regAddress,
+      //   // district: this.regAddress[2],
+      //   id: '',
+      //   // isDefault: 1,
+      //   // province: this.regAddress[0]
+      //   },
+      //   {addressType: "A02",
+      //   // city: this.workAddress[1],
+      //   country: this.work,
+      //   // custId: '',
+      //   addressDetail: this.workAddress,
+      //   // district: this.workAddress[2],
+      //   id: '',
+      //   // isDefault: 1,
+      //   // province: this.workAddress[0]
+      //   }
+      // ]
       var params = new FormData()
       for (let i in data) {
         // console.log(i,data[i])
@@ -969,31 +1039,9 @@ export default {
       console.log("详情", res);
       if (res) {
         this.form = res.data.data;
-        res.data.data.addresses.forEach(item=>{
-            if(item.addressType=='A02'){
-              this.work = item.country.split(',')
-              this.workAddress = item.addressDetail
-            }else{
-              this.reg = item.country.split(',')
-              this.regAddress= item.addressDetail
-            }
-          })
-        // this.form.addresses.forEach(item => {
-        //   if (item.addressType == "办公地址") {
-        //     this.workDetailAddress = item.addressDetail;
-        //     this.workAddress = [];
-        //     this.workAddress.push(item.province);
-        //     this.workAddress.push(item.city);
-        //     this.workAddress.push(item.district);
-        //   } else {
-        //     this.regDetailAddress = item.addressDetail;
-        //     this.regAddress = [];
-        //     this.regAddress.push(item.province);
-        //     this.regAddress.push(item.city);
-        //     this.regAddress.push(item.district);
-        //     console.log(this.regAddress);
-        //   }
-        // });
+        res.data.data.addresses.forEach((item,index)=>{
+            this.form.addresses[index].country = item.country.split(',')
+        })
       }
     },
     handleClick(tab, event) {
@@ -1075,6 +1123,12 @@ $sc: 12;
     .tab {
       background: #fff;
       padding: 20px;
+      .el-cascader{
+        width: 100%
+      }
+      .el-select{
+        width: 100%
+      }
       .block {
         background: #fff;
         padding: 10px;

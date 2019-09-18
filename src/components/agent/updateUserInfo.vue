@@ -44,7 +44,7 @@
               <el-form-item label="公司人数">
                 <el-input type="text" size="small" v-model="form.staffNumber"></el-input>
               </el-form-item>
-              <el-form-item label="注册地址" class="txt">
+              <!-- <el-form-item label="注册地址" class="txt">
                 <el-cascader
                   style="width:200"
                   v-model="form.reg"
@@ -67,7 +67,7 @@
                   placeholder="请选择省市区">
                 </el-cascader>
                 <el-input type="text" size="small" class="address" v-model="form.workAddress"></el-input>
-              </el-form-item>
+              </el-form-item> -->
             </el-collapse-item>
             <el-collapse-item name="3">
               <template slot="title">
@@ -86,7 +86,7 @@
                 <el-cascader
                   style="width:200"
                   v-model="form.custBankInfo.bankCountry"
-                  :options="address"
+                  :options="province"
                   separator='-'
                   size="small"
                   :props="prop"
@@ -122,6 +122,58 @@
       </div>
       <div class="tab">
         <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tab-pane label="地址" name="eighth">
+            <div class="tabBox">
+               <el-table :data="form.addresses" style="width: 100%" height="300">
+                <el-table-column prop="" width="300" label="地址类型" >
+                  <template slot-scope="scope">
+                    <el-select size="small" v-model="scope.row.addressType" >
+                      <el-option  label="注册地址" value="A01"></el-option>
+                      <el-option  label="办公地址" value="A02"></el-option>
+                    </el-select>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="300" label="地址" >
+                  <template slot-scope="scope">
+                    <el-cascader
+                      v-model="scope.row.country"
+                      :options="province"
+                      size="small"
+                      separator='-'
+                      :props="prop"
+                      placeholder="请选择省市区">
+                      </el-cascader>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="200" label="详细地址" >
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.district"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="200" label="手机号" >
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.mobile"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="200" label="邮箱" >
+                  <template slot-scope="scope">
+                    <el-input size="small" v-model="scope.row.eamil"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" label="" fixed="right" width="100">
+                  <template slot="header">
+                    <el-button type="primary" size="small" @click="add(10)">新增</el-button>
+                  </template>
+                  <template slot-scope='scope'>
+                    <el-button type="text" size="small" @click="del(10,scope.$index)">删除</el-button>
+                  </template>
+                </el-table-column>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+            </div>
+          </el-tab-pane>
           <el-tab-pane label="资产信息" name="first">
             <div class="tabBox">
                <el-table :data="form.assetsInformations" style="width: 100%" height="300">
@@ -426,7 +478,7 @@
         ],
         prop:{
           label:'name',
-          value:'name',
+          value:'code',
           children:'list',
         },
         address:[],
@@ -435,10 +487,11 @@
           custBankInfo:{}
         },
         types:[],
+        province:[],
         corporateTypes:[],
         departments:[],
         positions:[],
-        activeName: 'first',
+        activeName: 'eighth',
       }
     },
     created(){
@@ -447,6 +500,20 @@
       this.getDealerInfo()
     },
     methods: {
+      getCity() {
+      this.$http({
+        method: "get",
+        url: "static/cityL3.json"
+      })
+        .then(res => {
+          console.log("城市list", res);
+          this.province = res.data;
+        })
+        .catch(error => {
+          console.log(error);
+          alert("系统异常");
+        });
+    },
       uploadSuccess(res,file,fileList){
         console.log(res,file,fileList)
         console.log(res.data.fileId)
@@ -487,21 +554,7 @@
           
         }
       },
-      getCity() {
-      this.$http({
-        method: "get",
-        url: "static/cityL3.json"
-      })
-        .then(res => {
-          console.log("城市list", res);
-          this.address = res.data;
-            
-        })
-        .catch(error => {
-          console.log(error);
-          alert("系统异常");
-        });
-    },
+      
       handleChange(value) {
         console.log(value);
       },
@@ -528,6 +581,9 @@
             break;
             case 7:
             this.form.sales.splice(index,1)
+            break;
+            case 10:
+            this.form.addresses.splice(index,1)
             break;
           default:
             break;
@@ -594,6 +650,15 @@
               deliveryPlant:'',
             })
             break;
+          case 10:
+            this.form.addresses.unshift({
+              'addressType':'',
+            'country':'',
+            'district':'',
+            'mobile':'',
+            'eamil':'',
+            })
+            break;
           default:
             break;
         }
@@ -615,10 +680,10 @@
       resetForm(formName) { },
       //提交
       async commit() {
-        this.form.addresses=[
-          {country:this.form.work,addressDetail:this.form.workAddress,addressType:'A02'},
-          {country:this.form.reg,addressDetail:this.form.registAddress,addressType:'A01'}
-        ]
+        // this.form.addresses=[
+        //   {country:this.form.work,addressDetail:this.form.workAddress,addressType:'A02'},
+        //   {country:this.form.reg,addressDetail:this.form.registAddress,addressType:'A01'}
+        // ]
         const res = await updateDealerInfo(this.form)
         console.log('修改结果',res);
         if(res){
@@ -632,14 +697,8 @@
         if(res){
           this.form = res.data.data 
           this.form.custBankInfo.bankCountry = JSON.parse(res.data.data.custBankInfo.bankCountry)
-          res.data.data.addresses.forEach(item=>{
-            if(item.addressType=='A02'){
-              this.form.work = JSON.parse(item.country)
-              this.form.workAddress = item.addressDetail
-            }else{
-              this.form.reg = JSON.parse(item.country)
-              this.form.registAddress= item.addressDetail
-            }
+          res.data.data.addresses.forEach((item,index)=>{
+              this.form.addresses[index].country = JSON.parse(item.country)
           })
         }
       },
@@ -710,7 +769,12 @@
       .tab {
         background: #fff;
         padding: 20px;
-
+        .el-cascader{
+          width: 100%
+        }
+        .el-select{
+          width: 100%
+        }
         .block {
           background: #fff;
           bottom: 26px;

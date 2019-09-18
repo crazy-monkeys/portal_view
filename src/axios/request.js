@@ -109,21 +109,24 @@ export const request = (method, url, data = {}, header = {}) => {
                 if (err.status == 404) {
                     Message.error('错误的请求')
                 }
-                console.log(err.response.data);
-                // Message.error(err.response.data.msg)
-                MessageBox.alert('会话已经过期', '提示', {
-                        showClose: false,
-                        distinguishCancelAndClose: true,
-                        confirmButtonText: '确定',
-                        // cancelButtonText: '取消'
-                    })
-                    .then(() => {
-                        console.log(window)
-                        window.location.href = '/portal'
-                    })
-                    .catch(action => {
+                if (err.response.data.code == 10005) {
+                    console.log(err.response.data);
+                    // Message.error(err.response.data.msg)
+                    MessageBox.alert('会话已经过期', '提示', {
+                            showClose: false,
+                            distinguishCancelAndClose: true,
+                            confirmButtonText: '确定',
+                            // cancelButtonText: '取消'
+                        })
+                        .then(() => {
+                            console.log(window)
+                            window.location.href = '/portal'
+                        })
+                        .catch(action => {
 
-                    });
+                        });
+                }
+
             } else if (err.request) {
                 // The request was made but no response was received
                 // `error.request` is an instance of XMLHttpRequest in the browser and an instance of

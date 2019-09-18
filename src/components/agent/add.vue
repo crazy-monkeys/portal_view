@@ -47,7 +47,7 @@
               <el-form-item label="公司人数">
                 <el-input type="text" size="small" v-model="form.staffNumber"></el-input>
               </el-form-item>
-              <el-form-item label="注册地址" class="txt">
+              <!-- <el-form-item label="注册地址" class="txt">
                 <el-cascader
                   style="width:200"
                   v-model="form.reg"
@@ -70,7 +70,7 @@
                   placeholder="请选择省市区">
                 </el-cascader>
                 <el-input type="text" size="small" class="address" v-model="form.workAddress"></el-input>
-              </el-form-item>
+              </el-form-item> -->
             </el-collapse-item>
             <el-collapse-item name="3">
               <template slot="title">
@@ -89,7 +89,7 @@
                 <el-cascader
                   style="width:200"
                   v-model="form.custBankInfo.bankCountry"
-                  :options="address"
+                  :options="province"
                   separator='-'
                   size="small"
                   :props="prop"
@@ -125,6 +125,51 @@
       </div>
       <div class="tab">
         <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tab-pane label="地址" name="eighth">
+            <div class="tabBox">
+               <el-table :data="form.addresses" style="width: 100%" height="300">
+                <el-table-column prop="" width="300" label="地址类型" >
+                  <template slot-scope="scope">
+                    <el-select disabled size="small" v-model="scope.row.addressType" >
+                      <el-option  label="注册地址" value="A01"></el-option>
+                      <el-option  label="办公地址" value="A02"></el-option>
+                    </el-select>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="300" label="地址" >
+                  <template slot-scope="scope">
+                    <el-cascader
+                      disabled
+                      v-model="scope.row.country"
+                      :options="province"
+                      size="small"
+                      separator='-'
+                      :props="prop"
+                      placeholder="请选择省市区">
+                      </el-cascader>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="200" label="详细地址" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.district"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="200" label="手机号" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.mobile"></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="200" label="邮箱" >
+                  <template slot-scope="scope">
+                    <el-input size="small" disabled v-model="scope.row.eamil"></el-input>
+                  </template>
+                </el-table-column>
+                <div slot="empty">
+                  无数据
+                </div>
+              </el-table>
+            </div>
+          </el-tab-pane>
           <el-tab-pane label="资产信息" name="first">
             <div class="tabBox">
                <el-table :data="form.assetsInformations" style="width: 100%" height="300">
@@ -383,15 +428,16 @@
         ],
         prop:{
           label:'name',
-          value:'name',
+          value:'code',
           children:'list',
         },
         activeName1:['1','2','3','4','5'],
         form: {
           custBankInfo:{}
         },
+        province:[],
         address:[],
-        activeName: 'first',
+        activeName: 'eighth',
       }
     },
     created(){
@@ -400,6 +446,20 @@
       this.getDealerInfo()
     },
     methods: {
+      getCity() {
+      this.$http({
+        method: "get",
+        url: "static/cityL3.json"
+      })
+        .then(res => {
+          console.log("城市list", res);
+          this.province = res.data;
+        })
+        .catch(error => {
+          console.log(error);
+          alert("系统异常");
+        });
+    },
       getData(){
         this.getType(2,11)
         this.getType(2,5)
@@ -430,34 +490,14 @@
           
         }
       },
-      getCity() {
-      this.$http({
-        method: "get",
-        url: "static/cityL3.json"
-      })
-        .then(res => {
-          console.log("城市list", res);
-          this.address = res.data;
-        })
-        .catch(error => {
-          console.log(error);
-          alert("系统异常");
-        });
-    },
       async getDealerInfo(){
         const res = await getDealerInfo();
         console.log('代理商信息',res)
         if(res){
           this.form = res.data.data 
           this.form.custBankInfo.bankCountry = JSON.parse(res.data.data.custBankInfo.bankCountry)
-          res.data.data.addresses.forEach(item=>{
-            if(item.addressType=='A02'){
-              this.form.work = JSON.parse(item.country)
-              this.form.workAddress = item.addressDetail
-            }else{
-              this.form.reg = JSON.parse(item.country)
-              this.form.registAddress= item.addressDetail
-            }
+          res.data.data.addresses.forEach((item,index)=>{
+              this.form.addresses[index].country = JSON.parse(item.country)
           })
         }
       },
@@ -558,7 +598,7 @@
           .el-form-item {
             margin-bottom: 0;
             width: 200px;
-.el-date-editor{
+          .el-date-editor{
             width: 200px;
           }
             .el-form-item__label {
@@ -582,7 +622,12 @@
       .tab {
         background: #fff;
         padding: 20px;
-
+        .el-cascader{
+          width: 100%
+        }
+        .el-select{
+          width: 100%
+        }
         .block {
           background: #fff;
           bottom: 26px;

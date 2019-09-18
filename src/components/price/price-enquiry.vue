@@ -14,6 +14,9 @@
         </div>
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <!-- BU，产品型号，内部客户，审批状态 -->
+          <el-form-item label="BU">
+            <el-input size='small'  v-model="form.bu" placeholder="请输入"></el-input>
+          </el-form-item>
           <el-form-item label="产品型号">
             <el-input size='small'  v-model="form.productModel" placeholder="请输入"></el-input>
           </el-form-item>
@@ -21,7 +24,7 @@
             <el-input size='small' v-model="form.inCustomer" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="审批状态">
-            <el-select v-model="form.approvalStatus" size="small" filterable placeholder="请选择">
+            <el-select clearable v-model="form.approvalStatus" size="small" filterable placeholder="请选择">
               <el-option v-for="item in status" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
@@ -200,6 +203,7 @@
         approvalStatus:'',
         productModel:'',
         inCustomer:'',
+        bu:''
       },
       status: [
         {
@@ -307,6 +311,7 @@
            approvalStatus:this.form.approvalStatus,
            productModel:this.form.productModel,
            inCustomer:this.form.inCustomer,
+           bu:this.form.bu
         } 
         const res = await getList(data);
         console.log('询价列表',res);
@@ -396,6 +401,7 @@
           approvalStatus:'',
           productModel:'',
           inCustomer:'',
+          bu:''
         }
         this.resetData = true
         this.getList()
