@@ -13,105 +13,131 @@
             <el-row :gutter="22">
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="订单类型">
-                  <el-select v-model="value1" size="small"  placeholder="公司A">
+                  <el-select v-model="form.orderType" size="small"  placeholder="请选择">
+                    <el-option value="ZFD" label="交货免费"></el-option>
+                    <el-option value="ZOR" label="标准订单"></el-option>
+                    <el-option value="ZORT" label="标准订单（ZORT）"></el-option>
+                    <el-option value="ZRET" label="退货"></el-option>
+                    <el-option value="nKB" label="客户库存补货"></el-option>
+                    <el-option value="KE" label="客户库存出货"></el-option>
+                    <el-option value="ZKE" label="标准客户库存出货"></el-option>
+                    <el-option value="ZKB" label="标准客户库存补货"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="销售组织">
-                  <el-select v-model="value1" size="small" filterable placeholder="出口发票">
+                  <el-select v-model="form.salesOrgId" size="small" filterable placeholder="请选择">
+                    <el-option v-for="item in salesOrgIds" :key="item.groupCode" :value='item.groupCode' :label="item.groupCode 
+                    + '-'+item.groupName"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-
+              <!-- <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="分销渠道">
-                  <el-input size='small'  placeholder="" disabled v-model='v3'></el-input>
+                  <el-input size='small'  placeholder="" disabled v-model='form.way'></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-
                 <el-form-item label="产品组">
-                  <el-input size='small' placeholder="" disabled v-model='v4'></el-input>
+                  <el-input size='small' placeholder="" disabled v-model='form.productGroup'></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-
                 <el-form-item label="销售部门">
-                  <el-input size='small' placeholder="" disabled v-model='v5'></el-input>
+                  <el-input size='small' placeholder="" disabled v-model='form.apartment'></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-
                 <el-form-item label="销售组">
-                  <el-input size='small' placeholder=""  v-model='v6'></el-input>
+                  <el-input size='small' placeholder="" disabled  v-model='form.saleGroup'></el-input>
                 </el-form-item>
-              </el-col>
+              </el-col> -->
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-
                 <el-form-item label="售达方">
-                  <el-select v-model="value1" size="small" filterable placeholder="出口发票">
+                  <el-select v-model="form.soldParty" size="small" filterable placeholder="">
+                    <el-option value='1' label="售达方1"></el-option>
+                    <el-option value='2' label="售达方2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-
                 <el-form-item label="送达方">
-                  <el-select v-model="value1" size="small" filterable placeholder="出口发票">
+                  <el-select v-model="form.shipParty" size="small" filterable placeholder="">
+                    <el-option value='1' label="送达方1"></el-option>
+                    <el-option value='2' label="送达方2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
 
                 <el-form-item label="采购订单编号">
-                  <el-input size='small' placeholder=""  v-model='v9'></el-input>
+                  <el-input size='small' placeholder=""  v-model='form.purchaseOrderNo'></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
 
                 <el-form-item label="采购订单下达日期">
-                  <el-input size='small' placeholder=""  v-model='v10'></el-input>
+                  <el-date-picker
+                    v-model="form.purchaseOrderDate"
+                    type="date"
+                    size="small"
+                    value-format="yyyy-MM-dd"
+                    placeholder="选择日期">
+                  </el-date-picker>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-              
-                <el-form-item label="付款条件">
-                  <el-select v-model="value1" size="small" filterable placeholder="出口发票">
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-
                 <el-form-item label="国际贸易条款一">
-                  <el-select v-model="value1" size="small" filterable placeholder="出口发票">
-                  </el-select>
+                  <el-input v-model="form.inco1" size="small"  disabled></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="国际贸易条款二">
-                  <el-select v-model="value1" size="small" filterable placeholder="出口发票">
+                  <el-input v-model="form.inco2" :disabled="form.inco1=='CIP'" size="small" filterable placeholder="">
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
+                <el-form-item label="币种">
+                  <el-select v-model="form.currency" size="small"  filterable placeholder="">
+                    <el-option value="CNY" label="CNY"></el-option>
+                    <el-option value="HKB" label="HKB"></el-option>
+                    <el-option value="USD" label="USD"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-
-                <el-form-item label="客户组一">
-                  <el-select v-model="value1" size="small" filterable placeholder="出口发票">
+                <el-form-item label="下单类型">
+                  <el-select v-model="form.underOrderType" size="small" filterable placeholder="">
+                    <el-option value="A01" label="客户专货订单"></el-option>
+                    <el-option value="A02" label="Buffer订单"></el-option>
+                    <el-option value="A03" label="新产品订单"></el-option>
+                    <el-option value="A04" label="样品订单"></el-option>
+                    <el-option value="A05" label="Last Buy订单"></el-option>
+                    <el-option value="A06" label="分销商专货订单"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-
                 <el-form-item label="客户组二">
-                  <el-select v-model="value1" size="small" filterable placeholder="出口发票">
+                  <el-select v-model="form.customerAttribute" size="small" filterable placeholder="">
+                    <el-option value="B1" label="Account Market"></el-option>
+                    <el-option value="B2" label="Mass Market"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
 
                 <el-form-item label="交货日期">
-                  <el-select v-model="value1" size="small" filterable placeholder="出口发票">
-                  </el-select>
+                  <el-date-picker
+                    v-model="form.deliveryDate"
+                    type="month"
+                    size="small"
+                    value-format="yyyy-MM"
+                    placeholder="选择日期">
+                  </el-date-picker>
+                  <!-- <el-input size='small' placeholder=""  v-model='form.deliveryDate'></el-input> -->
                 </el-form-item>
               </el-col>
             </el-row>
@@ -201,10 +227,15 @@
 
 <script>
 import formTest from "../../assets/js/formTest";
+import {getCode} from '@/api/business/idr.js'
+import {apply} from '@/api/order/add.js'
+
 export default {
   name: "orderAdd",
   data() {
     return {
+      //销售组织
+      salesOrgIds:[],
       checkList:'',
       lines:[
         {
@@ -278,7 +309,21 @@ export default {
 
       radio: "1",
       form: {
-        txt: ""
+        orderType:'',
+        salesOrgId:'',
+        underOrderType:'',
+        soldParty:'',
+        shipParty:'',
+        purchaseOrderNo:'',
+        purchaseOrderDate:'',
+        customerAttribute:'',
+        deliveryDate:'',
+        inco1:'CIP',
+        inco2:'HK',
+        currency:"",
+        // pricingDate:'',
+        // payCondition:'',
+        // orderStatus:'',
       },
       activeName: "first",
       tableData: [
@@ -296,8 +341,58 @@ export default {
       total: 0
     };
   },
+  created(){
+    this.getCode()
+  },
+  watch:{
+    'form.currency':{
+      handler:function(n,o){
+        console.log(n)
+        if(n=='CNY'){
+          if(this.form.salesOrgId==3000){
+            this.form.inco1 = 'DDU'
+            console.log(this.form.icon1)
+          }
+        }else{
+            this.form.inco1 = 'CIP'
+            this.form.inco2 = 'HK'
+          }
+      }
+    },
+    'form.salesOrgId':{
+      handler:function(n,o){
+        console.log(n)
+        if(n==3000){
+          console.log(11111111)
+          if(this.form.currency=='CNY'){
+            this.form.inco1 = 'DDU'
+            console.log(this.form.icon1)
+          }
+        }else{
+            this.form.inco1 = 'CIP'
+            this.form.inco2 = 'HK'
+          }
+      }
+    }
+  },
   methods: {
-    sub(){},
+    async getCode(){
+      const res = await getCode();
+      console.log('发货方编码',res)
+      if(res){
+        this.salesOrgIds = res.data.data
+      }
+    },
+    async apply(){
+      const res = await apply(this.form);
+      console.log('申请结果',res)
+      if(res){
+        this.$message.success('订单申请成功')
+      }
+    },
+    sub(){
+      this.apply()
+    },
     cancel(){},
     handleClick(tab, event) {
       console.log(tab, event);

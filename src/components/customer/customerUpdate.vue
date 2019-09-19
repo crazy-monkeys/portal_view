@@ -227,14 +227,7 @@
           <el-tab-pane label="联系人" name="second">
             <div class="tabBox">
               <el-table :data="form.customerContacts" style="width: 100%" height="300">
-                <el-table-column prop=""  width="150" label="联系人归属" >
-                  <template slot-scope="scope">
-                    <el-select size="small"  v-model="scope.row.contactType" >
-                      <el-option value="客户联系人" label="客户联系人"></el-option>
-                      <el-option value="代理商联系人" label="代理商联系人"></el-option>
-                    </el-select>
-                  </template>
-                </el-table-column>
+                
                 <el-table-column prop=""  width="150" label="联系人类型" >
                   <template slot-scope="scope">
                     <el-select size="small"  v-model="scope.row.type" >

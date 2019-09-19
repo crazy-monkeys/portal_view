@@ -39,7 +39,7 @@
               <el-input type="text" size="small" v-model="form.corportaeAssets"> </el-input>
               </el-form-item>
               <el-form-item label="注册日期" class="date">
-                <el-date-picker size="small" v-model="form.registTime" type="date" format='yyyy-MM-dd' value-format="timestamp"   placeholder="选择日期"></el-date-picker>
+                <el-date-picker size="small" v-model="form.registTime" type="date" value-format='yyyy-MM-dd'    placeholder="选择日期"></el-date-picker>
               </el-form-item>
               <el-form-item label="公司人数">
                 <el-input type="text" size="small" v-model="form.staffNumber"></el-input>
@@ -329,11 +329,11 @@
                     </el-select>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" width="150"  label="股权占比" >
+                <!-- <el-table-column prop="" width="150"  label="股权占比" >
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.equityRatio"></el-input>
                   </template>
-                </el-table-column>
+                </el-table-column> -->
                 <el-table-column prop="" fixed="right" label="" width="100">
                   <template slot="header">
                     <el-button type="primary" size="small" @click="add(4)">新增</el-button>

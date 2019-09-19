@@ -304,11 +304,11 @@
                     </el-select>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" width="150"  label="股权占比" >
+                <!-- <el-table-column prop="" width="150"  label="股权占比" >
                   <template slot-scope="scope">
                     <el-input size="small" disabled v-model="scope.row.equityRatio"></el-input>
                   </template>
-                </el-table-column>
+                </el-table-column> -->
               
                 <div slot="empty">
                   无数据
