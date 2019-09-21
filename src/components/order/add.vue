@@ -144,26 +144,27 @@
           </el-form>
         </div>
         <div class="btns">
-          <el-button type='primary' class="add" size='small' >下载模版</el-button>
-          <el-button type='primary' class="add" size='small'>上传</el-button>
+          <el-button type='primary' class="add" size='small' @click="download">下载模版</el-button>
+          <el-upload
+            class="upload-demo"
+            :action="serverUrl+'/order/apply/upload'"
+            :auto-upload="true"
+            :headers="{'Authorization':auth}"
+            name='file'
+            :on-success="uploadSuccess"
+            :limit="1"
+            :show-file-list="false"
+            >
+            <el-button size="small" type="primary">上传</el-button>
+          </el-upload>
         </div>
         <div class="tab">
           <el-table :data="tableData" show-summary style="width: 100%" height="300">
-            <el-table-column prop="" label="ID" v-if="false">
+            <el-table-column prop="materialNumber" label="物料号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="t1" label="物料号" show-overflow-tooltip>
+            <el-table-column prop="unit" label="单位" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="t2" label="单价" show-overflow-tooltip>
-                <!-- <el-select v-model="value" size="small" filterable placeholder="请选择">
-                  <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                  </el-option>
-                </el-select> -->
-            </el-table-column>
-            <el-table-column prop="t3" label="单位" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="t4" label="数量" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="t5" label="价格" show-overflow-tooltip>
+            <el-table-column prop="num" label="数量" show-overflow-tooltip>
             </el-table-column>
             <div slot="empty">
               无数据
@@ -171,9 +172,6 @@
           </el-table>
         </div>
         <div class="lines">
-             <!-- □ 出口发票    □增值税普通发票     □增值税专业发票（13%）
-                        发票传递：   ■ 随货        □ 甲方办公地或   
-                                                         -->
           <div>
             <p>一、包装与标识要求：</p>
             <p class="two">1、乙方必须提供适合产品运输和存储要求的有效包装。</p>
@@ -229,11 +227,14 @@
 import formTest from "../../assets/js/formTest";
 import {getCode} from '@/api/business/idr.js'
 import {apply} from '@/api/order/add.js'
+import {serverUrl} from '@/axios/request.js'
 
 export default {
   name: "orderAdd",
   data() {
     return {
+      auth:sessionStorage.getItem('data'),
+      serverUrl:serverUrl,
       //销售组织
       salesOrgIds:[],
       checkList:'',
@@ -294,7 +295,7 @@ export default {
           ]
         },
       ],
-     options: [
+      options: [
         {
           value: "选项1",
           label: "转货订单"
@@ -376,6 +377,44 @@ export default {
     }
   },
   methods: {
+    uploadSuccess(val){
+      console.log(val)
+      if(val.code==1){
+        this.$message.success('上传成功')
+        this.tableData = val.data
+      }else{
+        this.$message.error(val.msg)
+      }
+    },
+    download(){
+      this.$http({
+            method: "get",
+            url: "" + process.env.API_ROOT + "/order/apply/lineTmpl",
+            responseType: "arraybuffer",
+            headers:{
+              'Authorization': sessionStorage.getItem('data'),
+            }
+          })
+            .then(res => {
+              console.log(res.data);
+              const blob = new Blob([res.data], {
+                type: "application/vnd.ms-excel"
+              });
+              const blobUrl = window.URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              document.body.appendChild(a);
+              a.style.display = "none";
+              a.download = "订单行模版.xlsx";
+              a.href = blobUrl;
+              a.click();
+              document.body.removeChild(a);
+            })
+            .catch(err => {
+
+              console.log(err);
+              alert("网络异常");
+            });
+    },
     async getCode(){
       const res = await getCode();
       console.log('发货方编码',res)
@@ -384,10 +423,15 @@ export default {
       }
     },
     async apply(){
-      const res = await apply(this.form);
-      console.log('申请结果',res)
-      if(res){
-        this.$message.success('订单申请成功')
+      this.form.lines = this.tableData
+      if(this.form.lines.length==0){
+        this.$message.error('请先上传订单行文件')
+      }else{
+        const res = await apply(this.form);
+        console.log('申请结果',res)
+        if(res){
+          this.$message.success('订单申请成功')
+        }
       }
     },
     sub(){
@@ -463,6 +507,7 @@ $sc: 12;
 .orderAdd {
   height: 100%;
   overflow-y: auto;
+  box-sizing: border-box;
   padding: 0 20px 20px 20px ;
   .head {
       padding:10px 20px;
@@ -474,11 +519,14 @@ $sc: 12;
     // background: pink;
     // padding: 0 30px 20px;
     .btns{
-        padding: 10px 20px;
-        // background: pink;
-        background: #fff;
-        margin-bottom: 10px;
+      padding: 10px 20px;
+      // background: pink;
+      background: #fff;
+      margin-bottom: 10px;
+      .upload-demo{
+        display: inline-block;
       }
+    }
     .selBox {
       padding: 0 20px 10px 20px;
       margin-bottom: 10px;

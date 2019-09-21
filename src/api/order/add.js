@@ -3,5 +3,5 @@ import { stringify } from 'qs'
 
 //客户列表
 export const apply = data => {
-    return request('post', `${serverUrl}/orderAapply/apply`, data).then(result => result)
+    return request('post', `${serverUrl}/order/apply/submit`, data).then(result => result)
 }

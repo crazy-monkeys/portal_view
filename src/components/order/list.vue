@@ -9,55 +9,59 @@
       </div>
 
       <div class="sels clear">
-        <!-- <el-button @click='change'  size='small' type='primary' plain>{{!dialogVisible ? '展开筛选条件' :'收起筛选条件'}}
-          </el-button> -->
         <div class="lineBox">
           <i class="el-icon-arrow-down" v-if='!dialogVisible' @click='change'> 展开</i>
-
           <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
-
-          <!-- <div class="line"></div> -->
         </div>
-        <!-- <transition-group enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
-          <el-form-item label="订单号">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="下单人">
-            <el-input size='small' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="订单状态">
-            <el-select v-model="value" size="small" filterable placeholder="专货订单">
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="下单日期" class="date">
-            <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
-              v-model="d1">
-            </el-date-picker>
-          </el-form-item>
-          <el-form-item label="交货日期" class="date">
-            <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
-              v-model="d1">
-            </el-date-picker>
-          </el-form-item>
-          <el-form-item :label="checkedCities.length==0 ?'' : ' '">
-            <el-button size='small' type='primary' plain>查询</el-button>
-            <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
-          </el-form-item>
+          <el-row :gutter="20">
+            <el-col :span="6">
+              <el-form-item label="订单号">
+                <el-input size='small' placeholder="请输入"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="下单人">
+                <el-input size='small' placeholder="请输入"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="订单状态">
+                <el-select v-model="value" size="small" filterable placeholder="专货订单">
+                  <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="下单日期" class="date">
+                <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
+                  v-model="d1">
+                </el-date-picker>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="交货日期" class="date">
+                <el-date-picker size='small' type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
+                  v-model="d1">
+                </el-date-picker>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label=" ">
+                <el-button size='small' type='primary' plain>查询</el-button>
+                <el-button @click='dialogVisible = true' size='small' type='primary' plain>重置</el-button>
+              </el-form-item>
+            </el-col>
+          </el-row>
         </el-form>
-        <!-- </transition-group> -->
-
       </div>
-
-      <!-- </transition-group> -->
       <div class="box">
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" height="700">
             <el-table-column prop="" width='20' show-overflow-tooltip label="">
             </el-table-column>
-            <el-table-column type="index" width='80' label="订单号" :index='q'>
+            <el-table-column prop="1" show-overflow-tooltip label="订单号">
             </el-table-column>
             <el-table-column prop="1" show-overflow-tooltip label="状态">
             </el-table-column>
@@ -87,7 +91,7 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="" label="操作" fixed='right'>
               <template slot-scope='scope'>
-                <el-button type='text' size='small' @click='detail'>明细</el-button>
+                <el-button type='text' size='small' @click='detail(scope.row.id)'>明细</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -97,7 +101,7 @@
           </el-table>
           <div class="block">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-            :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
+            :page-sizes="[10, 30,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
           </el-pagination>
         </div>
         </div>
@@ -147,13 +151,13 @@
 </template>
 
 <script>
-import formTest from "../../assets/js/formTest";
+import {queryList} from '@/api/order/list.js'
+
 export default {
   name: "orderList",
   data() {
     return {
       form: {},
-      total: 0,
       d1: [],
       activeName:"first",
       options: [
@@ -167,140 +171,39 @@ export default {
         }
       ],
       value: "",
-      checkAll: false,
-      checkedCities: [1, 2],
-      conditions: [
-        {
-          label: "客户名称",
-          value: 1
-        },
-        {
-          label: "英文名称",
-          value: 2
-        }
-      ],
-      isIndeterminate: false,
       dialogVisible: false,
       dialogVisible1: false,
       tableData: [
-        {
-          1: "A001",
-          2: "正常",
-          3: "章三",
-          4: "399.00",
-          5: "工商银行",
-          6: "网银",
-          7: "网银",
-          8: "无",
-          9: "无",
-          10: "无",
-          11: "无",
-          12: "无",
-          13: "2019-07-09"
-        },
-        {
-          1: "A001",
-          2: "正常",
-          3: "章三",
-          4: "399.00",
-          5: "工商银行",
-          6: "网银",
-          7: "网银",
-          8: "无",
-          9: "无",
-          10: "无",
-          11: "无",
-          12: "无",
-          13: "2019-07-09"
-        },
-        {
-          1: "A001",
-          2: "正常",
-          3: "章三",
-          4: "399.00",
-          5: "工商银行",
-          6: "网银",
-          7: "网银",
-          8: "无",
-          9: "无",
-          10: "无",
-          11: "无",
-          12: "无",
-          13: "2019-07-09"
-        },
-        {
-          1: "A001",
-          2: "正常",
-          3: "章三",
-          4: "399.00",
-          5: "工商银行",
-          6: "网银",
-          7: "网银",
-          8: "无",
-          9: "无",
-          10: "无",
-          11: "无",
-          12: "无",
-          13: "2019-07-09"
-        },
-        {
-          1: "A003",
-          2: "正常",
-          3: "章三",
-          4: "399.00",
-          5: "工商银行",
-          6: "网银",
-          7: "网银",
-          8: "无",
-          9: "无",
-          10: "无",
-          11: "无",
-          12: "无",
-          13: "2019-07-09"
-        }
       ],
       //第几页
       currentPage: 1,
       //每页的容量
-      pageSize: 10
+      pageSize: 10,
+      total: 0,
+
     };
   },
   computed: {
-    shopId() {
-      return this.$store.state.shopId.shopId;
-    }
+    
   },
-  created() {},
+  created() {
+    this.getList()
+  },
   watch: {},
   methods: {
+    async getList(){
+      const data ={
+        pageSize:this.pageSize,
+        pageIndex:this.currentPage,
+      }
+      const res = await queryList(data);
+      if(res){
+        this.tableData = res.data.data.list
+      }
+    },
     handleClick(){},
     change() {
       this.dialogVisible = !this.dialogVisible;
-    },
-    handleCheckAllChange(val) {
-      console.log(val);
-      this.checkedCities = val ? [1, 2, 3, 4, 5, 6] : [];
-      this.isIndeterminate = false;
-    },
-    handleCheckedCitiesChange(value) {
-      console.log(value);
-      let checkedCount = value.length;
-      this.checkAll = checkedCount === this.conditions.length;
-      this.isIndeterminate =
-        checkedCount > 0 && checkedCount < this.conditions.length;
-    },
-    sure() {
-      this.dialogVisible = false;
-    },
-    handleClose(done) {
-      this.$confirm("确认关闭？")
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
-    },
-    q(index) {
-      return this.pageSize * (this.currentPage - 1) + index + 1;
     },
     detail() {
       this.dialogVisible1 = true;
@@ -385,14 +288,14 @@ $sc: 12;
               height: 30px;
             }
             .el-form-item {
-              width: 200px;
+              width: 100%;
               margin-bottom: 0;
               .el-select{
                 width: 100%;
               }
             }
             .date {
-              width: 414px;
+              width: 100%;
             }
         }
         .box{

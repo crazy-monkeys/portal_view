@@ -57,6 +57,7 @@ axios.interceptors.request.use(
         return config
     },
     (error, response) => {
+
         console.log(error)
         console.log(response)
     }
@@ -73,8 +74,8 @@ axios.interceptors.response.use(
             sessionStorage.setItem(data, response.headers.Authorization)
         }
         return response
-    }, error => {
-        console.log(error)
+    }, (error, res) => {
+        console.log(error, res)
         return Promise.reject(error)
     }
 )
@@ -128,6 +129,7 @@ export const request = (method, url, data = {}, header = {}) => {
                 }
 
             } else if (err.request) {
+
                 // The request was made but no response was received
                 // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
                 // http.ClientRequest in node.js

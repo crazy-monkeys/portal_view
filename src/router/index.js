@@ -162,7 +162,11 @@ export default new Router({
                     name: 'orderList',
                     component: resolve => require(['@/components/order/list'], resolve),
                 },
-
+                {
+                    path: 'order/approve',
+                    name: 'orderApprove',
+                    component: resolve => require(['@/components/order/approve'], resolve),
+                },
 
                 //价格管理
                 //目录价格
