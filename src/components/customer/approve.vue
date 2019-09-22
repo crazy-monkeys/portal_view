@@ -149,11 +149,11 @@ export default {
       dialogVisible1:false,
       businessTypes: [
         {
-          value:1,
+          value:A03,
           label: "Mass Market"
         },
         {
-          value: 2,
+          value: A01,
           label: "Account Market"
         }
       ],

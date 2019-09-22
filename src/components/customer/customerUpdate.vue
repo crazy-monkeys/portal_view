@@ -29,9 +29,10 @@
             <el-col :span="6">
               <el-form-item label="角色">
             <el-select v-model="form.custRole" size="small"  placeholder="请选择">
-              <el-option  label="中国客户" value="1"></el-option>
-              <el-option  label="亚太客户" value="2"></el-option>
-              <el-option  label="北美客户" value="3"></el-option>
+                  <el-option label="中国客户" value="Z001"></el-option>
+                  <el-option label="亚太客户" value="Z002"></el-option>
+                  <el-option label="北美客户" value="Z003"></el-option>
+                  <el-option label="内部客户" value="Z010"></el-option>
             </el-select>
           </el-form-item>
             </el-col>
@@ -673,11 +674,11 @@ export default {
       },
       businessTypes: [
         {
-          value: 1,
+          value: "A03",
           label: "Mass Market"
         },
         {
-          value: 2,
+          value: "A01",
           label: "Account Market"
         }
       ],
