@@ -52,7 +52,7 @@
         </el-form>
       </div>
       <div class="box">
-        <div class="btns" v-if="userType!='内部客户'">
+        <div class="btns" v-if="userType=='内部客户'">
           <el-button class="add" size='small' type='primary' @click='add' :disabled="multipleSelection.length==0 ? true: false" >生成报价单</el-button>
         </div>
         <div class="tab">

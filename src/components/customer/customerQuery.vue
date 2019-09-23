@@ -16,11 +16,8 @@
           <el-form-item label="客户名称">
             <el-input size='small' placeholder="请输入" v-model="form.customerName"></el-input>
           </el-form-item>
-          <el-form-item label="客户内部编号">
-            <el-input size='small' placeholder="请输入" v-model="form.customerInCode"></el-input>
-          </el-form-item>
           <el-form-item label="客户外部编号" >
-            <el-input size='small' placeholder="请输入" v-model="form.customerOutCode"></el-input>
+            <el-input size='small' placeholder="请输入" v-model="form.outCode"></el-input>
           </el-form-item>
           <el-form-item label="是否License客户">
             <el-select v-model="form.isLicense" size="small"  placeholder="请选择">
@@ -59,9 +56,8 @@
             </el-table-column>
             <el-table-column prop="custName" width="150" show-overflow-tooltip label="客户名称" >
             </el-table-column>
-            <el-table-column prop="custInCode" width="150" label="客户内部编号" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="custOutCode" width="150" label="客户外部编号" show-overflow-tooltip>
+          
+            <el-table-column prop="outCode" width="150" label="客户外部编号" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="isLicense" width="150" show-overflow-tooltip label="License客户" >
               <template slot-scope="scope">
@@ -120,7 +116,7 @@ export default {
         custType:'',
         businessType:'',
         customerName:'',
-        customerOutCode:'',
+        outCode:'',
         customerInCode:'',
         isLicense:'',
         reportStartDate:'',
@@ -180,7 +176,7 @@ export default {
         businessType:'',
         customerName:'',
         customerInCode:'',
-        customerOutCode:'',
+        outCode:'',
         isLicense:'',
         reportStartDate:'',
         reportEndDate:'',
@@ -212,7 +208,7 @@ export default {
         pageSize:this.pageSize,
         customerName:form.customerName,
         customerInCode:form.customerInCode,
-        customerOutCode:form.customerOutCode,
+        customerOutCode:form.outCode,
         isLicense:form.isLicense,
         businessType:form.businessType,
         reportStartDate:form.reportStartDate,
