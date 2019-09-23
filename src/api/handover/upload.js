@@ -23,6 +23,10 @@ export const getReject = data => {
     return request('get', `${serverUrl}/handover/dealer/reject?${stringify(data)}`).then(result => result)
 }
 
+export const getError = data => {
+    return request('get', `${serverUrl}/handover/receive/detail/error?${stringify(data)}`).then(result => result)
+}
+
 //上传页面查询部分
 export const getList = data => {
     return request('get', `${serverUrl}/handover/dealer/detail?${stringify(data)}`).then(result => result)

@@ -51,7 +51,7 @@
           <div class="box">
             <div class="btns clear">
               <el-button class="add"  size='small' type='primary' @click="deleteRows" :disabled="multipleSelection.length==0">批量删除</el-button>
-              <el-button class="add"  size='small' type='primary'>批量修改</el-button>
+              <!-- <el-button class="add"  size='small' type='primary'>批量修改</el-button> -->
             </div>
             <div class="tab">
               <el-table :data="queryList" border style="width: 100%" height="100%" @selection-change="handleSelectionChange">
@@ -79,7 +79,7 @@
             
           </div>
         </el-tab-pane>
-        <el-tab-pane label="上传" name="second">
+        <!-- <el-tab-pane label="上传" name="second">
           <div class="box">
             <div class="btns clear">
               <el-button class="add" @click='download' size='small' type='primary' > 下载模版</el-button>
@@ -134,6 +134,34 @@
               </el-table>
             </div>
           </div>
+        </el-tab-pane> -->
+        <el-tab-pane label="错误记录" name="second">
+          <div class="box">
+            <div class="tab">
+              <el-table :data="tableData" border style="width: 100%" height="100%">
+                <el-table-column prop="" width='' label="错误信息" show-overflow-tooltip>
+                  <template >
+                    收货上传失败，请点击下载按钮查看详情
+                  </template>
+                </el-table-column>
+                <el-table-column prop="uploadTimeStr" width='200' label="上传日期" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="" width='80' fixed="right" label="操作">
+                  <template slot-scope="scope">
+                    <el-button type="text" @click="downloadError(scope.row.id)">下载</el-button>
+                  </template>
+                </el-table-column>
+                <div slot="empty">
+                  <p>无数据</p>
+                </div>
+              </el-table>
+              <div class="block">
+              <el-pagination @size-change="handleSizeChange2" @current-change="handleCurrentChange2" :current-page="currentPage2"
+                :page-sizes="[10, 20,50]" :page-size="pageSize2" layout="sizes,total, jumper, prev, pager, next" :total="total2">
+              </el-pagination>
+            </div>
+            </div>
+            
+          </div>
         </el-tab-pane>
         <el-tab-pane label="驳回记录" name="third">
           <div class="box">
@@ -168,7 +196,7 @@
 <script>
   import formTest from '../../assets/js/formTest'
   import Daterange from '../com/date'
-  import {download,sub,upload,downloadError,getReject,getList,del} from '@/api/handover/upload.js'
+  import {download,sub,upload,downloadError,getReject,getList,del,getError} from '@/api/handover/upload.js'
   import {serverUrl} from '../../axios/request'
   export default {
     name: 'receiveUpload',
@@ -226,6 +254,10 @@
         //每页的容量
         pageSize1: 10,
         total1:0,
+        currentPage2: 1,
+        //每页的容量
+        pageSize2: 10,
+        total2:0,
         activeName:'first'
       }
     },
@@ -254,7 +286,7 @@
           if(n=='first'){
             this.getList()
           }else if(n=='second'){
-
+            this.getError()
           }else{
             this.getReject()
           }
@@ -346,6 +378,18 @@
           this.total1 = res.data.data.total
         }
       },
+      async getError(){
+        var data = {
+          pageSize:this.pageSize2,
+          pageNum:this.currentPage2,
+        }
+        const res = await getError(data)
+        console.log('错误记录',res)
+        if(res){
+          this.tableData=res.data.data.list
+          this.total2 = res.data.data.total
+        }
+      },
       async getList(){
         var data = {
           dealerId:this.dealerId,
@@ -399,10 +443,10 @@
               alert("网络异常");
             });
       },
-      downloadError(){
+      downloadError(id){
         this.$http({
             method: "get",
-            url: "" + process.env.API_ROOT + "/handover/error?type=receive"+"&fileName=" + this.fileName,
+            url: "" + process.env.API_ROOT + "/handover/receive/detail/error/download?recordId="+id,
             responseType: "arraybuffer",
             headers:{
               'Authorization': sessionStorage.getItem('data'),
@@ -563,6 +607,17 @@
         console.log(`当前页: ${val}`);
         this.currentPage1 = val;
         this.getReject()
+
+      },
+      handleSizeChange2(val) {
+        console.log(`每页 ${val} 条`);
+        this.pageSize2 = val;
+        this.getError()
+      },
+      handleCurrentChange2(val) {
+        console.log(`当前页: ${val}`);
+        this.currentPage2 = val;
+        this.getError()
 
       },
     }

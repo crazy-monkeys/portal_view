@@ -12,5 +12,5 @@ export const approve = data => {
     return request('post', `${serverUrl}/order/approval/approval`, data).then(result => result)
 }
 export const getCreditInfo = data => {
-    return request('get', `${serverUrl}/order/approval/creditInfo/${data.id}`).then(result => result)
+    return request('get', `${serverUrl}/sys/dealer/getCredit/${data.id}`).then(result => result)
 }

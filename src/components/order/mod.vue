@@ -1,18 +1,14 @@
 <template>
-  <!-- 添加新增控件 -->
-  <div class="orderAdd">
-      <div class="head clear">
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item to="/home/order/list">订单管理</el-breadcrumb-item>
-          <el-breadcrumb-item>订单申请</el-breadcrumb-item>
-        </el-breadcrumb>
+  <div class="orderMod">
+      <div class="head clear" >
+        <el-page-header @back="back" content="订单申请修改"></el-page-header>
       </div>
       <div class="content">
         <div class="selBox">
-          <el-form ref="form" :model="form"  :rules="rules" class="form" label-position='top' :inline='true'>
+          <el-form ref="form" :model="form" class="form" label-position='top' :inline='true'>
             <el-row :gutter="22">
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-                <el-form-item label="订单类型" prop="orderType">
+                <el-form-item label="订单类型">
                   <el-select v-model="form.orderType" size="small"  placeholder="请选择">
                     <el-option value="ZFD" label="交货免费"></el-option>
                     <el-option value="ZOR" label="标准订单"></el-option>
@@ -26,24 +22,24 @@
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-                <el-form-item label="销售组织" prop="salesOrg">
-                  <el-select v-model="form.salesOrg" size="small" filterable placeholder="请选择">
+                <el-form-item label="销售组织">
+                  <el-select v-model="form.salesOrgId" size="small" filterable placeholder="请选择">
                     <el-option v-for="item in salesOrgIds" :key="item.groupCode" :value='item.groupCode' :label="item.groupCode 
                     + '-'+item.groupName"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-                <el-form-item label="售达方" prop="soldTo">
-                  <el-select v-model="form.soldTo" size="small" filterable placeholder="">
+                <el-form-item label="售达方">
+                  <el-select v-model="form.soldParty" size="small" filterable placeholder="">
                     <el-option value='1' label="售达方1"></el-option>
                     <el-option value='2' label="售达方2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-                <el-form-item label="送达方" prop="sendTo">
-                  <el-select v-model="form.sendTo" size="small" filterable placeholder="">
+                <el-form-item label="送达方">
+                  <el-select v-model="form.shipParty" size="small" filterable placeholder="">
                     <el-option value='1' label="送达方1"></el-option>
                     <el-option value='2' label="送达方2"></el-option>
                   </el-select>
@@ -51,15 +47,15 @@
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
 
-                <el-form-item label="采购订单编号"  prop="purchaseNo">
-                  <el-input size='small' placeholder=""  v-model='form.purchaseNo'></el-input>
+                <el-form-item label="采购订单编号">
+                  <el-input size='small' placeholder=""  v-model='form.purchaseOrderNo'></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
 
-                <el-form-item label="采购订单下达日期" prop="purchaseDate">
+                <el-form-item label="采购订单下达日期">
                   <el-date-picker
-                    v-model="form.purchaseDate"
+                    v-model="form.purchaseOrderDate"
                     type="date"
                     size="small"
                     value-format="yyyy-MM-dd"
@@ -68,18 +64,18 @@
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-                <el-form-item label="国际贸易条款一" prop="incoterms1">
-                  <el-input v-model="form.incoterms1" size="small"  disabled></el-input>
+                <el-form-item label="国际贸易条款一">
+                  <el-input v-model="form.inco1" size="small"  disabled></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-                <el-form-item label="国际贸易条款二"  prop="incoterms2">
-                  <el-input v-model="form.incoterms2" :disabled="form.incoterms1=='CIP'" size="small" filterable placeholder="">
+                <el-form-item label="国际贸易条款二">
+                  <el-input v-model="form.inco2" :disabled="form.inco1=='CIP'" size="small" filterable placeholder="">
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-                <el-form-item label="币种" prop="currency">
+                <el-form-item label="币种">
                   <el-select v-model="form.currency" size="small"  filterable placeholder="">
                     <el-option value="CNY" label="CNY"></el-option>
                     <el-option value="HKB" label="HKB"></el-option>
@@ -88,7 +84,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-                <el-form-item label="下单类型" prop="underOrderType">
+                <el-form-item label="下单类型">
                   <el-select v-model="form.underOrderType" size="small" filterable placeholder="">
                     <el-option value="A01" label="客户专货订单"></el-option>
                     <el-option value="A02" label="Buffer订单"></el-option>
@@ -100,26 +96,29 @@
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-                <el-form-item label="客户属性" prop="customerAttr">
-                  <el-select v-model="form.customerAttr" size="small" filterable placeholder="">
+                <el-form-item label="客户组二">
+                  <el-select v-model="form.customerAttribute" size="small" filterable placeholder="">
                     <el-option value="B1" label="Account Market"></el-option>
                     <el-option value="B2" label="Mass Market"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-                <el-form-item label="交货日期" prop="priceDate">
+
+                <el-form-item label="交货日期">
                   <el-date-picker
-                    v-model="form.priceDate"
+                    v-model="form.deliveryDate"
                     type="month"
                     size="small"
                     value-format="yyyy-MM"
                     placeholder="选择日期">
                   </el-date-picker>
+                  <!-- <el-input size='small' placeholder=""  v-model='form.deliveryDate'></el-input> -->
                 </el-form-item>
               </el-col>
             </el-row>
-          
+          </el-form>
+        </div>
         <div class="btns">
           <el-button type='primary' class="add" size='small' @click="download">下载模版</el-button>
           <el-upload
@@ -127,41 +126,43 @@
             :action="serverUrl+'/order/apply/upload'"
             :auto-upload="true"
             :headers="{'Authorization':auth}"
-            name='lineFile'
-            :data='form'
+            name='file'
             :on-success="uploadSuccess"
             :limit="1"
             :show-file-list="false"
-            :file-list="fileList"
             >
             <el-button size="small" type="primary">上传</el-button>
           </el-upload>
         </div>
         <div class="tab">
-          <el-table :data="tableData" border  style="width: 100%" height="300">
-            <el-table-column prop="productId" label="物料号" show-overflow-tooltip>
+          <el-table :data="tableData" show-summary style="width: 100%" height="300">
+            <el-table-column prop="materialNumber" label="物料号" show-overflow-tooltip>
+              <template slot-scope="scope">
+                <el-input v-model="scope.row.materialNumber" size="small"></el-input>
+              </template>
             </el-table-column>
-            <el-table-column prop="num" label="数量" show-overflow-tooltip>
+            <el-table-column prop="" label="数量" show-overflow-tooltip>
+              <template slot-scope="scope">
+                <el-input v-model="scope.row.num" size="small"></el-input>
+              </template>
             </el-table-column>
-            <el-table-column prop="price" label="含税价格" show-overflow-tooltip>
+            <el-table-column prop="" label="期望交货月份" show-overflow-tooltip>
+              <template slot-scope="scope">
+                <el-input v-model="scope.row.expectedDeliveryMonth" size="small"></el-input>
+              </template>
             </el-table-column>
-            <el-table-column prop="netPrice" label="不含税价格" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="expectedDeliveryMonth" label="期望交货月份" show-overflow-tooltip>
+            <el-table-column prop="" label="退货原因" show-overflow-tooltip>
+              <template slot-scope="scope">
+                <el-select v-model="" size="small">
+                  <el-option label="" value=""></el-option>
+                </el-select>
+                <el-input v-model="scope.row.materialNumber" size="small"></el-input>
+              </template>
             </el-table-column>
             <div slot="empty">
               无数据
             </div>
           </el-table>
-          <el-row >
-            <el-col :span="12" style="line-height:32px">
-              含税总金额：{{order.grossValue}}
-            </el-col>
-            <el-col :span="12" style="line-height:32px">
-              不含税总金额：{{order.netValue}}
-            </el-col>
-          </el-row>
-          <div></div>
         </div>
         <div class="lines">
           <div>
@@ -174,21 +175,21 @@
           </div> 
           <div>
             <p class="one">三、乙方按订单金额提供：
-              <el-form-item prop="invoiceType">
-                <el-radio-group v-model="form.invoiceType" size="mini" @change="changeaaa">
-                  <el-radio label="1" >出口发票</el-radio>
-                  <el-radio label="2" >增值税普通发票</el-radio>
-                  <el-radio label="3" >增值税专业发票（13%）</el-radio>
+              <!-- <el-form-item > -->
+                <el-radio-group v-model="checkList" size="mini">
+                  <el-radio label="出口发票"></el-radio>
+                  <el-radio label="增值税普通发票"></el-radio>
+                  <el-radio label="增值税专业发票（13%）"></el-radio>
                 </el-radio-group>
-              </el-form-item >
+              <!-- </el-form-item> -->
             </p>
             <p class="two">发票传递： 
-              <el-form-item prop="invoiceDeliveryType">
-                <el-radio-group v-model="form.invoiceDeliveryType">
-                  <el-radio label="1" value='1'>随货</el-radio>
-                  <el-radio label="2" value='2'>甲方办公地或<el-input v-model="form.invoiceDeliveryAddress" size="small" style="border:none;border-bottom:1px solid #000"></el-input></el-radio>
+              <!-- <el-form-item > -->
+                <el-radio-group v-model="checkList">
+                  <el-radio label="随货"></el-radio>
+                  <el-radio label="甲方办公地或">甲方办公地或<el-input v-model="value1" size="small" style="border:none;border-bottom:1px solid #000"></el-input></el-radio>
                 </el-radio-group>
-              </el-form-item>  
+              <!-- </el-form-item>   -->
                </p>
           </div> 
           <div>
@@ -206,13 +207,6 @@
           <div>
             <p>八、本订单为不可撤销订单。本订单传真件有效。</p>
           </div> 
-          <div>
-              <el-form-item prop="isAgreed">
-                <el-checkbox  @change="changeccc" v-model="form.isAgreed" label="是否同意以上条款" value='1'></el-checkbox>
-              </el-form-item>
-          </div> 
-        </div>
-        </el-form>
         </div>
         <div class="sub">
           <el-button type="primary" size="small"  @click="sub">提交</el-button>
@@ -229,41 +223,9 @@ import {apply} from '@/api/order/add.js'
 import {serverUrl} from '@/axios/request.js'
 
 export default {
-  name: "orderAdd",
+  name: "orderMod",
   data() {
     return {
-      rules:{
-        orderType:[{required:true,triggle:'blur',message:'订单类型不能为空'}],
-        salesOrg:[{required:true,triggle:'blur',validator: (rule, value, callback) => {
-          if (!value) {
-            callback(new Error('销售组织不能为空'))
-          }else{
-            callback()
-          }
-        },}],
-        underOrderType:[{required:true,triggle:'blur',message:'下单类型不能为空'}],
-        soldTo:[{required:true,triggle:'blur',message:'售达方不能为空'}],
-        sendTo:[{required:true,triggle:'blur',message:'送达方不能为空'}],
-        purchaseNo:[{required:true,triggle:'blur',message:'采购订单编号不能为空'}],
-        purchaseDate:[{required:true,triggle:'blur',message:'采购订单下达日期不能为空'}],
-        customerAttr:[{required:true,triggle:'blur',message:'客户属性不能为空'}],
-        priceDate:[{required:true,triggle:'blur',message:'交货日期不能为空'}],
-        incoterms1:[{required:true,triggle:'blur',message:'国际条款一不能为空'}],
-        incoterms2:[{required:true,triggle:'blur',message:'国际条款二不能为空'}],
-        currency:[{required:true,triggle:'blur',message:'币种不能为空'}],
-        invoiceDeliveryAddress :[{required:true,triggle:'blur',message:'请填写发票传递地址'}],
-        invoiceDeliveryType   :[{required:true,triggle:'blur',message:'请选择发票传递类型'}],
-        invoiceType  :[{required:true,triggle:['blur','change'],message:'请选择发票类型'}],
-        isAgreed:[{required:true,triggle:'change', validator: (rule, value, callback) => {
-          if (!value) {
-            callback(new Error('请勾选同意以上条款'))
-          }else{
-            callback()
-          }
-        },}]
-      },
-      order:{},
-      fileList:[],
       auth:sessionStorage.getItem('data'),
       serverUrl:serverUrl,
       //销售组织
@@ -342,21 +304,20 @@ export default {
       radio: "1",
       form: {
         orderType:'',
-        salesOrg:'',
+        salesOrgId:'',
         underOrderType:'',
-        soldTo:'',
-        sendTo:'',
-        purchaseNo:'',
-        purchaseDate:'',
-        customerAttr:'',
-        priceDate:'',
-        incoterms1:'CIP',
-        incoterms2:'HK',
+        soldParty:'',
+        shipParty:'',
+        purchaseOrderNo:'',
+        purchaseOrderDate:'',
+        customerAttribute:'',
+        deliveryDate:'',
+        inco1:'CIP',
+        inco2:'HK',
         currency:"",
-        invoiceDeliveryAddress :'',
-        invoiceDeliveryType   :'',
-        invoiceType :'',
-        isAgreed:''
+        // pricingDate:'',
+        // payCondition:'',
+        // orderStatus:'',
       },
       activeName: "first",
       tableData: [
@@ -382,52 +343,49 @@ export default {
       handler:function(n,o){
         console.log(n)
         if(n=='CNY'){
-          if(this.form.salesOrg==3000){
-            this.form.incoterms1 = 'DDU'
+          if(this.form.salesOrgId==3000){
+            this.form.inco1 = 'DDU'
             console.log(this.form.icon1)
           }
         }else{
-            this.form.incoterms1 = 'CIP'
-            this.form.incoterms2 = 'HK'
+            this.form.inco1 = 'CIP'
+            this.form.inco2 = 'HK'
           }
       }
     },
-    'form.salesOrg':{
+    'form.salesOrgId':{
       handler:function(n,o){
         console.log(n)
         if(n==3000){
           console.log(11111111)
           if(this.form.currency=='CNY'){
-            this.form.incoterms1 = 'DDU'
+            this.form.inco1 = 'DDU'
             console.log(this.form.icon1)
           }
         }else{
-            this.form.incoterms1 = 'CIP'
-            this.form.incoterms2 = 'HK'
+            this.form.inco1 = 'CIP'
+            this.form.inco2 = 'HK'
           }
       }
     }
   },
+  computed:{
+    queryId(){
+      return this.$route.query.id
+    },
+    queryType(){
+      return this.$route.query.type
+    }
+  },
   methods: {
-    changeccc(val){
-      console.log(val)
-    },
-    changeaaa(val){
-      console.log(val)
-    },
     uploadSuccess(val){
       console.log(val)
       if(val.code==1){
         this.$message.success('上传成功')
-        this.tableData = val.data.lines
-        this.order = {
-           grossValue:val.data.grossValue,
-           netValue:val.data.netValue,
-        }
+        this.tableData = val.data
       }else{
         this.$message.error(val.msg)
       }
-      this.fileList = []
     },
     download(){
       this.$http({
@@ -470,19 +428,15 @@ export default {
       if(this.form.lines.length==0){
         this.$message.error('请先上传订单行文件')
       }else{
-        var form =this.form 
-        form.isAgreed = form.isAgreed? 1:0
-        const res = await apply(form);
+        const res = await apply(this.form);
         console.log('申请结果',res)
         if(res){
           this.$message.success('订单申请成功')
         }
-          this.form.lines = ''
-          this.$router.push({name:'orderList'})
       }
     },
     sub(){
-      this.$formTest.submitForm(this.$refs['form'],this.apply)
+      this.apply()
     },
     cancel(){},
     handleClick(tab, event) {
@@ -551,7 +505,7 @@ export default {
 <style lang='scss'>
 $sc: 12;
 
-.orderAdd {
+.orderMod {
   height: 100%;
   overflow-y: auto;
   box-sizing: border-box;
@@ -566,9 +520,10 @@ $sc: 12;
     // background: pink;
     // padding: 0 30px 20px;
     .btns{
-      padding: 20px 10px;
+      padding: 10px 20px;
       // background: pink;
       background: #fff;
+      margin-bottom: 10px;
       .upload-demo{
         display: inline-block;
       }
@@ -587,7 +542,7 @@ $sc: 12;
         .el-form-item {
           // width: 200px;
           width: 100%;
-          // margin-bottom: 0;
+          margin-bottom: 0;
           .el-select {
             width: 100%;
             .el-input{
@@ -623,9 +578,11 @@ $sc: 12;
 
     .tab {
       background: #fff;
+      padding: 20px;
       .block {
         background: #fff;
         padding: 10px;
+
         .el-pagination {
           width: 100%;
           text-align: center;
@@ -635,7 +592,7 @@ $sc: 12;
     .lines{
       background: #fff;
       margin-top: 10px;
-      padding: 10px 0;
+      padding: 20px;
       .el-radio-group{
         display: inline-block;
         .el-checkbox__label{
@@ -649,12 +606,10 @@ $sc: 12;
       }
       &>div{
         .two{
-          line-height: 40px;
           text-indent: 24px;
           margin-left: 0px;
         }
         .one{
-          line-height: 40px;
           text-indent: 0px;
           margin-left: 0px;
         }
