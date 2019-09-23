@@ -167,6 +167,16 @@ export default new Router({
                     name: 'orderApprove',
                     component: resolve => require(['@/components/order/approve'], resolve),
                 },
+                {
+                    path: 'order/proApprove',
+                    name: 'proApprove',
+                    component: resolve => require(['@/components/order/proApprove'], resolve),
+                },
+                {
+                    path: 'order/proList',
+                    name: 'proList',
+                    component: resolve => require(['@/components/order/proList'], resolve),
+                },
 
                 //价格管理
                 //目录价格

@@ -1,10 +1,10 @@
 <template>
-  <div class="orderList">
+  <div class="proList">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item to='/home/order/list'>订单管理</el-breadcrumb-item>
-          <el-breadcrumb-item>订单查询</el-breadcrumb-item>
+          <el-breadcrumb-item>提货单查询</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
 
@@ -16,54 +16,19 @@
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='selDia'>
           <el-row :gutter="20">
               <el-form-item label="订单号">
-                <el-input size='small' v-model="form.rSapOrderId" placeholder="请输入"></el-input>
+                <el-input size='small' v-model="form.salesOrderId" placeholder="请输入"></el-input>
               </el-form-item>
-              <el-form-item label="下单人">
-                <el-select v-model="form.dealerId" size="small" filterable placeholder="请选择">
+              <el-form-item label="提货单号">
+                <el-input size='small' v-model="form.deliveryOrderNo" placeholder="请输入"></el-input>
+              </el-form-item>
+              <el-form-item label="申请人">
+                <el-select v-model="form.createUserId" size="small" filterable placeholder="请选择">
                   <el-option v-for="item in list" :key="item.id" :label="item.custName" :value="item.id">
                   </el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="下单日期" class="date">
+              <el-form-item label="申请时间" class="date">
                 <Daterange @data='watchTime' :resetDataReg='resetData' />
-              </el-form-item>
-              <el-form-item label="订单类型">
-                <el-select v-model="form.orderType" size="small" filterable placeholder="请选择">
-                  <el-option value="ZFD" label="交货免费"></el-option>
-                    <el-option value="ZOR" label="标准订单"></el-option>
-                    <el-option value="ZORT" label="标准订单（ZORT）"></el-option>
-                    <el-option value="ZRET" label="退货"></el-option>
-                    <el-option value="nKB" label="客户库存补货"></el-option>
-                    <el-option value="KE" label="客户库存出货"></el-option>
-                    <el-option value="ZKE" label="标准客户库存出货"></el-option>
-                    <el-option value="ZKB" label="标准客户库存补货"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="下单类型">
-                <el-select v-model="form.underOrderType" size="small" filterable placeholder="请选择">
-                  <el-option value="ZFD" label="交货免费"></el-option>
-                    <el-option value="A01" label="客户专货订单"></el-option>
-                    <el-option value="A02" label="Buffer订单"></el-option>
-                    <el-option value="A03" label="新产品订单"></el-option>
-                    <el-option value="A04" label="样品订单"></el-option>
-                    <el-option value="A05" label="Last Buy订单"></el-option>
-                    <el-option value="A06" label="分销商专货订单"></el-option>
-                </el-select>
-              </el-form-item>
-                <el-form-item label="售达方">
-                  <el-select v-model="form.soldTo" size="small" filterable placeholder="">
-                    <el-option v-for="item in tos" :key="item.id" :label="item.custName" :value="item.id">
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item label="送达方">
-                  <el-select v-model="form.sendTo" size="small" filterable placeholder="">
-                    <el-option v-for="item in tos" :key="item.id" :label="item.custName" :value="item.id">
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-              <el-form-item label="采购订单编号">
-                <el-input size='small' v-model="form.purchaseNo" placeholder="请输入"></el-input>
               </el-form-item>
               <el-form-item label=" ">
                 <el-button size='small' type='primary' plain @click="search">查询</el-button>
@@ -74,74 +39,26 @@
       </div>
       <div class="box">
         <div class="tab">
-          <el-table :data="tableData" style="width: 100%" border height="700">
-            <el-table-column prop="rSapOrderId" label="sap订单号" show-overflow-tooltip  width="150" >
+          <el-table :data="tableData" style="width: 100%" height="700">
+            <el-table-column prop="sapOrderNo" label="订单号" show-overflow-tooltip  width="150" >
             </el-table-column>
-            <el-table-column prop="purchaseNo" label="采购订单编号" show-overflow-tooltip  width="150" >
-            </el-table-column>
-            <el-table-column prop="orderType" label="订单类型" show-overflow-tooltip  width="150" >
-              <template slot-scope='scope'>
-                <span v-if="scope.row.orderType=='ZFD'" >交货免费</span>
-                <span v-if="scope.row.orderType=='ZOR'" >标准订单</span>
-                <span v-if="scope.row.orderType=='ZORT'" >标准订单（ZORT）</span>
-                <span v-if="scope.row.orderType=='ZRET'" >退货</span>
-                <span v-if="scope.row.orderType=='nKB'" >客户库存补货</span>
-                <span v-if="scope.row.orderType=='KE'" >客户库存出货</span>
-                <span v-if="scope.row.orderType=='ZKE'" >标准客户库存出货</span>
-                <span v-if="scope.row.orderType=='ZKB'" >标准客户库存补货</span>
-              </template>
-            </el-table-column>
-            <el-table-column prop="underOrderType" label="下单类型" show-overflow-tooltip  width="150" >
-              <template slot-scope='scope'>
-                <span v-if="scope.row.underOrderType=='A01'" >客户专货订单</span>
-                <span v-if="scope.row.underOrderType=='A02'" >Buffer订单</span>
-                <span v-if="scope.row.underOrderType=='A03'" >新产品订单</span>
-                <span v-if="scope.row.underOrderType=='A04'" >样品订单</span>
-                <span v-if="scope.row.underOrderType=='A05'" >Last Buy订单</span>
-                <span v-if="scope.row.underOrderType=='A06'" >分销商专货订单</span>
-              </template>
-            </el-table-column>
-            <el-table-column prop="rGrossValue" label="含税总金额" show-overflow-tooltip  width="150" >
-            </el-table-column>
-            <el-table-column prop="rNetValue" label="不含税总金额" show-overflow-tooltip  width="150" >
-            </el-table-column>
-            <el-table-column prop="rSapCurrency" label="订单货币" show-overflow-tooltip  width="150" >
-            </el-table-column>
-            <el-table-column prop="salesOrg" label="销售组织" show-overflow-tooltip  width="150" >
+            <el-table-column prop="sapDeliverOrderNo" label="提货单号" show-overflow-tooltip  width="150" >
             </el-table-column>
             <el-table-column prop="soldTo" label="售达方" show-overflow-tooltip  width="150" >
               <template slot-scope="scope">
-                {{to(scope.row.soldTo)}}
+                {{tos.filter(item=>{return item.id == scope.row.soldTo})[0].custName || ''}}
               </template>
             </el-table-column>
             <el-table-column prop="sendTo" label="送达方" show-overflow-tooltip  width="150" >
               <template slot-scope="scope">
-                {{to(scope.row.soldTo)}}
+                {{tos.filter(item=>{return item.id == scope.row.sendTo})[0].custName || ''}}
               </template>
             </el-table-column>
-            <el-table-column prop="purchaseDate" label="采购订单下达日期" show-overflow-tooltip  width="150" >
+            <el-table-column prop="deliverDate" label="提货日期" show-overflow-tooltip  width="150" >
             </el-table-column>
-            <el-table-column prop="paymentTerms" label="付款条件" show-overflow-tooltip  width="150" >
+            <el-table-column prop="actualDeliveryDate" label="实际发货日期" show-overflow-tooltip  width="150" >
             </el-table-column>
-            <el-table-column prop="incoterms1" label="国际贸易条款1" show-overflow-tooltip  width="150" >
-            </el-table-column>
-            <el-table-column prop="incoterms2" label="国际贸易条款2" show-overflow-tooltip  width="150" >
-            </el-table-column>
-            <el-table-column prop="customerAttr" label="客户属性" show-overflow-tooltip  width="150" >
-              <template slot-scope="scope">
-                <span v-if="scope.row.customerAttr=='B1'">Account Market</span>
-                <span v-if="scope.row.customerAttr=='B2'">Mass Market</span>
-              </template>
-            </el-table-column>
-            <el-table-column prop="isAgreed" label="是否同意条款" show-overflow-tooltip  width="150" >
-              <template slot-scope='scope'>
-                <span v-if="scope.row.isAgreed==0" >否</span>
-                <span v-if="scope.row.isAgreed==1" >是</span>
-              </template>
-            </el-table-column>
-            <el-table-column prop="refSapOrderId" label="原单号" show-overflow-tooltip  width="150" >
-            </el-table-column>
-            <el-table-column prop="orderReason" label="退货原因" show-overflow-tooltip  width="150" >
+            <el-table-column prop="shippingPoint" label="装运点" show-overflow-tooltip  width="150" >
             </el-table-column>
             <el-table-column prop="approver" label="审批人" show-overflow-tooltip  width="150" >
             </el-table-column>
@@ -156,13 +73,12 @@
             </el-table-column>
             <el-table-column prop="approvalOpinions" label="审批意见" show-overflow-tooltip  width="150" >
             </el-table-column>
-            <el-table-column width="250" label="操作" fixed='right'>
+            <el-table-column width="200" label="操作" fixed='right'>
               <template slot-scope='scope'>
                 <el-button type='text' size='small' @click='getDetail(scope.row.id)'>明细</el-button>
-                <el-button type='text' size='small' @click='getProduct(scope.row.dealerId,scope.row.id)' :disabled="scope.row.approvalStatus==1 ? false:true">提货</el-button>
-                <el-button type='text' size='small' @click='mod(scope.row)' :disabled="scope.row.approvalStatus!=0 ? false:true">修改</el-button>
-                <el-button type='text' size='small' @click='getDetail(scope.row.id)'  :disabled="scope.row.approvalStatus==1 ? false:true">取消</el-button>
-                <el-button type='text' size='small' @click='getDetail(scope.row.id)'  :disabled="scope.row.approvalStatus==2 ? false:true">删除</el-button>
+                <el-button type='text' size='small' @click='getProduct(scope.row.id)' :disabled="scope.row.actualDeliveryDate  ? false : true">收货</el-button>
+                <el-button type='text' size='small' @click='mod(scope.row)'>修改</el-button>
+                <el-button type='text' size='small' @click='getDetail(scope.row.id)'>取消</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -199,6 +115,8 @@
             </el-table-column>
             <el-table-column prop="remainingNum" width="150" label="剩余数量" show-overflow-tooltip>
             </el-table-column>
+            <el-table-column prop="unit" width="150" label="单位" show-overflow-tooltip>
+            </el-table-column>
             <el-table-column prop="rCurrency" width="150" label="币种" show-overflow-tooltip>
             </el-table-column>
             <div slot="empty">
@@ -208,10 +126,10 @@
         </div>
       </div>
     </el-dialog>
-    <el-dialog title="提货" top="5vh" :visible.sync="proDia" width="600px">
+    <el-dialog title="收货" top="5vh" :visible.sync="proDia" width="600px">
       <div class="tab">
         <div class="tabBox">
-          <el-form ref="proForm" :model="proForm" :rules="rules" class="form" label-width="auto" label-position='top' >
+          <el-form ref="proForm" :model="proForm" class="form" label-width="auto" label-position='top' >
             <el-form-item label="授信额度初始值">
               <el-input size='small' disabled v-model="credit.credit" ></el-input>
             </el-form-item>
@@ -221,10 +139,10 @@
             <el-form-item label="授信额度剩余值">
               <el-input size='small' disabled v-model="credit.creditUnUSE" ></el-input>
             </el-form-item>
-            <el-form-item label="装运点" prop="shippingPoint">
+            <el-form-item label="装运点">
               <el-input size='small'  v-model="proForm.shippingPoint" ></el-input>
             </el-form-item>
-            <el-form-item label="提货日期" prop="deliverDate">
+            <el-form-item label="提货日期">
               <el-date-picker
                 v-model="proForm.deliverDate"
                 type="date"
@@ -235,14 +153,9 @@
               </el-date-picker>
             </el-form-item>
             <el-table :data="proForm.lines" style="width: 100%" border height="400">
-              <el-table-column prop="" width="150" label="提货数量" show-overflow-tooltip>
-                <template slot-scope="scope">
-                  <el-form-item :prop="'lines.'+scope.$index +'.deliveryQuantity'" :rules="rules.deliveryQuantity" >
-                    <el-input  size="small" v-model="scope.row.deliveryQuantity"></el-input>
-                  </el-form-item>
-                </template>
+              <el-table-column prop="sapDeliverOrderLineNo" width="150" label="提货单行号" show-overflow-tooltip>
               </el-table-column>
-              <el-table-column prop="rItemNo" width="150" label="订单行号" show-overflow-tooltip>
+              <el-table-column prop="sapSalesOrderLineNo" width="150" label="销售单行号" show-overflow-tooltip>
               </el-table-column>
               <el-table-column prop="productId" width="150" label="物料号" show-overflow-tooltip>
               </el-table-column>
@@ -250,7 +163,13 @@
               </el-table-column>
               <el-table-column prop="remainingNum" width="150" label="剩余数量" show-overflow-tooltip>
               </el-table-column>
-              
+              <el-table-column prop="deliveryQuantity" width="150" label="提货数量" show-overflow-tooltip>
+                <template slot-scope="scope">
+                  <el-form-item >
+                    <el-input size="small" v-model.number="scope.row.deliveryQuantity"></el-input>
+                  </el-form-item>
+                </template>
+              </el-table-column>
               <div slot="empty">
                 无数据
               </div>
@@ -267,27 +186,16 @@
 </template>
 
 <script>
-import {queryList,detail,getCredit,submitPro} from '@/api/order/list.js'
+import {getCredit,submitPro,getProList,getProDetail} from '@/api/order/list.js'
 import {getShip,getDealerList} from '@/api/system/param.js'
 import Daterange from "../com/date";
 export default {
-  name: "orderList",
+  name: "proList",
   components:{
     Daterange
   },
   data() {
     return {
-      rules:{
-        shippingPoint:[
-          {required:true,triggle:'blur',message:'请输入装运点'}
-        ],
-        deliverDate:[
-          {required:true,triggle:'change',message:'请选择提货日期'}
-        ],
-        deliveryQuantity:[
-          {required:true,triggle:'blur',message:'请输入提货数量'},
-        ]
-      },
       // 授信额度
       credit:{},
       //订单行信息
@@ -302,16 +210,11 @@ export default {
       proForm:{},
       //筛选表单
       form: {
-        rSapOrderId:'',
-        custName:'',
-        createBeginTime:'',
-        createEndTime:'',
-        orderType:'',
-        underOrderType:'',
-        soldTo:'',
-        sendTo:'',
-        purchaseNo:'',
-        dealerId:''
+        salesOrderId:"",
+        deliveryOrderNo :"",
+        createUserId:"",
+        actualDeliveryStartDate:"",
+        actualDeliveryEndDate:"",
       },
       //筛选条件显示否
       selDia: false,
@@ -336,13 +239,10 @@ export default {
   created() {
     this.getShip()
     this.getDealerList()
-    this.getList()
+    this.getProList()
   },
   watch: {},
   methods: {
-    to(id){
-        return  this.tos.filter(item=>{return item.id == id})[0] ? this.tos.filter(item=>{return item.id == id})[0].custName  :''
-    },
     //表单验证
     submitForm(formName){
       this.$formTest.submitForm(this.$refs[formName],this.submitPro)
@@ -372,52 +272,38 @@ export default {
         lines:[]
       }
       this.proDia  = false
-      this.$formTest.resetForm(this.$refs['proForm'])
     },
     //获取提货详细信息
-    getProduct(dealerId,id){
-      this.proDia = true
-      this.detail(id)
-      this.getCredit( dealerId)
+    getProduct(id){
+      
     },
     //修改按钮
     mod(row){
-      this.$router.push(
-        {
-          name:'orderMod',
-          query:{
-            id:row.id,
-            type:row.approvalStatus
-          }
-        }
-      )
+      this.proDia = true
+      this.getProDetail(row.deliverOrderId)
+      this.getCredit(row.createUserId)
     },
     //搜索重置
     search(){
       this.currentPage =1
-      this.getList()
+      this.getProList()
     },
     reset(){
       this.form = {
-        rSapOrderId:'',
-        custName:'',
-        createBeginTime:'',
-        createEndTime:'',
-        orderType:'',
-        underOrderType:'',
-        soldTo:'',
-        sendTo:'',
-        purchaseNo:'',
-        dealerId:''
+        salesOrderId:"",
+        deliveryOrderNo :"",
+        createUserId:"",
+        actualDeliveryStartDate:"",
+        actualDeliveryEndDate:"",
       }
       this.resetData = true
-      this.getList()
+      this.getProList()
     },
     //监听时间选择控件
     watchTime(data){
       console.log(data)
-      this.form.createBeginTime = data.startTime
-      this.form.createEndTime = data.endTime
+      this.form.actualDeliveryStartDate = data.startTime
+      this.form.actualDeliveryEndDate = data.endTime
       this.resetData = false
     },
     //获取授信额度
@@ -448,34 +334,31 @@ export default {
       }
     },
     //获取订单行明细
-    async detail(id){
+    async getProDetail(id){
       const data ={
         id:id
       }
-      const res = await detail(data);
-      console.log('detail',res)
+      const res = await getProDetail(data);
+      console.log('getProDetail',res)
       if(res){
-        this.lines = res.data.data.lines
-        this.proForm.lines = res.data.data.lines.map(item=>{return {...item,deliveryQuantity:''}})
-        this.proForm.orderId = res.data.data.id
+        this.lines = res.data.data
+        this.proForm.lines = res.data.data
+        // this.proForm.orderId = res.data.data.id
       }
     },
     //获取主列表数据
-    async getList(){
+    async getProList(){
       const data ={
         pageSize:this.pageSize,
         pageIndex:this.currentPage,
-        rSapOrderId:this.form.rSapOrderId,
-        custName:this.form.custName,
-        createBeginTime:this.form.createBeginTime,
-        createEndTime:this.form.createEndTime,
-        orderType:this.form.orderType,
-        underOrderType:this.form.underOrderType,
-        soldTo:this.form.soldTo,
-        sendTo:this.form.sendTo,
-        purchaseNo:this.form.purchaseNo,
+        salesOrderId:this.form.salesOrderId,
+        deliveryOrderNo:this.form.deliveryOrderNo,
+        createUserId:this.form.createUserId,
+        actualDeliveryStartDate:this.form.actualDeliveryStartDate,
+        actualDeliveryEndDate:this.form.actualDeliveryEndDate,
       }
-      const res = await queryList(data);
+      const res = await getProList(data);
+      console.log('提货单列表',res)
       if(res){
         this.tableData = res.data.data.list
       }
@@ -487,7 +370,7 @@ export default {
     //点击明细按钮事件
     getDetail(id) {
       console.log(id)
-      this.detail(id)
+      this.getProDetail(id)
       this.lineDia = true;
     },
     // 分页
@@ -506,7 +389,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
 $sc: 12;
-.orderList{
+.proList{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;

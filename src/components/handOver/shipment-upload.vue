@@ -54,7 +54,6 @@
                 <el-table-column prop="customerExternalNumber" width='100' label="客户外部号" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="customerFullName" width='250' label="客户全称" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="sales" width='100' label="销售" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="categoryOne" width='150' label="类别一(类型)" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="categoryTow" width='150' label="类别二(子类)" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="categoryThree" width='150' label="类别三(平台)" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="productModel" width='150' label="产品型号" show-overflow-tooltip></el-table-column>
@@ -63,7 +62,7 @@
                 <el-table-column prop="salePrice" width='150' label="Sale Price" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="poPrice" width='150' label="Po Price" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="margin" width='150' label="Margin" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="currency" width='150' label="币种" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="salesOrganization" width='150' label="销售组织" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="customerOrderNumber" width='150' label="客户订单号" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="deliveryType" width='150' label="出货类型" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="orderMonth" width='150' label="订单月份" show-overflow-tooltip></el-table-column>

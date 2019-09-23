@@ -16,3 +16,12 @@ export const addAndEdit = data => {
 export const getType = data => {
     return request('get', `${serverUrl}/sys/selectByMAndF/${data.model}/${data.func}`).then(result => result)
 }
+
+export const getShip = () => {
+    return request('get', `${serverUrl}/user/dealer/getShip`).then(result => result)
+}
+
+
+export const getDealerList = () => {
+    return request('get', `${serverUrl}/sys/dealer/list`).then(result => result)
+}
