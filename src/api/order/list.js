@@ -21,7 +21,15 @@ export const submitPro = data => {
 export const getProList = data => {
     return request('post', `${serverUrl}/order/query/list/delivery`, data).then(result => result)
 }
-
+export const modPro = data => {
+    return request('post', `${serverUrl}/order/apply/update/delivery`, data).then(result => result)
+}
+export const calPro = data => {
+    return request('post', `${serverUrl}/order/apply/cancel/delivery`, data).then(result => result)
+}
+export const delPro = data => {
+    return request('get', `${serverUrl}/order/apply/delete/delivery/${data.id}`).then(result => result)
+}
 export const getProDetail = data => {
     return request('get', `${serverUrl}/order/query/delivery/detail/${data.id}`).then(result => result)
 }

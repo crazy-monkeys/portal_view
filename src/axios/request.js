@@ -70,8 +70,11 @@ axios.interceptors.response.use(
         cancelPending(response.config)
             // }, 500);
         console.log(response)
-        if (response.headers.Authorization) {
-            sessionStorage.setItem(data, response.headers.Authorization)
+        if (response.headers.authorization) {
+            console.log(111111)
+            console.log(22222)
+            console.log(sessionStorage.getItem('data'))
+            sessionStorage.setItem('data', response.headers.authorization)
         }
         return response
     }, (error, res) => {
