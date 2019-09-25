@@ -153,6 +153,11 @@ export default new Router({
 
                 //订单管理
                 {
+                    path: 'order/approve/list',
+                    name: 'approveList',
+                    component: resolve => require(['@/components/order/approveList'], resolve),
+                },
+                {
                     path: 'order/add',
                     name: 'orderAdd',
                     component: resolve => require(['@/components/order/add'], resolve),

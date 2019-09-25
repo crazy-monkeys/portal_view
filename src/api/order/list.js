@@ -33,3 +33,7 @@ export const delPro = data => {
 export const getProDetail = data => {
     return request('get', `${serverUrl}/order/query/delivery/detail/${data.id}`).then(result => result)
 }
+
+export const getProApprovalDetail = data => {
+    return request('get', `${serverUrl}/order/query/delivery/approval/detail/${data.id}`).then(result => result)
+}

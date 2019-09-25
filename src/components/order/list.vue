@@ -52,13 +52,13 @@
               </el-form-item>
                 <el-form-item label="售达方">
                   <el-select v-model="form.soldTo" size="small" filterable placeholder="">
-                    <el-option v-for="item in tos" :key="item.id" :label="item.custName" :value="item.id">
+                    <el-option v-for="item in list" :key="item.id" :label="item.custName" :value="item.id">
                     </el-option>
                   </el-select>
                 </el-form-item>
                 <el-form-item label="送达方">
                   <el-select v-model="form.sendTo" size="small" filterable placeholder="">
-                    <el-option v-for="item in tos" :key="item.id" :label="item.custName" :value="item.id">
+                    <el-option v-for="item in list" :key="item.id" :label="item.custName" :value="item.id">
                     </el-option>
                   </el-select>
                 </el-form-item>
@@ -334,14 +334,14 @@ export default {
     
   },
   created() {
-    this.getShip()
+    // this.getShip()
     this.getDealerList()
     this.getList()
   },
   watch: {},
   methods: {
     to(id){
-        return  this.tos.filter(item=>{return item.id == id})[0] ? this.tos.filter(item=>{return item.id == id})[0].custName  :''
+        return  this.list.filter(item=>{return item.id == id})[0] ? this.list.filter(item=>{return item.id == id})[0].custName  :''
     },
     //表单验证
     submitForm(formName){

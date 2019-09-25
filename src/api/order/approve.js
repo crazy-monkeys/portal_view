@@ -14,3 +14,12 @@ export const approve = data => {
 export const getCreditInfo = data => {
     return request('get', `${serverUrl}/sys/dealer/getCredit/${data.id}`).then(result => result)
 }
+
+
+export const approveProList = data => {
+    return request('post', `${serverUrl}/order/query/list/delivery/approval`, data).then(result => result)
+}
+
+export const approvePro = data => {
+    return request('post', `${serverUrl}/order/approval/delivery`, data).then(result => result)
+}

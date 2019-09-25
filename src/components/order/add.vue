@@ -36,16 +36,14 @@
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="售达方" prop="soldTo">
                   <el-select v-model="form.soldTo" size="small" filterable placeholder="">
-                    <el-option value='1' label="售达方1"></el-option>
-                    <el-option value='2' label="售达方2"></el-option>
+                    <el-option v-for="item in tos" :key='item.id' :label='item.custName'></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="送达方" prop="sendTo">
                   <el-select v-model="form.sendTo" size="small" filterable placeholder="">
-                    <el-option value='1' label="送达方1"></el-option>
-                    <el-option value='2' label="送达方2"></el-option>
+                    <el-option v-for="item in tos" :key='item.id' :label='item.custName'></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -226,12 +224,15 @@
 import formTest from "../../assets/js/formTest";
 import {getCode} from '@/api/business/idr.js'
 import {apply} from '@/api/order/add.js'
+import {getShip} from '@/api/system/param.js'
+
 import {serverUrl} from '@/axios/request.js'
 
 export default {
   name: "orderAdd",
   data() {
     return {
+      tos:[],
       rules:{
         orderType:[{required:true,triggle:'blur',message:'订单类型不能为空'}],
         salesOrg:[{required:true,triggle:'blur',validator: (rule, value, callback) => {
@@ -376,6 +377,7 @@ export default {
   },
   created(){
     this.getCode()
+    this.getShip()
   },
   watch:{
     'form.currency':{
@@ -409,6 +411,13 @@ export default {
     }
   },
   methods: {
+    async getShip(){
+      const res = await getShip();
+      console.log('tos',res)
+      if(res){
+        this.tos = res.data.data
+      }
+    },
     changeccc(val){
       console.log(val)
     },

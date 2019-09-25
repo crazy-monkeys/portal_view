@@ -266,7 +266,7 @@ export default {
   created() {
     this.getList()
     this.getDealerList()
-    this.getShip()
+    // this.getShip()
   },
   watch: {},
   methods: {
@@ -278,7 +278,7 @@ export default {
       }
     },
     to(id){
-        return  this.tos.filter(item=>{return item.id == id})[0] ? this.tos.filter(item=>{return item.id == id})[0].custName  :''
+        return  this.list.filter(item=>{return item.id == id})[0] ? this.list.filter(item=>{return item.id == id})[0].custName  :''
     },
     search(){
       this.currentPage =1

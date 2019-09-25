@@ -27,8 +27,11 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="申请时间" class="date">
+              <el-form-item label="提货时间" class="date">
                 <Daterange @data='watchTime' :resetDataReg='resetData' />
+              </el-form-item>
+              <el-form-item label="实际发货日期" class="date">
+                <Daterange @data='watchTime1' :resetDataReg='resetData1' />
               </el-form-item>
               <el-form-item label=" ">
                 <el-button size='small' type='primary' plain @click="search">查询</el-button>
@@ -60,26 +63,12 @@
             </el-table-column>
             <el-table-column prop="shippingPoint" label="装运点" show-overflow-tooltip  width="150" >
             </el-table-column>
-            <el-table-column prop="approver" label="审批人" show-overflow-tooltip  width="150" >
-            </el-table-column>
-            <el-table-column prop="approvalStatus" label="审批状态" show-overflow-tooltip  width="150" >
-              <template slot-scope="scope">
-                <span v-if="scope.row.approvalStatus==0">待审批</span>
-                <span v-if="scope.row.approvalStatus==1">已通过</span>
-                <span v-if="scope.row.approvalStatus==2">已驳回</span>
-              </template>
-            </el-table-column>
-            <el-table-column prop="approvalTime" label="审批时间" show-overflow-tooltip  width="150" >
-            </el-table-column>
-            <el-table-column prop="approvalOpinions" label="审批意见" show-overflow-tooltip  width="150" >
-            </el-table-column>
-            <el-table-column width="250" label="操作" fixed='right'>
+            <el-table-column width="200" label="操作" fixed='right'>
               <template slot-scope='scope'>
                 <el-button type='text' size='small' @click='getDetail(scope.row.deliverOrderId)'>明细</el-button>
-                <el-button type='text' size='small' @click='getProduct(scope.row.id)' :disabled="scope.row.approvalStatus==1 ? false:true">收货</el-button>
-                <el-button type='text' size='small' @click='mod(scope.row)' :disabled="scope.row.approvalStatus!=0 ? false:true">修改</el-button>
-                <el-button type='text' size='small' @click='getCancel(scope.row)' :disabled="scope.row.approvalStatus==1 ? false:true">取消</el-button>
-                <el-button type='text' size='small' @click='del(scope.row.deliverOrderId)'  :disabled="scope.row.approvalStatus==2 ? false:true">删除</el-button>
+                <el-button type='text' size='small' @click='getProduct(scope.row.id)' :disabled="scope.row.actualDeliveryDate ? false:true">收货</el-button>
+                <el-button type='text' size='small' @click='mod(scope.row)'>修改</el-button>
+                <el-button type='text' size='small' @click='getCancel(scope.row)'>取消</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -303,6 +292,7 @@ export default {
       list:[],
       //重置时间控件
       resetData:true,
+      resetData1:true,
       //提货表单
       proForm:{
         deliverOrderLineList:[],
@@ -318,6 +308,8 @@ export default {
         createUserId:"",
         actualDeliveryStartDate:"",
         actualDeliveryEndDate:"",
+        deliveryStartDate:"",
+        deliveryEndDate:"",
       },
       calDia:false,
       //筛选条件显示否
@@ -341,7 +333,7 @@ export default {
     
   },
   created() {
-    this.getShip()
+    // this.getShip()
     this.getDealerList()
     this.getProList()
   },
@@ -398,7 +390,7 @@ export default {
       }
     },
     to(id){
-        return  this.tos.filter(item=>{return item.id == id})[0] ? this.tos.filter(item=>{return item.id == id})[0].custName  :''
+        return  this.list.filter(item=>{return item.id == id})[0] ? this.list.filter(item=>{return item.id == id})[0].custName  :''
     },
     //表单验证
     submitForm(formName){
@@ -462,16 +454,25 @@ export default {
         createUserId:"",
         actualDeliveryStartDate:"",
         actualDeliveryEndDate:"",
+        deliveryStartDate:"",
+        deliveryEndDate:"",
       }
       this.resetData = true
+      this.resetData1 = true
       this.getProList()
     },
     //监听时间选择控件
     watchTime(data){
       console.log(data)
+      this.form.deliveryStartDate = data.startTime
+      this.form.deliveryEndDate = data.endTime
+      this.resetData = false
+    },
+    watchTime1(data){
+      console.log(data)
       this.form.actualDeliveryStartDate = data.startTime
       this.form.actualDeliveryEndDate = data.endTime
-      this.resetData = false
+      this.resetData1 = false
     },
     //获取授信额度
     async getCredit(id){
@@ -525,11 +526,14 @@ export default {
         createUserId:this.form.createUserId,
         actualDeliveryStartDate:this.form.actualDeliveryStartDate,
         actualDeliveryEndDate:this.form.actualDeliveryEndDate,
+        deliveryStartDate:this.form.deliveryStartDate,
+        deliveryEndDate:this.form.deliveryEndDate,
       }
       const res = await getProList(data);
       console.log('提货单列表',res)
       if(res){
         this.tableData = res.data.data.list
+        this.total = res.data.data.total
       }
     },
     //筛选区域展开否

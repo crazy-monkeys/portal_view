@@ -1,10 +1,10 @@
 <template>
-  <div class="approveProList">
+  <div class="approveList">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item >订单管理</el-breadcrumb-item>
-          <el-breadcrumb-item>提货单审批</el-breadcrumb-item>
+          <el-breadcrumb-item>申请列表</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="sels clear">
@@ -17,12 +17,12 @@
               <el-form-item label="订单号">
                 <el-input size='small' v-model="form.salesOrderId" clearable placeholder="请输入"></el-input>
               </el-form-item>
-              <el-form-item label="申请人">
+              <!-- <el-form-item label="申请人">
                 <el-select v-model="form.createUserId" clearable size="small" filterable placeholder="请选择">
                   <el-option v-for="item in list" :key="item.id" :label="item.custName" :value="item.id">
                   </el-option>
                 </el-select>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item label="审批状态">
                 <el-select v-model="form.approvalStatus" clearable size="small" filterable placeholder="请选择">
                   <el-option   label="待审批" :value="0">
@@ -44,6 +44,9 @@
         </el-form>
       </div>
       <div class="box">
+        <div class="btns">
+          <el-button size="small" @click="approve" type="primary"> 申请</el-button>
+        </div>
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" height="700" @row-click='rowClick'>
             <el-table-column prop="" label="申请人" show-overflow-tooltip  width="150" >
@@ -86,10 +89,10 @@
             </el-table-column>
             <el-table-column prop="approvalRemark" label="审批意见" show-overflow-tooltip  width="150" >
             </el-table-column>
-            <el-table-column width="100" label="操作" fixed='right'>
+            <el-table-column width="120" label="操作" fixed='right'>
               <template slot-scope='scope'>
-                <el-button type='text' size='small' @click='getDetail(scope.row.deliverOrderId)'>明细</el-button>
-                <el-button type='text' size='small' @click='getApprove(scope.row.createUserId)' :disabled="scope.row.approvalStatus==0 ? false:true">审批</el-button>
+                <el-button type='text' size='small' @click='getDetail(scope.row.deliverOrderId)' >明细</el-button>
+                <el-button type='text' size='small' @click='del(scope.row.deliverOrderId)' :disabled="scope.row.approvalStatus==2 ? false:true">删除</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -158,11 +161,11 @@
 
 <script>
 import {approve,approveProList,getCreditInfo,approvePro} from '@/api/order/approve.js'
-import {getProApprovalDetail} from '@/api/order/list.js'
+import {getProApprovalDetail,delPro} from '@/api/order/list.js'
 import Daterange from "../com/date";
 import {getShip,getDealerList} from '@/api/system/param.js'
 export default {
-  name: "approveProList",
+  name: "approveList",
   components:{
     Daterange
   },
@@ -180,7 +183,7 @@ export default {
         createUserId:"",
         createStartDate:"",
         createEndDate:"",
-        approvalStatus:0
+        approvalStatus:''
       },
       form1: {
         reason:'',
@@ -205,7 +208,35 @@ export default {
   },
   watch: {},
   methods: {
-     async getShip(){
+    del(id){
+      this.$confirm('确定要删除吗？', '发布', {
+        distinguishCancelAndClose: true,
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      })
+      .then(() => {
+          this.delPro(id)
+      })
+      .catch(action => {
+        
+      });
+    },
+    async delPro(id){
+      const data ={
+          id:id
+      }
+      const res = await delPro(data);
+      if(res){
+        this.$message.success('删除成功')
+        this.getList()
+      }
+    },
+    approve(){
+      this.$router.push({
+        name:'orderAdd'
+      })
+    },
+    async getShip(){
       const res = await getShip();
       console.log('tos',res)
       if(res){
@@ -232,7 +263,7 @@ export default {
         createUserId:"",
         createStartDate:"",
         createEndDate:"",
-        approvalStatus:0
+        approvalStatus:''
       }
       this.resetData = true
       this.getList()
@@ -259,10 +290,10 @@ export default {
         approvalStatus:this.form.approvalStatus,
         createStartDate:this.form.createStartDate,
         createEndDate:this.form.createEndDate,
-        queryType:1
+        queryType:2
       }
       const res = await approveProList(data);
-      console.log('提货单审批列表',res)
+      console.log('申请列表',res)
       if(res){
         this.tableData = res.data.data.list
         this.total = res.data.data.total
@@ -348,7 +379,7 @@ export default {
 <style lang='scss'>
 $sc: 12;
 
-.approveProList{
+.approveList{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;
