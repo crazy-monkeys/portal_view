@@ -139,7 +139,7 @@
           pageSize:this.pageSize,
         }
         const res = await getMore(data,param);
-        console.log('详情',res)
+        // console.log('详情',res)
         if(res){
           this.tableData = res.data.data.list
           this.total = res.data.data.total
@@ -175,12 +175,12 @@
       },
       // 分页
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+        // console.log(`每页 ${val} 条`);
         this.pageSize = val;
         this.getMore()
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        // console.log(`当前页: ${val}`);
         this.currentPage = val;
         this.getMore()
       },

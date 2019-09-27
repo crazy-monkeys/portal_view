@@ -506,17 +506,17 @@
         url: "static/cityL3.json"
       })
         .then(res => {
-          console.log("城市list", res);
+          // console.log("城市list", res);
           this.province = res.data;
         })
         .catch(error => {
-          console.log(error);
+          // console.log(error);
           alert("系统异常");
         });
     },
       uploadSuccess(res,file,fileList){
-        console.log(res,file,fileList)
-        console.log(res.data.fileId)
+        // console.log(res,file,fileList)
+        // console.log(res.data.fileId)
         if(res.code ==1){
           this.form.files[res.data.index].fileId = res.data.fileId
         }
@@ -536,7 +536,7 @@
           func:func,
         }
         const res = await getType(data);
-        console.log('关系类型',res)
+        // console.log('关系类型',res)
         if(res){
           if(func==11){
             this.corporateTypes = res.data.data
@@ -556,7 +556,7 @@
       },
       
       handleChange(value) {
-        console.log(value);
+        // console.log(value);
       },
       //删除行数据
       del(type,index){
@@ -665,7 +665,7 @@
       },
       //监听col展开
       handleChange(val){
-        console.log(val)
+        // console.log(val)
       },
       //返回按钮
       goBack(){
@@ -673,7 +673,7 @@
       },
       //切换tab
       handleClick(tab, event) {
-        console.log(tab, event);
+        // console.log(tab, event);
       },
       // 表单验证
       submitForm(formName) { },
@@ -685,7 +685,7 @@
         //   {country:this.form.reg,addressDetail:this.form.registAddress,addressType:'A01'}
         // ]
         const res = await updateDealerInfo(this.form)
-        console.log('修改结果',res);
+        // console.log('修改结果',res);
         if(res){
           this.$message.success('修改成功')
           this.goBack()
@@ -693,7 +693,7 @@
       },
       async getDealerInfo(){
         const res = await getDealerInfo();
-        console.log('代理商信息',res)
+        // console.log('代理商信息',res)
         if(res){
           this.form = res.data.data 
           this.form.custBankInfo.bankCountry = JSON.parse(res.data.data.custBankInfo.bankCountry)

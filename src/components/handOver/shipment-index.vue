@@ -134,7 +134,7 @@
     },
     methods: {
       rowClick(row){
-        console.log(row)
+        // console.log(row)
         this.rowData = row
       },
       reset(){
@@ -152,7 +152,7 @@
         this.getList()
       },
       watchTime(data){
-        console.log(data)
+        // console.log(data)
         this.form.uploadStartTime = data.startTime
         this.form.uploadEndTime = data.endTime
         this.resetData = false
@@ -167,7 +167,7 @@
           status:type,
         }
         const res = await operat(data,param)
-        console.log('确认结果',res);
+        // console.log('确认结果',res);
         if(res){
           this.$message.success(type==1?'确认成功':'驳回成功')
           this.dialogVisible3= false
@@ -194,7 +194,7 @@
           uploadEndTime:this.form.uploadEndTime,
         }
         const res = await getList(data)
-        console.log('出货数据列表',res);
+        // console.log('出货数据列表',res);
         if(res){
           this.tableData = res.data.data.list
           this.total = res.data.data.total
@@ -234,13 +234,13 @@
       },
       // 分页
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+        // console.log(`每页 ${val} 条`);
         this.pageSize = val;
         this.getList()
 
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        // console.log(`当前页: ${val}`);
         this.currentPage = val;
         this.getList()
       },

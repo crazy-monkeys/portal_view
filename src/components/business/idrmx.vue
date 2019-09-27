@@ -209,13 +209,13 @@ export default {
         id: this.queryId
       };
       const res = await detail(data);
-      console.log("详情", res);
+      // console.log("详情", res);
       if (res) {
         this.form = res.data.data;
       }
     },
     handleClick(tab, event) {
-      console.log(tab, event);
+      // console.log(tab, event);
     },
     // 点击返回按钮
     back() {

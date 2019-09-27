@@ -268,7 +268,7 @@ export default {
         timeout: 20000,
         data: data
       }).then(res=>{
-        console.log(res)
+        // console.log(res)
         if(res.data.code==1){
           this.$message.success('上传成功')
           this.fileList =[res.data.data]
@@ -278,14 +278,14 @@ export default {
           this.$message.error(res.data.msg)
         }
       }).catch(err=>{
-        console.log(err)
+        // console.log(err)
       })
       return false
     },
     uploadSuccess(res, file, fileList){
     },
     watchTime(data){
-      console.log(data)
+      // console.log(data)
       this.form.applyStartTime = data.startTime
       this.form.applyEndTime = data.endTime
       this.resetData = false
@@ -319,14 +319,14 @@ export default {
     },
     async getList(){
       const res = await getList({...this.form,pageSize:this.pageSize,pageIndex:this.currentPage});
-      console.log('差价、保价、退换货列表',res)
+      // console.log('差价、保价、退换货列表',res)
       if(res){
         this.tableData = res.data.data.list
         this.total = res.data.data.total
       }
     },
     rowClick(row){
-      console.log(row)
+      // console.log(row)
       this.rowData=row
     },
     
@@ -384,12 +384,12 @@ export default {
     },
     // 分页
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      // console.log(`每页 ${val} 条`);
       this.pageSize = val;
       this.getList()
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      // console.log(`当前页: ${val}`);
       this.currentPage = val;
       this.getList()
     }

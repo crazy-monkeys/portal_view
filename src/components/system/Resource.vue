@@ -225,7 +225,7 @@ export default {
     watch:{
         filterText: {
             handler:function(n,o){
-                console.log(11111)
+                // console.log(11111)
                 this.$refs.tree.filter(n);
             }
             
@@ -240,22 +240,22 @@ export default {
         //     return draggingNode.data.label.indexOf('三级 3-2-2') === -1;
         // },
         handleDragStart(node, ev) {
-            console.log('drag start', node);
+            // console.log('drag start', node);
         },
         handleDragEnter(draggingNode, dropNode, ev) {
-            console.log('tree drag enter: ', dropNode.label);
+            // console.log('tree drag enter: ', dropNode.label);
         },
         handleDragLeave(draggingNode, dropNode, ev) {
-            console.log('tree drag leave: ', dropNode.label);
+            // console.log('tree drag leave: ', dropNode.label);
         },
         handleDragOver(draggingNode, dropNode, ev) {
-            console.log('tree drag over: ', dropNode.label);
+            // console.log('tree drag over: ', dropNode.label);
         },
         handleDragEnd(draggingNode, dropNode, dropType, ev) {
-            console.log('tree drag end: ', dropNode && dropNode.label, dropType);
+            // console.log('tree drag end: ', dropNode && dropNode.label, dropType);
         },
         handleDrop(draggingNode, dropNode, dropType, ev) {
-            console.log('tree drop: ', draggingNode, dropNode, dropType);
+            // console.log('tree drop: ', draggingNode, dropNode, dropType);
             var data ={
                 resourceId :draggingNode.key,
                 resourceOrder :draggingNode.data.resourceOrder,
@@ -264,35 +264,35 @@ export default {
             }
             this.$http.post(''+process.env.API_ROOT+'/system/resource/changeResource',data)
             .then((res)=>{
-                console.log('移动资源',res)
+                // console.log('移动资源',res)
                 if(res.data.code ==1){
                     
                 }else{
                     
                 }
             }).catch((err)=>{
-                console.log(err);
+                // console.log(err);
                 alert('网络异常')
             })
         },
         // 取值
         getValue(value){
             this.valueId = value
-            console.log(this.valueId);
+            // console.log(this.valueId);
             this.form.catalog = this.valueId;
         },
         nodeClick(obj,node,item){
-            console.log(obj,node,item)
+            // console.log(obj,node,item)
             this.value =obj.resourceId
-            console.log(this.value)
+            // console.log(this.value)
         },
         async delResource(node){
-            console.log(node)
+            // console.log(node)
             var data ={
                 resourceId:node.key
             }
             const res = await delResource(data)
-                console.log('删除资源结果',res)
+                // console.log('删除资源结果',res)
             if(res){
                 this.$message({
                     type:'success',
@@ -313,7 +313,7 @@ export default {
                 permissionPrefixUrl:this.form.permission,
             }
             const res = await editResource(data);
-            console.log('编辑资源',res)
+            // console.log('编辑资源',res)
             if(res){
                 this.$message({
                     type:'success',
@@ -339,7 +339,7 @@ export default {
                 permissionPrefixUrl:this.form.permission,
             }
             const res = await addResource(data);
-            console.log('新增资源',res)
+            // console.log('新增资源',res)
             if(res){
                 this.$message({
                     type:'success',
@@ -357,7 +357,7 @@ export default {
                 resourceId:resourceId
             }
             const res = await findResource(data);
-            console.log('资源详情',res)
+            // console.log('资源详情',res)
             if(res){
                 this.form.name = res.data.data.resourceName
                 this.form.permission = res.data.data.permissionPrefixUrl
@@ -367,7 +367,7 @@ export default {
                 this.form.icon  = res.data.data.iconClass
                 this.form.catalog = res.data.data.parentId
                 this.valueId = res.data.data.parentId
-                console.log(this.valueId)
+                // console.log(this.valueId)
                 this.form.id = res.data.data.id
             }
         },
@@ -396,7 +396,7 @@ export default {
             this.resetForm('form')
         },
         mouseenter(node){
-            console.log(node.data.id)
+            // console.log(node.data.id)
             if(node.data.id){
             this.$set(node,'show',true)
 
@@ -416,14 +416,14 @@ export default {
             this.dialogVisible = true
         },
         filterNode(value, data) {
-            console.log(value,data)
+            // console.log(value,data)
             if (!value) return true;
             return data.resourceName.indexOf(value) !== -1;
         },
         // 获取权限数据
         async getResource(){
             const res =  await getResource()
-            console.log('所有资源',res)
+            // console.log('所有资源',res)
             if(res){
                 this.resource = [res.data.data]
             }

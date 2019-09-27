@@ -185,14 +185,14 @@ export default {
       this.dialogVisible = true;
     },
     watchTime(data) {
-      console.log(data);
+      // console.log(data);
       this.time = data;
       this.resetData = false;
     },
     rowClick(row) {
-      console.log(row);
+      // console.log(row);
       this.rowData = row;
-      console.log(this.rowData.role.roleCode);
+      // console.log(this.rowData.role.roleCode);
     },
     submitForm(formName) {
       this.$formTest.submitForm(
@@ -211,7 +211,7 @@ export default {
         roleCode: this.form.role
       };
       const res = await subAgentAdd(data);
-      console.log("新增结果", res);
+      // console.log("新增结果", res);
       if (res) {
         this.cancel();
         this.getList();
@@ -225,7 +225,7 @@ export default {
         roleCode: this.form.role
       };
       const res = await subAgentMod(data);
-      console.log("编辑结果", res);
+      // console.log("编辑结果", res);
       if (res) {
         this.cancel();
         this.getList();
@@ -254,7 +254,7 @@ export default {
     },
     async getRolesAll() {
       const res = await roleList();
-      console.log("角色列表", res);
+      // console.log("角色列表", res);
       if (res) {
         this.roles = res.data.data;
       }
@@ -286,7 +286,7 @@ export default {
         userType: this.form.userType
       };
       const res = await getList(data, params);
-      console.log("子账号列表", res);
+      // console.log("子账号列表", res);
       if (res) {
         this.tableData = res.data.data.list;
         this.total = res.data.data.total;
@@ -300,12 +300,12 @@ export default {
     },
     // 分页
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      // console.log(`每页 ${val} 条`);
       this.pageSize = val;
       this.getList();
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      // console.log(`当前页: ${val}`);
       this.currentPage = val;
       this.getList();
     }

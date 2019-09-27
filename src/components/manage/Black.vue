@@ -442,7 +442,7 @@ export default {
   },
   methods: {
     handleClick(tab, event) {
-      console.log(tab, event);
+      // console.log(tab, event);
     },
     changeCon() {},
     changeSign(val) {},
@@ -475,7 +475,7 @@ export default {
       this.csdialogVisible = true;
     },
     handleSelect(item) {
-      console.log(item);
+      // console.log(item);
     },
     //创建主题按钮
     create() {

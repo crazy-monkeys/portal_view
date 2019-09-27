@@ -201,16 +201,16 @@
       },
       reset(){},
       rowClick(row) {
-        console.log(row)
+        // console.log(row)
         this.rowData = row
       },
       filterNode(value, data) {
-        console.log(value, data)
+        // console.log(value, data)
         if (!value) return true;
         return data.userGroupName.indexOf(value) !== -1;
       },
       a() {
-        console.log(this.$refs.tree.getCheckedKeys())
+        // console.log(this.$refs.tree.getCheckedKeys())
         this.form.groups = this.$refs.tree.getCheckedKeys()
       },
       add0(m) { return m < 10 ? '0' + m : m },
@@ -239,20 +239,20 @@
         this.$http.get('' + process.env.API_ROOT + '/system/permission/roleInfo?' + this.toQueryString(data)
         )
           .then((res) => {
-            console.log('角色列表', res)
+            // console.log('角色列表', res)
             if (res.data.code == 1) {
               this.roles = res.data.data.list
             } else {
 
             }
           }).catch((err) => {
-            console.log(err);
+            // console.log(err);
             alert('网络异常')
           })
       },
       //切换tab
       handleClick(tab, event) {
-        // console.log(tab, event);
+        // // console.log(tab, event);
       },
       //启用禁用
       changeStatus(index, rows, type) {
@@ -282,14 +282,14 @@
           .then(() => {
             this.$http.post('' + process.env.API_ROOT + '/system/loginUser/updateUserStatus', formData
             ).then((res) => {
-              console.log('改变状态结果', res)
+              // console.log('改变状态结果', res)
               if (res.data.code == 1) {
                 this.getAccountList()
               } else {
 
               }
             }).catch((err) => {
-              console.log(err);
+              // console.log(err);
               alert('网络异常')
             })
           })
@@ -307,7 +307,7 @@
         //     this.commit()
         //     // this.$refs[formName].clearValidate();
         //   } else {
-        //     console.log("error submit!!");
+        //     // console.log("error submit!!");
         //     return false;
         //   }
         // });
@@ -359,7 +359,7 @@
       getMore(index, rows) {
         this.$http.get('' + process.env.API_ROOT + '/system/loginUser/getUserInfo?userId=' + rows[index].userId
         ).then((res) => {
-          console.log('账户详情', res)
+          // console.log('账户详情', res)
           if (res.data.code == 1) {
             //角色
             this.form.checkedRoles = res.data.data.roles.length != 0 ? res.data.data.roles.map((item) => { return item.roleId }) : []
@@ -376,12 +376,12 @@
             // this.form.oldPwd= res.data.data.email
             this.loginName = res.data.data.user.loginName ? res.data.data.user.loginName : ''
 
-            console.log(this.form.checkedRoles)
+            // console.log(this.form.checkedRoles)
           } else {
 
           }
         }).catch((err) => {
-          console.log(err);
+          // console.log(err);
           alert('网络异常')
         })
       },
@@ -391,14 +391,14 @@
         this.$http.get('' + process.env.API_ROOT + '/system/userGroup/getAllUserGroup'
         )
           .then((res) => {
-            console.log('用户组列表', res)
+            // console.log('用户组列表', res)
             if (res.data.code == 1) {
               this.groups = res.data.data
             } else {
 
             }
           }).catch((err) => {
-            console.log(err);
+            // console.log(err);
             alert('网络异常')
           })
       },
@@ -433,7 +433,7 @@
           url: '' + process.env.API_ROOT + '/system/loginUser/userInfo?pageIndex=' + this.currentPage + '&pageSize=' + this.pageSize,
           data: data
         }).then(res => {
-          console.log("账户列表", res);
+          // console.log("账户列表", res);
           if (res.data.code == 1) {
             this.tableData = res.data.data.list
             this.total = res.data.data.total
@@ -443,7 +443,7 @@
           }
         })
           .catch(error => {
-            console.log(error);
+            // console.log(error);
             alert("登入失败");
           });
       },
@@ -468,7 +468,7 @@
 
         return this.$http.post('' + process.env.API_ROOT + '/system/loginUser/updatePwd', data)
         // ).then((res)=>{
-        //     console.log('修改密码结果',res)
+        //     // console.log('修改密码结果',res)
         //     if(res.data.code ==1){
         //       this.resetForm('form')
         //     }else{
@@ -478,7 +478,7 @@
         //       })
         //     }
         // }).catch((err)=>{
-        //   console.log(err);
+        //   // console.log(err);
         //   alert('网络异常')
         // })
       },
@@ -495,7 +495,7 @@
 
         return this.$http.post('' + process.env.API_ROOT + '/system/loginUser/updateInfo', data)
         // ).then((res)=>{
-        //     console.log('修改结果',res)
+        //     // console.log('修改结果',res)
         //     if(res.data.code ==1){
         //       // this.dialogVisible = false
         //       this.resetForm('form')
@@ -507,18 +507,18 @@
         //       })  
         //     }
         // }).catch((err)=>{
-        //   console.log(err);
+        //   // console.log(err);
         //   alert('网络异常')
         // })
       },
       commit() {
-        console.log(this)
+        // console.log(this)
         if (this.form.oldPwd) {
           this.$http.all([this.updatePwd(), this.updateMsg()])
             .then(this.$http.spread((msgRes, pwdRes) => {
               // 上面两个请求都完成后，才执行这个回调方法
-              console.log(msgRes)
-              console.log(pwdRes)
+              // console.log(msgRes)
+              // console.log(pwdRes)
               if (msgRes.data.code == 1 && pwdRes.data.code == 1) {
                 this.clearForm()
                 this.resetForm('form')
@@ -545,14 +545,14 @@
                 })
               }
             })).catch((err) => {
-              console.log(err);
+              // console.log(err);
               alert('网络异常')
             });
         } else {
           this.$http.all([this.updateMsg()])
             .then(this.$http.spread((msgRes) => {
               // 上面两个请求都完成后，才执行这个回调方法
-              console.log(msgRes)
+              // console.log(msgRes)
               if (msgRes.data.code == 1) {
                 this.clearForm()
                 this.resetForm('form')
@@ -569,18 +569,18 @@
                 })
               }
             })).catch((err) => {
-              console.log(err);
+              // console.log(err);
               alert('网络异常')
             });
         }
       },
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+        // console.log(`每页 ${val} 条`);
         this.pageSize = val;
         this.getAccountList()
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        // console.log(`当前页: ${val}`);
         this.currentPage = val;
         this.getAccountList()
       }

@@ -4,7 +4,7 @@
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item >订单管理</el-breadcrumb-item>
-          <el-breadcrumb-item>申请列表</el-breadcrumb-item>
+          <el-breadcrumb-item>提货单申请列表</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="sels clear">
@@ -44,9 +44,9 @@
         </el-form>
       </div>
       <div class="box">
-        <div class="btns">
+        <!-- <div class="btns">
           <el-button size="small" @click="approve" type="primary"> 申请</el-button>
-        </div>
+        </div> -->
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" height="700" @row-click='rowClick'>
             <el-table-column prop="" label="申请人" show-overflow-tooltip  width="150" >
@@ -293,7 +293,7 @@ export default {
         queryType:2
       }
       const res = await approveProList(data);
-      console.log('申请列表',res)
+      console.log('提货单申请列表',res)
       if(res){
         this.tableData = res.data.data.list
         this.total = res.data.data.total
@@ -366,10 +366,12 @@ export default {
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageSize = val;
+      this.getList()
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.currentPage = val;
+      this.getList()
     }
   }
 };

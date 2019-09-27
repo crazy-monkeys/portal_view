@@ -126,7 +126,7 @@ import {detail} from '@/api/business/rebate.js'
           id:this.id
         }
         const res =await detail(data);
-        console.log('明细',res);
+        // console.log('明细',res);
         if(res){
           this.form = res.data.data
         }
@@ -134,11 +134,11 @@ import {detail} from '@/api/business/rebate.js'
       handleClick(){},
       // 分页
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+        // console.log(`每页 ${val} 条`);
         this.pageSize = val;
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        // console.log(`当前页: ${val}`);
         this.currentPage = val;
       },
       

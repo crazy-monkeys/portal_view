@@ -607,7 +607,7 @@ export default {
   watch: {
     workAddress: {
       handler: function(n, o) {
-        console.log(n);
+        // console.log(n);
       }
     }
   },
@@ -628,7 +628,7 @@ export default {
     },
     async getEmployeeIds(){
       const res = await getEmployeeIds();
-      console.log('销售列表',res)
+      // console.log('销售列表',res)
       if(res){
        this.employeeIds = res.data.data
       }
@@ -639,7 +639,7 @@ export default {
         func:func,
       }
       const res = await getType(data);
-      console.log('关系类型',res)
+      // console.log('关系类型',res)
       if(res){
         if(func==11){
           this.corporateTypes = res.data.data
@@ -667,11 +667,11 @@ export default {
         url: "static/cityL3.json"
       })
         .then(res => {
-          console.log("城市list", res);
+          // console.log("城市list", res);
           this.province = res.data;
         })
         .catch(error => {
-          console.log(error);
+          // console.log(error);
           alert("系统异常");
         });
     },
@@ -680,7 +680,7 @@ export default {
         id: this.queryId
       };
       const res = await detail(data);
-      console.log("详情", res);
+      // console.log("详情", res);
       if (res) {
         this.form = res.data.data;
         res.data.data.addresses.forEach((item,index)=>{
@@ -689,7 +689,7 @@ export default {
       }
     },
     handleClick(tab, event) {
-      console.log(tab, event);
+      // console.log(tab, event);
     },
     back() {
       window.history.back();

@@ -405,7 +405,7 @@ export default {
         deliverOrderLineList:this.proForm.deliverOrderLineList
       }
       const res = await modPro(data);
-      console.log('提货结果',res);
+      // console.log('提货结果',res);
       if(res){
         this.$message.success('操作成功')
         this.cancel()
@@ -463,13 +463,13 @@ export default {
     },
     //监听时间选择控件
     watchTime(data){
-      console.log(data)
+      // console.log(data)
       this.form.deliveryStartDate = data.startTime
       this.form.deliveryEndDate = data.endTime
       this.resetData = false
     },
     watchTime1(data){
-      console.log(data)
+      // console.log(data)
       this.form.actualDeliveryStartDate = data.startTime
       this.form.actualDeliveryEndDate = data.endTime
       this.resetData1 = false
@@ -480,7 +480,7 @@ export default {
          id:id
       }
       const res = await getCredit(data);
-      console.log('授信额度',res)
+      // console.log('授信额度',res)
       if(res){
         this.credit = res.data.data
       }
@@ -488,7 +488,7 @@ export default {
     //获取售达方 送达方列表
     async getShip(){
       const res = await getShip();
-      console.log('tos',res)
+      // console.log('tos',res)
       if(res){
         this.tos = res.data.data
       }
@@ -496,7 +496,7 @@ export default {
     //获取下单人列表
     async getDealerList(){
       const res = await getDealerList();
-      console.log('list',res)
+      // console.log('list',res)
       if(res){
         this.list = res.data.data
       }
@@ -507,7 +507,7 @@ export default {
         id:id
       }
       const res = await getProDetail(data);
-      console.log('getProDetail',res)
+      // console.log('getProDetail',res)
       if(res){
         this.proForm.orderInvoiceList = res.data.data.orderInvoiceList
         this.proForm.deliverOrderLineList = res.data.data.deliverOrderLineList
@@ -530,7 +530,7 @@ export default {
         deliveryEndDate:this.form.deliveryEndDate,
       }
       const res = await getProList(data);
-      console.log('提货单列表',res)
+      // console.log('提货单列表',res)
       if(res){
         this.tableData = res.data.data.list
         this.total = res.data.data.total
@@ -542,17 +542,17 @@ export default {
     },
     //点击明细按钮事件
     getDetail(id) {
-      console.log(id)
+      // console.log(id)
       this.getProDetail(id)
       this.lineDia = true;
     },
     // 分页
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      // console.log(`每页 ${val} 条`);
       this.pageSize = val;
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      // console.log(`当前页: ${val}`);
       this.currentPage = val;
     }
   }

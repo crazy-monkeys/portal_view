@@ -155,17 +155,17 @@ export default {
       return this.pageSize * (this.currentPage - 1) + index + 1;
     },
     checkChange(val){
-      console.log(this.$refs['tree'].getCheckedKeys())
-      console.log(this.$refs['tree'].getHalfCheckedKeys())
+      // console.log(this.$refs['tree'].getCheckedKeys())
+      // console.log(this.$refs['tree'].getHalfCheckedKeys())
       this.form.resource =  this.$refs['tree'].getCheckedKeys()
-      console.log(this.form.resource)
+      // console.log(this.form.resource)
       // this.addArr = this.form.resource.filter(item=>{
       //      return this.defaultCheckedKeys.indexOf(item)==-1
       // })
       // this.reArr= this.defaultCheckedKeys.filter(item=>{
       //      return this.form.resource.indexOf(item)==-1
       // })
-      // console.log(this.addArr,this.reArr)
+      // // console.log(this.addArr,this.reArr)
     },
      rowClick(row){
       this.rowData = row
@@ -187,7 +187,7 @@ export default {
         id:id
       }
       const res = await delRow(data);
-      console.log('删除结果',res)
+      // console.log('删除结果',res)
       if(res){
         this.$message({
             type: 'success',
@@ -215,7 +215,7 @@ export default {
         id : id
       }
       const res = await findRole(data);
-      console.log('角色详情',res);
+      // console.log('角色详情',res);
       if(res){
         this.roleForm.name = res.data.data.roleName
         this.roleForm.code = res.data.data.roleCode
@@ -229,17 +229,17 @@ export default {
         id : id
       }
       const res = await findRoleResource(data);
-      console.log('角色拥有的权限',res);
+      // console.log('角色拥有的权限',res);
       if(res){
         this.defaultCheckedKeys = res.data.data
         this.form.resource = res.data.data
-        console.log(this.form.resource)
+        // console.log(this.form.resource)
       }
     },
     //获取所有权限
     async getResource(){
       const res = await getResource();
-      console.log('所有资源',res);
+      // console.log('所有资源',res);
       if(res){
         this.resource = [res.data.data]
       }
@@ -262,12 +262,12 @@ export default {
     },
      // 分页
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      // console.log(`每页 ${val} 条`);
       this.pageSize = val;
       this.getRoles()
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      // console.log(`当前页: ${val}`);
       this.currentPage = val;
       this.getRoles()
     },
@@ -294,7 +294,7 @@ export default {
         
       }
       const res = await modRolePermission(data);
-      console.log('修改角色权限结果',res)
+      // console.log('修改角色权限结果',res)
       if(res){
         this.form.resource =[]
         this.$refs['tree'].setCheckedKeys([])
@@ -313,7 +313,7 @@ export default {
         roleName:''
       }
       const res = await getRoles(data);
-      console.log('角色列表',res)
+      // console.log('角色列表',res)
       if(res){
         this.roles = res.data.data.list
         this.total = res.data.data.total
@@ -327,7 +327,7 @@ export default {
         roleType:this.roleForm.roleType
       }
       const res = await saveRole(data);
-      console.log('新增结果',res)
+      // console.log('新增结果',res)
       if(res){
         this.getRoles();
         this.close()
@@ -342,7 +342,7 @@ export default {
         roleType:this.roleForm.roleType
       }
       const res = await updateRole(data);
-      console.log('新增结果',res)
+      // console.log('新增结果',res)
       if(res){
         this.getRoles();
         this.close()

@@ -181,7 +181,7 @@ import {getList,send,getAll,detail} from '@/api/business/rebate.js'
       },
       async getAll(){
         const res = await getAll();
-        console.log('所有执行方',res);
+        // console.log('所有执行方',res);
         if(res){
           this.executors = res.data.data;
         }
@@ -227,7 +227,7 @@ import {getList,send,getAll,detail} from '@/api/business/rebate.js'
           status:this.form.status,
         }
         const res = await getList(data);
-        console.log('客户rebate列表',res);
+        // console.log('客户rebate列表',res);
         if(res){
           this.tableData = res.data.data.list.map(item=>{
             return {money:'',...item}
@@ -261,12 +261,12 @@ import {getList,send,getAll,detail} from '@/api/business/rebate.js'
         this.dialogVisible = !this.dialogVisible
       },
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+        // console.log(`每页 ${val} 条`);
         this.pageSize = val;
         this.getList()
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        // console.log(`当前页: ${val}`);
         this.currentPage = val;
         this.getList()
       },

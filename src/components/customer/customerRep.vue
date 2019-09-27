@@ -202,20 +202,20 @@ export default {
         queryType:3,
       }
       const res = await getList(data);
-      console.log('客户列表',res)
+      // console.log('客户列表',res)
       if(res){
         this.tableData = res.data.data.list;
         this.total = res.data.data.total;
       }
     },
     watchCreatTime(data){
-      console.log(data)
+      // console.log(data)
       this.form.createStartDate = data.startTime
       this.form.createEndDate = data.endTime
       this.resetData = false
     },
     watchRepTime(data){
-      console.log(data)
+      // console.log(data)
       this.form.reportStartDate = data.startTime
       this.form.reportEndDate = data.endTime
       this.resetData1 = false
@@ -235,7 +235,7 @@ export default {
         id:row.id
       }
       const res = await del(data)
-      console.log('删除结果',res)
+      // console.log('删除结果',res)
       if(res){
         this.$message({
             type: 'success',
@@ -262,7 +262,7 @@ export default {
     },
     
     check(value,rule,callback){
-      console.log(value,rule,callback)
+      // console.log(value,rule,callback)
       if(!value){
         return '请输入客户名'
       }else{
@@ -304,12 +304,12 @@ export default {
     },
     // 分页
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      // console.log(`每页 ${val} 条`);
       this.pageSize = val;
       this.getList(this.form)
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      // console.log(`当前页: ${val}`);
       this.currentPage = val;
       this.getList(this.form)
     }

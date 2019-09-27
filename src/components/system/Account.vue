@@ -188,12 +188,12 @@ export default {
   },
   methods: {
     watchTime(data){
-      console.log(data)
+      // console.log(data)
       this.time = data
       this.resetData = false
     },
     rowClick(row){
-      console.log(row)
+      // console.log(row)
       this.rowData = row
       this.roleForm.role = this.rowData.role.roleCode
     },
@@ -209,7 +209,7 @@ export default {
         roleCode :this.roleForm.role,
       };
       const res = await saveUserRole(data)
-      console.log('授权结果',res)
+      // console.log('授权结果',res)
       if(res){
         this.cancel()
         this.getList()
@@ -225,7 +225,7 @@ export default {
     },
     async getRolesAll(){
       const res = await getRolesAll();
-      console.log('角色列表',res)
+      // console.log('角色列表',res)
       if(res){
         this.roles = res.data.data
       }
@@ -258,7 +258,7 @@ export default {
         userType:this.form.userType,
       }
       const res = await getUserList(data,params);
-      console.log('用户列表',res)
+      // console.log('用户列表',res)
       if(res){
         this.tableData = res.data.data.list
         this.total = res.data.data.total
@@ -272,12 +272,12 @@ export default {
     },
     // 分页
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      // console.log(`每页 ${val} 条`);
       this.pageSize = val;
       this.getList()
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      // console.log(`当前页: ${val}`);
       this.currentPage = val;
       this.getList()
     }

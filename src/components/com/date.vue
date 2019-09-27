@@ -23,14 +23,14 @@ export default {
     watch:{
         time:{
             handler:function(n,o){
-                console.log(n)
+                // console.log(n)
                 this.$emit('data',n)
             },
             deep:true
         },
         resetDataReg:{
             handler:function(n,o){
-                console.log(n)
+                // console.log(n)
                 if(n){
                     this.time = {
                         startTime :'',
@@ -41,7 +41,7 @@ export default {
         },
         resetDataCreate:{
             handler:function(n,o){
-                console.log(n)
+                // console.log(n)
                 if(n){
                     this.time = {
                         startTime :'',
@@ -53,11 +53,11 @@ export default {
     },
     methods:{
         changeStartTime(val){
-            console.log(val)
+            // console.log(val)
             this.$emit('data',this.time)
         },
         changeEndTime(val){
-            console.log(val)
+            // console.log(val)
             this.$emit('data',this.time)
 
         },

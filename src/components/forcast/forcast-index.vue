@@ -291,7 +291,7 @@
         this.search()
       },
       watchTime(data){
-        console.log(data)
+        // console.log(data)
         this.form.uploadStartTime = data.startTime
         this.form.uploadEndTime = data.endTime
         this.resetData = false
@@ -308,7 +308,7 @@
           agencyAbbreviation :this.form.agencyAbbreviation
         }
         const res = await getList(data);
-        console.log('查询列表',res);
+        // console.log('查询列表',res);
         if(res){
           this.tableData = res.data.data.list
           this.total = res.data.data.total
@@ -402,7 +402,7 @@
           pageNum:this.currentPage,
         }
         const res = await getSdList(data);
-        console.log('sd查询列表',res);
+        // console.log('sd查询列表',res);
         if(res){
           this.sdTableData = res.data.data.list
           this.total = res.data.data.total
@@ -496,12 +496,12 @@
       },
       // 分页
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+        // console.log(`每页 ${val} 条`);
         this.pageSize = val;
         this.getList()
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        // console.log(`当前页: ${val}`);
         this.currentPage = val;
         this.getList()
       },

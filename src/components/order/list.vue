@@ -4,7 +4,7 @@
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item to='/home/order/list'>订单管理</el-breadcrumb-item>
-          <el-breadcrumb-item>订单查询</el-breadcrumb-item>
+          <el-breadcrumb-item>销售单查询</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
 
@@ -50,18 +50,18 @@
                     <el-option value="A06" label="分销商专货订单"></el-option>
                 </el-select>
               </el-form-item>
-                <el-form-item label="售达方">
-                  <el-select v-model="form.soldTo" size="small" filterable placeholder="">
-                    <el-option v-for="item in list" :key="item.id" :label="item.custName" :value="item.id">
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item label="送达方">
-                  <el-select v-model="form.sendTo" size="small" filterable placeholder="">
-                    <el-option v-for="item in list" :key="item.id" :label="item.custName" :value="item.id">
-                    </el-option>
-                  </el-select>
-                </el-form-item>
+              <el-form-item label="售达方">
+                <el-select v-model="form.soldTo" size="small" filterable placeholder="">
+                  <el-option v-for="item in list" :key="item.id" :label="item.custName" :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="送达方">
+                <el-select v-model="form.sendTo" size="small" filterable placeholder="">
+                  <el-option v-for="item in list" :key="item.id" :label="item.custName" :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
               <el-form-item label="采购订单编号">
                 <el-input size='small' v-model="form.purchaseNo" placeholder="请输入"></el-input>
               </el-form-item>
@@ -74,7 +74,7 @@
       </div>
       <div class="box">
         <div class="tab">
-          <el-table :data="tableData" style="width: 100%" border height="700">
+          <el-table :data="tableData" style="width: 100%" border height="700" @row-click='rowClick'>
             <el-table-column prop="rSapOrderId" label="sap订单号" show-overflow-tooltip  width="150" >
             </el-table-column>
             <el-table-column prop="purchaseNo" label="采购订单编号" show-overflow-tooltip  width="150" >
@@ -105,9 +105,10 @@
             </el-table-column>
             <el-table-column prop="rNetValue" label="不含税总金额" show-overflow-tooltip  width="150" >
             </el-table-column>
-            <el-table-column prop="rSapCurrency" label="订单货币" show-overflow-tooltip  width="150" >
-            </el-table-column>
-            <el-table-column prop="salesOrg" label="销售组织" show-overflow-tooltip  width="150" >
+            <el-table-column prop="salesOrg" label="销售组织" show-overflow-tooltip  width="200" >
+              <template slot-scope="scope">
+                {{sale(scope.row.salesOrg)}}
+              </template>
             </el-table-column>
             <el-table-column prop="soldTo" label="售达方" show-overflow-tooltip  width="150" >
               <template slot-scope="scope">
@@ -142,19 +143,6 @@
             <el-table-column prop="refSapOrderId" label="原单号" show-overflow-tooltip  width="150" >
             </el-table-column>
             <el-table-column prop="orderReason" label="退货原因" show-overflow-tooltip  width="150" >
-            </el-table-column>
-            <el-table-column prop="approver" label="审批人" show-overflow-tooltip  width="150" >
-            </el-table-column>
-            <el-table-column prop="approvalStatus" label="审批状态" show-overflow-tooltip  width="150" >
-              <template slot-scope="scope">
-                <span v-if="scope.row.approvalStatus==0">待审批</span>
-                <span v-if="scope.row.approvalStatus==1">已通过</span>
-                <span v-if="scope.row.approvalStatus==2">已驳回</span>
-              </template>
-            </el-table-column>
-            <el-table-column prop="approvalTime" label="审批时间" show-overflow-tooltip  width="150" >
-            </el-table-column>
-            <el-table-column prop="approvalOpinions" label="审批意见" show-overflow-tooltip  width="150" >
             </el-table-column>
             <el-table-column width="250" label="操作" fixed='right'>
               <template slot-scope='scope'>
@@ -269,6 +257,7 @@
 <script>
 import {queryList,detail,getCredit,submitPro} from '@/api/order/list.js'
 import {getShip,getDealerList} from '@/api/system/param.js'
+import {getCode} from '@/api/business/idr.js'
 import Daterange from "../com/date";
 export default {
   name: "orderList",
@@ -277,6 +266,8 @@ export default {
   },
   data() {
     return {
+      rowData:{},
+      salesOrgIds:[],
       rules:{
         shippingPoint:[
           {required:true,triggle:'blur',message:'请输入装运点'}
@@ -334,12 +325,25 @@ export default {
     
   },
   created() {
-    // this.getShip()
+    this.getCode()
     this.getDealerList()
     this.getList()
   },
   watch: {},
   methods: {
+    rowClick(row){
+      this.rowData= row
+    },
+    sale(id){
+        return  this.salesOrgIds.filter(item=>{return item.groupCode == id})[0] ? this.salesOrgIds.filter(item=>{return item.groupCode == id})[0].groupName  :''
+    },
+    async getCode(){
+      const res = await getCode();
+      // console.log('发货方编码',res)
+      if(res){
+        this.salesOrgIds = res.data.data
+      }
+    },
     to(id){
         return  this.list.filter(item=>{return item.id == id})[0] ? this.list.filter(item=>{return item.id == id})[0].custName  :''
     },
@@ -356,7 +360,7 @@ export default {
         orderLine:this.proForm.lines
       }
       const res = await submitPro(data);
-      console.log('提货结果',res);
+      // console.log('提货结果',res);
       if(res){
         this.$message.success('操作成功')
         this.cancel()
@@ -415,7 +419,7 @@ export default {
     },
     //监听时间选择控件
     watchTime(data){
-      console.log(data)
+      // console.log(data)
       this.form.createBeginTime = data.startTime
       this.form.createEndTime = data.endTime
       this.resetData = false
@@ -426,7 +430,7 @@ export default {
          id:id
       }
       const res = await getCredit(data);
-      console.log('授信额度',res)
+      // console.log('授信额度',res)
       if(res){
         this.credit = res.data.data
       }
@@ -434,7 +438,7 @@ export default {
     //获取售达方 送达方列表
     async getShip(){
       const res = await getShip();
-      console.log('tos',res)
+      // console.log('tos',res)
       if(res){
         this.tos = res.data.data
       }
@@ -442,7 +446,7 @@ export default {
     //获取下单人列表
     async getDealerList(){
       const res = await getDealerList();
-      console.log('list',res)
+      // console.log('list',res)
       if(res){
         this.list = res.data.data
       }
@@ -453,7 +457,7 @@ export default {
         id:id
       }
       const res = await detail(data);
-      console.log('detail',res)
+      // console.log('detail',res)
       if(res){
         this.lines = res.data.data.lines
         this.proForm.lines = res.data.data.lines.map(item=>{return {...item,deliveryQuantity:''}})
@@ -486,17 +490,17 @@ export default {
     },
     //点击明细按钮事件
     getDetail(id) {
-      console.log(id)
+      // console.log(id)
       this.detail(id)
       this.lineDia = true;
     },
     // 分页
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      // console.log(`每页 ${val} 条`);
       this.pageSize = val;
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      // console.log(`当前页: ${val}`);
       this.currentPage = val;
     }
   }

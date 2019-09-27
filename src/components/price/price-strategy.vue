@@ -129,7 +129,7 @@ export default {
       this.getList();
     },
     watchTime(data) {
-      console.log(data);
+      // console.log(data);
       this.form.effectBeginTime = data.startTime;
       this.form.effectEndTime = data.endTime;
       this.resetData = false;
@@ -147,7 +147,7 @@ export default {
         effectEndTime: this.form.effectEndTime
       };
       const res = await getList(data);
-      console.log("产品价格策略列表", res);
+      // console.log("产品价格策略列表", res);
       if (res) {
         this.tableData = res.data.data.list;
         this.total = res.data.data.total;
@@ -183,12 +183,12 @@ export default {
     },
     // 分页
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      // console.log(`每页 ${val} 条`);
       this.pageSize = val;
       this.getList();
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      // console.log(`当前页: ${val}`);
       this.currentPage = val;
       this.getList();
     }

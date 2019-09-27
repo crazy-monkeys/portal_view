@@ -172,7 +172,7 @@
     methods: {
       handleClick(){},
       suc(val){
-        console.log(val)
+        // console.log(val)
         if(val.code!=1){
           this.$message.error(val.msg)
         }else{
@@ -188,7 +188,7 @@
           })
         }
         const res = await submit(data);
-        console.log('提交结果',res);
+        // console.log('提交结果',res);
         if(res){
           this.$message.success('提交成功');
           this.activeName = 'first'
@@ -204,7 +204,7 @@
             }
           })
             .then(res => {
-              console.log(res.data);
+              // console.log(res.data);
               const blob = new Blob([res.data], {
                 type: "application/vnd.ms-excel"
               });
@@ -218,7 +218,7 @@
               document.body.removeChild(a);
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
               alert("网络异常");
             });
       },
@@ -238,7 +238,7 @@
         this.search()
       },
       watchCreatTime(data){
-        console.log(data)
+        // console.log(data)
         this.form.createStartDate = data.startTime
         this.form.createEndDate = data.endTime
         this.resetData = false
@@ -254,7 +254,7 @@
           visitEndDate	:this.form.createEndDate,
         }
         const res = await getList(data);
-        console.log('摆放记录列表',res)
+        // console.log('摆放记录列表',res)
         if(res){
           this.tableData = res.data.data.list
           this.total = res.data.data.total
@@ -268,12 +268,12 @@
       },
       // 分页
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+        // console.log(`每页 ${val} 条`);
         this.pageSize = val;
         this.getList()
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        // console.log(`当前页: ${val}`);
         this.currentPage = val;
         this.getList()
       },

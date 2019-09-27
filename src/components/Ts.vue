@@ -81,7 +81,7 @@
           func:1,
         }
         const res = await getType(data);
-        console.log('公告类型',res)
+        // console.log('公告类型',res)
         if(res){
           this.types = res.data.data
           this.types.unshift({
@@ -95,7 +95,7 @@
           id:id
         }
         const res = await view(data);
-        console.log('url',res)
+        // console.log('url',res)
         if(res){
           let url = 'portal-api/file/'+ res.data.data
           window.open('/static/pdf/web/viewer.html?file=' + encodeURIComponent(url))
@@ -120,12 +120,12 @@
       },
       // 分页
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+        // console.log(`每页 ${val} 条`);
         this.pageSize = val;
         this.getList()
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        // console.log(`当前页: ${val}`);
         this.currentPage = val;
         this.getList()
       },
@@ -138,20 +138,20 @@
           data.typeId = this.aciveName
         }
         const res = await getList(data)
-        console.log('公告列表',res)
+        // console.log('公告列表',res)
         if(res){
           this.tableData = res.data.data.list
           this.list = this.tableData
         }
       },
       rowClick(row) {
-        console.log(row)
+        // console.log(row)
         this.rowData = row
       },
       //切换tab
       handleClick(tab, event) {
-        console.log(tab, event);
-        console.log(this.aciveName)
+        // console.log(tab, event);
+        // console.log(this.aciveName)
         this.getList()
       },
     }

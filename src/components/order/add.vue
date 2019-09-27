@@ -36,14 +36,14 @@
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="售达方" prop="soldTo">
                   <el-select v-model="form.soldTo" size="small" filterable placeholder="">
-                    <el-option v-for="item in tos" :key='item.id' :label='item.custName'></el-option>
+                    <el-option v-for="item in tos" :key='item.id' :label='item.custName' :value="item.id+''"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="送达方" prop="sendTo">
-                  <el-select v-model="form.sendTo" size="small" filterable placeholder="">
-                    <el-option v-for="item in tos" :key='item.id' :label='item.custName'></el-option>
+                  <el-select v-model="form.sendTo" size="small" filterable placeholder="" >
+                    <el-option v-for="item in tos" :key='item.id' :label='item.custName' :value="item.id+''"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -60,7 +60,7 @@
                     v-model="form.purchaseDate"
                     type="date"
                     size="small"
-                    value-format="yyyy-MM-dd"
+                    value-format="yyyyMMdd"
                     placeholder="选择日期">
                   </el-date-picker>
                 </el-form-item>
@@ -105,7 +105,7 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
+              <!-- <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="交货日期" prop="priceDate">
                   <el-date-picker
                     v-model="form.priceDate"
@@ -115,7 +115,7 @@
                     placeholder="选择日期">
                   </el-date-picker>
                 </el-form-item>
-              </el-col>
+              </el-col> -->
             </el-row>
           
         <div class="btns">
@@ -139,13 +139,15 @@
           <el-table :data="tableData" border  style="width: 100%" height="300">
             <el-table-column prop="productId" label="物料号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="num" label="数量" show-overflow-tooltip>
+            <el-table-column prop="platform" width="150" label="平台" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="price" label="含税价格" show-overflow-tooltip>
+            <el-table-column prop="num" width="150" label="数量" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="netPrice" label="不含税价格" show-overflow-tooltip>
+            <el-table-column prop="rPrice" width="150" label="含税价格" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="expectedDeliveryMonth" label="期望交货月份" show-overflow-tooltip>
+            <el-table-column prop="rNetPrice" width="150" label="不含税价格" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="expectedDeliveryMonth" width="150" label="期望交货月份" show-overflow-tooltip>
             </el-table-column>
             <div slot="empty">
               无数据
@@ -206,7 +208,7 @@
           </div> 
           <div>
               <el-form-item prop="isAgreed">
-                <el-checkbox  @change="changeccc" v-model="form.isAgreed" label="是否同意以上条款" value='1'></el-checkbox>
+                <el-checkbox  @change="changeccc" v-model="form.isAgreed" label="是否同意以上条款" ></el-checkbox>
               </el-form-item>
           </div> 
         </div>
@@ -269,7 +271,6 @@ export default {
       serverUrl:serverUrl,
       //销售组织
       salesOrgIds:[],
-      checkList:'',
       lines:[
         {
           index:'一、',
@@ -327,19 +328,7 @@ export default {
           ]
         },
       ],
-      options: [
-        {
-          value: "选项1",
-          label: "转货订单"
-        },
-        {
-          value: "选项2",
-          label: "Buffer 订单"
-        }
-      ],
       value: "", 
-      value1:"",
-
       radio: "1",
       form: {
         orderType:'',
@@ -359,16 +348,7 @@ export default {
         invoiceType :'',
         isAgreed:''
       },
-      activeName: "first",
       tableData: [
-        {
-          t1: "中国建设银行",
-          t3: "AF",
-          t4: "AF-001",
-          t5: "87",
-          t6: "100",
-          t7: "2019-06-23"
-        }
       ],
       currentPage: 1,
       pageSize: 10,
@@ -382,11 +362,11 @@ export default {
   watch:{
     'form.currency':{
       handler:function(n,o){
-        console.log(n)
+        // console.log(n)
         if(n=='CNY'){
           if(this.form.salesOrg==3000){
             this.form.incoterms1 = 'DDU'
-            console.log(this.form.icon1)
+            // console.log(this.form.icon1)
           }
         }else{
             this.form.incoterms1 = 'CIP'
@@ -396,12 +376,12 @@ export default {
     },
     'form.salesOrg':{
       handler:function(n,o){
-        console.log(n)
+        // console.log(n)
         if(n==3000){
-          console.log(11111111)
+          // console.log(11111111)
           if(this.form.currency=='CNY'){
             this.form.incoterms1 = 'DDU'
-            console.log(this.form.icon1)
+            // console.log(this.form.icon1)
           }
         }else{
             this.form.incoterms1 = 'CIP'
@@ -413,19 +393,19 @@ export default {
   methods: {
     async getShip(){
       const res = await getShip();
-      console.log('tos',res)
+      // console.log('tos',res)
       if(res){
         this.tos = res.data.data
       }
     },
     changeccc(val){
-      console.log(val)
+      // console.log(val)
     },
     changeaaa(val){
-      console.log(val)
+      // console.log(val)
     },
     uploadSuccess(val){
-      console.log(val)
+      // console.log(val)
       if(val.code==1){
         this.$message.success('上传成功')
         this.tableData = val.data.lines
@@ -448,7 +428,7 @@ export default {
             }
           })
             .then(res => {
-              console.log(res.data);
+              // console.log(res.data);
               const blob = new Blob([res.data], {
                 type: "application/vnd.ms-excel"
               });
@@ -463,31 +443,31 @@ export default {
             })
             .catch(err => {
 
-              console.log(err);
+              // console.log(err);
               alert("网络异常");
             });
     },
     async getCode(){
       const res = await getCode();
-      console.log('发货方编码',res)
+      // console.log('发货方编码',res)
       if(res){
         this.salesOrgIds = res.data.data
       }
     },
     async apply(){
-      this.form.lines = this.tableData
-      if(this.form.lines.length==0){
+      this.form.orderLines = this.tableData
+      if(this.form.orderLines.length==0){
         this.$message.error('请先上传订单行文件')
       }else{
         var form =this.form 
         form.isAgreed = form.isAgreed? 1:0
         const res = await apply(form);
-        console.log('申请结果',res)
+        // console.log('申请结果',res)
         if(res){
           this.$message.success('订单申请成功')
+          this.$router.push({name:'saleList'})
         }
-          this.form.lines = ''
-          this.$router.push({name:'orderList'})
+          this.form.orderLines = ''
       }
     },
     sub(){
@@ -495,7 +475,7 @@ export default {
     },
     cancel(){},
     handleClick(tab, event) {
-      console.log(tab, event);
+      // console.log(tab, event);
     },
     changeCon() {},
     changeSign(val) {},
@@ -528,7 +508,7 @@ export default {
       this.csdialogVisible = true;
     },
     handleSelect(item) {
-      console.log(item);
+      // console.log(item);
     },
     //创建主题按钮
     create() {

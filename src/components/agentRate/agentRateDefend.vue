@@ -85,7 +85,7 @@
             }
           })
             .then(res => {
-              console.log(res.data);
+              // console.log(res.data);
               const blob = new Blob([res.data], {
                 type: "application/vnd.ms-excel"
               });
@@ -99,12 +99,12 @@
               document.body.removeChild(a);
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
               alert("网络异常");
             });
       },
       suc(val){
-        console.log(val)
+        // console.log(val)
         if(val.code==1){
           this.$message.success('上传成功')
           this.isEmpty = false
@@ -119,7 +119,7 @@
             return item.id
           }).join(',')
         }
-        console.log(data)
+        // console.log(data)
         const res = await approve(data);
         if(res){
           this.$message.success('发布成功')

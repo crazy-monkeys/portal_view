@@ -436,7 +436,7 @@
           }).join(',')
         }
         const res = await del(data);
-        console.log('删除结果',res)
+        // console.log('删除结果',res)
         if(res){
           this.$message.success('删除成功')
           this.queryList()
@@ -459,9 +459,9 @@
         this.multipleSelection = val;
       },
       rowClick(row){
-        console.log(row)
+        // console.log(row)
         this.rowData = row
-        console.log(this.rowData)
+        // console.log(this.rowData)
         this.form1.one = this.rowData.line.currentWriteOne
         this.form1.two = this.rowData.line.currentWriteTwo
         this.form1.three = this.rowData.line.currentWriteThree
@@ -484,7 +484,7 @@
           }
         }]  
         const res = await update(data);
-        console.log('修改结果',res)
+        // console.log('修改结果',res)
         if(res){
           this.$message.success('修改成功')
           this.queryList()
@@ -545,7 +545,7 @@
         timeout: 20000,
         data: data
       }).then(res=>{
-        console.log(res)
+        // console.log(res)
         if(res.data.code==1){
           if(res.data.data.success){
             this.$message.success('上传成功')
@@ -558,7 +558,7 @@
           this.$message.error(res.data.msg)
         }
       }).catch(err=>{
-        console.log(err)
+        // console.log(err)
       })
       return false
     },
@@ -572,9 +572,9 @@
           uploadStartTime:this.form.uploadStartTime, 
           uploadEndTime:this.form.uploadEndTime
         }
-        console.log(data)
+        // console.log(data)
         const res = await queryList(data);
-        console.log('上传部分查询列表',res);
+        // console.log('上传部分查询列表',res);
         if(res){
           this.list = res.data.data.list
           this.total = res.data.data.total
@@ -585,9 +585,9 @@
           pageSize:this.pageSize1,
           pageNum:this.currentPage1,
         }
-        console.log(data)
+        // console.log(data)
         const res = await rejectList(data);
-        console.log('上传部分驳回列表',res);
+        // console.log('上传部分驳回列表',res);
         if(res){
           this.rejects = res.data.data.list
           this.total1 = res.data.data.total
@@ -597,9 +597,9 @@
         const data ={
           batchNo : this.batchNo
         }
-        console.log(data)
+        // console.log(data)
         const res = await submit(data);
-        console.log('提交结果',res);
+        // console.log('提交结果',res);
         if(res){
           this.$message.success('提交成功')
           this.tableData = []
@@ -620,7 +620,7 @@
             }
           })
             .then(res => {
-              console.log(res.data);
+              // console.log(res.data);
               const blob = new Blob([res.data], {
                 type: "application/vnd.ms-excel"
               });
@@ -634,7 +634,7 @@
               document.body.removeChild(a);
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
               alert("网络异常");
             });
       },
@@ -648,7 +648,7 @@
             }
           })
             .then(res => {
-              console.log(res.data);
+              // console.log(res.data);
               const blob = new Blob([res.data], {
                 type: "application/vnd.ms-excel"
               });
@@ -662,12 +662,12 @@
               document.body.removeChild(a);
             })
             .catch(err => {
-              console.log(err);
+              // console.log(err);
               alert("网络异常");
             });
       },
       suc(val){
-        console.log(val)
+        // console.log(val)
         if(val.code!=1){
           this.$message.error(val.msg)
         }else{
@@ -688,12 +688,12 @@
           }
           this.batchNo = val.data.batchNo
           this.tableData = val.data.data
-          console.log(this.tableData)
-          console.log(this.batchNo)
+          // console.log(this.tableData)
+          // console.log(this.batchNo)
         }
       },
       suc1(val){
-        console.log(val)
+        // console.log(val)
         if(val.code!=1){
           this.$message.error(val.msg)
         }else{
@@ -720,7 +720,7 @@
               'Authorization': sessionStorage.getItem('data'),
             }
           }).then(res => {
-              console.log(res.data);
+              // console.log(res.data);
               const blob = new Blob([res.data], {
                 type: "application/vnd.ms-excel"
               });
@@ -734,7 +734,7 @@
               document.body.removeChild(a);
           })
           .catch(err => {
-            console.log(err);
+            // console.log(err);
           });
         }).catch(() => {
             
@@ -756,19 +756,19 @@
       },
       // 分页
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+        // console.log(`每页 ${val} 条`);
         this.pageSize = val;
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        // console.log(`当前页: ${val}`);
         this.currentPage = val;
       },
       handleSizeChange1(val) {
-        console.log(`每页 ${val} 条`);
+        // console.log(`每页 ${val} 条`);
         this.pageSize1 = val;
       },
       handleCurrentChange1(val) {
-        console.log(`当前页: ${val}`);
+        // console.log(`当前页: ${val}`);
         this.currentPage1 = val;
       },
     }

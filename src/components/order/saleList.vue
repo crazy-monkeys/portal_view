@@ -1,67 +1,48 @@
 <template>
-  <div class="approve">
+  <div class="saleList">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item >订单管理</el-breadcrumb-item>
-          <el-breadcrumb-item>销售单审批</el-breadcrumb-item>
+          <el-breadcrumb-item>销售单申请列表</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="sels clear">
         <div class="lineBox">
-          <i class="el-icon-arrow-down" v-if='!dialogVisible' @click='change'> 展开</i>
-          <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
+          <i class="el-icon-arrow-down" v-if='!selDia' @click='change'> 展开</i>
+          <i class="el-icon-arrow-up" v-if='selDia' @click='change'> 收起</i>
         </div>
-        <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
-          <el-form-item label="申请人">
-            <el-select v-model="form.dealerId" size="small" filterable placeholder="请选择">
-              <el-option v-for="item in list" :key="item.id" :label="item.custName" :value="item.id">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          
-          <el-form-item label="订单类型">
-            <el-select v-model="form.orderType" size="small" filterable placeholder="请选择">
-              <el-option value="ZFD" label="交货免费"></el-option>
-                <el-option value="ZOR" label="标准订单"></el-option>
-                <el-option value="ZORT" label="标准订单（ZORT）"></el-option>
-                <el-option value="ZRET" label="退货"></el-option>
-                <el-option value="nKB" label="客户库存补货"></el-option>
-                <el-option value="KE" label="客户库存出货"></el-option>
-                <el-option value="ZKE" label="标准客户库存出货"></el-option>
-                <el-option value="ZKB" label="标准客户库存补货"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="下单类型">
-            <el-select v-model="form.underOrderType" size="small" filterable placeholder="请选择">
-              <el-option value="ZFD" label="交货免费"></el-option>
-                <el-option value="A01" label="客户专货订单"></el-option>
-                <el-option value="A02" label="Buffer订单"></el-option>
-                <el-option value="A03" label="新产品订单"></el-option>
-                <el-option value="A04" label="样品订单"></el-option>
-                <el-option value="A05" label="Last Buy订单"></el-option>
-                <el-option value="A06" label="分销商专货订单"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="审批状态">
-            <el-select v-model="form.approvalStatus" size="small" filterable placeholder="请选择">
-              <el-option value="0" label="待审批"></el-option>
-                <el-option value="1" label="已通过"></el-option>
-                <el-option value="2" label="已驳回"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="下单日期" class="date">
-            <Daterange @data='watchTime' :resetDataReg='resetData' />
-          </el-form-item>
-          <el-form-item label=" ">
-            <el-button size='small' type='primary' plain @click="search">查询</el-button>
-            <el-button @click='reset' size='small' type='primary' plain>重置</el-button>
-          </el-form-item>
+        <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='selDia'>
+          <el-row :gutter="20">
+              <el-form-item label="订单号">
+                <el-input size='small' v-model="form.salesOrderId" clearable placeholder="请输入"></el-input>
+              </el-form-item>
+              <el-form-item label="审批状态">
+                <el-select v-model="form.approvalStatus" clearable size="small" filterable placeholder="请选择">
+                  <el-option   label="待审批" :value="0">
+                  </el-option>
+                  <el-option   label="已通过" :value="1">
+                  </el-option>
+                  <el-option   label="已驳回" :value="2">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="申请时间" class="date">
+                <Daterange @data='watchTime' :resetDataReg='resetData' />
+              </el-form-item>
+              <el-form-item label=" ">
+                <el-button size='small' type='primary' plain @click="search">查询</el-button>
+                <el-button @click='reset' size='small' type='primary' plain>重置</el-button>
+              </el-form-item>
+          </el-row>
         </el-form>
       </div>
       <div class="box">
+        <div class="btns">
+          <el-button size="small" @click="approve" type="primary"> 申请</el-button>
+        </div>
         <div class="tab">
-          <el-table :data="tableData" style="width: 100%" border height="100%" @row-click='rowClick'>
+          <el-table :data="tableData" style="width: 100%" height="700" @row-click='rowClick'>
             <el-table-column prop="purchaseNo" label="采购订单编号" show-overflow-tooltip  width="150" >
             </el-table-column>
             <el-table-column prop="orderType" label="订单类型" show-overflow-tooltip  width="150" >
@@ -85,12 +66,6 @@
                 <span v-if="scope.row.underOrderType=='A05'" >Last Buy订单</span>
                 <span v-if="scope.row.underOrderType=='A06'" >分销商专货订单</span>
               </template>
-            </el-table-column>
-            <el-table-column prop="rGrossValue" label="含税总金额" show-overflow-tooltip  width="150" >
-            </el-table-column>
-            <el-table-column prop="rNetValue" label="不含税总金额" show-overflow-tooltip  width="150" >
-            </el-table-column>
-            <el-table-column prop="rSapCurrency" label="订单货币" show-overflow-tooltip  width="150" >
             </el-table-column>
             <el-table-column prop="salesOrg" label="销售组织" show-overflow-tooltip  width="200" >
               <template slot-scope="scope">
@@ -144,10 +119,10 @@
             </el-table-column>
             <el-table-column prop="approvalOpinions" label="审批意见" show-overflow-tooltip  width="150" >
             </el-table-column>
-            <el-table-column width="100" label="操作" fixed='right'>
+            <el-table-column width="120" label="操作" fixed='right'>
               <template slot-scope='scope'>
-                <el-button type='text' size='small' @click='getDetail(scope.row.id)'>明细</el-button>
-                <el-button type='text' size='small' @click='getApprove(scope.row.dealerId)' :disabled="scope.row.approvalStatus==0 ? false:true">审批</el-button>
+                <el-button type='text' size='small' @click='getDetail(scope.row.deliverOrderId)' >明细</el-button>
+                <el-button type='text' size='small' @click='del(scope.row.deliverOrderId)' :disabled="scope.row.approvalStatus==2 ? false:true">删除</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -164,7 +139,7 @@
         
       </div>
     </div>
-    <el-dialog title="订单行信息" :visible.sync="dialogVisible1" width="600px">
+    <el-dialog title="销售单明细" :visible.sync="dialogVisible1" width="600px">
       <div class="tab">
         <div class="tabBox">
           <el-table :data="rowData.jsonLines" style="width: 100%" border height="100%">
@@ -186,77 +161,36 @@
     </el-dialog>
 
 
-    <el-dialog
-        title="审批"
-        :visible.sync="dialogVisible5"
-        width="400px"
-        top="10vh"
-        >
-        <el-form ref="form1" :model="form1" size="small" class="form" label-width="auto" label-position='top'  >
-          <el-form-item label="授信额度初始值" >
-            <el-input size='small' v-model="credit.credit"  resize="none"  disabled></el-input>
-            
-          </el-form-item>
-          <el-form-item label="授信额度剩余值" >
-            <el-input size='small'  v-model="credit.creditUSE"    resize="none"  disabled></el-input>
-            
-          </el-form-item>
-          <el-form-item label="授信额度可用值" >
-            <el-input size='small' v-model="credit.creditUnUSE"   resize="none"  disabled></el-input>
-            
-          </el-form-item>
-          
-          <el-form-item label="需求交货日期" >
-            <el-date-picker
-            style="width:100%"
-              v-model="form1.expectedDeliveryDate"
-              type="date"
-              size="small"
-              value-format="yyyyMMdd"
-              placeholder="选择日期">
-            </el-date-picker>
-          </el-form-item>
-          <el-form-item label="审批信息">
-            <el-input size='small' v-model="form1.reason" rows='4' resize="none" type="textarea" placeholder="请输入"></el-input>
-          </el-form-item>
-        </el-form>
-          <span slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="submitForm('form',2)" size="small" plain>驳 回</el-button>
-            <el-button @click="submitForm('form',1)" size="small" type="primary" >通 过</el-button>
-          </span>
-    </el-dialog>
+  
   </div>
 </template>
 
 <script>
+import {getSaleList} from '@/api/order/approve.js'
+import {delPro} from '@/api/order/list.js'
 import Daterange from "../com/date";
-import {approve,approveList,getCreditInfo} from '@/api/order/approve.js'
 import {getDealerList} from '@/api/system/param.js'
 import {getCode} from '@/api/business/idr.js'
 
 export default {
-  name: "approve",
+  name: "saleList",
   components:{
     Daterange
   },
   data() {
     return {
-      credit:{},
       list:[],
       resetData:true,
       rowData:{},
-      dialogVisible5:false,
       form: {
-        orderType:'',
-        underOrderType:'',
-        approvalStatus:'',
-        dealerId:'',
+        salesOrderId:"",
+        createUserId:"",
+        createStartDate:"",
+        createEndDate:"",
+        approvalStatus:''
       },
-      form1: {
-        reason:'',
-        expectedDeliveryDate:''
-      },
-      dialogVisible: false,
+      salesOrgIds:[],
+      selDia: false,
       dialogVisible1: false,
       tableData: [],
       //第几页
@@ -264,17 +198,21 @@ export default {
       //每页的容量
       pageSize: 10,
       total: 0,
-      salesOrgIds:[],
     };
+  },
+  computed: {
   },
   created() {
     this.getList()
     this.getDealerList()
     this.getCode()
   },
+  watch: {},
   methods: {
-    sale(id){
-        return  this.salesOrgIds.filter(item=>{return item.groupCode == id})[0] ? this.salesOrgIds.filter(item=>{return item.groupCode == id})[0].groupName  :''
+    approve(){
+      this.$router.push({
+        name:'orderAdd'
+      })
     },
     async getCode(){
       const res = await getCode();
@@ -283,8 +221,34 @@ export default {
         this.salesOrgIds = res.data.data
       }
     },
+    del(id){
+      this.$confirm('确定要删除吗？', '发布', {
+        distinguishCancelAndClose: true,
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      })
+      .then(() => {
+          this.delPro(id)
+      })
+      .catch(action => {
+        
+      });
+    },
+    async delPro(id){
+      const data ={
+          id:id
+      }
+      const res = await delPro(data);
+      if(res){
+        this.$message.success('删除成功')
+        this.getList()
+      }
+    },
     to(id){
         return  this.list.filter(item=>{return item.id == id})[0] ? this.list.filter(item=>{return item.id == id})[0].custName  :''
+    },
+    sale(id){
+        return  this.salesOrgIds.filter(item=>{return item.groupCode == id})[0] ? this.salesOrgIds.filter(item=>{return item.groupCode == id})[0].groupName  :''
     },
     search(){
       this.currentPage =1
@@ -292,104 +256,58 @@ export default {
     },
     async getDealerList(){
       const res = await getDealerList();
-      // console.log('list',res)
+      console.log('list',res)
       if(res){
         this.list = res.data.data
       }
     },
     reset(){
       this.form = {
-        orderType:'',
-        underOrderType:'',
-        approvalStatus:'',
-        dealerId:'',
+        salesOrderId:"",
+        createUserId:"",
+        createStartDate:"",
+        createEndDate:"",
+        approvalStatus:''
       }
       this.resetData = true
       this.getList()
     },
     watchTime(data){
-      // console.log(data)
-      this.form.createBeginTime = data.startTime
-      this.form.createEndTime = data.endTime
+      console.log(data)
+      this.form.createStartDate = data.startTime
+      this.form.createEndDate = data.endTime
       this.resetData = false
     },
     rowClick(row){
       this.rowData = row
     },
-    submitForm(formName,type){
-      this.$formTest.submitForm(this.$refs[formName],type==1 ? this.approvePass : this.approvalReject)
-    },
     async getList(){
       const data ={
         pageSize:this.pageSize,
         pageIndex:this.currentPage,
-        orderType:this.form.orderType,
-        underOrderType:this.form.underOrderType,
-        approvalStatus:this.form.approvalStatus,
-        dealerId:this.form.dealerId,
-        createBeginTime:this.form.createBeginTime,
-        createEndTime:this.form.createEndTime,
       }
-      const res = await approveList(data);
+      const res = await getSaleList(data);
+      console.log('销售单申请列表',res)
       if(res){
         this.tableData = res.data.data.list
+        this.total = res.data.data.total
       }
+    },
+    
+    change() {
+      this.selDia = !this.selDia;
     },
     getDetail(id) {
       this.dialogVisible1 = true;
     },
-    async approvalReject(approvalStatus){
-      const data ={
-        applyId:this.rowData.id,
-        reason:this.form1.reason,
-        expectedDeliveryDate:this.form1.expectedDeliveryDate,
-        approvalStatus:2,
-      }
-      const res = await approve(data);
-      if(res){
-        this.$message.success('审批成功')
-        this.dialogVisible5 = false
-        this.getList()
-      }
-    },
-    async approvePass(approvalStatus){
-      const data ={
-        applyId:this.rowData.id,
-        reason:this.form1.reason,
-        expectedDeliveryDate:this.form1.expectedDeliveryDate,
-        approvalStatus:1,
-      }
-      const res = await approve(data);
-      if(res){
-        this.$message.success('审批成功')
-        this.dialogVisible5 = false
-        this.getList()
-      }
-    },
-    async getCreditInfo(id){
-      const data ={
-        id:id
-      }
-      const res = await getCreditInfo(data);
-      if(res){
-        this.credit = res.data.data
-        this.dialogVisible5 = true
-      }
-    },
-    getApprove(id){
-      this.getCreditInfo(id)
-    },
-    change() {
-      this.dialogVisible = !this.dialogVisible;
-    },
     // 分页
     handleSizeChange(val) {
-      // console.log(`每页 ${val} 条`);
+      console.log(`每页 ${val} 条`);
       this.pageSize = val;
       this.getList()
     },
     handleCurrentChange(val) {
-      // console.log(`当前页: ${val}`);
+      console.log(`当前页: ${val}`);
       this.currentPage = val;
       this.getList()
     }
@@ -401,7 +319,7 @@ export default {
 <style lang='scss'>
 $sc: 12;
 
-.approve{
+.saleList{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;

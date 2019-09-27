@@ -20,6 +20,9 @@ export const approveProList = data => {
     return request('post', `${serverUrl}/order/query/list/delivery/approval`, data).then(result => result)
 }
 
+export const getSaleList = data => {
+    return request('post', `${serverUrl}/order/apply/list`, data).then(result => result)
+}
 export const approvePro = data => {
     return request('post', `${serverUrl}/order/approval/delivery`, data).then(result => result)
 }

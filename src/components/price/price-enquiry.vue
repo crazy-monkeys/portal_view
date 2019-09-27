@@ -240,7 +240,7 @@
         this.multipleSelection = val;
       },
     rowClick(row){
-      console.log(row)
+      // console.log(row)
       this.rowData = row
     },
     async delEnquiry(id){
@@ -248,7 +248,7 @@
         id:id
       }
       const res = await delEnquiry(data);
-      console.log('删除结果',res)
+      // console.log('删除结果',res)
       if(res){
         this.getList()
       }
@@ -286,7 +286,7 @@
         this.getList()
       },
       watchTime(data){
-        console.log(data)
+        // console.log(data)
         this.form.effectBeginTime = data.startTime
         this.form.effectEndTime = data.endTime
         this.resetData = false
@@ -298,7 +298,7 @@
            applyRemark:this.addForm.applyRemark,
         } 
         const res = await addEnquiry(data);
-        console.log('提交结果',res);
+        // console.log('提交结果',res);
         if(res){
           this.cancel()
           this.getList()
@@ -314,7 +314,7 @@
            bu:this.form.bu
         } 
         const res = await getList(data);
-        console.log('询价列表',res);
+        // console.log('询价列表',res);
         if(res){
           this.tableData = res.data.data.list
           this.total = res.data.data.total
@@ -335,7 +335,7 @@
       },
       sub(){
         var arr = this.multipleSelection.map(item=>{return item.inCustomer});
-        console.log('内部客户组成的数组',arr)
+        // console.log('内部客户组成的数组',arr)
         var noEmpty =  arr.filter(item=>{
           if(item){
             if(item.length!=0){
@@ -352,12 +352,12 @@
             }
           }
         })
-        console.log(empty)
-        console.log(this.form1.inquirer.split(',')[1]=='agent')
+        // console.log(empty)
+        // console.log(this.form1.inquirer.split(',')[1]=='agent')
         if(this.form1.inquirer.split(',')[1]=='agent'){
           //询价方为代理商
-        console.log(empty.length)
-        console.log(arr.length)
+        // console.log(empty.length)
+        // console.log(arr.length)
           if(noEmpty.length==arr.length || empty.length==arr.length){
             //客户内部名称全不为空
             if(noEmpty.length==arr.length){
@@ -380,7 +380,7 @@
           //询价方为客户
             this.type = 'all'
             this.queryPrice = this.form1.inquirer.split(',')[0]
-            console.log(this.form1.inquirer.split(',')[0])
+            // console.log(this.form1.inquirer.split(',')[0])
             this.$nextTick(()=>{
               this.$print(this.$refs.print)
             })
@@ -414,12 +414,12 @@
     },
     // 分页
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      // console.log(`每页 ${val} 条`);
       this.pageSize = val;
       this.getList()
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      // console.log(`当前页: ${val}`);
       this.currentPage = val;
       this.getList()
 

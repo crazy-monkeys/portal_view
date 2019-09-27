@@ -12,6 +12,12 @@ export default new Router({
             },
             component: resolve => require(['@/components/Home'], resolve),
             children: [
+                //单独上传页面
+                {
+                    path: 'uploadIndex',
+                    name: 'uploadIndex',
+                    component: resolve => require(['@/components/customer/uploadIndex'], resolve)
+                },
                 //首页
                 {
                     path: 'tb',
@@ -156,6 +162,11 @@ export default new Router({
                     path: 'order/approve/list',
                     name: 'approveList',
                     component: resolve => require(['@/components/order/approveList'], resolve),
+                },
+                {
+                    path: 'order/sale/list',
+                    name: 'saleList',
+                    component: resolve => require(['@/components/order/saleList'], resolve),
                 },
                 {
                     path: 'order/add',

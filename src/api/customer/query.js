@@ -52,3 +52,12 @@ export const getEmployeeIds = () => {
 export const getDealers = () => {
     return request('get', `${serverUrl}/sys/dealer/list`).then(result => result)
 }
+
+
+export const getUpload = (data) => {
+    return request('post', `${serverUrl}/sys/customer/file/upload`, data).then(result => result)
+}
+
+export const getUploadData = (data) => {
+    return request('get', `${serverUrl}/sys/customer/file/list/${data.outCode}`).then(result => result)
+}
