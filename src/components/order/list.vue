@@ -149,8 +149,7 @@
                 <el-button type='text' size='small' @click='getDetail(scope.row.id)'>明细</el-button>
                 <el-button type='text' size='small' @click='getProduct(scope.row.dealerId,scope.row.id)' :disabled="scope.row.approvalStatus==1 ? false:true">提货</el-button>
                 <el-button type='text' size='small' @click='mod(scope.row)' :disabled="scope.row.approvalStatus!=0 ? false:true">修改</el-button>
-                <el-button type='text' size='small' @click='getDetail(scope.row.id)'  :disabled="scope.row.approvalStatus==1 ? false:true">取消</el-button>
-                <el-button type='text' size='small' @click='getDetail(scope.row.id)'  :disabled="scope.row.approvalStatus==2 ? false:true">删除</el-button>
+                <el-button type='text' size='small' @click='cal(scope.row)'  >取消</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -251,11 +250,44 @@
         <el-button size="small" type="primary" @click="submitForm('proForm')">确 定</el-button>
       </span>
     </el-dialog>
+    <el-dialog title="取消" top="5vh" :visible.sync="calDia" width="600px">
+      <div class="tab">
+        <div class="tabBox">
+            <el-table :data="lines" style="width: 100%" border height="400" @selection-change="handleSelectionChange">
+              <el-table-column prop="rItemNo" width="150" label="订单行号" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="productId" width="150" label="物料号" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="platform" width="150"  label="平台" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="expectedDeliveryDate" width="150" label="需求交货日期" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="rPrice" width="150" label="含税价格" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="rNetPrice" width="150" label="不含税价格" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="num" width="150" label="订单数量" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="remainingNum" width="150" label="剩余数量" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="rCurrency" width="150" label="币种" show-overflow-tooltip>
+            </el-table-column>
+            <div slot="empty">
+              无数据
+            </div>
+            </el-table>
+        </div>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button size="small" @click="cancel">取 消</el-button>
+        <el-button size="small" type="primary" @click="sure">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import {queryList,detail,getCredit,submitPro} from '@/api/order/list.js'
+import {queryList,detail,getCredit,submitPro,cancelOrder} from '@/api/order/list.js'
 import {getShip,getDealerList} from '@/api/system/param.js'
 import {getCode} from '@/api/business/idr.js'
 import Daterange from "../com/date";
@@ -304,6 +336,7 @@ export default {
         purchaseNo:'',
         dealerId:''
       },
+      calDia:false,
       //筛选条件显示否
       selDia: false,
       //明细显示否
@@ -318,7 +351,7 @@ export default {
       //每页的容量
       pageSize: 10,
       total: 0,
-
+      multipleSelection:[]
     };
   },
   computed: {
@@ -331,6 +364,34 @@ export default {
   },
   watch: {},
   methods: {
+    handleSelectionChange(val){
+      this.multipleSelection = val;
+    },
+    cal(row){
+      this.detail(row.id)
+      this.calDia = true
+    },
+    async cancelOrder(){
+      const data ={
+        orderId : this.rowData.id
+      }
+      const param ={
+        itemIds:this.multipleSelection.map(item=>{return item.id})
+      }
+      const res = await cancelOrder(data,param);
+      if(res){
+        this.$message.success('取消成功')
+        this.getList()
+      }
+    },
+    sure(){
+      if(this.multipleSelection.length==0){
+        this.$message.error('请选择需要取消的数据行')
+      }else{
+        this.cancelOrder()
+      }
+    },
+    
     rowClick(row){
       this.rowData= row
     },
@@ -368,6 +429,7 @@ export default {
     },
     //提货取消按钮
     cancel(){
+      this.multipleSelection = []
       this.credit = {}
       this.lines = []
       this.proForm ={
@@ -376,6 +438,7 @@ export default {
         lines:[]
       }
       this.proDia  = false
+      this.calDia = false
       this.$formTest.resetForm(this.$refs['proForm'])
     },
     //获取提货详细信息
