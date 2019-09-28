@@ -9,10 +9,17 @@ module.exports = merge(prodEnv, {
     // API_ROOT: '"http://192.168.101.14:8080/portal-api"'
     // API_ROOT: '"http://192.168.101.15:8080/portal-api"'
     API_ROOT: '"http://portal-sit.threeape.cn/portal-api"'
+<<<<<<< HEAD
         // API_ROOT: '"http://192.168.101.16/portal-api"'
         // API_ROOT: '"http://localhost:8080/portal-api"'
         // API_ROOT: '"http://192.168.101.6:8080/portal-api"'
         // API_ROOT: '"http://192.168.101.3:9090/portal-api"'
+=======
+    // API_ROOT: '"http://192.168.101.16/portal-api"'
+    // API_ROOT: '"http://localhost:8080/portal-api"'
+    // API_ROOT: '"http://192.168.101.6:8080/portal-api"'
+    // API_ROOT: '"http://192.168.101.3:9090/portal-api"'
+>>>>>>> 72dbe951cb5faf8d7d74e0e4cbf10c9f509f5d79
         // API_ROOT: '"https://result.eolinker.com/zClHbPQ1b2ab5ed3ffb38c435e1c4f71e0b2b62da68e2f7?uri="'
         // API_ROOT: '"http://192.168.101.14:8080"'
 })

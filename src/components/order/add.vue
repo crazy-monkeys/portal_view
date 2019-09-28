@@ -473,7 +473,9 @@ export default {
     sub(){
       this.$formTest.submitForm(this.$refs['form'],this.apply)
     },
-    cancel(){},
+    cancel(){
+      window.history.go(-1)
+    },
     handleClick(tab, event) {
       // console.log(tab, event);
     },
