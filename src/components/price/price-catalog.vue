@@ -15,28 +15,28 @@
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <!-- BU，PDT，产品型号，客户限制，代理商或客户名称，生效时间，平台，产品状态 -->
           <el-form-item label="BU">
-            <el-input size='small' v-model='form.bu' placeholder="请输入"></el-input>
+            <el-input size='small' clearable v-model='form.bu' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="PDT">
-            <el-input size='small' v-model='form.pdt' placeholder="请输入"></el-input>
+            <el-input size='small' clearable v-model='form.pdt' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="客户限制">
-            <el-input size='small' v-model='form.inCustomer' placeholder="请输入"></el-input>
+            <el-input size='small' clearable v-model='form.inCustomer' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="平台">
-            <el-input size='small' v-model='form.platform' placeholder="请输入"></el-input>
+            <el-input size='small' clearable v-model='form.platform' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="产品型号">
-            <el-input size='small' v-model='form.productModel' placeholder="请输入"></el-input>
+            <el-input size='small' clearable v-model='form.productModel' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="产品状态">
-            <el-select  size="small"  v-model="form.status" clearable>
+          <el-form-item label="价格状态">
+            <el-select  size="small" clearable filterable  v-model="form.status" >
               <el-option label='生效' value="True"></el-option>
               <el-option label='失效' value="False"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="Price Type">
-            <el-select size="small" v-model="form.priceType" clearable>
+          <el-form-item label="下单主体">
+            <el-select size="small" v-model="form.priceType" filterable clearable>
               <el-option label='客户' value="客户"></el-option>
               <el-option label='代理' value="代理"></el-option>
               <el-option label='直供' value="直供"></el-option>
@@ -60,13 +60,16 @@
             <el-table-column type="expand">
               <template slot-scope="props">
                 <el-table :data="props.row.boms" border style="width: 90%">
-                  <el-table-column prop="bomName"  show-overflow-tooltip label="实体料号">
+                  <el-table-column prop="bomName"  show-overflow-tooltip label="实体产品型号">
                   </el-table-column>
-                  <el-table-column prop="inCustomer"  show-overflow-tooltip label="客户限制">
+                  <el-table-column prop="price"  show-overflow-tooltip label="拆分价">
+                    <template slot-scope="scope">
+                      {{scope.row.price.toFixed(4)}}
+                    </template>
                   </el-table-column>
-                  <el-table-column prop="qty" show-overflow-tooltip label="数量">
+                  <el-table-column prop="inCustomer"  show-overflow-tooltip label="客户简称">
                   </el-table-column>
-                  <el-table-column prop="price"  show-overflow-tooltip label="目录价格">
+                  <el-table-column prop="qty" show-overflow-tooltip label="实体芯片数量">
                   </el-table-column>
                 </el-table>
               </template>
@@ -86,15 +89,17 @@
             </el-table-column>
             <el-table-column prop="productType" width='150' label="Product Type" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="priceType" width='150' label="Price Type" show-overflow-tooltip>
-            </el-table-column>
+            
             <el-table-column prop="platform" width='100' show-overflow-tooltip label="平台">
             </el-table-column>
             <el-table-column show-overflow-tooltip width='240' prop="productModel" label="产品型号">
             </el-table-column>
-            <el-table-column show-overflow-tooltip width='150' prop="catalogPrice" label="目录价格">
+            <el-table-column show-overflow-tooltip width='150' prop="" label="目录价格">
+              <template slot-scope="scope">
+                {{scope.row.catalogPrice.toFixed(4)}}
+              </template>
             </el-table-column>
-            <el-table-column show-overflow-tooltip width='150' prop="inCustomer" label="客户限制">
+            <el-table-column show-overflow-tooltip width='150' prop="inCustomer" label="客户简称">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="effectTime" width='200' label="生效时间">
             </el-table-column>
@@ -103,6 +108,8 @@
             <el-table-column show-overflow-tooltip prop="modifyTime" width='150' label="更新时间">
             </el-table-column> -->
             <el-table-column show-overflow-tooltip prop="remark" width='150' label="备注">
+            </el-table-column>
+            <el-table-column prop="priceType" width='150' label="下单主体" show-overflow-tooltip>
             </el-table-column>
             <div slot="empty">
               <p>无数据</p>

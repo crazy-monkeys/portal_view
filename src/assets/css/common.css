@@ -108,15 +108,13 @@ input::-ms-clear {
 
 /*滚动条整体样式*/
 
-
 ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
+    width: 8px;
+    height: 8px;
 }
 
 
 /*滚动条里面小方块*/
-
 
 ::-webkit-scrollbar-thumb {
     border-radius: 5px;
@@ -126,7 +124,6 @@ input::-ms-clear {
 
 
 /*滚动条里面轨道*/
-
 
 ::-webkit-scrollbar-track {
     border-radius: 5px;
@@ -149,7 +146,6 @@ div {
     scrollbar-track-color: #fff;
 }
 
-
 input::-webkit-credentials-auto-fill-button {
     display: none !important;
     visibility: hidden;
@@ -169,7 +165,6 @@ input::-webkit-credentials-auto-fill-button {
 
 
 /*Chrome下隐藏滚动条，溢出可以透明滚动*/
-
 
 html::-webkit-scrollbar {
     width: 0px

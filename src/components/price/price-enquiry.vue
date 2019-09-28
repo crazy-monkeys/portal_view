@@ -80,8 +80,7 @@
             </el-table-column>
             <el-table-column prop="productType" width='150' label="Product Type" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="priceType" width='150' label="Price Type" show-overflow-tooltip>
-            </el-table-column>
+            
             <el-table-column prop="platform" width='100' show-overflow-tooltip label="平台">
             </el-table-column>
             <el-table-column prop="productModel" width='240' label="产品型号" show-overflow-tooltip>
@@ -95,6 +94,8 @@
             <el-table-column prop="applyTime" width='200' label="申请时间" show-overflow-tooltip>
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="remark" width='150' label="备注">
+            </el-table-column>
+            <el-table-column prop="priceType" width='150' label="下单主体" show-overflow-tooltip>
             </el-table-column>
             <el-table-column width="80" label="操作" fixed='right'>
               <template slot-scope='scope'>

@@ -132,10 +132,10 @@
               <!-- <div class="detailBox"><div>生效时间 : </div>{{detail.effectTime}}</div> -->
             </el-col>
             <el-col :span="12">
-              <el-form-item label="内部客户">
+              <el-form-item label="客户简称">
                 <el-input size='small'  v-model="detail.inCustomer" :readonly="true" placeholder="请输入"></el-input>
               </el-form-item>
-              <!-- <div class="detailBox"><div>内部客户 : </div>{{detail.inCustomer}}</div> -->
+              <!-- <div class="detailBox"><div>客户简称 : </div>{{detail.inCustomer}}</div> -->
             </el-col>
             <el-col :span="12">
               <el-form-item label="平台">
@@ -182,14 +182,17 @@
             </el-col>
           </el-row>
           <el-table class="tab" :data="detail.boms" border style="width: 100%">
-            <el-table-column prop="bomName"  show-overflow-tooltip label="实体料号">
-            </el-table-column>
-            <el-table-column prop="inCustomer"  show-overflow-tooltip label="内部客户">
-            </el-table-column>
-            <el-table-column prop="qty" show-overflow-tooltip label="数量">
-            </el-table-column>
-            <el-table-column prop="price"  show-overflow-tooltip label="目录价格">
-            </el-table-column>
+            <el-table-column prop="bomName"  show-overflow-tooltip label="实体产品型号">
+                  </el-table-column>
+                  <el-table-column prop="price"  show-overflow-tooltip label="拆分价">
+                    <template slot-scope="scope">
+                      {{(scope.row.price*1).toFixed(4)}}
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="inCustomer"  show-overflow-tooltip label="客户简称">
+                  </el-table-column>
+                  <el-table-column prop="qty" show-overflow-tooltip label="实体芯片数量">
+                  </el-table-column>
           </el-table>
         </div>
         </el-form>

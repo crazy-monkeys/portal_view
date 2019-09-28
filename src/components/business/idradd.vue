@@ -17,7 +17,7 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="发货方编码">
-            <el-select v-model="form.shipperCode" size="small" filterable placeholder="请选择">
+            <el-select filterable v-model="form.shipperCode" size="small" filterable placeholder="请选择">
               <el-option
                 v-for="item in options2"
                 :key="item.groupCode"
@@ -33,7 +33,7 @@
             <el-date-picker size="small" v-model="form.applyTime" value-format="yyyy-MM-dd" type="date"  placeholder="选择日期"></el-date-picker>
           </el-form-item>
           <el-form-item label="币种">
-            <el-select v-model="form.currency" size="small" filterable placeholder="请选择">
+            <el-select  filterable v-model="form.currency" size="small" filterable placeholder="请选择">
               <el-option
                 v-for="item in options1"
                 :key="item.value"
@@ -50,7 +50,7 @@
             <el-input size="small" v-model="form.inCustomerName"  disabled></el-input>
           </el-form-item>
           <el-form-item label="外部客户名称">
-            <el-select size="small" v-model="form.outCustomerName"  placeholder="请选择">
+            <el-select filterable size="small" v-model="form.outCustomerName"  placeholder="请选择">
               <el-option
                 v-for="item in options3"
                 :key="item.id"
@@ -362,7 +362,7 @@ export default {
       // console.log('内部客户',res)
       if(res){
         this.options3 = res.data.data.outShips
-        this.form.inCustomerName = res.data.data.inShip.corporateName
+        this.form.inCustomerName = res.data.data.inShip ? res.data.data.inShip.corporateName :''
       }
     },
     async getCode(){

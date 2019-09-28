@@ -29,13 +29,11 @@
           <el-form-item label="PDT">
             <el-input size='small' v-model="form.pdt" placeholder="请输入"></el-input>
           </el-form-item>
-           <el-form-item label="类别一(类型)">
-            <el-input size='small' v-model="form.category" placeholder="请输入"></el-input>
-          </el-form-item>
-           <el-form-item label="类别二(子类型)">
+           
+           <el-form-item label="Product Type">
             <el-input size='small' v-model="form.subCategory" placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="类别三(平台)">
+          <el-form-item label="平台">
             <el-input size='small' v-model="form.platform" placeholder="请输入"></el-input>
           </el-form-item>
            <el-form-item label="SAP 物料号" >
@@ -76,11 +74,9 @@
             </el-table-column>
             <el-table-column label="PDT" width="150" prop='pdt' show-overflow-tooltip>
             </el-table-column>
-            <el-table-column label="类别一(类型)" width="150" prop='category' show-overflow-tooltip>
+            <el-table-column label="Product Type" width="150" prop='subCategory' show-overflow-tooltip>
             </el-table-column>
-            <el-table-column label="类别二(子类型)" width="150" prop='subCategory' show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column label="类别三(平台)" width="150" prop='platform' show-overflow-tooltip>
+            <el-table-column label="平台" width="150" prop='platform' show-overflow-tooltip>
             </el-table-column>
             <el-table-column label="最小包装数" width="150" prop='mpq' show-overflow-tooltip>
             </el-table-column>
