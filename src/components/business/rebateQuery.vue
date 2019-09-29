@@ -14,16 +14,16 @@
         </div>
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <el-form-item label="代理商">
-            <el-input size='small' v-model="form.dealerName" placeholder="请输入"></el-input>
+            <el-input size='small' clearable v-model="form.dealerName" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="客户">
-            <el-input size='small' v-model="form.customerName" placeholder="请输入"></el-input>
+            <el-input size='small' clearable v-model="form.customerName" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="执行方">
-            <el-input size='small' v-model="form.executor" placeholder="请输入"></el-input>
+            <el-input size='small' clearable v-model="form.executor" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="执行方式">
-            <el-select v-model="form.executeStyle" size="small"> 
+            <el-select v-model="form.executeStyle" clearable size="small"> 
               <el-option label="方式1" value='1'></el-option> 
               <el-option label="方式2" value='2'></el-option> 
             </el-select>
@@ -32,7 +32,7 @@
             <Daterange @data='watchTime' :resetDataCreate='resetData' />
           </el-form-item>
           <el-form-item label="状态">
-            <el-select v-model="form.status" size="small"> 
+            <el-select v-model="form.status" clearable size="small"> 
               <el-option label="审核中" value='1'></el-option> 
               <el-option label="客户待确认" value='2'></el-option> 
               <el-option label="客户已确认" value='3'></el-option> 

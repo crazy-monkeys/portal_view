@@ -52,6 +52,9 @@
                   <el-table-column prop="qty" show-overflow-tooltip label="数量">
                   </el-table-column>
                   <el-table-column prop="price"  show-overflow-tooltip label="目录价格">
+                    <template slot-scope="scope" >
+                        {{scope.row.price ?  (scope.row.price).toFixed(4)+ ' $' :''}}
+                    </template>
                   </el-table-column>
                 </el-table>
               </template>
@@ -71,7 +74,7 @@
             </el-table-column>
             <el-table-column prop="" width='80' show-overflow-tooltip label="状态">
               <template slot-scope="scope">
-                {{scope.row.status=='True' ?'生效':'失效'}}
+                {{scope.row.status=='True' ?'生效':scope.row.status=='False' ?'失效':''}}
               </template>
             </el-table-column>
             <el-table-column prop="bu" width='200' show-overflow-tooltip label="BU">
@@ -86,6 +89,10 @@
             <el-table-column prop="productModel" width='240' label="产品型号" show-overflow-tooltip>
             </el-table-column>
             <el-table-column show-overflow-tooltip width='150' prop="catalogPrice" label="目录价格">
+                    <template slot-scope="scope">
+                        {{scope.row.catalogPrice ?  (scope.row.catalogPrice).toFixed(4)+ ' $' :''}}
+                    </template>
+
             </el-table-column>
              <el-table-column show-overflow-tooltip width='150' prop="inCustomer" label="内部客户">
             </el-table-column>

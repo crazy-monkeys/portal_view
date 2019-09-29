@@ -13,11 +13,11 @@
             <el-radio-group v-model="form.type">
               <el-radio :label='1' >保价</el-radio>
               <el-radio :label='2'>差价补偿</el-radio>
-              <el-radio :label='3'>换货</el-radio>
+              <el-radio :label='3'>退换货</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="发货方编码">
-            <el-select filterable v-model="form.shipperCode" size="small" filterable placeholder="请选择">
+            <el-select filterable v-model="form.shipperCode" size="small"  placeholder="请选择">
               <el-option
                 v-for="item in options2"
                 :key="item.groupCode"
@@ -240,6 +240,17 @@ export default {
       handler:function(n,o){
         if(n!=o){
           this.form.shipperCode = ''
+          this.form.applyTime = ''
+          this.form.currency = ''
+          this.form.crAmount = ''
+          this.form.company = ''
+          this.form.inCustomerName = ''
+          this.form.reson = ''
+          this.form.remark = ''
+          this.form.iList = []
+          this.form.dList = []
+          this.form.rList = []
+          this.form.files = []
         }
       }
     },

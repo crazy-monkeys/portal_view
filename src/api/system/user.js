@@ -8,3 +8,7 @@ export const getUserList = (data, params) => {
 export const saveUserRole = data => {
     return request('post', `${serverUrl}/permission/improveUserPerm?${stringify(data)}`).then(result => result)
 }
+
+export const freeze = data => {
+    return request('post', `${serverUrl}/user/modifyLifecycle/${data.name}/${data.userStatus}`).then(result => result)
+}

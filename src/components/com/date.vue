@@ -24,7 +24,21 @@ export default {
         time:{
             handler:function(n,o){
                 // console.log(n)
-                this.$emit('data',n)
+                if(this.time.startTime&&this.time.endTime){
+                    if(new Date(this.time.startTime).getTime()<new Date(this.time.endTime).getTime()){
+                        this.$emit('data',n)
+                    }else{
+                        this.$message.error('开始时间必须早于结束时间')
+                        this.time={
+                            startTime:'',
+                            endTime:''
+                        }
+                        this.$emit('data',n)
+                    }
+                }else{
+                        this.$emit('data',n)
+
+                }
             },
             deep:true
         },

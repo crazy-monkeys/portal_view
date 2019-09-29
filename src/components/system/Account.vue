@@ -73,9 +73,11 @@
               </span>
               </template>
             </el-table-column>
-            <el-table-column label="操作" width="100" fixed="right">
-              <template >
+            <el-table-column label="操作" width="150" fixed="right">
+              <template slot-scope="scope">
                 <el-button size="small" type="text" @click="authorize">授权</el-button>
+                <el-button v-if="tableData[scope.$index].userStatus==1 " size="small" type="text" :disabled="userId==scope.row.id" @click="getFreeze(scope.row.loginName)">冻结</el-button>
+                <el-button v-if="tableData[scope.$index].userStatus==0 " size="small" type="text" :disabled="userId==scope.row.id" @click="getAct(scope.row.loginName)">激活</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -113,7 +115,7 @@
 
 <script>
 import Daterange from "../com/date";
-import { getUserList ,saveUserRole} from '@/api/system/user.js'
+import { getUserList ,saveUserRole,freeze} from '@/api/system/user.js'
 import {   getRolesAll } from '@/api/system/role.js'
 export default {
   name: "user",
@@ -186,7 +188,62 @@ export default {
     this.getList();
     this.getRolesAll();
   },
+  computed:{
+    userId(){
+      return this.$store.state.loginUser.loginInfo.id
+    }
+  },
   methods: {
+    getFreeze(name){
+      this.$confirm('确定冻结此账号吗？', '冻结', {
+        distinguishCancelAndClose: true,
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      })
+      .then(() => {
+          this.freeze(name)
+      })
+      .catch(action => {
+        
+      });
+    },
+    getAct(name){
+      this.$confirm('确定冻结此账号吗？', '冻结', {
+        distinguishCancelAndClose: true,
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      })
+      .then(() => {
+          this.act(name)
+      })
+      .catch(action => {
+        
+      });
+    },
+    async freeze(name){
+      const data ={
+        name:name,
+        userStatus:0
+      }
+      const res = await freeze(data);
+      console.log('冻结结果',res);
+      if(res){
+        this.$message.success('操作成功');
+        this.getList()
+      }
+    },
+    async act(name){
+      const data ={
+        name:name,
+        userStatus:1
+      }
+      const res = await freeze(data);
+      console.log('激活结果',res);
+      if(res){
+        this.$message.success('操作成功');
+        this.getList()
+      }
+    },
     watchTime(data){
       // console.log(data)
       this.time = data

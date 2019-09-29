@@ -87,7 +87,7 @@
         :before-close="cancel"
         >
         <el-form ref="form1" :rules='rules' :model="form1" size="small" class="form" label-width="auto" label-position='top'  >
-          <el-form-item :label="label" prop="approvalRemark">
+          <el-form-item :label="label" :prop="title=='驳回' ?  'approvalRemark' :''" :rules=" title=='驳回' ? rules.approvalRemark :[]">
             <el-input size='small' v-model="form1.approvalRemark" rows='4' resize="none" type="textarea" placeholder="请输入"></el-input>
           </el-form-item>
         </el-form>
@@ -132,10 +132,10 @@
               <!-- <div class="detailBox"><div>生效时间 : </div>{{detail.effectTime}}</div> -->
             </el-col>
             <el-col :span="12">
-              <el-form-item label="客户简称">
+              <el-form-item label="内部客户">
                 <el-input size='small'  v-model="detail.inCustomer" :readonly="true" placeholder="请输入"></el-input>
               </el-form-item>
-              <!-- <div class="detailBox"><div>客户简称 : </div>{{detail.inCustomer}}</div> -->
+              <!-- <div class="detailBox"><div>内部客户 : </div>{{detail.inCustomer}}</div> -->
             </el-col>
             <el-col :span="12">
               <el-form-item label="平台">
@@ -189,9 +189,9 @@
                       {{(scope.row.price*1).toFixed(4)}}
                     </template>
                   </el-table-column>
-                  <el-table-column prop="inCustomer"  show-overflow-tooltip label="客户简称">
+                  <el-table-column prop="inCustomer"  show-overflow-tooltip label="内部客户">
                   </el-table-column>
-                  <el-table-column prop="qty" show-overflow-tooltip label="实体芯片数量">
+                  <el-table-column prop="qty" show-overflow-tooltip label="实体芯片数量比">
                   </el-table-column>
           </el-table>
         </div>
@@ -363,7 +363,7 @@ export default {
     add1(type) {
       this.dialogCreate = true
       if(type==1){
-        this.form1.approvalStatus ='pass'
+        this.form1.approvalStatus = 'pass'
         this.title = '审批'
         this.label = '审批信息'
       }else{

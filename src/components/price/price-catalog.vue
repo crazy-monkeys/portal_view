@@ -20,14 +20,17 @@
           <el-form-item label="PDT">
             <el-input size='small' clearable v-model='form.pdt' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="客户限制">
+          <el-form-item label="产品型号">
+            <el-input size='small' clearable v-model='form.productModel' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="内部客户">
             <el-input size='small' clearable v-model='form.inCustomer' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="生效时间" class="date">
+            <Daterange @data='watchTime' :resetDataReg='resetData' />
           </el-form-item>
           <el-form-item label="平台">
             <el-input size='small' clearable v-model='form.platform' placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="产品型号">
-            <el-input size='small' clearable v-model='form.productModel' placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="价格状态">
             <el-select  size="small" clearable filterable  v-model="form.status" >
@@ -42,9 +45,7 @@
               <el-option label='直供' value="直供"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="生效时间" class="date">
-            <Daterange @data='watchTime' :resetDataReg='resetData' />
-          </el-form-item>
+          
           <el-form-item label=" ">
             <el-button size='small' type='primary' @click='search' plain>搜索</el-button>
             <el-button @click='reset' size='small' type='primary' plain>重置</el-button>
@@ -64,12 +65,12 @@
                   </el-table-column>
                   <el-table-column prop="price"  show-overflow-tooltip label="拆分价">
                     <template slot-scope="scope">
-                      {{scope.row.price.toFixed(4)}}
+                      {{scope.row.price.toFixed(4)+ ' $'}}
                     </template>
                   </el-table-column>
-                  <el-table-column prop="inCustomer"  show-overflow-tooltip label="客户简称">
+                  <el-table-column prop="inCustomer"  show-overflow-tooltip label="内部客户">
                   </el-table-column>
-                  <el-table-column prop="qty" show-overflow-tooltip label="实体芯片数量">
+                  <el-table-column prop="qty" show-overflow-tooltip label="实体芯片数量比">
                   </el-table-column>
                 </el-table>
               </template>
@@ -96,10 +97,10 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip width='150' prop="" label="目录价格">
               <template slot-scope="scope">
-                {{scope.row.catalogPrice.toFixed(4)}}
+                {{scope.row.catalogPrice.toFixed(4)+ ' $'}}
               </template>
             </el-table-column>
-            <el-table-column show-overflow-tooltip width='150' prop="inCustomer" label="客户简称">
+            <el-table-column show-overflow-tooltip width='150' prop="inCustomer" label="内部客户">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="effectTime" width='200' label="生效时间">
             </el-table-column>
