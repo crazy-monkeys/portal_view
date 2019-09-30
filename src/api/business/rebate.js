@@ -23,3 +23,7 @@ export const send = data => {
 export const getAll = data => {
     return request('get', `${serverUrl}/sys/customer/all`).then(result => result)
 }
+
+export const downloadFiles = data => {
+    return request('get', `${serverUrl}/business/rebate/download/${data.id}`).then(result => result)
+}

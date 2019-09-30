@@ -74,7 +74,6 @@
            </div>
             
            <div class="desc" v-if="type=='all'">
-               客户
                 <h3>报价说明：</h3> 
                 <div><span> 一.</span><p>上述价格币别为美金</p></div>   
                 <div><span> 二.</span><p>上述价格人民币采购汇率为下达采购订单当日的中国人民银行美金中间价（仅限样品）</p></div>   
@@ -87,7 +86,6 @@
                 <div><span> 九.</span><p>报价有效期：年月日—年月日（一年）</p></div>   
            </div>
            <div class="desc" v-if="type=='empty'">
-               空
                 <h3>报价说明：</h3> 
                 <div><span> 一.</span><p>上述价格币别为美金</p></div>   
                 <div><span> 二.</span><p>上述价格人民币采购汇率为下达采购订单当日的中国人民银行美金中间价（仅限样品）</p></div>   
@@ -99,7 +97,6 @@
                 <div><span> 八.</span><p>报价有效期：年月日-年月日（一年）</p></div>   
            </div>
            <div class="desc" v-if="type=='noEmpty'">
-               非空
                 <h3>报价说明：</h3> 
                 <div><span> 一.</span><p>上述价格仅适用于代理商负责之最终客户XX（“最终客户”）</p></div>   
                 <div><span> 二.</span><p>上述价格币别为美金</p></div>   
@@ -114,7 +111,6 @@
            </div>
 
            <div class="desc" v-if="type==1">
-               通用
                 <h3>报价说明：</h3> 
                 <div><span> 一.</span><p>上述价格币别为美金</p></div>   
                 <div><span> 二.</span><p>上述套片价格无拆分价格</p></div>   
@@ -125,7 +121,6 @@
                 <div><span> 七.</span><p>报价有效期：年月日—年月日（一年）</p></div>   
            </div>
            <div class="desc" v-if="type==2">
-               阶梯
                 <h3>报价说明：</h3> 
                 <div><span> 一.</span><p>上述价格币别为美金</p></div>   
                 <div><span> 二.</span><p>上述套片价格无拆分价格</p></div>   
@@ -136,7 +131,6 @@
                 <div><span> 七.</span><p>报价有效期：年月日—年月日（一年）</p></div>   
            </div>
            <div class="desc" v-if="type==4">
-               绑量
                 <h3>报价说明：</h3> 
                 <div><span> 一.</span><p>上述价格币别为美金</p></div>   
                 <div><span> 二.</span><p>上述套片价格无拆分价格</p></div>   

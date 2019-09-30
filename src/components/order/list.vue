@@ -171,6 +171,11 @@
           <el-table :data="lines" style="width: 100%" border height="100%">
             <el-table-column prop="rItemNo" width="150" label="订单行号" show-overflow-tooltip>
             </el-table-column>
+            <el-table-column prop="actice" width="150" label="状态" show-overflow-tooltip>
+              <template slot-scope="scope">
+                {{scope.row.actice ==1 ? '生效' :'失效'}}
+              </template>
+            </el-table-column>
             <el-table-column prop="productId" width="150" label="物料号" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="platform" width="150"  label="平台" show-overflow-tooltip>
@@ -253,7 +258,14 @@
       <div class="tab">
         <div class="tabBox">
             <el-table :data="lines" style="width: 100%" border height="400" @selection-change="handleSelectionChange">
+               <el-table-column type="selection" width="60" >
+            </el-table-column>
               <el-table-column prop="rItemNo" width="150" label="订单行号" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="actice" width="150" label="状态" show-overflow-tooltip>
+              <template slot-scope="scope">
+                {{scope.row.actice ==1 ? '生效' :'失效'}}
+              </template>
             </el-table-column>
             <el-table-column prop="productId" width="150" label="物料号" show-overflow-tooltip>
             </el-table-column>
@@ -375,7 +387,7 @@ export default {
         orderId : this.rowData.id
       }
       const param ={
-        itemIds:this.multipleSelection.map(item=>{return item.id})
+        itemIds:this.multipleSelection.map(item=>{return item.id}).join(',')
       }
       const res = await cancelOrder(data,param);
       if(res){
@@ -387,7 +399,13 @@ export default {
       if(this.multipleSelection.length==0){
         this.$message.error('请选择需要取消的数据行')
       }else{
+        console.log(this.multipleSelection.map((item)=>{return item.actice}))
+        if(this.multipleSelection.map((item)=>{return item.actice}).indexOf(0)!=-1){
+        this.$message.error('无法操作状态为失效的数据行')
+        }else{
         this.cancelOrder()
+
+        }
       }
     },
     

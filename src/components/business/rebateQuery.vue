@@ -13,9 +13,9 @@
           <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
         </div>
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
-          <el-form-item label="代理商">
+          <!-- <el-form-item label="代理商">
             <el-input size='small' clearable v-model="form.dealerName" placeholder="请输入"></el-input>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="客户">
             <el-input size='small' clearable v-model="form.customerName" placeholder="请输入"></el-input>
           </el-form-item>
@@ -48,35 +48,42 @@
       <div class="box">
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" border height="100%" @row-click='rowClick'>
-            <el-table-column prop="agencyName" width="150" label="代理商" show-overflow-tooltip></el-table-column>
             <el-table-column prop="customerShortName" width="150" label="客户简称" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="customerType" width="150" label="客户类型" show-overflow-tooltip></el-table-column>
             <el-table-column prop="salesName" width="150" label="销售名称" show-overflow-tooltip></el-table-column>
             <el-table-column prop="amebaHeader" width="150" label="阿米巴队长" show-overflow-tooltip></el-table-column>
             <el-table-column prop="amebaDepartment" width="150" label="阿米巴部门" show-overflow-tooltip></el-table-column>
             <el-table-column prop="shipmentCompany" width="150" label="出货公司" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="accountYearMonth" width="150" label="核算年月" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="orderMonth" width="150" label="订单年月" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="shipmentYearMonth" width="150" label="出货年月" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="bu" width="150" label="BU" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="product" width="150" label="产品型号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="qty" width="150" label="数量" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="salesPrice" width="150" label="Sales Price" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="poPrice" width="150" label="Old Price" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="actualPrice" width="150" label="Actual Price" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="platform" width="150" label="平台" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="rebateAmount"  width="150" label="Rebate金额" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="releaseAmount" width="150" label="已释放金额" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="surplusRebateAmount" width="150" label="剩余可释放金额" show-overflow-tooltip></el-table-column>
-            <el-table-column  prop="status" width="150"  label="状态" show-overflow-tooltip>
+            <el-table-column prop="rebateAmount" width="150" label="释放金额" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="executor" width="150" label="执行方" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="executeStyle" width="150" label="执行方式" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="noticeDate" width="150" label="通知日期" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="remark" width="150" label="备注" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="status" width="150" label="状态" show-overflow-tooltip>
+              状态 1-审核中 2-客户待确认 3-客户已确认 4-执行完成
               <template slot-scope="scope">
-                {{scope.row.status==1 ?'审核中':scope.row.status==2 ? '客户待确认' : scope.row.status==3 ?'客户已确认' :'执行完成'}}
+                <span v-if="scope.row.status==1">审核中</span>
+                <span v-if="scope.row.status==2">客户待确认</span>
+                <span v-if="scope.row.status==3">客户已确认</span>
+                <span v-if="scope.row.status==4">执行完成</span>
               </template>
+            </el-table-column>
+            <el-table-column prop="dlExecuteDate" width="150" label="代理执行日期" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="dlFileId" width="150" label="代理商上传文件ID" show-overflow-tooltip>
+              <template slot-scope="scope">
+                <el-button v-if="scope.row.dlFileId" size="small" type="text" @click="downloadFile(scope.row.dlFileId)">点击下载</el-button>
+                <span  v-if="!scope.row.dlFileId">无文件</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="zrExecuteDate" width="150" label="展锐执行日期" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="zrFileId" width="150" label="展锐上传文件ID" show-overflow-tooltip>
+                <template slot-scope="scope">
+                  <el-button v-if="scope.row.zrFileId" size="small" type="text" @click="downloadFile(scope.row.zrFileId)">点击下载</el-button>
+                  <span  v-if="!scope.row.zrFileId">无文件</span>
+                </template>
             </el-table-column>
             <el-table-column  label="操作" width="80" fixed="right">
               <template slot-scope="scope">
-                <el-upload style='display:inline-block' class="upload-demo" :headers="{'Authorization':auth}" :show-file-list="false" ref='upload' name='file'  :on-success='uploadSuccess' :action='serverUrl+"/business/rebate/upload/"+scope.row.id' >
+                <el-upload style='display:inline-block' :data='rowdata' class="upload-demo" :headers="{'Authorization':auth}" :show-file-list="false" ref='upload' name='file'  :on-success='uploadSuccess' :action='serverUrl+"/business/rebate/upload"' >
                   <el-button size="small"  type="text" >上传</el-button>
                 </el-upload>
               </template>
@@ -130,7 +137,7 @@
 import Daterange from "../com/date";
 
 import {serverUrl} from "@/axios/request.js";
-import {queryList,send} from '@/api/business/rebate.js'
+import {queryList,send,downloadFiles} from '@/api/business/rebate.js'
   export default {
     name: 'rebateQuery',
     components:{
@@ -138,6 +145,8 @@ import {queryList,send} from '@/api/business/rebate.js'
     },
     data() {
       return {
+        rowData:{},
+        rowdata:{},
       resetData:false,
       auth:sessionStorage.getItem('data'),
         serverUrl:serverUrl,
@@ -176,6 +185,26 @@ import {queryList,send} from '@/api/business/rebate.js'
     watch: {
     },
     methods: {
+      downloadFile(id){
+        this.downloadFiles(id)
+      },
+      async downloadFiles(id){
+        const data ={
+          id:id
+        }
+        const res = await downloadFiles(data);
+        console.log('下载结果',res)
+        if(res){
+          const a = document.createElement("a");
+          document.body.appendChild(a);
+          a.style.display = "none";
+          // a.download = "代理商费率模版.xlsx";
+          a.href = res.data.data;
+          a.download = res.data.data;
+          a.click();
+          document.body.removeChild(a);
+        }
+      },
       watchTime(data){
         // console.log(data)
         this.form.noticeBeginDate= data.startTime
@@ -212,6 +241,13 @@ import {queryList,send} from '@/api/business/rebate.js'
       },
       rowClick(row){
         this.rowData = row
+        this.rowdata.noticeDate = row.noticeDate
+        this.rowdata.shipmentCompany = row.shipmentCompany
+        this.rowdata.customerShortName = row.customerShortName
+        this.rowdata.salesName = row.salesName ?  row.salesName:''
+        this.rowdata.amebaHeader = row.amebaHeader
+        this.rowdata.amebaDepartment = row.amebaDepartment
+        this.rowdata.executor = row.executor
       },
       send(){
         this.sendVis = true
