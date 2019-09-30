@@ -27,8 +27,8 @@
               <el-form-item label="下单日期" class="date">
                 <Daterange @data='watchTime' :resetDataReg='resetData' />
               </el-form-item>
-              <el-form-item label="订单类型">
-                <el-select v-model="form.orderType" size="small" filterable placeholder="请选择">
+              <el-form-item label="下单类型">
+                <el-select v-model="form.underOrderType" size="small" filterable placeholder="请选择">
                   <el-option value="ZFD" label="交货免费"></el-option>
                     <el-option value="ZOR" label="标准订单"></el-option>
                     <el-option value="ZORT" label="标准订单（ZORT）"></el-option>
@@ -39,9 +39,8 @@
                     <el-option value="ZKB" label="标准客户库存补货"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="下单类型">
-                <el-select v-model="form.underOrderType" size="small" filterable placeholder="请选择">
-                  <el-option value="ZFD" label="交货免费"></el-option>
+              <el-form-item label="订单类型">
+                <el-select v-model="form.orderType" size="small" filterable placeholder="请选择">
                     <el-option value="A01" label="客户专货订单"></el-option>
                     <el-option value="A02" label="Buffer订单"></el-option>
                     <el-option value="A03" label="新产品订单"></el-option>
@@ -79,26 +78,26 @@
             </el-table-column>
             <el-table-column prop="purchaseNo" label="采购订单编号" show-overflow-tooltip  width="150" >
             </el-table-column>
-            <el-table-column prop="orderType" label="订单类型" show-overflow-tooltip  width="150" >
+            <el-table-column prop=" underOrderType" label=" 下单类型" show-overflow-tooltip  width="150" >
               <template slot-scope='scope'>
-                <span v-if="scope.row.orderType=='ZFD'" >交货免费</span>
-                <span v-if="scope.row.orderType=='ZOR'" >标准订单</span>
-                <span v-if="scope.row.orderType=='ZORT'" >标准订单（ZORT）</span>
-                <span v-if="scope.row.orderType=='ZRET'" >退货</span>
-                <span v-if="scope.row.orderType=='nKB'" >客户库存补货</span>
-                <span v-if="scope.row.orderType=='KE'" >客户库存出货</span>
-                <span v-if="scope.row.orderType=='ZKE'" >标准客户库存出货</span>
-                <span v-if="scope.row.orderType=='ZKB'" >标准客户库存补货</span>
+                <span v-if="scope.row.underOrderType=='ZFD'" >交货免费</span>
+                <span v-if="scope.row.underOrderType=='ZOR'" >标准订单</span>
+                <span v-if="scope.row.underOrderType=='ZORT'" >标准订单（ZORT）</span>
+                <span v-if="scope.row.underOrderType=='ZRET'" >退货</span>
+                <span v-if="scope.row.underOrderType=='nKB'" >客户库存补货</span>
+                <span v-if="scope.row.underOrderType=='KE'" >客户库存出货</span>
+                <span v-if="scope.row.underOrderType=='ZKE'" >标准客户库存出货</span>
+                <span v-if="scope.row.underOrderType=='ZKB'" >标准客户库存补货</span>
               </template>
             </el-table-column>
-            <el-table-column prop="underOrderType" label="下单类型" show-overflow-tooltip  width="150" >
+            <el-table-column prop="orderType" label="订单类型" show-overflow-tooltip  width="150" >
               <template slot-scope='scope'>
-                <span v-if="scope.row.underOrderType=='A01'" >客户专货订单</span>
-                <span v-if="scope.row.underOrderType=='A02'" >Buffer订单</span>
-                <span v-if="scope.row.underOrderType=='A03'" >新产品订单</span>
-                <span v-if="scope.row.underOrderType=='A04'" >样品订单</span>
-                <span v-if="scope.row.underOrderType=='A05'" >Last Buy订单</span>
-                <span v-if="scope.row.underOrderType=='A06'" >分销商专货订单</span>
+                <span v-if="scope.row.orderType=='A01'" >客户专货订单</span>
+                <span v-if="scope.row.orderType=='A02'" >Buffer订单</span>
+                <span v-if="scope.row.orderType=='A03'" >新产品订单</span>
+                <span v-if="scope.row.orderType=='A04'" >样品订单</span>
+                <span v-if="scope.row.orderType=='A05'" >Last Buy订单</span>
+                <span v-if="scope.row.orderType=='A06'" >分销商专货订单</span>
               </template>
             </el-table-column>
             <el-table-column prop="rGrossValue" label="含税总金额" show-overflow-tooltip  width="150" >

@@ -227,7 +227,12 @@ export default {
   watch:{
     'form.shipperCode':{
       handler:function(n,o){
+        if(n){
         this.form.company = this.options2.filter(item=>{if(item.groupCode==n){return item}})[0].groupName
+
+        }else{
+          this.form.company=''
+        }
       }
     },
     'form.files':{
@@ -245,6 +250,7 @@ export default {
           this.form.crAmount = ''
           this.form.company = ''
           this.form.inCustomerName = ''
+          this.form.outCustomerName = ''
           this.form.reson = ''
           this.form.remark = ''
           this.form.iList = []

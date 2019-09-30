@@ -45,7 +45,7 @@
           <el-table :data="tableData" style="width: 100%" height="700" @row-click='rowClick'>
             <el-table-column prop="purchaseNo" label="采购订单编号" show-overflow-tooltip  width="150" >
             </el-table-column>
-            <el-table-column prop="orderType" label="订单类型" show-overflow-tooltip  width="150" >
+            <el-table-column prop="underOrderType" label="下单类型" show-overflow-tooltip  width="150" >
               <template slot-scope='scope'>
                 <span v-if="scope.row.orderType=='ZFD'" >交货免费</span>
                 <span v-if="scope.row.orderType=='ZOR'" >标准订单</span>
@@ -57,7 +57,7 @@
                 <span v-if="scope.row.orderType=='ZKB'" >标准客户库存补货</span>
               </template>
             </el-table-column>
-            <el-table-column prop="underOrderType" label="下单类型" show-overflow-tooltip  width="150" >
+            <el-table-column prop="orderType" label="订单类型" show-overflow-tooltip  width="150" >
               <template slot-scope='scope'>
                 <span v-if="scope.row.underOrderType=='A01'" >客户专货订单</span>
                 <span v-if="scope.row.underOrderType=='A02'" >Buffer订单</span>
@@ -119,10 +119,9 @@
             </el-table-column>
             <el-table-column prop="approvalOpinions" label="审批意见" show-overflow-tooltip  width="150" >
             </el-table-column>
-            <el-table-column width="120" label="操作" fixed='right'>
+            <el-table-column width="60" label="操作" fixed='right'>
               <template slot-scope='scope'>
                 <el-button type='text' size='small' @click='getDetail(scope.row.deliverOrderId)' >明细</el-button>
-                <el-button type='text' size='small' @click='del(scope.row.deliverOrderId)' :disabled="scope.row.approvalStatus==2 ? false:true">删除</el-button>
               </template>
             </el-table-column>
             <div slot="empty">

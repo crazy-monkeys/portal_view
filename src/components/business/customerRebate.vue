@@ -38,6 +38,37 @@
         <div class="tab">
           <el-table :data="tableData" style="width: 100%" border height="100%" @row-click='rowClick' @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="60"  show-overflow-tooltip></el-table-column>
+            <el-table-column type="expand">
+              <template slot-scope="props">
+                <el-table :data="props.row.itemList" border style="width: 90%">
+                  <el-table-column prop="rebateAmount"  show-overflow-tooltip label="释放金额">
+                  </el-table-column>
+                  <el-table-column prop="executor"  show-overflow-tooltip label="执行方">
+                  </el-table-column>
+                  <el-table-column prop="executeStyle"  show-overflow-tooltip label="执行方式">
+                  </el-table-column>
+                  <el-table-column prop="zrExecuteDate" show-overflow-tooltip label="展锐执行日期">
+                  </el-table-column>
+                  <el-table-column prop="dlExecuteDate" show-overflow-tooltip label="代理执行日期">
+                  </el-table-column>
+                  <el-table-column prop="noticeDate" show-overflow-tooltip label="通知日期">
+                  </el-table-column>
+                  <el-table-column prop="noticeDate" show-overflow-tooltip label="通知日期">
+                  </el-table-column>
+                  <el-table-column prop="status" show-overflow-tooltip label="状态">
+                    <template  slot-scope="scope">
+                      <span v-if="scope.row.status==1">审核中</span>
+                      <span v-if="scope.row.status==2">客户待确认</span>
+                      <span v-if="scope.row.status==3">客户已确认</span>
+                      <span v-if="scope.row.status==4">执行完成</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="remark" show-overflow-tooltip label="备注">
+                  </el-table-column>
+                  
+                </el-table>
+              </template>
+            </el-table-column>
             <el-table-column prop="" width="150" label="释放金额" show-overflow-tooltip>
               <template slot-scope="scope">
                 <el-input v-model="scope.row.money" size="small"></el-input>

@@ -208,7 +208,7 @@ export default {
       });
     },
     getAct(name){
-      this.$confirm('确定冻结此账号吗？', '冻结', {
+      this.$confirm('确定激活此账号吗？', '激活', {
         distinguishCancelAndClose: true,
         confirmButtonText: '确定',
         cancelButtonText: '取消'

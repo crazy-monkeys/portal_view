@@ -12,8 +12,8 @@
           <el-form ref="form" :model="form"  :rules="rules" class="form" label-position='top' :inline='true'>
             <el-row :gutter="22">
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-                <el-form-item label="订单类型" prop="orderType">
-                  <el-select v-model="form.orderType" size="small"  placeholder="请选择">
+                <el-form-item label="下单类型" prop="underOrderType">
+                  <el-select v-model="form.underOrderType" size="small"  placeholder="请选择">
                     <el-option value="ZFD" label="交货免费"></el-option>
                     <el-option value="ZOR" label="标准订单"></el-option>
                     <el-option value="ZORT" label="标准订单（ZORT）"></el-option>
@@ -86,8 +86,8 @@
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
-                <el-form-item label="下单类型" prop="underOrderType">
-                  <el-select v-model="form.underOrderType" size="small" filterable placeholder="">
+                <el-form-item label="订单类型" prop="orderType">
+                  <el-select v-model="form.orderType" size="small" filterable placeholder="">
                     <el-option value="A01" label="客户专货订单"></el-option>
                     <el-option value="A02" label="Buffer订单"></el-option>
                     <el-option value="A03" label="新产品订单"></el-option>

@@ -14,13 +14,13 @@
         </div>
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <!-- BU，产品型号，内部客户，审批状态 -->
-          <el-form-item label="BU">
+          <el-form-item label="BU" >
             <el-input size='small'  v-model="form.bu" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="产品型号">
             <el-input size='small'  v-model="form.productModel" placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="内部客户">
+          <el-form-item label="客户简称">
             <el-input size='small' v-model="form.inCustomer" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="审批状态">
@@ -47,13 +47,13 @@
                 <el-table :data="props.row.boms" border style="width: 90%">
                   <el-table-column prop="bomName"  show-overflow-tooltip label="实体料号">
                   </el-table-column>
-                  <el-table-column prop="inCustomer"  show-overflow-tooltip label="内部客户">
+                  <el-table-column prop="inCustomer"  show-overflow-tooltip label="客户简称">
                   </el-table-column>
                   <el-table-column prop="qty" show-overflow-tooltip label="数量">
                   </el-table-column>
-                  <el-table-column prop="price"  show-overflow-tooltip label="目录价格">
+                  <el-table-column prop="price"  show-overflow-tooltip label="目录价格($)">
                     <template slot-scope="scope" >
-                        {{scope.row.price ?  (scope.row.price).toFixed(4)+ ' $' :''}}
+                        {{scope.row.price}}
                     </template>
                   </el-table-column>
                 </el-table>
@@ -88,13 +88,13 @@
             </el-table-column>
             <el-table-column prop="productModel" width='240' label="产品型号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column show-overflow-tooltip width='150' prop="catalogPrice" label="目录价格">
+            <el-table-column show-overflow-tooltip width='150' prop="catalogPrice" label="目录价格($)">
                     <template slot-scope="scope">
-                        {{scope.row.catalogPrice ?  (scope.row.catalogPrice).toFixed(4)+ ' $' :''}}
+                        {{scope.row.catalogPrice }}
                     </template>
 
             </el-table-column>
-             <el-table-column show-overflow-tooltip width='150' prop="inCustomer" label="内部客户">
+             <el-table-column show-overflow-tooltip width='150' prop="inCustomer" label="客户简称">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="effectTime" width='150' label="生效时间">
             </el-table-column>
@@ -129,6 +129,9 @@
           </el-form-item>
           <el-form-item label="内部客户"  prop="inCustomer" class="inp">
             <el-input size="small" v-model="addForm.inCustomer" placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="BU"  prop="bu" class="inp">
+            <el-input size="small" v-model="addForm.bu" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="申请说明" prop="applyRemark" class="last">
              <el-input type='textarea' v-model='addForm.applyRemark' :rows="2" placeholder="" resize='none'></el-input>
@@ -201,11 +204,13 @@
       rowData:{},
       rules:{
         productModel: [{ required: true, trigger: "change" ,message:'请输入产品型号'}],
+        bu: [{ required: true, trigger: "blur" ,message:'bu不能为空'}],
       },
       addForm:{
         applyRemark:'',
         productModel:'',
         inCustomer:'',
+        bu:''
       },
       form: {
         approvalStatus:'',
@@ -278,6 +283,7 @@
       this.dialogCreate=false
       this.addForm = {
         applyRemark:'',
+        bu:'',
         productModel:'',
         inCustomer:'',
       }
@@ -304,6 +310,7 @@
            productModel:this.addForm.productModel,
            inCustomer:this.addForm.inCustomer,
            applyRemark:this.addForm.applyRemark,
+           bu:this.addForm.bu
         } 
         const res = await addEnquiry(data);
         // console.log('提交结果',res);

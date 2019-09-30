@@ -23,8 +23,15 @@
           <el-form-item label="产品型号">
             <el-input size='small' clearable v-model='form.productModel' placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="内部客户">
+          <el-form-item label="客户简称">
             <el-input size='small' clearable v-model='form.inCustomer' placeholder="请输入"></el-input>
+          </el-form-item>
+          <el-form-item label="下单主体">
+            <el-select size="small" v-model="form.priceType" filterable clearable>
+              <el-option label='客户' value="客户"></el-option>
+              <el-option label='代理' value="代理"></el-option>
+              <el-option label='直供' value="直供"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="生效时间" class="date">
             <Daterange @data='watchTime' :resetDataReg='resetData' />
@@ -38,14 +45,6 @@
               <el-option label='失效' value="False"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下单主体">
-            <el-select size="small" v-model="form.priceType" filterable clearable>
-              <el-option label='客户' value="客户"></el-option>
-              <el-option label='代理' value="代理"></el-option>
-              <el-option label='直供' value="直供"></el-option>
-            </el-select>
-          </el-form-item>
-          
           <el-form-item label=" ">
             <el-button size='small' type='primary' @click='search' plain>搜索</el-button>
             <el-button @click='reset' size='small' type='primary' plain>重置</el-button>
@@ -63,12 +62,12 @@
                 <el-table :data="props.row.boms" border style="width: 90%">
                   <el-table-column prop="bomName"  show-overflow-tooltip label="实体产品型号">
                   </el-table-column>
-                  <el-table-column prop="price"  show-overflow-tooltip label="拆分价">
+                  <el-table-column prop="price"  show-overflow-tooltip label="拆分价($)">
                     <template slot-scope="scope">
-                      {{scope.row.price.toFixed(4)+ ' $'}}
+                      {{scope.row.price.toFixed(4)}}
                     </template>
                   </el-table-column>
-                  <el-table-column prop="inCustomer"  show-overflow-tooltip label="内部客户">
+                  <el-table-column prop="inCustomer"  show-overflow-tooltip label="客户简称">
                   </el-table-column>
                   <el-table-column prop="qty" show-overflow-tooltip label="实体芯片数量比">
                   </el-table-column>
@@ -95,12 +94,12 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip width='240' prop="productModel" label="产品型号">
             </el-table-column>
-            <el-table-column show-overflow-tooltip width='150' prop="" label="目录价格">
+            <el-table-column show-overflow-tooltip width='150' prop="" label="目录价格($)">
               <template slot-scope="scope">
-                {{scope.row.catalogPrice.toFixed(4)+ ' $'}}
+                {{scope.row.catalogPrice.toFixed(4)}}
               </template>
             </el-table-column>
-            <el-table-column show-overflow-tooltip width='150' prop="inCustomer" label="内部客户">
+            <el-table-column show-overflow-tooltip width='150' prop="inCustomer" label="客户简称">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="effectTime" width='200' label="生效时间">
             </el-table-column>
@@ -143,7 +142,7 @@
         <el-button size="small"  type="primary" @click="submitForm('form1')">确 定</el-button>
       </span>
     </el-dialog>
-    <Tem ref='print' :table='multipleSelection' :queryPrice='queryPrice' :type='type'></Tem>
+    <Tem ref='print' :table='multipleSelection' :queryPrice='queryPrice' :type='type' ></Tem>
 
   </div>
 </template>
