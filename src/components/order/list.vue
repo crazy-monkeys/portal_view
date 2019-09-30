@@ -1,7 +1,8 @@
 <template>
   <div class="orderList">
     <div class="sellBox">
-      <div class="head clear">
+      
+      <div class="head clear" >
         <el-breadcrumb separator="/">
           <el-breadcrumb-item to='/home/order/list'>订单管理</el-breadcrumb-item>
           <el-breadcrumb-item>销售单查询</el-breadcrumb-item>
@@ -309,6 +310,7 @@ export default {
   },
   data() {
     return {
+      
       rowData:{},
       salesOrgIds:[],
       rules:{
@@ -365,9 +367,7 @@ export default {
       multipleSelection:[]
     };
   },
-  computed: {
-    
-  },
+  
   created() {
     this.getCode()
     this.getDealerList()
@@ -375,6 +375,9 @@ export default {
   },
   watch: {},
   methods: {
+    back(){
+      window.history.go(-1)
+    },
     handleSelectionChange(val){
       this.multipleSelection = val;
     },
@@ -468,7 +471,7 @@ export default {
     mod(row){
       this.$router.push(
         {
-          name:'orderMod',
+          name:'orderAdd',
           query:{
             id:row.id,
             type:row.approvalStatus
@@ -562,6 +565,7 @@ export default {
       const res = await queryList(data);
       if(res){
         this.tableData = res.data.data.list
+        this.total = res.data.data.total
       }
     },
     //筛选区域展开否

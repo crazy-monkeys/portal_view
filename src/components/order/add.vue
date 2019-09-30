@@ -1,9 +1,12 @@
 <template>
   <!-- 添加新增控件 -->
   <div class="orderAdd">
-      <div class="head clear">
+    <div class="head clear" v-if="queryId">
+        <el-page-header @back="back" content="订单申请修改"></el-page-header>
+      </div>
+      <div class="head clear" v-if="!queryId">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item to="/home/order/list">订单管理</el-breadcrumb-item>
+          <el-breadcrumb-item>订单管理</el-breadcrumb-item>
           <el-breadcrumb-item>订单申请</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -76,7 +79,7 @@
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
+              <!-- <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="币种" prop="currency">
                   <el-select v-model="form.currency" size="small"  filterable placeholder="">
                     <el-option value="CNY" label="CNY"></el-option>
@@ -84,7 +87,7 @@
                     <el-option value="USD" label="USD"></el-option>
                   </el-select>
                 </el-form-item>
-              </el-col>
+              </el-col> -->
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="订单类型" prop="orderType">
                   <el-select v-model="form.orderType" size="small" filterable placeholder="">
@@ -223,9 +226,11 @@
 </template>
 
 <script>
+import {detail} from '@/api/order/list.js'
+
 import formTest from "../../assets/js/formTest";
 import {getCode} from '@/api/business/idr.js'
-import {apply} from '@/api/order/add.js'
+import {apply,mod} from '@/api/order/add.js'
 import {getShip} from '@/api/system/param.js'
 
 import {serverUrl} from '@/axios/request.js'
@@ -358,6 +363,14 @@ export default {
   created(){
     this.getCode()
     this.getShip()
+    if(this.queryId){
+      this.detail(this.queryId)
+    }
+  },
+  computed: {
+    queryId(){
+      return this.$route.query.id
+    }
   },
   watch:{
     'form.currency':{
@@ -391,6 +404,25 @@ export default {
     }
   },
   methods: {
+    async detail(id){
+      const data ={
+        id:id
+      }
+      const res = await detail(data);
+      console.log('detail',res)
+      if(res){
+        this.form = res.data.data
+        this.form.invoiceType += ''
+        this.form.invoiceDeliveryType += ''
+        this.form.isAgreed = false
+        this.tableData = res.data.data.lines
+        this.order.grossValue = res.data.data.rGrossValue ? res.data.data.rGrossValue :0
+        this.order.netValue = res.data.data.rNetValue ? res.data.data.rNetValue:0
+        // this.lines = res.data.data.lines
+        // this.proForm.lines = res.data.data.lines.map(item=>{return {...item,deliveryQuantity:''}})
+        // this.proForm.orderId = res.data.data.id
+      }
+    },
     async getShip(){
       const res = await getShip();
       // console.log('tos',res)
@@ -470,8 +502,27 @@ export default {
           this.form.orderLines = ''
       }
     },
+    async mod(){
+      this.form.orderLines = this.tableData
+      if(this.form.orderLines.length==0){
+        this.$message.error('请先上传订单行文件')
+      }else{
+        var form =this.form 
+        var data ={
+          orderId : this.queryId
+        }
+        form.isAgreed = form.isAgreed? 1:0
+        const res = await mod(data,form);
+        // console.log('申请结果',res)
+        if(res){
+          this.$message.success('订单申请修改成功')
+          this.$router.push({name:'saleList'})
+        }
+          this.form.orderLines = ''
+      }
+    },
     sub(){
-      this.$formTest.submitForm(this.$refs['form'],this.apply)
+      this.$formTest.submitForm(this.$refs['form'],this.queryId? this.mod :  this.apply)
     },
     cancel(){
       window.history.go(-1)

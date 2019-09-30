@@ -63,6 +63,14 @@
           <el-table :data="tableData" style="width: 100%" border height="100%" @row-click='rowClick'>
             <el-table-column prop="purchaseNo" label="采购订单编号" show-overflow-tooltip  width="150" >
             </el-table-column>
+            <el-table-column prop="appalyType" label="申请类型" show-overflow-tooltip  width="150" >
+              <template slot-scope="scope">
+                <span v-if="scope.row.appalyType==1">订单创建</span>
+                <span v-if="scope.row.appalyType==2">订单修改</span>
+                <span v-if="scope.row.appalyType==3">订单取消</span>
+                <span v-if="scope.row.appalyType==4">变更交期</span>
+              </template>
+            </el-table-column>
             <el-table-column prop="underOrderType" label=" 下单类型" show-overflow-tooltip  width="150" >
               <template slot-scope='scope'>
                 <span v-if="scope.row.underOrderType=='ZFD'" >交货免费</span>
