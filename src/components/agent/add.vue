@@ -223,17 +223,17 @@
                     <el-input size="small" disabled v-model="scope.row.productLine"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" width="150" label="月份一" >
+                <el-table-column prop="" width="150" label="产品线一销售额" >
                   <template slot-scope="scope">
                     <el-input size="small" disabled v-model="scope.row.revenuePlOne"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" width="150" label="月份二" >
+                <el-table-column prop="" width="150" label="产品线二销售额" >
                   <template slot-scope="scope">
                     <el-input size="small" disabled v-model="scope.row.revenuePlTwo"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" width="150" label="月份三" >
+                <el-table-column prop="" width="150" label="产品线三销售额" >
                   <template slot-scope="scope">
                     <el-input size="small" disabled v-model="scope.row.revenuePlThree"></el-input>
                   </template>
