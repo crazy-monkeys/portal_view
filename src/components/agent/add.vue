@@ -218,7 +218,7 @@
                     <el-input size="small" disabled v-model="scope.row.businessYear"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" width="150" label="产品线" >
+                <el-table-column prop="" width="150" label="产品线一" >
                   <template slot-scope="scope">
                     <el-input size="small" disabled v-model="scope.row.productLine"></el-input>
                   </template>
