@@ -43,7 +43,7 @@
                 <el-select v-model="form.custRole" size="small" placeholder="请选择">
                    <el-option label="中国客户" value="Z001"></el-option>
                   <el-option label="亚太客户" value="Z002"></el-option>
-                  <el-option label="北美客户" value="Z003"></el-option>
+                  <!-- <el-option label="北美客户" value="Z003"></el-option> -->
                   <el-option label="内部客户" value="Z010"></el-option>
                 </el-select>
               </el-form-item>
