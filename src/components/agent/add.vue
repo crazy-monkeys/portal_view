@@ -41,12 +41,12 @@
               <el-input type="text" size="small" v-model="form.corportaeAssets"> </el-input>
               </el-form-item>
               <el-form-item label="注册日期" class="date">
-                <!-- <el-input type="text" size="small" v-model="form.registTime"></el-input> -->
-                <el-date-picker size="small" v-model="form.registTime" type="date" format='yyyy-MM-dd' value-format="timestamp"   placeholder="选择日期"></el-date-picker>
+                <el-input type="text" size="small" v-model="form.registTime"></el-input>
+                <!-- <el-date-picker size="small" v-model="form.registTime" type="date" format='yyyy-MM-dd' value-format="timestamp"   placeholder="选择日期"></el-date-picker> -->
               </el-form-item>
-              <el-form-item label="公司人数">
+              <!-- <el-form-item label="公司人数">
                 <el-input type="text" size="small" v-model="form.staffNumber"></el-input>
-              </el-form-item>
+              </el-form-item> -->
               <!-- <el-form-item label="注册地址" class="txt">
                 <el-cascader
                   style="width:200"
@@ -497,7 +497,7 @@
           this.form = res.data.data 
           this.form.custBankInfo.bankCountry = JSON.parse(res.data.data.custBankInfo.bankCountry)
           res.data.data.addresses.forEach((item,index)=>{
-              this.form.addresses[index].country = JSON.parse(item.country)
+              this.form.addresses[index].country = item.country.split(',')
           })
         }
       },
