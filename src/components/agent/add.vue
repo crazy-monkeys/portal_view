@@ -42,11 +42,11 @@
               </el-form-item>
               <el-form-item label="注册日期" class="date">
                 <!-- <el-input type="text" size="small" v-model="form.registTime"></el-input> -->
-                <el-date-picker size="small" v-model="form.registTime" type="date" format='yyyy-MM-dd' value-format="timestamp"   placeholder="选择日期"></el-date-picker>
+                <el-date-picker size="small" v-model="form.registTime" type="date"  value-format="yyyy-MM-dd"   placeholder="选择日期"></el-date-picker>
               </el-form-item>
-              <el-form-item label="公司人数">
+              <!-- <el-form-item label="公司人数">
                 <el-input type="text" size="small" v-model="form.staffNumber"></el-input>
-              </el-form-item>
+              </el-form-item> -->
               <!-- <el-form-item label="注册地址" class="txt">
                 <el-cascader
                   style="width:200"
@@ -218,22 +218,22 @@
                     <el-input size="small" disabled v-model="scope.row.businessYear"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" width="150" label="产品线" >
+                <el-table-column prop="" width="150" label="产品线一" >
                   <template slot-scope="scope">
                     <el-input size="small" disabled v-model="scope.row.productLine"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" width="150" label="月份一" >
+                <el-table-column prop="" width="150" label="产品线一销售额" >
                   <template slot-scope="scope">
                     <el-input size="small" disabled v-model="scope.row.revenuePlOne"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" width="150" label="月份二" >
+                <el-table-column prop="" width="150" label="产品线二销售额" >
                   <template slot-scope="scope">
                     <el-input size="small" disabled v-model="scope.row.revenuePlTwo"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" width="150" label="月份三" >
+                <el-table-column prop="" width="150" label="产品线三销售额" >
                   <template slot-scope="scope">
                     <el-input size="small" disabled v-model="scope.row.revenuePlThree"></el-input>
                   </template>
@@ -497,7 +497,7 @@
           this.form = res.data.data 
           this.form.custBankInfo.bankCountry = JSON.parse(res.data.data.custBankInfo.bankCountry)
           res.data.data.addresses.forEach((item,index)=>{
-              this.form.addresses[index].country = JSON.parse(item.country)
+              this.form.addresses[index].country = item.country.split(',')
           })
         }
       },
