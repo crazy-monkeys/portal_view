@@ -20,8 +20,11 @@
               </el-form-item>
               <el-form-item label="状态">
                 <el-select v-model="form.status" clearable>
-                  <el-option value='1' label="已提交"></el-option>
-                  <el-option value='2' label="已验证"></el-option>
+                  <el-option value='-1' label="驳回"></el-option>
+                  <el-option value='1' label="新增待处理"></el-option>
+                  <el-option value='2' label="已提交"></el-option>
+                  <el-option value='3' label="删除待处理"></el-option>
+                  <el-option value='3' label="修改待处理"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="销售">
@@ -45,6 +48,15 @@
               <el-table :data="list" border style="width: 100%" height="100%" @row-click='rowClick' @selection-change="handleSelectionChange">
                 <el-table-column type="selection"  show-overflow-tooltip></el-table-column>
                 <el-table-column prop="errorMsg" width='100' label="错误信息" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="status==-1" width='100' label="状态" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <span v-if="scope.row.status==-1">驳回</span>
+                    <span v-if="scope.row.status==1">新增待处理</span>
+                    <span v-if="scope.row.status==2">已提交</span>
+                    <span v-if="scope.row.status==3">删除待处理</span>
+                    <span v-if="scope.row.status==4">修改待处理</span>
+                  </template>
+                </el-table-column>
                 <el-table-column prop="createTimeStr" width='100' label="上传日期" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="operationYearMonth" width='80' label="年月" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="company" width='80' label="出货公司" show-overflow-tooltip></el-table-column>

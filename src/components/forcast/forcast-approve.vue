@@ -38,8 +38,11 @@
           </el-form-item>
           <el-form-item label="状态">
             <el-select v-model="form.isUpdate" clearable size="small">
-              <el-option label="已调整" value="1"> </el-option>
-              <el-option label="未调整" value="0"> </el-option>
+              <el-option value='-1' label="驳回"></el-option>
+                  <el-option value='1' label="新增待处理"></el-option>
+                  <el-option value='2' label="已提交"></el-option>
+                  <el-option value='3' label="删除待处理"></el-option>
+                  <el-option value='3' label="修改待处理"></el-option>
             </el-select>
           </el-form-item>
           
