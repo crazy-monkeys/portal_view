@@ -2,120 +2,130 @@
   <div class="announce">
     <div class="sellBox">
 
-    <div class="head clear">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item >系统管理</el-breadcrumb-item>
-        <el-breadcrumb-item>公告管理</el-breadcrumb-item>
-      </el-breadcrumb>
-    </div>
-    <div class="box">
-      <div class="sels clear">
-        <div class="lineBox">
-          <i class="el-icon-arrow-down" v-if='!dialogVisible1' @click='change'> 展开</i>
-
-          <i class="el-icon-arrow-up" v-if='dialogVisible1' @click='change'> 收起</i>
-        </div>
-        <el-form ref="selForm" :model="selForm" class="selForm" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible1'>
-          <el-form-item label="标题">
-            <el-input size='small' v-model="selForm.title" placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="类型">
-            <el-select size='small' v-model="selForm.typeId" clearable placeholder="请输入">
-              <el-option 
-              v-for="item in types" 
-              :key='item.pValue'
-              :label='item.zhName'
-              :value='item.pValue'
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="发布日期" class="date" v-model="selForm.startTime">
-            <Daterange @data='watchTime' :resetData='resetData' />
-          </el-form-item>
-          <el-form-item :label="' '">
-            <el-button size='small' type='primary' @click="search" plain>搜索</el-button>
-            <el-button @click='reset' size='small' type='primary' plain>重置</el-button>
-          </el-form-item>
-        </el-form>
+      <div class="head clear">
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item >系统管理</el-breadcrumb-item>
+          <el-breadcrumb-item>公告管理</el-breadcrumb-item>
+        </el-breadcrumb>
       </div>
-      <div class="tab">
-        <div class="btns clear">
-          <el-button class="add" @click='add' size='small' type='primary'>新建</el-button>
-        </div>
-        <el-table :data="list" border style="width: 100%" height="700" @row-click='rowClick' >
-          <el-table-column type="index" label="编号" v-if="false" width="80" show-overflow-tooltip>
-          </el-table-column>
-          <el-table-column label="id" prop="id" width="30" v-if="false">
-          </el-table-column>
-          <el-table-column prop="title" label="标题" show-overflow-tooltip>
-          </el-table-column>
-          <el-table-column prop="zhName" label="类型"  show-overflow-tooltip>
-          </el-table-column>
-          <el-table-column prop="createTimeStr" show-overflow-tooltip label="创建时间">
-          </el-table-column>
-          <el-table-column prop="createTimeStr" show-overflow-tooltip label="发布时间">
-          </el-table-column>
-          <el-table-column prop="createUserName" show-overflow-tooltip label="发布人">
-          </el-table-column>
-          <el-table-column prop="status" show-overflow-tooltip label="状态">
-            <template slot-scope='scope'>
-              {{scope.row.status==1?'已发布' : scope.row.status==0?'未发布' :scope.row.status==-1?'已撤销':''}}
-            </template>
-          </el-table-column>
-          <el-table-column prop="status" show-overflow-tooltip label="操作" fixed="right" width="80">
-            <template slot-scope="scope">
-              <el-button type="text" size="small" @click="del(list[scope.$index].id)">撤销</el-button>
-            </template>
-          </el-table-column>
-          <div slot="empty">
-            <p>无数据</p>
+      <div class="box">
+        <div class="sels clear">
+          <div class="lineBox">
+            <i class="el-icon-arrow-down" v-if='!dialogVisible1' @click='change'> 展开</i>
+
+            <i class="el-icon-arrow-up" v-if='dialogVisible1' @click='change'> 收起</i>
           </div>
-        </el-table>
-        <div class="block">
-          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-            :page-sizes="[10,30,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
-          </el-pagination>
+          <el-form ref="selForm" :model="selForm" class="selForm" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible1'>
+            <el-form-item label="标题">
+              <el-input size='small' v-model="selForm.title" placeholder="请输入"></el-input>
+            </el-form-item>
+            <el-form-item label="类型">
+              <el-select size='small' v-model="selForm.typeId" clearable placeholder="请输入">
+                <el-option 
+                v-for="item in types" 
+                :key='item.pValue'
+                :label='item.zhName'
+                :value='item.pValue'
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="发布日期" class="date" v-model="selForm.startTime">
+              <Daterange @data='watchTime' :resetData='resetData' />
+            </el-form-item>
+            <el-form-item :label="' '">
+              <el-button size='small' type='primary' @click="search" plain>搜索</el-button>
+              <el-button @click='reset' size='small' type='primary' plain>重置</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+        <div class="tab">
+          <div class="btns clear">
+            <el-button class="add" @click='add' size='small' type='primary'>新建</el-button>
+          </div>
+          <el-table :data="list" border style="width: 100%" height="700" @row-click='rowClick' >
+            <el-table-column type="index" label="编号" v-if="false" width="80" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column label="id" prop="id" width="30" v-if="false">
+            </el-table-column>
+            <el-table-column prop="title" label="标题" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="zhName" label="类型"  show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="createTimeStr" show-overflow-tooltip label="创建时间">
+            </el-table-column>
+            <el-table-column prop="createTimeStr" show-overflow-tooltip label="发布时间">
+            </el-table-column>
+            <el-table-column prop="createUserName" show-overflow-tooltip label="发布人">
+            </el-table-column>
+            <el-table-column prop="status" show-overflow-tooltip label="状态">
+              <template slot-scope='scope'>
+                {{scope.row.status==1?'已发布' : scope.row.status==0?'未发布' :scope.row.status==-1?'已撤销':''}}
+              </template>
+            </el-table-column>
+            <el-table-column prop="status" show-overflow-tooltip label="操作" fixed="right" width="80">
+              <template slot-scope="scope">
+                <el-button type="text" size="small" @click="del(list[scope.$index].id)">撤销</el-button>
+              </template>
+            </el-table-column>
+            <div slot="empty">
+              <p>无数据</p>
+            </div>
+          </el-table>
+          <div class="block">
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+              :page-sizes="[10,30,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
+            </el-pagination>
+          </div>
         </div>
       </div>
-    </div>
-    
-    <el-dialog title="公告发布" :visible.sync="dialogVisible" width="50%" :center="true">
-
-      <el-form ref="form" label-position="top" :rules="rules" :model="form" class="form" :inline='true'>
-          <el-form-item label="标题" prop='title'>
-            <el-input size='small' v-model="form.title" placeholder=""  ></el-input>
-          </el-form-item>
-          <el-form-item label="类型" prop='type'>
-            <el-select  size="small" v-model="form.type" filterable >
-              <el-option
-                v-for="item in types"
-                :key="item.pValue"
-                :label="item.zhName"
-                :value="item.pValue">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="附件" prop="fileList">
-            <el-upload class="upload-demo" accept=".pdf" name='files' :before-upload='beforeUpload' :on-success='uploadSuccess' :action='serverUrl+"/announcement/file"' :headers="{'Authorization': data}" :file-list="fileList">
-              <el-button size="mini" type="" >上传文件</el-button>
-            </el-upload>
-          </el-form-item>
-          
-        </el-form>
-        <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="improve" size="small">发布</el-button>
-          <el-button type="primary" @click="quit" size="small">取消</el-button>
-        </span>
       
-    </el-dialog>
-  </div>
+      <el-dialog title="公告发布" :visible.sync="dialogVisible" width="50%" :center="true">
+        <el-form ref="form" label-position="top" :rules="rules" :model="form" class="form" :inline='true'>
+            <el-form-item label="标题" prop='title'>
+              <el-input size='small' v-model="form.title" placeholder=""  ></el-input>
+            </el-form-item>
+            <el-form-item label="类型" prop='type'>
+              <el-select  size="small" v-model="form.type" filterable >
+                <el-option
+                  v-for="item in types"
+                  :key="item.pValue"
+                  :label="item.zhName"
+                  :value="item.pValue">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="可见人" prop='roleList'>
+              <el-select  size="small" v-model="form.roleList" filterable multiple collapse-tags>
+                <el-option
+                  v-for="item in userList"
+                  :key="item.id"
+                  :label="item.roleName"
+                  :value="item.id">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="附件" prop="fileList">
+              <el-upload class="upload-demo" accept=".pdf" name='files' :before-upload='beforeUpload' :on-success='uploadSuccess' :action='serverUrl+"/announcement/file"' :headers="{'Authorization': data}" :file-list="fileList">
+                <el-button size="mini" type="" >上传文件</el-button>
+              </el-upload>
+            </el-form-item>
+            
+          </el-form>
+          <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="improve" size="small">发布</el-button>
+            <el-button type="primary" @click="quit" size="small">取消</el-button>
+          </span>
+        
+      </el-dialog>
     </div>
+  </div>
 
 </template>
 
 <script>
   import {getList ,detail,addAndEdit,improve,cancel,upload} from "@/api/system/announce.js";
   import {getType} from "@/api/system/param.js";
+  import {getRolesAll} from "@/api/system/role.js";
   import {serverUrl} from "@/axios/request.js";
   import Daterange from "../com/date";
   
@@ -135,7 +145,10 @@
             { required: true, trigger: 'blur',message:'类型不能为空'}
           ],
           fileList: [
-            { required: true, trigger: 'blur',message:'附件不能为空'}
+            { required: true, trigger: 'change',message:'附件不能为空'}
+          ],
+          roleList: [
+            { required: true, trigger: 'change',message:'可见人不能为空'}
           ],
         },
         resetData:false,
@@ -143,7 +156,7 @@
         form:{
           title:'',
           type:'',
-
+          roleList:[]
         },
         time:'',
         types:[
@@ -156,6 +169,7 @@
           typeId:'',
         },
         fileList:[],
+        userList:[],
         rowData: {},
         dialogVisible: false,
         dialogVisible1: false,
@@ -167,7 +181,8 @@
     },
     created() {
       this.getList()
-      this.getType()
+      this.getType() 
+      this.getUserList()
     },
     watch:{
       fileList:{
@@ -177,6 +192,13 @@
       }
     },
     methods: {
+      async getUserList(){
+       const res = await getRolesAll();
+       console.log('角色列表',res)
+       if(res){
+         this.userList = res.data.data
+       }
+      },
       beforeUpload(val){
         // console.log(val)
         if(val.type=='application/pdf'){
@@ -273,7 +295,8 @@
               fileStoragePath:item.url,
               id:item.id
             }
-          })
+          }),
+          roleList:this.form.roleList
         }
         const res = await addAndEdit(data)
         // console.log('新增或编辑结果',res)
@@ -357,11 +380,20 @@
   padding: 0 20px 20px;
 
   .el-dialog{
-    .el-form-item{
-      width: 100%;
-      .el-select{
-        width: 100%;
-      }
+    .form {
+        .el-form-item__label {
+          height: 30px;
+        }
+        .el-form-item {
+          width: 100%;
+          // margin-bottom: 0;
+          .el-select{
+            width: 100%;
+          }
+        }
+        .date {
+          width: 414px;
+        }
     }
   }
   .sellBox{
@@ -396,21 +428,7 @@
           width: 414px;
         }
     }
-    .form {
-        .el-form-item__label {
-          height: 30px;
-        }
-        .el-form-item {
-          width: 100%;
-          margin-bottom: 0;
-          .el-select{
-            width: 100%;
-          }
-        }
-        .date {
-          width: 414px;
-        }
-    }
+    
     .box{
       height: 100%;
       position: relative;

@@ -710,7 +710,8 @@
           this.$prompt('请输入年月：如201908', '模版下载', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          // inputValidator:this.check,
+          inputPattern:/\S/,
+          inputErrorMessage:'年月不能为空'
         }).then(({ value }) => {
           this.$http({
             method: "get",

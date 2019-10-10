@@ -13,16 +13,18 @@
           <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
         </div>
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
-          <el-form-item label="代理商">
+          <el-form-item label="代理简称">
             <el-input size='small' clearable v-model="form.dealerName" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="客户">
             <el-input size='small' clearable v-model="form.customerName" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="状态">
-            <el-select v-model="form.status" clearable filterable size="small"> 
-              <el-option label="客户已确认" value='1'></el-option> 
-              <el-option label="客户未确认" value='2'></el-option> 
+            <el-select v-model="form.status" clearable size="small"> 
+              <el-option label="结算中" value='1'></el-option> 
+              <el-option label="客户待确认" value='2'></el-option> 
+              <el-option label="客户已确认" value='3'></el-option> 
+              <el-option label="执行完毕" value='4'></el-option> 
             </el-select>
           </el-form-item>
           <el-form-item label=' '>
@@ -57,10 +59,10 @@
                   </el-table-column>
                   <el-table-column prop="status" show-overflow-tooltip label="状态">
                     <template  slot-scope="scope">
-                      <span v-if="scope.row.status==1">审核中</span>
+                      <span v-if="scope.row.status==1">结算中</span>
                       <span v-if="scope.row.status==2">客户待确认</span>
                       <span v-if="scope.row.status==3">客户已确认</span>
-                      <span v-if="scope.row.status==4">执行完成</span>
+                      <span v-if="scope.row.status==4">执行完毕</span>
                     </template>
                   </el-table-column>
                   <el-table-column prop="remark" show-overflow-tooltip label="备注">
@@ -74,33 +76,48 @@
                 <el-input v-model="scope.row.money" size="small"></el-input>
               </template>
             </el-table-column>
-            <el-table-column prop="agencyName" width="150" label="代理商" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="agencyName" width="150" label="代理简称" show-overflow-tooltip></el-table-column>
             <el-table-column prop="customerShortName" width="150" label="客户简称" show-overflow-tooltip></el-table-column>
             <el-table-column prop="customerType" width="150" label="客户类型" show-overflow-tooltip></el-table-column>
             <el-table-column prop="salesName" width="150" label="销售名称" show-overflow-tooltip></el-table-column>
             <el-table-column prop="amebaHeader" width="150" label="阿米巴队长" show-overflow-tooltip></el-table-column>
             <el-table-column prop="amebaDepartment" width="150" label="阿米巴部门" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="shipmentCompany" width="150" label="出货公司" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="shipmentCompany" width="150" label="出货公司" show-overflow-tooltip>
+              <template slot-scope="scope">
+                <span v-if="scope.row.shipmentCompany==7100 ||scope.row.shipmentCompany==3000">
+                  {{"SPRD-"+scope.row.shipmentCompany }}
+                </span>
+                <span v-if="scope.row.shipmentCompany==4800 ">
+                  {{"RDA-"+scope.row.shipmentCompany }}
+                </span>
+                <span v-if="scope.row.shipmentCompany!=7100 && scope.row.shipmentCompany!=3000 && scope.row.shipmentCompany!=4800">
+                  {{scope.row.shipmentCompany }}
+                </span>
+              </template>
+            </el-table-column>
             <el-table-column prop="accountYearMonth" width="150" label="核算年月" show-overflow-tooltip></el-table-column>
             <el-table-column prop="orderMonth" width="150" label="订单年月" show-overflow-tooltip></el-table-column>
             <el-table-column prop="shipmentYearMonth" width="150" label="出货年月" show-overflow-tooltip></el-table-column>
             <el-table-column prop="bu" width="150" label="BU" show-overflow-tooltip></el-table-column>
             <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="platform" width="150" label="平台" show-overflow-tooltip></el-table-column>
             <el-table-column prop="product" width="150" label="产品型号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="qty" width="150" label="数量" show-overflow-tooltip></el-table-column>
             <el-table-column prop="salesPrice" width="150" label="Sales Price" show-overflow-tooltip></el-table-column>
             <el-table-column prop="poPrice" width="150" label="Old Price" show-overflow-tooltip></el-table-column>
             <el-table-column prop="actualPrice" width="150" label="Actual Price" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="platform" width="150" label="平台" show-overflow-tooltip></el-table-column>
             <el-table-column prop="rebateAmount"  width="150" label="Rebate金额" show-overflow-tooltip></el-table-column>
             <el-table-column prop="releaseAmount" width="150" label="已释放金额" show-overflow-tooltip></el-table-column>
             <el-table-column prop="surplusRebateAmount" width="150" label="剩余可释放金额" show-overflow-tooltip></el-table-column>
             <el-table-column label="状态" width="150" show-overflow-tooltip>
               <template slot-scope="scope">
-                {{scope.row.status==1 ?'客户已确认':'客户未确认' }}
+                <span v-if="scope.row.status==1">结算中</span>
+                <span v-if="scope.row.status==2">客户待确认</span>
+                <span v-if="scope.row.status==3">客户已确认</span>
+                <span v-if="scope.row.status==4">执行完毕</span>
               </template>
             </el-table-column>
-            <el-table-column  label="操作" width="160" fixed="right">
+            <el-table-column  label="操作" width="80" fixed="right">
               <template slot-scope="scope">
                 <!-- <el-button type='text' @click="send(scope.row.id)">发送确认函</el-button> -->
                 <el-button type='text' @click="mx(scope.row.id)">明细</el-button>
@@ -112,7 +129,7 @@
           </el-table>
           <div class="block">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-            :page-sizes="[10, 20,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
+            :page-sizes="[50,100,500]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
           </el-pagination>
         </div>
         </div>
@@ -177,7 +194,7 @@ import {getList,send,getAll,detail} from '@/api/business/rebate.js'
         //第几页
         currentPage: 1,
         //每页的容量
-        pageSize: 10,
+        pageSize: 50,
         //总数
         total: 0,
       }
@@ -218,12 +235,14 @@ import {getList,send,getAll,detail} from '@/api/business/rebate.js'
         }
       },
       send(){
-         var re= /^0\.\d+$|^[1-9]+(\.\d+)?$/
+         var re= /^[1-9]\d*$|^[1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0$/
          var sucArr =  this.multipleSelection.filter(item=>{
+             console.log(re.test(item.money))
            if(re.test(item.money)){
              return item
            }
          })
+         console.log(sucArr)
          if(sucArr.length==this.multipleSelection.length){
           this.success = true
           this.sendVis = true
@@ -261,7 +280,7 @@ import {getList,send,getAll,detail} from '@/api/business/rebate.js'
         // console.log('客户rebate列表',res);
         if(res){
           this.tableData = res.data.data.list.map(item=>{
-            return {money:'',...item}
+            return {money:item.surplusRebateAmount,...item}
           })
           this.total = res.data.data.total
         }

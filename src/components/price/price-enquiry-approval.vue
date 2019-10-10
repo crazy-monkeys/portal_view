@@ -361,7 +361,6 @@ export default {
       }
     },
     add1(type) {
-      this.dialogCreate = true
       if(type==1){
         this.form1.approvalStatus = 'pass'
         this.title = '审批'
@@ -371,6 +370,7 @@ export default {
         this.title = '驳回'
         this.label = '驳回信息'
       }
+      this.dialogCreate = true
     },
     change() {
       this.dialogVisible = !this.dialogVisible;

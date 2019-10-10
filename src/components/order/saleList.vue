@@ -284,6 +284,10 @@ export default {
       const data ={
         pageSize:this.pageSize,
         pageIndex:this.currentPage,
+        approvalStatus:this.form.approvalStatus,
+        salesOrderId:this.form.salesOrderId,
+        createStartDate:this.form.createStartDate,
+        createEndDate:this.form.createEndDate,
       }
       const res = await getSaleList(data);
       console.log('销售单申请列表',res)

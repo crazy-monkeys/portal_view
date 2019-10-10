@@ -53,7 +53,7 @@
       </div>
       <div class="box">
         <div class="btns" v-if="userType=='内部客户'">
-          <el-button class="add" size='small' type='primary' @click='add' :disabled="multipleSelection.length==0 ? true: false" >生成报价单</el-button>
+          <el-button class="add" size='small' type='primary' @click='add' :disabled="dis" >生成报价单</el-button>
         </div>
         <div class="tab">
           <el-table :data="tableData" border style="width: 100%" height="100%"  @selection-change="handleSelectionChange">
@@ -142,7 +142,7 @@
         <el-button size="small"  type="primary" @click="submitForm('form1')">确 定</el-button>
       </span>
     </el-dialog>
-    <Tem ref='print' :table='multipleSelection' :queryPrice='queryPrice' :type='type' ></Tem>
+    <Tem ref='print' :table='multipleSelection' :queryPrice='queryPrice' :type='type' :name='!dis?multipleSelection[0].inCustomer :""' :effectTime='!dis?multipleSelection[0].effectTime :""'></Tem>
 
   </div>
 </template>
@@ -159,6 +159,7 @@
     },
     data() {
       return {
+        dis:true,
         rules:{
           inquirer:[
             {required:true,triggle:'change',message:'请选择询价方'}
@@ -234,6 +235,21 @@
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
+        if(this.multipleSelection.length==0){
+          this.dis = true
+        }else{
+          var len1 = this.multipleSelection.filter(item=>{
+            return item.inCustomer == this.multipleSelection[0].inCustomer
+          }).length
+          var len2 = this.multipleSelection.filter(item=>{
+            return item.effectTime == this.multipleSelection[0].effectTime
+          }).length
+          if(len1==this.multipleSelection.length && len2==this.multipleSelection.length){
+            this.dis = false
+          }else{
+            this.dis = true
+          }
+        }
       },
       search(){
         this.currentPage = 1
