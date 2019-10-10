@@ -20,7 +20,6 @@
               </el-form-item>
               <el-form-item label="状态">
                 <el-select v-model="form.status" clearable>
-                  <el-option value='-1' label="驳回"></el-option>
                   <el-option value='1' label="新增待处理"></el-option>
                   <el-option value='2' label="已提交"></el-option>
                   <el-option value='3' label="删除待处理"></el-option>

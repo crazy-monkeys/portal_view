@@ -36,7 +36,7 @@
           <el-form-item label="上传日期" class="date">
             <Daterange @data='watchTime' :resetDataReg='resetData' />
           </el-form-item>
-          <el-form-item label="状态">
+          <!-- <el-form-item label="状态">
             <el-select v-model="form.isUpdate" clearable size="small">
               <el-option value='-1' label="驳回"></el-option>
                   <el-option value='1' label="新增待处理"></el-option>
@@ -44,7 +44,7 @@
                   <el-option value='3' label="删除待处理"></el-option>
                   <el-option value='3' label="修改待处理"></el-option>
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
           
           <el-form-item label="阿米巴队长">
             <el-input size='small' placeholder="请输入"  v-model="form.ambPeople"></el-input>
@@ -105,9 +105,11 @@
             </el-table-column>
                 <el-table-column prop="" width='100' label="审批状态" show-overflow-tooltip>
                   <template slot-scope="scope">
-                    <span v-if="scope.row.status==-1">已驳回</span>
-                    <span v-if="scope.row.status==2">已通过</span>
-                    <span v-if="scope.row.status==1">待审批</span>
+                    <span v-if="scope.row.status==-1">驳回</span>
+                    <span v-if="scope.row.status==1">新增待处理</span>
+                    <span v-if="scope.row.status==2">已提交</span>
+                    <span v-if="scope.row.status==3">删除待处理</span>
+                    <span v-if="scope.row.status==4">修改待处理</span>
                   </template>
                 </el-table-column>
                 <el-table-column prop="createTimeStr" width='100' label="上传日期" show-overflow-tooltip></el-table-column>

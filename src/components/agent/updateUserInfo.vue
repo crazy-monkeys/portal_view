@@ -684,7 +684,14 @@
         //   {country:this.form.work,addressDetail:this.form.workAddress,addressType:'A02'},
         //   {country:this.form.reg,addressDetail:this.form.registAddress,addressType:'A01'}
         // ]
-        // this.form.custBankInfo.bankCountry =  this.form.custBankInfo.bankCountry.join(',')
+        if(typeof(this.form.custBankInfo.bankCountry)!='string'){
+          this.form.custBankInfo.bankCountry =  this.form.custBankInfo.bankCountry.join(',')
+        }
+        this.form.addresses.forEach((item)=>{
+          if(typeof(item.country)!='string'){
+            item.country = item.country.join(',')
+          }
+          })
         const res = await updateDealerInfo(this.form)
         // console.log('修改结果',res);
         if(res){
@@ -697,7 +704,7 @@
         // console.log('代理商信息',res)
         if(res){
           this.form = res.data.data 
-          this.form.custBankInfo.bankCountry = JSON.parse(res.data.data.custBankInfo.bankCountry)
+          this.form.custBankInfo.bankCountry = res.data.data.custBankInfo.bankCountry.split(',')
           res.data.data.addresses.forEach((item,index)=>{
               this.form.addresses[index].country = item.country.split(',')
           })
