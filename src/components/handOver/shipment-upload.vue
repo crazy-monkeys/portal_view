@@ -45,7 +45,21 @@
           <div class="box">
             <div class="btns clear">
               <el-button class="add"  size='small' type='primary' @click="deleteRows" :disabled="multipleSelection.length==0">批量删除</el-button>
-              <el-button class="add"  size='small' type='primary'>批量修改</el-button>
+              <el-button class="add"  size='small' type='primary'  @click="mods" :disabled="multipleSelection.length==0">批量修改</el-button>
+              <el-upload
+                class="upload-demo"
+                ref="upload"
+                :action="url2"
+                :data='da'
+                :headers='headers'
+                name="excel"
+                accept=".xlsx,.xls"
+                :auto-upload="true"
+                :show-file-list="false"
+                :on-success="suc"
+                >
+                <el-button size="small"  type="primary">上传修改文件</el-button>
+              </el-upload>
             </div>
             <div class="tab">
               <el-table :data="queryList" border style="width: 100%" height="100%" @selection-change="handleSelectionChange">
@@ -195,6 +209,7 @@
         isError1:true,
         isError2:true,
         url:serverUrl + '/handover/template',
+        url2:serverUrl + '/handover/detail/update/upload',
         url1:serverUrl+'/handover/error/retry',
         headers:{
           "Authorization": sessionStorage.getItem("data"),
@@ -275,8 +290,42 @@
       }
     },
     methods: {
+      
       handleSelectionChange(val) {
         this.multipleSelection = val;
+      },
+      mods(){
+
+        var ids = this.multipleSelection.map(item=>{
+            return item.id
+          }).join(',')
+
+          this.$http({
+            method: "get",
+            url: "" + process.env.API_ROOT + "/handover/detail/update/download?ids="+ids+'&type=deliver',
+            responseType: "arraybuffer",
+            headers:{
+              'Authorization': sessionStorage.getItem('data'),
+            }
+          })
+            .then(res => {
+              // console.log(res.data);
+              const blob = new Blob([res.data], {
+                type: "application/vnd.ms-excel"
+              });
+              const blobUrl = window.URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              document.body.appendChild(a);
+              a.style.display = "none";
+              a.download = "数据列表.xlsx";
+              a.href = blobUrl;
+              a.click();
+              document.body.removeChild(a);
+            })
+            .catch(err => {
+              // console.log(err);
+              alert("网络异常");
+            });
       },
       async del(){
         const data ={
