@@ -25,17 +25,17 @@
              <el-input v-model="form.productType" clearable>
             </el-input>
           </el-form-item>
-          <el-form-item label="产品层次一"  >
+          <el-form-item label="BU"  >
              <el-input v-model="form.productLevelOne" clearable>
             
             </el-input>
           </el-form-item>
-          <el-form-item label="产品层次二"  >
+          <el-form-item label="PDT"  >
              <el-input v-model="form.productLevelTwo" clearable>
               
             </el-input>
           </el-form-item>
-          <el-form-item label="产品层次三"  >
+          <el-form-item label="PlatForm"  >
              <el-input v-model="form.productLevelThree" clearable>
              
             </el-input>
@@ -57,9 +57,9 @@
           <el-table :data="tableData" border style="width: 100%" height="100%">
             <el-table-column prop="customerType" width='150' label="客户分类" show-overflow-tooltip></el-table-column>
             <el-table-column prop="insideCustomer" width='150' label="客户名称" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="productLevelOne" width='150' label="产品层次一" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="productLevelTwo" width="150" label="产品层次二" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="productLevelThree" width="150" label="产品层次三" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="productLevelOne" width='150' label="BU" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="productLevelTwo" width="150" label="PDT" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="productLevelThree" width="150" label="Platform" show-overflow-tooltip></el-table-column>
             <el-table-column prop="productType" width="150" label="Product Type" show-overflow-tooltip></el-table-column>
             <el-table-column prop="basicAgencyRate" width="150" label="基准代理费率(%)" show-overflow-tooltip></el-table-column>
             <el-table-column prop="floatAgencyRate" width="150" label="浮动代理费率(%)" show-overflow-tooltip></el-table-column>
