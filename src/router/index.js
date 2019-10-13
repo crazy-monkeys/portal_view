@@ -84,6 +84,12 @@ export default new Router({
 
 
                 //系统管理
+                //关系维护
+                {
+                    path: 'system/releation',
+                    name: 'releation',
+                    component: resolve => require(['@/components/system/releation'], resolve),
+                },
                 //系统参数设置
                 {
                     path: 'system/param',
