@@ -147,7 +147,7 @@
             <el-table-column width="250" label="操作" fixed='right'>
               <template slot-scope='scope'>
                 <el-button type='text' size='small' @click='getDetail(scope.row.id)'>明细</el-button>
-                <el-button type='text' size='small' @click='getProduct(scope.row.dealerId,scope.row.id)' :disabled="scope.row.approvalStatus==1 ? false:true">提货</el-button>
+                <el-button type='text' size='small' @click='getProduct(scope.row.dealerId,scope.row.id)'>提货</el-button>
                 <el-button type='text' size='small' @click='mod(scope.row)' :disabled="scope.row.approvalStatus!=0 ? false:true">修改</el-button>
                 <el-button type='text' size='small' @click='cal(scope.row)'  >取消</el-button>
               </template>

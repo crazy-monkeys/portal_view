@@ -15,6 +15,9 @@
         </div>
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <!-- 产品型号，申请人，申请时间，审批状态 -->
+          <el-form-item label="BU">
+            <el-input size='small'  v-model="form.bu" placeholder="请输入"></el-input>
+          </el-form-item>
           <el-form-item label="产品型号">
             <el-input size='small'  v-model="form.productModel" placeholder="请输入"></el-input>
           </el-form-item>
@@ -58,6 +61,8 @@
             <el-table-column prop="applyRemark"  width='150' label="审批说明" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="productModel" width='240' label="产品型号" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="bu" width='100' label="BU" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="applyTime" width='200' label="申请时间" show-overflow-tooltip>
             </el-table-column>
@@ -285,6 +290,7 @@ export default {
     async getDetail(row){
       const data ={
         productModel:row.productModel,
+        bu:row.bu,
         inCustomer:row.inCustomer
       }
       const res = await getDetail(data);
@@ -351,7 +357,8 @@ export default {
         pageSize:this.pageSize,
         proposer:this.form.proposer,
         approvalStatus:this.form.approvalStatus,
-        productModel:this.form.productModel
+        productModel:this.form.productModel,
+        bu:this.form.bu
       } 
       const res = await getList(data);
       // console.log('审批列表',res);
