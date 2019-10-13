@@ -36,38 +36,11 @@
                 <h3 style="padding:10px 0;color:purple">背景信息</h3>
               </template>
               <el-form-item label="公司资产" >
-              <el-input type="text" size="small" v-model="form.corportaeAssets"> </el-input>
+                <el-input type="text" size="small" v-model="form.corportaeAssets"> </el-input>
               </el-form-item>
               <el-form-item label="注册日期" class="date">
                 <el-date-picker size="small" v-model="form.registTime" type="date" value-format='yyyy-MM-dd'    placeholder="选择日期"></el-date-picker>
               </el-form-item>
-              <!-- <el-form-item label="公司人数">
-                <el-input type="text" size="small" v-model="form.staffNumber"></el-input>
-              </el-form-item> -->
-              <!-- <el-form-item label="注册地址" class="txt">
-                <el-cascader
-                  style="width:200"
-                  v-model="form.reg"
-                  :options="address"
-                  separator='-'
-                  size="small"
-                  :props="prop"
-                  placeholder="请选择省市区">
-                </el-cascader>
-                <el-input type="text" size="small" class="address" v-model="form.registAddress"></el-input>
-              </el-form-item>
-              <el-form-item label="办公地址" class="txt">
-                <el-cascader
-                  style="width:200"
-                  v-model="form.work"
-                  :options="address"
-                  separator='-'
-                  size="small"
-                  :props="prop"
-                  placeholder="请选择省市区">
-                </el-cascader>
-                <el-input type="text" size="small" class="address" v-model="form.workAddress"></el-input>
-              </el-form-item> -->
             </el-collapse-item>
             <el-collapse-item name="3">
               <template slot="title">

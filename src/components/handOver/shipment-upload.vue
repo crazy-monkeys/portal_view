@@ -45,7 +45,7 @@
           <div class="box">
             <div class="btns clear">
               <el-button class="add"  size='small' type='primary' @click="deleteRows" :disabled="multipleSelection.length==0">批量删除</el-button>
-              <el-button class="add"  size='small' type='primary'  @click="mods" :disabled="multipleSelection.length==0">批量修改</el-button>
+              <el-button class="add" style="margin-left:0"  size='small' type='primary'  @click="mods" :disabled="multipleSelection.length==0">批量修改</el-button>
               <el-upload
                 class="upload-demo"
                 ref="upload"

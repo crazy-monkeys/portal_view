@@ -81,11 +81,13 @@
         </div>
         <div class="tabBox">
           <el-table v-if='form.type==1' :data="form.iList" border="" style="width: 100%" height="500">
+            <el-table-column prop="company" label="发货公司" show-overflow-tooltip width="200" >
+            </el-table-column>
             <el-table-column prop="customerName" label="客户" show-overflow-tooltip width="200" >
             </el-table-column>
-            <el-table-column prop="adjustDate"   show-overflow-tooltip label="调价时间" width="200">
-            </el-table-column>
             <el-table-column prop="receiveGoodsDate"   show-overflow-tooltip label="收货时间" width="200">
+            </el-table-column>
+            <el-table-column prop="adjustDate"   show-overflow-tooltip label="调价时间" width="200">
             </el-table-column>
             <el-table-column prop="bu"   label="BU" show-overflow-tooltip width="200">
             </el-table-column>
@@ -99,9 +101,13 @@
             </el-table-column>
             <el-table-column prop="num"   show-overflow-tooltip label="库存数量" width="200">
             </el-table-column>
-            <el-table-column prop="price"  show-overflow-tooltip label="库存价格" width="200">
-            </el-table-column>
             <el-table-column prop="currency"   show-overflow-tooltip label="币种" width="200">
+            </el-table-column>
+            <el-table-column prop="customerAttribute"  show-overflow-tooltip label="客户属性" width="200">
+            </el-table-column>
+            <el-table-column prop="agencyRate"  show-overflow-tooltip label="代理费率" width="200">
+            </el-table-column>
+            <el-table-column prop="price"  show-overflow-tooltip label="库存价格" width="200">
             </el-table-column>
             <el-table-column prop="newPrice"   show-overflow-tooltip label="新价格" width="200">
             </el-table-column>
@@ -116,8 +122,13 @@
             </div>
           </el-table>
           <el-table v-if='form.type==2' :data="form.dList" border="" style="width: 100%" height="500">
+            <el-table-column prop="company" label="发货公司" show-overflow-tooltip width="200" >
+            </el-table-column>
             <el-table-column prop="customerName" label="客户" show-overflow-tooltip width="200" >
             </el-table-column>
+            <el-table-column prop="customerAttribute"  show-overflow-tooltip label="客户属性" width="200">
+            </el-table-column>
+            
             <el-table-column prop="bu"   label="BU" show-overflow-tooltip width="200">
             </el-table-column>
             <el-table-column prop="pdt"  label="PDT" show-overflow-tooltip width="200">
@@ -135,6 +146,8 @@
             <el-table-column prop="customerPrice"  show-overflow-tooltip label="客户提货单价" width="200">
             </el-table-column>
             <el-table-column prop="agentPrice"  show-overflow-tooltip label="代理提货单价" width="200">
+            </el-table-column>
+            <el-table-column prop="agencyRate"  show-overflow-tooltip label="代理费率" width="200">
             </el-table-column>
             <el-table-column prop="differenceAmount"  show-overflow-tooltip label="差价金额" width="200">
             </el-table-column>
