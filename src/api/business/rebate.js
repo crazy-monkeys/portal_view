@@ -16,10 +16,13 @@ export const detail = data => {
 
 //发送确认函
 export const send = data => {
-    return request('post', `${serverUrl}/business/rebate/confirm`, data).then(result => result)
-}
-
-//详情
+        return request('post', `${serverUrl}/business/rebate/confirm`, data).then(result => result)
+    }
+    //备注
+export const mark = data => {
+        return request('post', `${serverUrl}/business/rebate/saveRemark`, data).then(result => result)
+    }
+    //详情
 export const getAll = data => {
     return request('get', `${serverUrl}/sys/customer/all`).then(result => result)
 }

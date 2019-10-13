@@ -117,10 +117,12 @@
                 <span v-if="scope.row.status==4">执行完毕</span>
               </template>
             </el-table-column>
-            <el-table-column  label="操作" width="80" fixed="right">
+            <el-table-column prop="remark" width="150" label="备注" show-overflow-tooltip></el-table-column>
+            <el-table-column  label="操作" width="100" fixed="right">
               <template slot-scope="scope">
                 <!-- <el-button type='text' @click="send(scope.row.id)">发送确认函</el-button> -->
                 <el-button type='text' @click="mx(scope.row.id)">明细</el-button>
+                <el-button type='text' @click="remark(scope.row.id)">备注</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -168,7 +170,7 @@
 </template>
 
 <script>
-import {getList,send,getAll,detail} from '@/api/business/rebate.js'
+import {getList,send,getAll,detail,mark} from '@/api/business/rebate.js'
   export default {
     name: 'customerRebate',
     data() {
@@ -208,7 +210,27 @@ import {getList,send,getAll,detail} from '@/api/business/rebate.js'
     watch: {
     },
     methods: {
-       handleSelectionChange(val) {
+      remark(){
+         this.$prompt('请输入备注', '备注', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+        }).then(({ value }) => {
+          this.mark(this.value,this.rowData.id)
+        }).catch(() => {
+            
+        });
+      },
+      async mark(val,id){
+        const data ={
+          remark:val,
+          id:id
+        }
+        const res = await mark(data);
+        if(res){
+          this.getList()
+        }
+      },
+      handleSelectionChange(val) {
         this.multipleSelection = val;
       },
       submitForm(formName){

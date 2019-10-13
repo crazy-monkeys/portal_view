@@ -2,11 +2,7 @@
   <div class="rebateDetail">
     <div class="sellBox">
       <div class="head clear">
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item>商务管理</el-breadcrumb-item>
-          <el-breadcrumb-item>客户Rebate</el-breadcrumb-item>
-          <el-breadcrumb-item>明细</el-breadcrumb-item>
-        </el-breadcrumb>
+        <el-page-header @back="back" content="明细"></el-page-header>
       </div>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="核算明细" name="first">
@@ -121,6 +117,9 @@ import {detail} from '@/api/business/rebate.js'
     watch: {
     },
     methods: {
+      back() {
+        window.history.back();
+      },
       async getMore(){
         const data ={
           id:this.id

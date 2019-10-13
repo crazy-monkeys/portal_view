@@ -199,7 +199,7 @@
         width="400px"
         top="10vh"
         >
-        <el-form ref="form1" :model="form1" size="small" class="form" label-width="auto" label-position='top'  >
+        <el-form ref="form1" :model="form1" :rules='rules' size="small" class="form" label-width="auto" label-position='top'  >
           <el-form-item label="授信额度初始值" >
             <el-input size='small' v-model="credit.credit"  resize="none"  disabled></el-input>
             
@@ -213,7 +213,7 @@
             
           </el-form-item>
           
-          <el-form-item label="需求交货日期" >
+          <el-form-item label="需求交货日期" prop='expectedDeliveryDate'>
             <el-date-picker
             style="width:100%"
               v-model="form1.expectedDeliveryDate"
@@ -228,8 +228,8 @@
           </el-form-item>
         </el-form>
           <span slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="submitForm('form',2)" size="small" plain>驳 回</el-button>
-            <el-button @click="submitForm('form',1)" size="small" type="primary" >通 过</el-button>
+            <el-button type="primary" @click="submitForm('form1',2)" size="small" plain>驳 回</el-button>
+            <el-button @click="submitForm('form1',1)" size="small" type="primary" >通 过</el-button>
           </span>
     </el-dialog>
   </div>
@@ -248,6 +248,9 @@ export default {
   },
   data() {
     return {
+      rules:{
+        expectedDeliveryDate:[{required:true,triggle:'change',message:'请输入需求交货日期'}]
+      },
       credit:{},
       list:[],
       resetData:true,
@@ -340,24 +343,30 @@ export default {
       const res = await approveList(data);
       if(res){
         this.tableData = res.data.data.list
+        this.total = res.data.data.total
       }
     },
     getDetail(id) {
       this.dialogVisible1 = true;
     },
     async approvalReject(approvalStatus){
-      const data ={
-        applyId:this.rowData.id,
-        reason:this.form1.reason,
-        expectedDeliveryDate:this.form1.expectedDeliveryDate,
-        approvalStatus:2,
+      if(this.form1.reason.length!=0){
+        const data ={
+          applyId:this.rowData.id,
+          reason:this.form1.reason,
+          expectedDeliveryDate:this.form1.expectedDeliveryDate,
+          approvalStatus:2,
+        }
+        const res = await approve(data);
+        if(res){
+          this.$message.success('审批成功')
+          this.dialogVisible5 = false
+          this.getList()
+        }
+      }else{
+        this.$message.error('请填写驳回原因')
       }
-      const res = await approve(data);
-      if(res){
-        this.$message.success('审批成功')
-        this.dialogVisible5 = false
-        this.getList()
-      }
+      
     },
     async approvePass(approvalStatus){
       const data ={
