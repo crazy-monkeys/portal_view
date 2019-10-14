@@ -81,7 +81,7 @@
         </div>
         <div class="tabBox">
           <el-table v-if='form.type==1' :data="form.iList" border="" style="width: 100%" height="500">
-            <el-table-column prop="company" label="发货公司" show-overflow-tooltip width="200" >
+            <el-table-column prop="shipmentCompany" label="发货公司" show-overflow-tooltip width="200" >
             </el-table-column>
             <el-table-column prop="customerName" label="客户" show-overflow-tooltip width="200" >
             </el-table-column>
@@ -122,7 +122,7 @@
             </div>
           </el-table>
           <el-table v-if='form.type==2' :data="form.dList" border="" style="width: 100%" height="500">
-            <el-table-column prop="company" label="发货公司" show-overflow-tooltip width="200" >
+            <el-table-column prop="shipmentCompany" label="发货公司" show-overflow-tooltip width="200" >
             </el-table-column>
             <el-table-column prop="customerName" label="客户" show-overflow-tooltip width="200" >
             </el-table-column>

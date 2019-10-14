@@ -20,7 +20,7 @@ export const send = data => {
     }
     //备注
 export const mark = data => {
-        return request('post', `${serverUrl}/business/rebate/saveRemark`, data).then(result => result)
+        return request('post', `${serverUrl}/business/rebate/modifyRemark`, data).then(result => result)
     }
     //详情
 export const getAll = data => {
