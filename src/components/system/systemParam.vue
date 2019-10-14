@@ -170,12 +170,16 @@
       return {
         models:[
           {
-            label:'公告管理',
+            label:'公告、文档管理',
             value:1,
             children:[
               {
                 label:'公告类型',
                 value:1,
+              },
+              {
+                label:'文档类型',
+                value:2,
               }
             ]
           },

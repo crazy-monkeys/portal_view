@@ -60,9 +60,9 @@
             </el-table-column>
             <el-table-column prop="applyRemark"  width='150' label="审批说明" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="productModel" width='240' label="产品型号" show-overflow-tooltip>
-            </el-table-column>
             <el-table-column prop="bu" width='100' label="BU" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="productModel" width='240' label="产品型号" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="applyTime" width='200' label="申请时间" show-overflow-tooltip>
             </el-table-column>

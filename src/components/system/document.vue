@@ -1,595 +1,361 @@
 <template>
   <div class="document">
     <div class="sellBox">
-    <div class="head clear">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item to="/home/account/settings">系统管理</el-breadcrumb-item>
-        <el-breadcrumb-item>文档管理</el-breadcrumb-item>
-      </el-breadcrumb>
-    </div>
-    <div class="sels clear">
-        <div class="lineBox">
-          <i class="el-icon-arrow-down" v-if='!dialogVisible3' @click='change'> 展开</i>
-          <i class="el-icon-arrow-up" v-if='dialogVisible3' @click='change'> 收起</i>
-        </div>
-        <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible3'>
-          <el-form-item label="文件名">
-            <el-input size='small' v-model="form.fileName" placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="文件版本">
-            <el-input v-model="form.version" size='small'  placeholder="请选择">
-            </el-input>
-          </el-form-item>
-          <el-form-item label="文件类型">
-            <el-select v-model="form.fileType" size='small' filterable placeholder="请选择">
-              <el-option v-for="item in fileTypes" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label=" ">
-            <el-button size='small' type='primary' plain @click="search">搜索</el-button>
-            <el-button  size='small' type='primary' plain @click="reset">重置</el-button>
-          </el-form-item>
-        </el-form>
+      <div class="head clear">
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item >系统管理</el-breadcrumb-item>
+          <el-breadcrumb-item>文档管理</el-breadcrumb-item>
+        </el-breadcrumb>
       </div>
-    <div class="box">
-      <div class="tab">
-        <el-table :data="tableData" style="width: 100%" height="700" @row-click='rowClick'>
-          <el-table-column type="index" label="编号" v-if="false" width="80">
-          </el-table-column>
-          <el-table-column label="" width="30" v-if="false">
-          </el-table-column>
-          <el-table-column prop="1" label="原文件名" >
-          </el-table-column>
-          <el-table-column prop="6" label="显示文件名" show-overflow-tooltip>
-          </el-table-column>
-          <el-table-column prop="2" show-overflow-tooltip label="版本">
-          </el-table-column>
-          <el-table-column prop="3" show-overflow-tooltip label="类型">
-          </el-table-column>
-          <el-table-column prop="4" show-overflow-tooltip label="创建时间">
-          </el-table-column>
-          <el-table-column prop="5" show-overflow-tooltip label="状态">
-          </el-table-column>
-          <el-table-column  show-overflow-tooltip label="操作" fixed="right" width="100">
-            <template slot-scope="scope">
-              <el-button type="text" size="small" @click="publish">
-                发布
-              </el-button>
-              <el-button type="text" size="small" @click="revoke">
-                撤销
-              </el-button>
-            </template>
-          </el-table-column>
-          <div slot="empty">
-            <p>无账户信息</p>
-          </div>
-        </el-table>
-        <div class="block">
-          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-            :page-sizes="[15,30,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
-          </el-pagination>
-        </div>
-      </div>
-    </div>
-    
-    <el-dialog title="发布" top="5vh" :visible.sync="dialogVisible" width="50%">
+      <div class="box">
+        <div class="sels clear">
+          <div class="lineBox">
+            <i class="el-icon-arrow-down" v-if='!dialogVisible1' @click='change'> 展开</i>
 
-      <el-form ref="form" :model="form" class="form" label-position='top' :inline='true'>
-          <el-form-item label="标题">
-            <el-input size='small' placeholder="" :readonly="true" v-model='v2'></el-input>
-          </el-form-item>
-          <el-form-item label="文件类型">
-            <el-select v-model="value" size="small" filterable placeholder="稽核报告">
-            </el-select>
-          </el-form-item>
-        </el-form>
-         <div class="div-round">
-          角色
-            <el-input size='small' placeholder="" class="input150"></el-input>
-          用户名
-            <el-input size='small' placeholder="" class="input150"></el-input>
-         </div>
-         <br/>
-          <el-table :data="tableData" style="width: 100%" height="300">
-            <el-table-column prop="" label="ID" v-if="false">
+            <i class="el-icon-arrow-up" v-if='dialogVisible1' @click='change'> 收起</i>
+          </div>
+          <el-form ref="selForm" :model="selForm" class="selForm" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible1'>
+            <el-form-item label="标题">
+              <el-input size='small' v-model="selForm.fileName" placeholder="请输入"></el-input>
+            </el-form-item>
+            <el-form-item label="类型">
+              <el-select size='small' v-model="selForm.typeId" clearable placeholder="请输入">
+                <el-option 
+                v-for="item in types" 
+                :key='item.pValue'
+                :label='item.zhName'
+                :value='item.pValue'
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <!-- <el-form-item label="发布日期" class="date" v-model="selForm.startTime">
+              <Daterange @data='watchTime' :resetData='resetData' />
+            </el-form-item> -->
+            <el-form-item :label="' '">
+              <el-button size='small' type='primary' @click="search" plain>搜索</el-button>
+              <el-button @click='reset' size='small' type='primary' plain>重置</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+        <div class="tab">
+          <div class="btns clear">
+            <el-button class="add" @click='add' size='small' type='primary'>新建</el-button>
+          </div>
+          <el-table :data="list" border style="width: 100%" height="700" @row-click='rowClick' >
+            <el-table-column type="index" label="编号" v-if="false" width="80" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="t1" label="授权" show-overflow-tooltip>
+            <el-table-column label="id" prop="id" width="30" v-if="false">
             </el-table-column>
-            <el-table-column prop="t2" label="用户名" show-overflow-tooltip>
+            <el-table-column prop="releaseFileName" label="标题" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="t3" label="角色" show-overflow-tooltip>
+            <el-table-column prop="thirdFileName" label="文件名"  show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="releaseUserName" show-overflow-tooltip label="发布人">
+            </el-table-column>
+            <el-table-column prop="releaseTimeStr" show-overflow-tooltip label="发布时间">
+            </el-table-column>
+            <el-table-column prop="status" show-overflow-tooltip label="状态">
+              <template slot-scope='scope'>
+                {{scope.row.status==1?'已发布' : scope.row.status==0?'未发布' :scope.row.status==-1?'已撤销':''}}
+              </template>
+            </el-table-column>
+            <el-table-column prop="status" show-overflow-tooltip label="操作" fixed="right" width="80">
+              <template slot-scope="scope">
+                <el-button type="text" size="small" @click="del(list[scope.$index].id)">撤销</el-button>
+              </template>
             </el-table-column>
             <div slot="empty">
-              无数据
+              <p>无数据</p>
             </div>
           </el-table>
+          <div class="block">
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+              :page-sizes="[10,30,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
+            </el-pagination>
+          </div>
+        </div>
+      </div>
+      
+      <el-dialog title="公告发布" :visible.sync="dialogVisible" width="50%" :center="true">
+        <el-form ref="form" label-position="top" :rules="rules" :model="form" class="form" :inline='true'>
+            <el-form-item label="标题" prop='title'>
+              <el-input size='small' v-model="form.title" placeholder=""  ></el-input>
+            </el-form-item>
+            <el-form-item label="类型" prop='type'>
+              <el-select  size="small" v-model="form.type" filterable >
+                <el-option
+                  v-for="item in types"
+                  :key="item.pValue"
+                  :label="item.zhName"
+                  :value="item.pValue">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="可见人" prop='roleList'>
+              <el-select  size="small" v-model="form.roleList" filterable multiple collapse-tags>
+                <el-option
+                  v-for="item in userList"
+                  :key="item.id"
+                  :label="item.loginName"
+                  :value="item.id">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="附件" >
+              <el-upload class="upload-demo"  name='file'  :on-success='uploadSuccess' :action='serverUrl+"/archive/file"' :headers="{'Authorization': data}" :file-list="form.fileList">
+                <el-button size="mini" type="" >上传文件</el-button>
+              </el-upload>
+            </el-form-item>
+            
+          </el-form>
           <span slot="footer" class="dialog-footer">
-            <el-button @click="cancel" size='small'>取 消</el-button>
-            <el-button type="primary" @click="submitForm('roleForm')" size='small'>发 布</el-button>
+            <el-button type="primary" @click="submitForm('form')" size="small">发布</el-button>
+            <el-button type="primary" @click="quit" size="small">取消</el-button>
           </span>
-    </el-dialog>
+        
+      </el-dialog>
     </div>
   </div>
+
 </template>
 
 <script>
-  import formTest from "../../assets/js/formTest";
-  import formatDate from "../../assets/js/formatDate";
-
+  import {getList ,detail,addAndEdit,improve,cancel,upload} from "@/api/system/document.js";
+  import {getType} from "@/api/system/param.js";
+  import {getRolesAll} from "@/api/system/role.js";
+  import {getUserList} from "@/api/system/user.js";
+  import {serverUrl} from "@/axios/request.js";
+  import Daterange from "../com/date";
+  
   export default {
     name: 'document',
+    components:{
+      Daterange
+    },
     data() {
       return {
-        fileTypes:[],
+        data:sessionStorage.getItem('data'),
+        rules: {
+          title: [
+            { required: true, trigger: 'blur',message:'标题不能为空'}
+          ],
+          type: [
+            { required: true, trigger: 'change',message:'类型不能为空'}
+          ],
+          fileList: [
+            { required: true, trigger: ['change','blur'],message:'附件不能为空'}
+          ],
+          roleList: [
+            { required: true, trigger: 'change',message:'可见人不能为空'}
+          ],
+        },
+        resetData:false,
+        serverUrl: serverUrl,
         form:{
-          fileType:'',
-          fileName:'',
-          version:''
+          title:'',
+          type:'',
+          roleList:[],
+          fileList:[],
+          fileObj:{}
         },
-        rowData: {},
-        defaultProps: {
-          children: 'children',
-          label: 'userGroupName'
-        },
-        dialogVisible: false,
-        dialogVisible3: false,
-        tableData: [
-          {
-            "1":"最新公告.txt",
-            "2":"1.0",
-            "3":"文档",
-            "4":"2019-06-01",
-            "5":"已发布",
-            "6":"最新公告"
-          },
-          {
-            "1":"最新公告.txt",
-            "2":"1.0",
-            "3":"文档",
-            "4":"2019-06-01",
-            "5":"已发布",
-            "6":"最新公告"
-          },
-          {
-            "1":"最新公告.txt",
-            "2":"1.0",
-            "3":"文档",
-            "4":"2019-06-01",
-            "5":"已发布",
-            "6":"最新公告"
-          }
+        time:'',
+        types:[
+         
         ],
+        
+        selForm:{
+          fileName:'',
+          startTime:'',
+          endTime:'',
+          typeId:'',
+        },
+        fileList:[],
+        userList:[],
+        rowData: {},
+        dialogVisible: false,
+        dialogVisible1: false,
+        list: [],
         currentPage: 1,
-        pageSize: 15,
+        pageSize: 10,
         total: 0,
       }
     },
     created() {
+      this.getList()
+      this.getType() 
+      this.getUserList()
     },
-    watch: {
-     
+    watch:{
     },
     methods: {
-      revoke(){
-        this.$confirm('确定要撤回发布吗？', '撤销', {
+      async getUserList(){
+      var data ={
+        pageNum:1,
+        pageSize:10000,
+      }
+       const res = await getUserList(data);
+       console.log('用户列表',res)
+       if(res){
+         this.userList = res.data.data.list
+       }
+      },
+      async getType(){
+        var data ={
+          model:1,
+          func:2,
+        }
+        const res = await getType(data);
+        // console.log('公告类型',res)
+        if(res){
+          this.types = res.data.data
+        }
+      },
+    //   watchTime(data){
+    //   // console.log(data)
+    //   this.selForm.startTime = data.startTime
+    //   this.selForm.endTime = data.endTime
+    //   this.resetData = false
+    // },
+      del(id){
+        this.$confirm('是否确认操作', '撤销', {
             distinguishCancelAndClose: true,
             confirmButtonText: '确认',
             cancelButtonText: '取消'
           })
-            .then(() => {
-              this.$message({
-                type: 'success',
-                message: '撤销成功'
-              })
-            })
-            .catch(action => {
-              this.$message({
-                type: 'fail',
-                message: '已取消操作'
-              })
-            });
+          .then(() => { 
+          this.cancel(id)
+          })
+          .catch(action => {
+          });
       },
-      cancel(){
+      async cancel(id){
+        var data ={
+          id:id
+        }
+        // console.log(data)
+        const res = await cancel(data)
+        // console.log('撤销结果',res)
+        if(res){
+          this.getList()
+        }
+      },
+      uploadSuccess(res, file, fileList){
+        // console.log(res,file,fileList)
+        if(res){
+          this.form.fileObj = res.data 
+          this.form.fileList = [
+            {
+              name:res.data.thirdFileName,
+              url:res.data.fileStoragePath,
+              id:res.data.id
+            }
+          ] 
+        }
+      },
+      search(){
+        this.currentPage =1
+        this.getList()
+      },
+      reset(){
+        this.resetData = true
+        this.selForm.fileName = ''
+        this.selForm.typeId = ''
+        this.selForm.startTime = ''
+        this.selForm.endTime = ''
+        // this.time={}
+        this.getList()
+      },
+      async improve(){
+        this.form.fileObj.releaseFileName = this.form.title;
+        this.form.fileObj.typeId = this.form.type;
+        this.form.fileObj.userIds = this.form.roleList;
+        // var data ={
+        //   title:this.form.title,
+        //   typeId:this.form.type,
+        //   fileList:this.form.fileList.map(item=>{
+        //     return {
+        //       fileName:item.name,
+        //       fileStoragePath:item.url,
+        //       id:item.id
+        //     }
+        //   }),
+        //   roleList:this.form.roleList
+        // }
+        const res = await addAndEdit(this.form.fileObj)
+        // console.log('新增或编辑结果',res)
+        if(res){
+          this.resetForm('form')
+          this.clearForm()
+          this.getList()
+          this.dialogVisible = false
+        }
+      },
+      quit(){
+        this.resetForm('form')
+        this.clearForm()
         this.dialogVisible = false
       },
-      publish(){
-        this.dialogVisible = true
+      clearForm(){
+        this.form ={
+          title:'',
+          type:'',
+          fileList:[],
+          fileObj:{}
+        }
       },
-      change(){
-        this.dialogVisible3 =!this.dialogVisible3
+      //展开搜索框
+      change() {
+        this.dialogVisible1 = !this.dialogVisible1;
       },
-      reset(){},
       rowClick(row) {
         // console.log(row)
         this.rowData = row
-      },
-      filterNode(value, data) {
-        // console.log(value, data)
-        if (!value) return true;
-        return data.userGroupName.indexOf(value) !== -1;
-      },
-      a() {
-        // console.log(this.$refs.tree.getCheckedKeys())
-        this.form.groups = this.$refs.tree.getCheckedKeys()
-      },
-      add0(m) { return m < 10 ? '0' + m : m },
-      format(shijianchuo) {
-        //shijianchuo是整数，否则要parseInt转换
-        if (!shijianchuo) {
-          return ''
-        } else {
-          var time = new Date(shijianchuo);
-          var y = time.getFullYear();
-          var m = time.getMonth() + 1;
-          var d = time.getDate();
-          var h = time.getHours();
-          var mm = time.getMinutes();
-          var s = time.getSeconds();
-          return y + '-' + this.add0(m) + '-' + this.add0(d) + ' ' + this.add0(h) + ':' + this.add0(mm) + ':' + this.add0(s);
-        }
-
+        // console.log(row.id)
       },
       //获取角色列表
-      getRoles() {
+      async getList() {
         var data = {
-          pageIndex: 1,
-          pageSize: 10000
+          pageNum: this.currentPage,
+          pageSize: this.pageSize,
+          fileName: this.selForm.fileName,
+          typeId: this.selForm.typeId,
         }
-        this.$http.get('' + process.env.API_ROOT + '/system/permission/roleInfo?' + this.toQueryString(data)
-        )
-          .then((res) => {
-            // console.log('角色列表', res)
-            if (res.data.code == 1) {
-              this.roles = res.data.data.list
-            } else {
-
-            }
-          }).catch((err) => {
-            // console.log(err);
-            alert('网络异常')
-          })
-      },
-      //切换tab
-      handleClick(tab, event) {
-        // // console.log(tab, event);
-      },
-      //启用禁用
-      changeStatus(index, rows, type) {
-        var formData = new FormData()
-        formData.append(
-          'userId', rows[index].userId
-        )
-        if (rows[index].status == 3) {
-          formData.append(
-            'status', 1
-          )
-        } else {
-          formData.append(
-            'status', 3
-          )
+        const res = await getList(data)
+        // console.log('公告列表',res)
+        if(res){
+          this.list = res.data.data.list
+          this.total = res.data.data.total
         }
-
-        // var data ={
-        //   userId:rows[index].userId,
-        //   status:rows[index].status
-        // }
-        this.$confirm('确定要' + (rows[index].status == 3 ? '启用 ' : '禁用 ') + rows[index].loginName + ' 吗？', (rows[index].status == 3 ? '启用' : '禁用'), {
-          distinguishCancelAndClose: true,
-          confirmButtonText: '确定',
-          cancelButtonText: '取消'
-        })
-          .then(() => {
-            this.$http.post('' + process.env.API_ROOT + '/system/loginUser/updateUserStatus', formData
-            ).then((res) => {
-              // console.log('改变状态结果', res)
-              if (res.data.code == 1) {
-                this.getAccountList()
-              } else {
-
-              }
-            }).catch((err) => {
-              // console.log(err);
-              alert('网络异常')
-            })
-          })
-          .catch(action => {
-            // this.$message({
-            //   type: 'fail',
-            //   message: '已取消操作'
-            // })
-          });
       },
       //修改表单提交
       submitForm(formName) {
-        // this.$refs[formName].validate(valid => {
-        //   if (valid) {
-        //     this.commit()
-        //     // this.$refs[formName].clearValidate();
-        //   } else {
-        //     // console.log("error submit!!");
-        //     return false;
-        //   }
-        // });
-        this.dialogVisible = false
+        this.$formTest.submitForm(this.$refs[formName],this.improve)  
       },
       //重置表单
       resetForm(formName) {
-        if (this.$refs[formName]) {
-          if (this.$refs[formName] !== undefined) {
-            this.$refs[formName].resetFields();
-          } else {
-            this.$nextTick(() => {
-              this.$refs[formName].resetFields();
-            });
-          }
-        }
+        this.$formTest.resetForm(this.$refs[formName])  
       },
-      //搜索功能
-      search() {
+      //新建框
+      add() {
         this.dialogVisible = true;
       },
-      //清空表单数据
-      clearForm() {
-        //电话号码
-        this.form.phone = ''
-        //姓名
-        this.form.name = ''
-        //邮箱
-        this.form.email = ''
-        this.form.checkedRoles = []
-        //旧密码
-        this.form.oldPwd = ''
-        //新密码
-        this.form.newPwd = ''
-        //确认密码
-        this.form.rePwd = ''
-        //用户组
-        this.form.groups = []
-      },
-      //修改按钮
-      mod(index, rows) {
-        this.activeName = '1'
-        this.getRoles()
-        this.getGroup()
-        this.getMore(index, rows)
-        this.dialogVisible = true
-      },
-      //获取账户详情
-      getMore(index, rows) {
-        this.$http.get('' + process.env.API_ROOT + '/system/loginUser/getUserInfo?userId=' + rows[index].userId
-        ).then((res) => {
-          // console.log('账户详情', res)
-          if (res.data.code == 1) {
-            //角色
-            this.form.checkedRoles = res.data.data.roles.length != 0 ? res.data.data.roles.map((item) => { return item.roleId }) : []
-            //姓名
-            this.form.name = res.data.data.user.realName ? res.data.data.user.realName : ''
-            //邮箱
-            this.form.email = res.data.data.user.email ? res.data.data.user.email : ''
-            //手机号
-            this.form.phone = res.data.data.user.phone ? res.data.data.user.phone : ''
-            //用户组
-
-            this.form.groups = res.data.data.userGroupIds.length != 0 ? res.data.data.userGroupIds : []
-
-            // this.form.oldPwd= res.data.data.email
-            this.loginName = res.data.data.user.loginName ? res.data.data.user.loginName : ''
-
-            // console.log(this.form.checkedRoles)
-          } else {
-
-          }
-        }).catch((err) => {
-          // console.log(err);
-          alert('网络异常')
-        })
-      },
-      //获取用户组列表
-      getGroup() {
-
-        this.$http.get('' + process.env.API_ROOT + '/system/userGroup/getAllUserGroup'
-        )
-          .then((res) => {
-            // console.log('用户组列表', res)
-            if (res.data.code == 1) {
-              this.groups = res.data.data
-            } else {
-
-            }
-          }).catch((err) => {
-            // console.log(err);
-            alert('网络异常')
-          })
-      },
-      //把对象转成query值
-      cleanArray(actual) {
-        var newArray = [];
-        for (let i = 0; i < actual.length; i++) {
-          if (actual[i]) {
-            newArray.push(actual[i]);
-          }
-        }
-        return newArray;
-      },
-      toQueryString(obj) {
-        if (!obj) return "";
-        return this.cleanArray(
-          Object.keys(obj).map(key => {
-            if (obj[key] === undefined) return "";
-            return encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]);
-          })
-        ).join("&");
-      },
-      //获取账户列表
-      getAccountList() {
-        var data = {
-          loginName: this.accountName,
-          phone: this.phone,
-          realName: this.realName,
-        }
-        this.$http({
-          method: 'post',
-          url: '' + process.env.API_ROOT + '/system/loginUser/userInfo?pageIndex=' + this.currentPage + '&pageSize=' + this.pageSize,
-          data: data
-        }).then(res => {
-          // console.log("账户列表", res);
-          if (res.data.code == 1) {
-            this.tableData = res.data.data.list
-            this.total = res.data.data.total
-          } else {
-            this.tableData = []
-            this.total = 0
-          }
-        })
-          .catch(error => {
-            // console.log(error);
-            alert("登入失败");
-          });
-      },
-      //显示创建店铺框
-      add() {
-        this.$router.push(
-          {
-            name: 'accountAdd'
-          }
-        )
-      },
-      close() {
-        this.dialogVisible = false;
-        this.clearForm()
-      },
-      updatePwd() {
-        var data = {
-          oldLoginPwd: this.form.oldPwd,
-          newLoginPwd: this.form.newPwd,
-          userId: this.rowData.userId
-        }
-
-        return this.$http.post('' + process.env.API_ROOT + '/system/loginUser/updatePwd', data)
-        // ).then((res)=>{
-        //     // console.log('修改密码结果',res)
-        //     if(res.data.code ==1){
-        //       this.resetForm('form')
-        //     }else{
-        //       this.$message({
-        //         type:'error',
-        //         message:res.data.msg
-        //       })
-        //     }
-        // }).catch((err)=>{
-        //   // console.log(err);
-        //   alert('网络异常')
-        // })
-      },
-      updateMsg() {
-        var data = {
-          loginName: this.loginName,
-          realName: this.form.name,
-          phone: this.form.phone,
-          email: this.form.email,
-          userId: this.rowData.userId,
-          roleIds: this.form.checkedRoles.join(','),
-          userGroupIds: this.form.groups.join(','),
-        }
-
-        return this.$http.post('' + process.env.API_ROOT + '/system/loginUser/updateInfo', data)
-        // ).then((res)=>{
-        //     // console.log('修改结果',res)
-        //     if(res.data.code ==1){
-        //       // this.dialogVisible = false
-        //       this.resetForm('form')
-        //       this.getAccountList()
-        //     }else{
-        //       this.$message({
-        //         type:'error',
-        //         message:res.data.msg
-        //       })  
-        //     }
-        // }).catch((err)=>{
-        //   // console.log(err);
-        //   alert('网络异常')
-        // })
-      },
-      commit() {
-        // console.log(this)
-        if (this.form.oldPwd) {
-          this.$http.all([this.updatePwd(), this.updateMsg()])
-            .then(this.$http.spread((msgRes, pwdRes) => {
-              // 上面两个请求都完成后，才执行这个回调方法
-              // console.log(msgRes)
-              // console.log(pwdRes)
-              if (msgRes.data.code == 1 && pwdRes.data.code == 1) {
-                this.clearForm()
-                this.resetForm('form')
-                this.getAccountList()
-                this.$message({
-                  type: 'success',
-                  message: '修改成功'
-                })
-                this.dialogVisible = false
-              } else if (msgRes.data.code == 1 && pwdRes.data.code != 1) {
-                this.$message({
-                  type: 'error',
-                  message: pwdRes.data.msg
-                })
-              } else if (msgRes.data.code != 1 && pwdRes.data.code == 1) {
-                this.$message({
-                  type: 'error',
-                  message: msgRes.data.msg
-                })
-              } else {
-                this.$message({
-                  type: 'error',
-                  message: '修改失败'
-                })
-              }
-            })).catch((err) => {
-              // console.log(err);
-              alert('网络异常')
-            });
-        } else {
-          this.$http.all([this.updateMsg()])
-            .then(this.$http.spread((msgRes) => {
-              // 上面两个请求都完成后，才执行这个回调方法
-              // console.log(msgRes)
-              if (msgRes.data.code == 1) {
-                this.clearForm()
-                this.resetForm('form')
-                this.getAccountList()
-                this.$message({
-                  type: 'success',
-                  message: '修改成功'
-                })
-                this.dialogVisible = false
-              } else {
-                this.$message({
-                  type: 'error',
-                  message: msgRes.data.msg
-                })
-              }
-            })).catch((err) => {
-              // console.log(err);
-              alert('网络异常')
-            });
-        }
-      },
+      // 分页
       handleSizeChange(val) {
         // console.log(`每页 ${val} 条`);
         this.pageSize = val;
-        this.getAccountList()
+        this.getList()
       },
       handleCurrentChange(val) {
         // console.log(`当前页: ${val}`);
         this.currentPage = val;
-        this.getAccountList()
+        this.getList()
       }
     }
   }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
+  $sc:12;
 .document{
   height: 100%;
   box-sizing: border-box;
@@ -601,9 +367,14 @@
           height: 30px;
         }
         .el-form-item {
+          width: 100%;
+          // margin-bottom: 0;
           .el-select{
             width: 100%;
           }
+        }
+        .date {
+          width: 414px;
         }
     }
   }
@@ -624,8 +395,8 @@
         color: #b161bf;
       }
     }
-    .form {
-        .el-form-item__label {
+    .selForm{
+      .el-form-item__label {
           height: 30px;
         }
         .el-form-item {
@@ -639,12 +410,13 @@
           width: 414px;
         }
     }
+    
     .box{
       height: 100%;
       position: relative;
       display: flex;
       flex-direction: column;
-      background: #fff;
+      // background: #fff;
       .btns{
         padding: 10px 20px;
         // background: pink;
@@ -653,13 +425,16 @@
         padding-bottom: 52px;
         box-sizing: border-box;
         height: 100%;
-        // background: orange;
+        background: #fff;
         display: flex;
         flex-direction: column;
         position: relative;
         .el-table{
           height: 100%;
           position: relative;
+          td{
+            height: 10%;
+          }
         }
         .block{
           position: absolute;

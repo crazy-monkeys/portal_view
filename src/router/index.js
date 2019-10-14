@@ -90,6 +90,11 @@ export default new Router({
                     name: 'releation',
                     component: resolve => require(['@/components/system/releation'], resolve),
                 },
+                {
+                    path: 'system/document',
+                    name: 'document',
+                    component: resolve => require(['@/components/system/document'], resolve),
+                },
                 //系统参数设置
                 {
                     path: 'system/param',

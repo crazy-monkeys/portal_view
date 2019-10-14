@@ -31,11 +31,18 @@
                 label="序号"
                 width="100"
                 >
+                
+                </el-table-column>
+                <el-table-column
+                prop="bu"
+                label="事业部"
+                width="100"
+                >
                 </el-table-column>
                 <el-table-column
                 prop="productModel"
                 label="产品型号"
-                width="200"
+                width="100"
                 >
                 </el-table-column>
                 <el-table-column

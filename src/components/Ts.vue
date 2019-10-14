@@ -142,6 +142,8 @@
         if(res){
           this.tableData = res.data.data.list
           this.list = this.tableData
+          this.total = res.data.data.total
+
         }
       },
       rowClick(row) {

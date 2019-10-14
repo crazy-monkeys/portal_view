@@ -14,11 +14,11 @@
         <el-table :data="list" :show-header="false" style="width: 100%" height="100%" @row-click='rowClick'>
           <el-table-column  prop="title" >
             <template slot-scope="scope">
-              <!-- <a :href="scope.row.path" :download="scope.row.path"></a> -->
-              <el-button type="text"  @click="check(list[scope.$index].id)"> {{list[scope.$index].title}}</el-button>
+              <!-- <a :href="scope.row.fileStoragePath" :download="scope.row.fileStoragePath">{{list[scope.$index].thirdFileName}}</a> -->
+              <el-button type="text"  @click="download(list[scope.$index].id,scope.row.thirdFileName)"> {{list[scope.$index].thirdFileName}}</el-button>
             </template>
           </el-table-column>
-          <el-table-column prop="createTimeStr" align="right" show-overflow-tooltip >
+          <el-table-column prop="releaseTimeStr" align="right" show-overflow-tooltip >
           </el-table-column>
           <div slot="empty">
             <p>无数据</p>
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-  import {getList,view } from "@/api/system/announce.js";
+  import {getList,view ,downloadFiles} from "@/api/system/document.js";
   import {serverUrl } from "../axios/request.js";
   import {getType} from "@/api/system/param.js";
 
@@ -65,10 +65,11 @@
         handler:function(n,o){
           if(n){
             this.list = this.tableData.filter(item=>{
-              return item.title.includes(n) 
+              return item.thirdFileName.includes(n) 
             })
           }else{
             this.list = this.tableData
+
           }
           
         }
@@ -102,10 +103,35 @@
           window.open('/static/pdf/web/viewer.html?file=' + encodeURIComponent(url))
         }
       },
-      check(id){
-          window.open('/portal/static/pdf/web/viewer.html?file=' + encodeURIComponent(process.env.API_ROOT + '/announcement/file/'+id ) +'&.pdf' )
-      },
       
+      download(id,name){
+        this.$http({
+            method: "get",
+            url: "" + process.env.API_ROOT + "/archive/file/download?id="+id,
+            responseType: "arraybuffer",
+            headers:{
+              'Authorization': sessionStorage.getItem('data'),
+            }
+          })
+            .then(res => {
+              // console.log(res.data);
+              const blob = new Blob([res.data], {
+                // type: "application/vnd.ms-excel"
+              });
+              const blobUrl = window.URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              document.body.appendChild(a);
+              a.style.display = "none";
+              a.download = name;
+              a.href = blobUrl;
+              a.click();
+              document.body.removeChild(a);
+            })
+            .catch(err => {
+              // console.log(err);
+              alert("网络异常");
+            });
+      },
       // 将返回的流数据转换为url
       getObjectURL(file) {
           let url = null;
@@ -134,6 +160,7 @@
         var data = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
+          isRole:1
         }
         if(this.aciveName!=0){
           data.typeId = this.aciveName
@@ -143,6 +170,7 @@
         if(res){
           this.tableData = res.data.data.list
           this.list = this.tableData
+          this.total = res.data.data.total
         }
       },
       rowClick(row) {

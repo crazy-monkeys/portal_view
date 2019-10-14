@@ -124,15 +124,16 @@
     <el-dialog title="新建询价单" :visible.sync="dialogCreate" width="400px" :before-close="cancel">
       <div class="sels clear">
         <el-form ref="addForm" :model="addForm" class="form" :rules='rules' label-width="auto" label-position='top' :inline='true'>
+          <el-form-item label="BU"  prop="bu" class="inp">
+            <el-input size="small" v-model="addForm.bu" placeholder="请输入"></el-input>
+          </el-form-item>
           <el-form-item label="产品型号" prop="productModel"  class="inp">
             <el-input size="small" v-model="addForm.productModel" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="内部客户"  prop="inCustomer" class="inp">
             <el-input size="small" v-model="addForm.inCustomer" placeholder="请输入"></el-input>
           </el-form-item>
-          <el-form-item label="BU"  prop="bu" class="inp">
-            <el-input size="small" v-model="addForm.bu" placeholder="请输入"></el-input>
-          </el-form-item>
+          
           <el-form-item label="申请说明" prop="applyRemark" class="last">
              <el-input type='textarea' v-model='addForm.applyRemark' :rows="2" placeholder="" resize='none'></el-input>
           </el-form-item>

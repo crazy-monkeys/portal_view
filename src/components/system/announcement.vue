@@ -94,7 +94,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="可见人" prop='roleList'>
+            <!-- <el-form-item label="可见人" prop='roleList'>
               <el-select  size="small" v-model="form.roleList" filterable multiple collapse-tags>
                 <el-option
                   v-for="item in userList"
@@ -103,7 +103,7 @@
                   :value="item.id">
                 </el-option>
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="附件" prop="fileList">
               <el-upload class="upload-demo" accept=".pdf" name='files' :before-upload='beforeUpload' :on-success='uploadSuccess' :action='serverUrl+"/announcement/file"' :headers="{'Authorization': data}" :file-list="fileList">
                 <el-button size="mini" type="" >上传文件</el-button>
@@ -296,7 +296,6 @@
               id:item.id
             }
           }),
-          roleList:this.form.roleList
         }
         const res = await addAndEdit(data)
         // console.log('新增或编辑结果',res)
