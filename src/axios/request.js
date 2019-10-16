@@ -130,6 +130,23 @@ export const request = (method, url, data = {}, header = {}) => {
 
                         });
                 }
+                if (err.response.data.code == 10004) {
+                    // console.log(err.response.data);
+                    // Message.error(err.response.data.msg)
+                    MessageBox.alert('未登录', '提示', {
+                            showClose: false,
+                            distinguishCancelAndClose: true,
+                            confirmButtonText: '确定',
+                            // cancelButtonText: '取消'
+                        })
+                        .then(() => {
+                            // console.log(window)
+                            window.location.href = '/portal'
+                        })
+                        .catch(action => {
+
+                        });
+                }
 
             } else if (err.request) {
 
