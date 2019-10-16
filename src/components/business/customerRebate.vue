@@ -22,7 +22,7 @@
           <el-form-item label="状态">
             <el-select v-model="form.status" clearable size="small"> 
               <el-option label="结算中" value='1'></el-option> 
-              <el-option label="客户待确认" value='2'></el-option> 
+              <el-option label="客户未确认" value='2'></el-option> 
               <el-option label="客户已确认" value='3'></el-option> 
               <el-option label="执行完毕" value='4'></el-option> 
             </el-select>
@@ -60,7 +60,7 @@
                   <el-table-column prop="status" show-overflow-tooltip label="状态">
                     <template  slot-scope="scope">
                       <span v-if="scope.row.status==1">结算中</span>
-                      <span v-if="scope.row.status==2">客户待确认</span>
+                      <span v-if="scope.row.status==2">客户未确认</span>
                       <span v-if="scope.row.status==3">客户已确认</span>
                       <span v-if="scope.row.status==4">执行完毕</span>
                     </template>
@@ -76,7 +76,7 @@
                 <el-input v-model="scope.row.money" size="small"></el-input>
               </template>
             </el-table-column>
-            <el-table-column prop="agencyName" width="150" label="代理简称" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="agencyShortName" width="150" label="代理简称" show-overflow-tooltip></el-table-column>
             <el-table-column prop="customerShortName" width="150" label="客户简称" show-overflow-tooltip></el-table-column>
             <el-table-column prop="customerType" width="150" label="客户类型" show-overflow-tooltip></el-table-column>
             <el-table-column prop="salesName" width="150" label="销售名称" show-overflow-tooltip></el-table-column>
@@ -103,16 +103,16 @@
             <el-table-column prop="platform" width="150" label="平台" show-overflow-tooltip></el-table-column>
             <el-table-column prop="product" width="150" label="产品型号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="qty" width="150" label="数量" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="salesPrice" width="150" label="Sales Price" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="poPrice" width="150" label="Old Price" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="actualPrice" width="150" label="Actual Price" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="salesPrice" width="150" label="客户提货价格" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="poPrice" width="150" label="rebate计算价格" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="actualPrice" width="150" label="客户实际价格" show-overflow-tooltip></el-table-column>
             <el-table-column prop="rebateAmount"  width="150" label="Rebate金额" show-overflow-tooltip></el-table-column>
             <el-table-column prop="releaseAmount" width="150" label="已释放金额" show-overflow-tooltip></el-table-column>
             <el-table-column prop="surplusRebateAmount" width="150" label="剩余可释放金额" show-overflow-tooltip></el-table-column>
             <el-table-column label="状态" width="150" show-overflow-tooltip>
               <template slot-scope="scope">
                 <span v-if="scope.row.status==1">结算中</span>
-                <span v-if="scope.row.status==2">客户待确认</span>
+                <span v-if="scope.row.status==2">客户未确认</span>
                 <span v-if="scope.row.status==3">客户已确认</span>
                 <span v-if="scope.row.status==4">执行完毕</span>
               </template>

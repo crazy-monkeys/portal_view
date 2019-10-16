@@ -34,7 +34,7 @@
           <el-form-item label="状态">
             <el-select v-model="form.status" clearable size="small"> 
               <el-option label="结算中" value='1'></el-option> 
-              <el-option label="客户待确认" value='2'></el-option> 
+              <el-option label="客户未确认" value='2'></el-option> 
               <el-option label="客户已确认" value='3'></el-option> 
               <el-option label="执行完毕" value='4'></el-option> 
             </el-select>
@@ -73,7 +73,7 @@
             <el-table-column prop="status" width="150" label="状态" show-overflow-tooltip>
               <template slot-scope="scope">
                 <span v-if="scope.row.status==1">结算中</span>
-                <span v-if="scope.row.status==2">客户待确认</span>
+                <span v-if="scope.row.status==2">客户未确认</span>
                 <span v-if="scope.row.status==3">客户已确认</span>
                 <span v-if="scope.row.status==4">执行完毕</span>
               </template>
