@@ -93,9 +93,9 @@
             </el-table-column>
             <el-table-column prop="pdt"  label="PDT" show-overflow-tooltip width="200">
             </el-table-column>
-            <el-table-column prop="productType"   label="产品类型" show-overflow-tooltip width="200">
+            <el-table-column prop="productType"   label="Product Type" show-overflow-tooltip width="200">
             </el-table-column>
-            <el-table-column prop="platform"  show-overflow-tooltip label="平台" width="200">
+            <el-table-column prop="platform"  show-overflow-tooltip label="Platform" width="200">
             </el-table-column>
             <el-table-column prop="productModel"  show-overflow-tooltip label="产品型号" width="200">
             </el-table-column>
@@ -133,9 +133,9 @@
             </el-table-column>
             <el-table-column prop="pdt"  label="PDT" show-overflow-tooltip width="200">
             </el-table-column>
-            <el-table-column prop="productType"   label="产品类型" show-overflow-tooltip width="200">
+            <el-table-column prop="productType"   label="Product Type" show-overflow-tooltip width="200">
             </el-table-column>
-            <el-table-column prop="platfom"  show-overflow-tooltip label="平台" width="200">
+            <el-table-column prop="platform"  show-overflow-tooltip label="Platform" width="200">
             </el-table-column>
             <el-table-column prop="productModel"  show-overflow-tooltip label="产品型号" width="200">
             </el-table-column>
@@ -255,6 +255,7 @@ export default {
         crAmount	:'',
         company	:'',
         inCustomerName	:'',
+        outCustomerName:'',
         reson	:'',
         remark	:'',
         type:1,
@@ -270,8 +271,7 @@ export default {
     'form.shipperCode':{
       handler:function(n,o){
         if(n){
-        this.form.company = this.options2.filter(item=>{if(item.groupCode==n){return item}})[0].groupName
-
+          this.form.company = this.options2.filter(item=>{if(item.groupCode==n){return item}})[0].groupName
         }else{
           this.form.company=''
         }
@@ -291,7 +291,7 @@ export default {
           this.form.currency = ''
           this.form.crAmount = ''
           this.form.company = ''
-          this.form.inCustomerName = ''
+          // this.form.inCustomerName = ''
           this.form.outCustomerName = ''
           this.form.reson = ''
           this.form.remark = ''

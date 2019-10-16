@@ -16,10 +16,20 @@
                 <el-table-column prop="customerType" width='150' label="客户类别" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="amebaHeader" width='150' label="阿米巴队长" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="amebaDepartment" width='150' label="阿米巴部门" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="bu" width='150' label="BU" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="bu" width='150' label="BU" show-overflow-tooltip>
+                   <template slot-scope="scope">
+                <span v-if="scope.row.bu=='Connectivity Device BU'">泛连接</span>
+                <span v-if="scope.row.bu=='Industrial Electronics BU'">工业电子</span>
+                <span v-if="scope.row.bu=='Consumer Electronics BU'">消费电子</span>
+              </template>
+                </el-table-column>
                 <el-table-column prop="product" width='150' label="产品型号" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="shipmentType" width='150' label="出货类型" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="qty" width='150' label="数量" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="qty" width='150' label="数量($/K)" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                {{scope.row.qty/1000}}
+              </template>
+                </el-table-column>
                 <el-table-column prop="salesPrice" width='150' label="Sale Price($)" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="poPrice" width='150' label="Po Price($)" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="actualPrice" width='150' label="Actual Price($)" show-overflow-tooltip></el-table-column>

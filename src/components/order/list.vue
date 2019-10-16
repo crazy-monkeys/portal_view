@@ -150,6 +150,7 @@
                 <el-button type='text' size='small' @click='getProduct(scope.row.dealerId,scope.row.id)'>提货</el-button>
                 <el-button type='text' size='small' @click='mod(scope.row)' :disabled="scope.row.approvalStatus!=0 ? false:true">修改</el-button>
                 <el-button type='text' size='small' @click='cal(scope.row)'  >取消</el-button>
+                <el-button type='text' size='small' @click='modDate(scope.row.dealerId,scope.row.id)'  >变更交期</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -190,8 +191,6 @@
             <el-table-column prop="num" width="150" label="订单数量" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="remainingNum" width="150" label="剩余数量" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="rCurrency" width="150" label="币种" show-overflow-tooltip>
             </el-table-column>
             <div slot="empty">
               无数据
@@ -242,7 +241,6 @@
               </el-table-column>
               <el-table-column prop="remainingNum" width="150" label="剩余数量" show-overflow-tooltip>
               </el-table-column>
-              
               <div slot="empty">
                 无数据
               </div>
@@ -253,6 +251,54 @@
       <span slot="footer" class="dialog-footer">
         <el-button size="small" @click="cancel">取 消</el-button>
         <el-button size="small" type="primary" @click="submitForm('proForm')">确 定</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog title="变更交期" top="5vh" :visible.sync="modDateDia" width="600px">
+      <div class="tab">
+        <div class="tabBox">
+          <el-form ref="modDateForm" :model="modDateForm" :rules="rules" class="form" label-width="auto" label-position='top' >
+            <el-form-item label="授信额度初始值">
+              <el-input size='small' disabled v-model="credit.credit" ></el-input>
+            </el-form-item>
+            <el-form-item label="授信额度占用值">
+              <el-input size='small' disabled v-model="credit.creditUSE" ></el-input>
+            </el-form-item>
+            <el-form-item label="授信额度剩余值">
+              <el-input size='small' disabled v-model="credit.creditUnUSE" ></el-input>
+            </el-form-item>
+            <el-table :data="modDateForm.lines" style="width: 100%" border height="400">
+              <el-table-column prop="" width="200" label="期望交货日期" show-overflow-tooltip>
+                <template slot-scope="scope">
+                  <el-form-item :prop="'lines.'+scope.$index +'.expectedDeliveryDate'" :rules="rules.expectedDeliveryDate" >
+                    <el-date-picker
+                      v-model="scope.row.expectedDeliveryDate"
+                      type="date"
+                      style="width:100%"
+                      size="small"
+                      value-format="yyyyMMdd"
+                      placeholder="选择日期">
+                    </el-date-picker>
+                  </el-form-item>
+                </template>
+              </el-table-column>
+              <el-table-column prop="rItemNo" width="150" label="订单行号" show-overflow-tooltip>
+              </el-table-column>
+              <el-table-column prop="productId" width="150" label="物料号" show-overflow-tooltip>
+              </el-table-column>
+              <el-table-column prop="num" width="150" label="订单数量" show-overflow-tooltip>
+              </el-table-column>
+              <el-table-column prop="remainingNum" width="150" label="剩余数量" show-overflow-tooltip>
+              </el-table-column>
+              <div slot="empty">
+                无数据
+              </div>
+            </el-table>
+          </el-form>
+        </div>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button size="small" @click="cancel">取 消</el-button>
+        <el-button size="small" type="primary" @click="submitForm('modDateForm',true)">确 定</el-button>
       </span>
     </el-dialog>
     <el-dialog title="取消" top="5vh" :visible.sync="calDia" width="600px">
@@ -282,8 +328,6 @@
             </el-table-column>
             <el-table-column prop="remainingNum" width="150" label="剩余数量" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="rCurrency" width="150" label="币种" show-overflow-tooltip>
-            </el-table-column>
             <div slot="empty">
               无数据
             </div>
@@ -299,7 +343,7 @@
 </template>
 
 <script>
-import {queryList,detail,getCredit,submitPro,cancelOrder} from '@/api/order/list.js'
+import {queryList,detail,getCredit,submitPro,cancelOrder,submitFormModDate} from '@/api/order/list.js'
 import {getShip,getDealerList} from '@/api/system/param.js'
 import {getCode} from '@/api/business/idr.js'
 import Daterange from "../com/date";
@@ -322,6 +366,9 @@ export default {
         ],
         deliveryQuantity:[
           {required:true,triggle:'blur',message:'请输入提货数量'},
+        ],
+        expectedDeliveryDate:[
+          {required:true,triggle:'blur',message:'请输入期望提货日期'},
         ]
       },
       // 授信额度
@@ -336,6 +383,7 @@ export default {
       resetData:true,
       //提货表单
       proForm:{},
+      modDateForm:{},
       //筛选表单
       form: {
         rSapOrderId:'',
@@ -350,6 +398,7 @@ export default {
         dealerId:''
       },
       calDia:false,
+      modDateDia:false,
       //筛选条件显示否
       selDia: false,
       //明细显示否
@@ -429,10 +478,22 @@ export default {
         return  this.list.filter(item=>{return item.id == id})[0] ? this.list.filter(item=>{return item.id == id})[0].custName  :''
     },
     //表单验证
-    submitForm(formName){
-      this.$formTest.submitForm(this.$refs[formName],this.submitPro)
+    submitForm(formName,type){
+      this.$formTest.submitForm(this.$refs[formName],type? this.submitFormModDate : this.submitPro)
     },
     //提货确定按钮
+    async submitFormModDate(){
+      const data ={
+        orderId:this.modDateForm.orderId,
+      }
+      const param=this.modDateForm.lines.map(item=>{return {itemId:item.id,expectedDeliveryDate:item.expectedDeliveryDate}})
+      const res = await submitFormModDate(data,param);
+      // console.log('提货结果',res);
+      if(res){
+        this.$message.success('操作成功')
+        this.cancel()
+      }
+    },
     async submitPro(){
       const data ={
         orderId:this.proForm.orderId,
@@ -457,13 +518,23 @@ export default {
         deliverDate:"",
         lines:[]
       }
+      this.modDateForm ={
+        lines:[]
+      }
       this.proDia  = false
+      this.modDateDia  = false
       this.calDia = false
       this.$formTest.resetForm(this.$refs['proForm'])
+      this.$formTest.resetForm(this.$refs['modDateForm'])
     },
     //获取提货详细信息
     getProduct(dealerId,id){
       this.proDia = true
+      this.detail(id)
+      this.getCredit( dealerId)
+    },
+    modDate(dealerId,id){
+      this.modDateDia = true
       this.detail(id)
       this.getCredit( dealerId)
     },
@@ -545,6 +616,8 @@ export default {
         this.lines = res.data.data.lines
         this.proForm.lines = res.data.data.lines.map(item=>{return {...item,deliveryQuantity:''}})
         this.proForm.orderId = res.data.data.id
+        this.modDateForm.lines = res.data.data.lines
+        this.modDateForm.orderId = res.data.data.id
       }
     },
     //获取主列表数据

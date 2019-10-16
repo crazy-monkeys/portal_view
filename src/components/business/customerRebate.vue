@@ -48,6 +48,11 @@
                   <el-table-column prop="executor"  show-overflow-tooltip label="执行方">
                   </el-table-column>
                   <el-table-column prop="executeStyle"  show-overflow-tooltip label="执行方式">
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.executeStyle==1">抵扣代理商AR</span>
+                      <span v-if="scope.row.executeStyle==2">返货</span>
+                      <span v-if="scope.row.executeStyle==3">返款</span>
+                    </template>
                   </el-table-column>
                   <el-table-column prop="zrExecuteDate" show-overflow-tooltip label="展锐执行日期">
                   </el-table-column>
@@ -98,11 +103,21 @@
             <el-table-column prop="accountYearMonth" width="150" label="核算年月" show-overflow-tooltip></el-table-column>
             <el-table-column prop="orderMonth" width="150" label="订单年月" show-overflow-tooltip></el-table-column>
             <el-table-column prop="shipmentYearMonth" width="150" label="出货年月" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="bu" width="150" label="BU" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="bu" width="150" label="BU" show-overflow-tooltip>
+              <template slot-scope="scope">
+                <span v-if="scope.row.bu=='Connectivity Device BU'">泛连接</span>
+                <span v-if="scope.row.bu=='Industrial Electronics BU'">工业电子</span>
+                <span v-if="scope.row.bu=='Consumer Electronics BU'">消费电子</span>
+              </template>
+            </el-table-column>
             <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip></el-table-column>
             <el-table-column prop="platform" width="150" label="平台" show-overflow-tooltip></el-table-column>
             <el-table-column prop="product" width="150" label="产品型号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="qty" width="150" label="数量" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="qty" width="150" label="数量($/K)" show-overflow-tooltip>
+              <template slot-scope="scope">
+                {{scope.row.qty/1000}}
+              </template>
+            </el-table-column>
             <el-table-column prop="salesPrice" width="150" label="客户提货价格" show-overflow-tooltip></el-table-column>
             <el-table-column prop="poPrice" width="150" label="rebate计算价格" show-overflow-tooltip></el-table-column>
             <el-table-column prop="actualPrice" width="150" label="客户实际价格" show-overflow-tooltip></el-table-column>
@@ -153,8 +168,9 @@
           </el-form-item> -->
           <el-form-item label="执行方式">
             <el-select v-model="sendForm.executeStyle" size="small"> 
-              <el-option label="方式1" value='1'></el-option> 
-              <el-option label="方式2" value='2'></el-option> 
+              <el-option label="抵扣代理商AR" value='1'></el-option> 
+              <el-option label="返货" value='2'></el-option> 
+              <el-option label="返款" value='3'></el-option> 
             </el-select>
           </el-form-item>
           <el-form-item label="备注">
@@ -181,7 +197,7 @@ import {getList,send,getAll,detail,mark} from '@/api/business/rebate.js'
         sendForm:{
           executor:'',
           surplusRebateAmount:'',
-          executeStyle:'',
+          executeStyle:'1',
           remark:'',
         },
         executors:[],
@@ -215,7 +231,7 @@ import {getList,send,getAll,detail,mark} from '@/api/business/rebate.js'
           confirmButtonText: '确定',
           cancelButtonText: '取消',
         }).then(({ value }) => {
-          this.mark(this.value,this.rowData.id)
+          this.mark(value,this.rowData.id)
         }).catch(() => {
             
         });
@@ -241,7 +257,7 @@ import {getList,send,getAll,detail,mark} from '@/api/business/rebate.js'
         this.sendForm ={
           executor:'',
           surplusRebateAmount:'',
-          executeStyle:'',
+          executeStyle:'1',
           remark:'',
         }
         this.$formTest.resetForm(this.$refs['sendForm'])

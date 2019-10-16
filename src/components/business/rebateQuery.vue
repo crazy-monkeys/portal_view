@@ -24,8 +24,9 @@
           </el-form-item>
           <el-form-item label="执行方式">
             <el-select v-model="form.executeStyle" clearable size="small"> 
-              <el-option label="方式1" value='1'></el-option> 
-              <el-option label="方式2" value='2'></el-option> 
+              <el-option label="抵扣代理商AR" value='1'></el-option> 
+              <el-option label="返货" value='2'></el-option> 
+              <el-option label="返款" value='3'></el-option> 
             </el-select>
           </el-form-item>
           <el-form-item label="通知日期" class="date">
@@ -67,7 +68,13 @@
             </el-table-column>
             <el-table-column prop="rebateAmount" width="150" label="释放金额" show-overflow-tooltip></el-table-column>
             <el-table-column prop="executor" width="150" label="执行方" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="executeStyle" width="150" label="执行方式" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="executeStyle" width="150" label="执行方式" show-overflow-tooltip>
+              <template slot-scope="scope">
+                      <span v-if="scope.row.executeStyle==1">抵扣代理商AR</span>
+                      <span v-if="scope.row.executeStyle==2">返货</span>
+                      <span v-if="scope.row.executeStyle==3">返款</span>
+                    </template>
+            </el-table-column>
             <el-table-column prop="noticeDate" width="150" label="通知日期" show-overflow-tooltip></el-table-column>
             <el-table-column prop="remark" width="150" label="备注" show-overflow-tooltip></el-table-column>
             <el-table-column prop="status" width="150" label="状态" show-overflow-tooltip>

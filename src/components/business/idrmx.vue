@@ -48,88 +48,140 @@
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="单据信息" name="first">
             <div class="tabBox">
-              <el-table
-                :data="type==1 ? form.iList :type==2?  form.dList : form.rList"
-                border
-                style="width: 100%"
-                height="500"
-              >
-                <div v-if="type==1">
-                  <el-table-column  prop='remark'  show-overflow-tooltip label="备注" width="200"></el-table-column>
-
-                  <el-table-column  prop='customerName'  label="客户" show-overflow-tooltip width="200"></el-table-column>
-                  <el-table-column  prop='adjustDate'  show-overflow-tooltip label="调价时间" width="200"></el-table-column>
-                  <el-table-column  prop='receiveGoodsDate'  show-overflow-tooltip label="收货时间" width="200"></el-table-column>
-                  <el-table-column  prop='bu'  label="BU" show-overflow-tooltip width="200"></el-table-column>
-                  <el-table-column  prop='pdt'  label="PDT" show-overflow-tooltip width="200"></el-table-column>
-                  <el-table-column  prop='productType'  label="产品类型" show-overflow-tooltip width="200"></el-table-column>
-                  <el-table-column  prop='platform'  show-overflow-tooltip label="平台" width="200"></el-table-column>
-                  <el-table-column  prop='productModel'  show-overflow-tooltip label="产品型号" width="200"></el-table-column>
-                  <el-table-column  prop='num'  show-overflow-tooltip label="库存数量" width="200"></el-table-column>
-                  <el-table-column  prop='price'  show-overflow-tooltip label="库存价格" width="200"></el-table-column>
-                  <el-table-column  prop='currency'  show-overflow-tooltip label="币种" width="200"></el-table-column>
-                  <el-table-column  prop='newPrice'  show-overflow-tooltip label="新价格" width="200"></el-table-column>
-                  <el-table-column  prop='insuranceAmount'  show-overflow-tooltip label="保价金额" width="200"></el-table-column>
-                  <el-table-column  prop='modifyDate'  show-overflow-tooltip label="调整时间" width="200"></el-table-column>
-                </div>
-
-                <div v-if="type==2">
-                  <el-table-column prop='remark' show-overflow-tooltip label="备注" width="200"></el-table-column>
-
-                  <el-table-column
-                    prop='customerName'
-                    label="客户"
-                    show-overflow-tooltip
-                    width="200"
-                  ></el-table-column>
-                  <el-table-column prop='bu' label="BU" show-overflow-tooltip width="200"></el-table-column>
-                  <el-table-column prop='pdt' label="PDT" show-overflow-tooltip width="200"></el-table-column>
-                  <el-table-column prop='productType' label="产品类型" show-overflow-tooltip width="200"></el-table-column>
-                  <el-table-column prop='platfom' show-overflow-tooltip label="平台" width="200"></el-table-column>
-                  <el-table-column prop='productModel' show-overflow-tooltip label="产品型号" width="200"></el-table-column>
-                  <el-table-column prop='shipmentDate' show-overflow-tooltip label="出货时间" width="200"></el-table-column>
-                  <el-table-column prop='num' show-overflow-tooltip label="数量" width="200"></el-table-column>
-                  <el-table-column prop='customerPrice' show-overflow-tooltip label="客户提货单价" width="200"></el-table-column>
-                  <el-table-column prop='agentPrice' show-overflow-tooltip label="代理提货单价" width="200"></el-table-column>
-                  <el-table-column prop='differenceAmount' show-overflow-tooltip label="差价金额" width="200"></el-table-column>
-                </div>
-
-                <div v-if="type==3">
-                  <el-table-column prop="remark" show-overflow-tooltip label="备注" width="200"></el-table-column>
-
-                  <el-table-column prop="type" show-overflow-tooltip label="类型" width="200"></el-table-column>
-                  <el-table-column prop="orderNumber" show-overflow-tooltip label="订单号" width="200"></el-table-column>
-                  <el-table-column
-                    prop="takeGoodsDate"
-                    show-overflow-tooltip
-                    label="提货日期"
-                    width="200"
-                  ></el-table-column>
-                  <el-table-column prop="productLine" show-overflow-tooltip label="产品线" width="200"></el-table-column>
-                  <el-table-column prop="bu" show-overflow-tooltip label="BU" width="200"></el-table-column>
-                  <el-table-column prop="pdt" show-overflow-tooltip label="PDT" width="200"></el-table-column>
-                  <el-table-column prop="platform" show-overflow-tooltip label="平台" width="200"></el-table-column>
-                  <el-table-column
-                    prop="productModel"
-                    show-overflow-tooltip
-                    label="产品型号"
-                    width="200"
-                  ></el-table-column>
-                  <el-table-column prop="num" show-overflow-tooltip label="数量" width="200"></el-table-column>
-                  <el-table-column prop="currency" show-overflow-tooltip label="币种" width="200"></el-table-column>
-                  <el-table-column prop="price" show-overflow-tooltip label="价格" width="200"></el-table-column>
-                  <el-table-column prop="amount" show-overflow-tooltip label="金额" width="200"></el-table-column>
-                  <el-table-column
-                    prop="replacementDate"
-                    show-overflow-tooltip
-                    label="换货日期"
-                    width="200"
-                  ></el-table-column>
-                </div>
-
-                <div slot="empty">无数据</div>
-              </el-table>
+          <el-table v-if='form.type==1' :data="form.iList" border="" style="width: 100%" height="500">
+            <el-table-column prop="shipmentCompany" label="发货公司" show-overflow-tooltip width="200" >
+            </el-table-column>
+            <el-table-column prop="customerName" label="客户" show-overflow-tooltip width="200" >
+            </el-table-column>
+            <el-table-column prop="receiveGoodsDate"   show-overflow-tooltip label="收货时间" width="200">
+            </el-table-column>
+            <el-table-column prop="adjustDate"   show-overflow-tooltip label="调价时间" width="200">
+            </el-table-column>
+            <el-table-column prop="bu"   label="BU" show-overflow-tooltip width="200">
+            </el-table-column>
+            <el-table-column prop="pdt"  label="PDT" show-overflow-tooltip width="200">
+            </el-table-column>
+            <el-table-column prop="productType"   label="Product Type" show-overflow-tooltip width="200">
+            </el-table-column>
+            <el-table-column prop="platform"  show-overflow-tooltip label="Platform" width="200">
+            </el-table-column>
+            <el-table-column prop="productModel"  show-overflow-tooltip label="产品型号" width="200">
+            </el-table-column>
+            <el-table-column prop="num"   show-overflow-tooltip label="库存数量" width="200">
+            </el-table-column>
+            <el-table-column prop="currency"   show-overflow-tooltip label="币种" width="200">
+            </el-table-column>
+            <el-table-column prop="customerAttribute"  show-overflow-tooltip label="客户属性" width="200">
+            </el-table-column>
+            <el-table-column prop="agencyRate"  show-overflow-tooltip label="代理费率" width="200">
+            </el-table-column>
+            <el-table-column prop="price"  show-overflow-tooltip label="库存价格" width="200">
+            </el-table-column>
+            <el-table-column prop="newPrice"   show-overflow-tooltip label="新价格" width="200">
+            </el-table-column>
+            <el-table-column prop="insuranceAmount"  show-overflow-tooltip label="保价金额" width="200">
+            </el-table-column>
+            <el-table-column prop="modifyDate"   show-overflow-tooltip label="调整时间" width="200">
+            </el-table-column>
+            <el-table-column prop="remark"  show-overflow-tooltip label="备注" width="200">
+            </el-table-column>
+            <div slot="empty">
+              无数据
             </div>
+          </el-table>
+          <el-table v-if='form.type==2' :data="form.dList" border="" style="width: 100%" height="500">
+            <el-table-column prop="shipmentCompany" label="发货公司" show-overflow-tooltip width="200" >
+            </el-table-column>
+            <el-table-column prop="customerName" label="客户" show-overflow-tooltip width="200" >
+            </el-table-column>
+            <el-table-column prop="customerAttribute"  show-overflow-tooltip label="客户属性" width="200">
+            </el-table-column>
+            
+            <el-table-column prop="bu"   label="BU" show-overflow-tooltip width="200">
+            </el-table-column>
+            <el-table-column prop="pdt"  label="PDT" show-overflow-tooltip width="200">
+            </el-table-column>
+            <el-table-column prop="productType"   label="Product Type" show-overflow-tooltip width="200">
+            </el-table-column>
+            <el-table-column prop="platform"  show-overflow-tooltip label="Platform" width="200">
+            </el-table-column>
+            <el-table-column prop="productModel"  show-overflow-tooltip label="产品型号" width="200">
+            </el-table-column>
+            <el-table-column prop="shipmentDate"   show-overflow-tooltip label="出货时间" width="200">
+            </el-table-column>
+            <el-table-column prop="num"  show-overflow-tooltip label="数量" width="200">
+            </el-table-column>
+            <el-table-column prop="customerPrice"  show-overflow-tooltip label="客户提货单价" width="200">
+            </el-table-column>
+            <el-table-column prop="agentPrice"  show-overflow-tooltip label="代理提货单价" width="200">
+            </el-table-column>
+            <el-table-column prop="agencyRate"  show-overflow-tooltip label="代理费率" width="200">
+            </el-table-column>
+            <el-table-column prop="differenceAmount"  show-overflow-tooltip label="差价金额" width="200">
+            </el-table-column>
+            <el-table-column prop="remark"  show-overflow-tooltip label="备注" width="200">
+            </el-table-column>
+            <div slot="empty">
+              无数据
+            </div>
+          </el-table>
+          <el-table v-if='form.type==3' :data="form.rList" border="" style="width: 100%" height="500">
+            <el-table-column prop="shipmentCompany"  show-overflow-tooltip label="发货公司" width="200">
+            </el-table-column>
+            <el-table-column prop="agencyName"  show-overflow-tooltip label="代理商" width="200">
+            </el-table-column>
+            <el-table-column prop="takeGoodsDate"  show-overflow-tooltip label="提货日期" width="200">
+            </el-table-column>
+            <el-table-column prop="returnProductLine"  show-overflow-tooltip label="退货产品线" width="200">
+            </el-table-column>
+            <el-table-column prop="returnBu"  show-overflow-tooltip label="退货BU" width="200">
+            </el-table-column>
+            <el-table-column prop="returnPdt"  show-overflow-tooltip label="退货PDT" width="200">
+            </el-table-column>
+            <el-table-column prop="returnPlatform"  show-overflow-tooltip label="退货平台" width="200">
+            </el-table-column>
+            <el-table-column prop="returnProductModel"  show-overflow-tooltip label="退货产品型号" width="200">
+            </el-table-column>
+            <el-table-column prop="returnNum"  show-overflow-tooltip label="退货数量" width="200">
+            </el-table-column>
+            <el-table-column prop="returnCurrency"  show-overflow-tooltip label="退货币种" width="200">
+            </el-table-column>
+            <el-table-column prop="returnPrice"  show-overflow-tooltip label="退货价格" width="200">
+            </el-table-column>
+            <el-table-column prop="returnCustomerAttribute"  show-overflow-tooltip label="客户属性" width="200">
+            </el-table-column>
+            <el-table-column prop="returnAgencyRate"  show-overflow-tooltip label="代理费率" width="200">
+            </el-table-column>
+            <el-table-column prop="returnAmount"  show-overflow-tooltip label="退货金额" width="200">
+            </el-table-column>
+            
+            <el-table-column prop="exchangeProductLine"  show-overflow-tooltip label="换货产品线" width="200">
+            </el-table-column>
+            <el-table-column prop="exchangeBu"  show-overflow-tooltip label="换货BU" width="200">
+            </el-table-column>
+            <el-table-column prop="exchangePdt"  show-overflow-tooltip label="换货PDT" width="200">
+            </el-table-column>
+            <el-table-column prop="exchangePlatform"  show-overflow-tooltip label="换货平台" width="200">
+            </el-table-column>
+            <el-table-column prop="exchangeProductModel"  show-overflow-tooltip label="换货产品型号" width="200">
+            </el-table-column>
+            <el-table-column prop="exchangeNum"  show-overflow-tooltip label="换货数量" width="200">
+            </el-table-column>
+            <el-table-column prop="exchangeCurrency"  show-overflow-tooltip label="换货币种" width="200">
+            </el-table-column>
+            <el-table-column prop="exchangePrice"  show-overflow-tooltip label="换货价格" width="200">
+            </el-table-column>
+            <el-table-column prop="exchangeAmount"  show-overflow-tooltip label="换货金额" width="200">
+            </el-table-column>
+            <el-table-column prop="exchangeDate"  show-overflow-tooltip label="换货日期" width="200">
+            </el-table-column>
+            <el-table-column prop="remark"  show-overflow-tooltip label="备注" width="200">
+            </el-table-column>
+            <div slot="empty">
+              无数据
+            </div>
+          </el-table>
+        </div>
           </el-tab-pane>
           <el-tab-pane label="附件" name="fourth">
             <div class="tabBox">

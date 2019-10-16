@@ -15,7 +15,10 @@ export const getCredit = data => {
     }
     //提货
 export const submitPro = data => {
-        return request('post', `${serverUrl}/order/apply/submitOrderDelivery`, data).then(result => result)
+    return request('post', `${serverUrl}/order/apply/submitOrderDelivery`, data).then(result => result)
+}
+export const submitFormModDate = (data, param) => {
+        return request('post', `${serverUrl}/order/apply/modifyDeliveryDate/${data.orderId}`, param).then(result => result)
     }
     //提货单列表
 export const getProList = data => {

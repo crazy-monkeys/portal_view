@@ -213,7 +213,7 @@
             
           </el-form-item>
           
-          <el-form-item label="需求交货日期" prop='expectedDeliveryDate'>
+          <el-form-item label="需求交货日期" >
             <el-date-picker
             style="width:100%"
               v-model="form1.expectedDeliveryDate"

@@ -38,6 +38,11 @@
                 label="事业部"
                 width="100"
                 >
+                 <template slot-scope="scope">
+                <span v-if="scope.row.bu=='Connectivity Device BU'">泛连接</span>
+                <span v-if="scope.row.bu=='Industrial Electronics BU'">工业电子</span>
+                <span v-if="scope.row.bu=='Consumer Electronics BU'">消费电子</span>
+              </template>
                 </el-table-column>
                 <el-table-column
                 prop="productModel"
