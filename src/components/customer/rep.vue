@@ -391,7 +391,9 @@
               <el-table :data="form.relationships" style="width: 100%" height="300">
                 <el-table-column prop=""  label="名称" >
                   <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.corporateName"></el-input>
+                    <el-select  v-model="scope.row.corporateName" size="small" clearable filterable> 
+                      <el-option v-for="item in executors" :key='item.inCode' :value="item.inCode" :label="item.custName"> </el-option> 
+                    </el-select>
                   </template>
                 </el-table-column>
                 <el-table-column prop="" label="关系类型" >
@@ -566,10 +568,13 @@
 import {detail,add,checkCust} from "@/api/customer/query.js";
 import {stringify} from "qs";
 import {getType} from '@/api/system/param.js'
+  import {getAll} from '@/api/business/rebate.js'
+
 export default {
   name: "rep",
   data() {
     return {
+      executors:[],
       contactTypes:[],
       types:[],
         corporateTypes:[],
@@ -666,6 +671,7 @@ export default {
     // if(this.queryId){
     //   this.getDetail()
     // }
+    this.getAll()
     this.checkCust()
   },
   watch:{
@@ -690,6 +696,13 @@ export default {
     },
   },
   methods: {
+    async getAll(){
+        const res = await getAll();
+        // console.log('所有执行方',res);
+        if(res){
+          this.executors = res.data.data;
+        }
+      },
     getData(){
         this.getType(2,11)
         this.getType(2,6)

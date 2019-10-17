@@ -46,7 +46,7 @@
               <template slot-scope='scope' >
                 <el-button type="text" @click="mx(scope.row)">明细</el-button>
                 <el-button type="text" @click="bz" >确认</el-button>
-                <el-button type="text" @click="bz" :disabled="scope.row.type==2">出货确认</el-button>
+                <el-button type="text" @click="deliverConfirm(scope.row)" :disabled="scope.row.type==2">出货确认</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -83,7 +83,7 @@
 <script>
   import Daterange from "../com/date";
   import {download,sub,upload,downloadError,operat} from '@/api/handover/upload.js'
-  import {getList} from '@/api/handover/index.js'
+  import {getList,confirm} from '@/api/handover/index.js'
   import {serverUrl} from '../../axios/request'
   export default {
     name: 'shipmentQuery',
@@ -131,6 +131,28 @@
       
     },
     methods: {
+      deliverConfirm(row){
+        this.$confirm('确定发送邮件吗？', '确认', {
+            distinguishCancelAndClose: true,
+            confirmButtonText: '确定',
+            cancelButtonText: '取消'
+          })
+            .then(() => {
+                this.confirm(row.id)
+            })
+            .catch(action => {
+              
+            });
+      },
+      async confirm(id){
+        const data ={
+          recordId:id
+        }
+        const res = await confirm(data);
+        if(res){
+          console.log('已确定')
+        }
+      },
       rowClick(row){
         // console.log(row)
         this.rowData = row

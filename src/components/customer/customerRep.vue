@@ -169,6 +169,7 @@ export default {
   },
   watch: {},
   methods: {
+    
     reset(){
       this.form = {
         businessType:'',

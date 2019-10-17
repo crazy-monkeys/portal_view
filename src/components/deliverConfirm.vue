@@ -6,14 +6,15 @@
         <el-input v-model="form.newPwd"  type='textarea' :rows="2" resize="none"></el-input>
       </el-form-item>
       <div class="subBtn">
-        <el-button @click="close" >取消</el-button>
-        <el-button type="primary" @click="sub" >确定</el-button>
+        <el-button @click="sub(-1)" >不同意</el-button>
+        <el-button type="primary" @click="sub(1)" >同意</el-button>
       </div>
     </el-form>
   </div>
 </template>
 
 <script>
+import {sure} from '@/api/handover/index.js'
 export default {
   name: "deliverConfirm",
   data() {
@@ -28,8 +29,8 @@ export default {
   created(){
   },
   computed:{
-    sid(){
-      return this.$route.query.sid
+    detailIds(){
+      return this.$route.query.detailIds
     },
     loginName(){
       return this.$route.query.loginName
@@ -37,28 +38,21 @@ export default {
   },
   methods:{
     close(){
-      this.$router.push('/')
     },
-    sub(){
+    async sure(data){
+      const res = await sure(data);
+      if(res){
+        this.form.newPwd = ''
+        this.$message.success('操作成功')
+      }
+    },
+    sub(type){
       var data = {
         confirmMsg:this.form.newPwd,
+        confirmStatus:type,
+        detailIds:this.detailIds,
       }
-      this.$http.post("" + process.env.API_ROOT + "/handover/deliver/data/confirm")
-      .then(res => {
-        // console.log("修改密码结果", res);
-        if (res.data.code == 1) {
-            this.form.newPwd = '';
-        } else {
-          this.$message({
-            type:'error',
-            message:res.data.msg
-          })
-        }
-      })
-      .catch(error => {
-        console.log(error)
-        alert("系统异常");
-      });
+      this.sure(data)
     }
   }
 };

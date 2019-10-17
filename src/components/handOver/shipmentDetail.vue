@@ -39,10 +39,8 @@
       </div>
       <div class="box">
         <div class="tab">
-          
+        <div v-if='type=="deliver"' style="height:100%">
           <el-table :data="tableData" border height="100%" style="width:100%">
-<div v-if='type=="deliver"'>
-
             <el-table-column prop="customerExternalNumber" width='150' label="客户外部号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="customerFullName" width='150' label="客户全称" show-overflow-tooltip></el-table-column>
             <el-table-column prop="sales" width='150' label="销售" show-overflow-tooltip></el-table-column>
@@ -61,8 +59,22 @@
             <el-table-column prop="orderMonth" width='150' label="订单月份" show-overflow-tooltip></el-table-column>
             <el-table-column prop="deliveryCompany" width='150' label="发货公司" show-overflow-tooltip></el-table-column>
             <el-table-column prop="remark" width='150' label="备注"  show-overflow-tooltip></el-table-column>
+            <el-table-column prop="confirmMsg" width='150' label="客户备注"  show-overflow-tooltip></el-table-column>
+            <el-table-column prop="confirmStatus" width='150' label="确认状态"  show-overflow-tooltip>
+              <template slot-scope="scope">
+                <span v-if="scope.confirmStatus==-1">不同意</span>
+                <span v-if="scope.confirmStatus==1">同意</span>
+                <span v-if="scope.confirmStatus!=1 &&scope.confirmStatus!=-1">未确认</span>
+              </template>
+            </el-table-column>
+            <div slot="empty">
+              <p>无数据</p>
             </div>
-<div v-if='type=="receive"'>
+          </el-table>
+          </div>
+        <div v-if='type=="receive"' style="height:100%">
+          <el-table :data="tableData" border height="100%" style="width:100%">
+
                   <el-table-column prop="productModel" width='150' label="产品型号" show-overflow-tooltip></el-table-column>
                   <el-table-column prop="inventoryCategory" width='150' label="库存类别" show-overflow-tooltip></el-table-column>
                   <el-table-column prop="inventoryUnitPrice" width='150' label="库存单价" show-overflow-tooltip></el-table-column>
@@ -73,11 +85,12 @@
                   <el-table-column prop="deliveryCompany" width='150' label="发货公司" show-overflow-tooltip></el-table-column>
                   <el-table-column prop="purchaseNumber" width='150' label="采购单号" show-overflow-tooltip></el-table-column>
                   <el-table-column prop="remark" width='150' label="备注" show-overflow-tooltip></el-table-column>
-                  </div>
             <div slot="empty">
               <p>无数据</p>
             </div>
           </el-table>
+                  </div>
+
           <div class="block">
             <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
               :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
