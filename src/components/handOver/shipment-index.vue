@@ -7,13 +7,10 @@
           <el-breadcrumb-item>交付数据查询</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-
       <div class="sels clear">
         <div class="lineBox">
           <i class="el-icon-arrow-down" v-if='!dialogVisible' @click='change'> 展开</i>
-
           <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
-
         </div>
         <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
           <el-form-item label="代理商">
@@ -45,10 +42,11 @@
             <!-- <el-table-column prop="0" width='' label="出货日期"></el-table-column> -->
             <el-table-column prop="uploadTimeStr" width="150" label="上传日期" show-overflow-tooltip></el-table-column>
             <el-table-column prop="statusDesc" width="150" label="状态" show-overflow-tooltip></el-table-column>
-            <el-table-column  label="操作" fixed="right" width="100" show-overflow-tooltip>
+            <el-table-column  label="操作" fixed="right" width="200" >
               <template slot-scope='scope' >
                 <el-button type="text" @click="mx(scope.row)">明细</el-button>
                 <el-button type="text" @click="bz" >确认</el-button>
+                <el-button type="text" @click="bz" :disabled="scope.row.type==2">出货确认</el-button>
               </template>
             </el-table-column>
             <div slot="empty">

@@ -241,7 +241,10 @@
               <el-table :data="form.relationships" style="width: 100%" height="300">
                 <el-table-column prop=""  label="名称" >
                   <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.corporateName"></el-input>
+                    <!-- <el-input size="small" v-model="scope.row.corporateName"></el-input> -->
+                    <el-select v-model="scope.row.corporateName" size="small" clearable filterable> 
+                      <el-option v-for="item in executors" :key='item.inCode' :value="item.inCode" :label="item.custName"> </el-option> 
+                    </el-select>
                   </template>
                 </el-table-column>
                 <el-table-column prop="" label="关系类型" >
@@ -426,6 +429,8 @@
   import {getDealerInfo,updateDealerInfo} from '@/api/banner/banner.js'
   import {getType} from '@/api/system/param.js'
   import {serverUrl} from '@/axios/request.js'
+  import {getAll} from '@/api/business/rebate.js'
+
   export default {
     name: "updateUserInfo",
     data() {
@@ -435,6 +440,7 @@
         },
         auth:sessionStorage.getItem('data'),
         serverUrl:serverUrl,
+        executors:[],
         currences:[
           {
             pValue:'RMB',
@@ -470,9 +476,17 @@
     created(){
       this.getData()
       this.getCity()
+      this.getAll()
       this.getDealerInfo()
     },
     methods: {
+      async getAll(){
+        const res = await getAll();
+        // console.log('所有执行方',res);
+        if(res){
+          this.executors = res.data.data;
+        }
+      },
       getCity() {
       this.$http({
         method: "get",

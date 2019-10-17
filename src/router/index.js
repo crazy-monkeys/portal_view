@@ -24,6 +24,7 @@ export default new Router({
                     name: 'tb',
                     component: resolve => require(['@/components/Tb'], resolve)
                 },
+
                 //帮助页
                 {
                     path: 'help',
@@ -355,6 +356,10 @@ export default new Router({
             name: 'Pwd',
             component: resolve => require(['@/components/Pwd'], resolve),
         },
-
+        {
+            path: '/deliver/confirm',
+            name: 'deliverConfirm',
+            component: resolve => require(['@/components/deliverConfirm'], resolve)
+        }
     ]
 })
