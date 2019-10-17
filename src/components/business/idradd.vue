@@ -33,7 +33,7 @@
             <el-date-picker size="small" v-model="form.applyTime" value-format="yyyy-MM-dd" type="date"  placeholder="选择日期"></el-date-picker>
           </el-form-item>
           <el-form-item label="币种">
-            <el-select  filterable v-model="form.currency" size="small" filterable placeholder="请选择">
+            <el-select  filterable v-model="form.currency" size="small"  placeholder="请选择">
               <el-option
                 v-for="item in options1"
                 :key="item.value"
@@ -43,7 +43,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="CR金额" v-if="form.type!='2'">
-            <el-input size="small" v-model="form.crAmount" ></el-input>
+            <el-input size="small" type="number" v-model.number="form.crAmount" :min='0'></el-input>
           </el-form-item>
           
           <el-form-item label="内部客户名称">
