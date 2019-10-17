@@ -93,9 +93,9 @@
                 <span v-if="scope.row.orderType=='A06'" >分销商专货订单</span>
               </template>
             </el-table-column>
-            <el-table-column prop="rGrossValue" label="含税总金额" show-overflow-tooltip  width="150" >
+            <el-table-column prop="grossValue" label="含税总金额" show-overflow-tooltip  width="150" >
             </el-table-column>
-            <el-table-column prop="rNetValue" label="不含税总金额" show-overflow-tooltip  width="150" >
+            <el-table-column prop="netValue" label="不含税总金额" show-overflow-tooltip  width="150" >
             </el-table-column>
             <el-table-column prop="rSapCurrency" label="订单货币" show-overflow-tooltip  width="150" >
             </el-table-column>
