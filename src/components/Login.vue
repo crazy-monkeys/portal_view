@@ -86,7 +86,7 @@ export default {
     };
   },
   created() {},
-  
+
   methods: {
     clickImg(){
       this.newtime = new Date().getTime()
@@ -154,7 +154,7 @@ export default {
                     message:res.data.msg
                   })
                 }
-              
+
               })
               .catch(error => {
 
@@ -206,8 +206,7 @@ export default {
               method : 'post',
               url :  process.env.API_ROOT+ '/user/login',
               data:data,
-              // withCredentials:true,
-              // crossDomain: true
+              withCredentials:true
             }) .then(res => {
                 // console.log("登陆信息", res);
                 if (res.data.code===1) {
@@ -249,10 +248,10 @@ export default {
                 }
             });
             }
-            
+
           }
         }
-      },   
+      },
     forget(){
        this.dialogVisible = true
         // console.log('找回密码')
