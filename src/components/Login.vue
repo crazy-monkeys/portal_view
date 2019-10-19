@@ -23,10 +23,19 @@
             ></el-input>
             <span class="forget" @click="forget">忘记密码？</span>
           </el-form-item>
+          <el-form-item label-width="100" label="">
+            <el-input
+              type="text"
+              prefix-icon="el-icon-key"
+              v-model="verifyCode"
+              autocomplete="off"
+              @keyup.enter.native="sub"
+            ></el-input>
+            <img class="yzm" :src="baseUrl+'/verifyCode?timestamp='+newtime" alt="验证码图片" @click="clickImg">
+          </el-form-item>
         </div>
         <el-form-item class="loginBtns">
           <el-button class="sub"  @click="sub">登 录 </el-button>
- 
           <span class="dd">
             <!-- <a :href="url + '/ad/index'">Click here</a>  -->
             <el-button @click="dd" type="text">Click here</el-button>
@@ -65,6 +74,9 @@ export default {
   name: "login",
   data() {
     return {
+      newtime:new Date().getTime(),
+      baseUrl:process.env.API_ROOT,
+      verifyCode:"",
       loginName: "",
       loginPwd: "",
       url:process.env.API_ROOT,
@@ -76,6 +88,9 @@ export default {
   created() {},
   
   methods: {
+    clickImg(){
+      this.newtime = new Date().getTime()
+    },
      handleClose(){
        this.dialogVisible = false
        this.value= ''
@@ -165,7 +180,9 @@ export default {
     sub() {
         var data ={
           'loginName':this.loginName,
-          'loginPwd':this.loginPwd
+          'loginPwd':this.loginPwd,
+          'verifyCode':this.verifyCode,
+          'timestamp':this.newtime
         }
         if (!this.loginName) {
           this.$message({
@@ -179,7 +196,13 @@ export default {
               message: "请输入密码"
             });
           } else {
-            this.$http({
+            if(!this.verifyCode){
+              this.$message({
+                type: "error",
+                message: "请输入验证码"
+              });
+            }else{
+              this.$http({
               method : 'post',
               url :  process.env.API_ROOT+ '/user/login',
               data:data
@@ -198,18 +221,21 @@ export default {
                     type:'error',
                     message:res.data.msg
                   })
+                  this.newtime = new Date().getTime()
                 }
-              
               })
               .catch(error => {
                 if (error.response) {
                   // The request was made and the server responded with a status code
                   // that falls out of the range of 2xx
                   // console.log(error.response.data);
+                  console.log(error)
                   this.$message({
                     type:'error',
                     message:error.response.data.msg
                   })
+                  this.newtime = new Date().getTime()
+
                 } else if (error.request) {
                   // The request was made but no response was received
                   // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
@@ -219,7 +245,9 @@ export default {
                   // Something happened in setting up the request that triggered an Error
                   // console.log('Error', error.message);
                 }
-              });
+            });
+            }
+            
           }
         }
       },   
@@ -235,7 +263,7 @@ export default {
 <style lang="scss" >
 $sc: 12;
 .login .login-box .el-form-item {
-  margin-bottom: 50 / $sc + rem;
+  margin-bottom: 22 / $sc + rem;
 }
 
 .login .login-box .el-form-item__content {
@@ -367,13 +395,20 @@ $sc: 12;
         cursor: pointer;
         color: rgba(146,7,132,1);
       }
+      .yzm{
+        position: absolute;
+        right: 0;
+        top: 10 / $sc + rem;
+        cursor: pointer;
+        color: rgba(146,7,132,1);
+      }
       .forget:hover {
         color: rgba(146,7,132,0.5);
       }
     }
     .loginBtns {
       .dd{
-          padding-top: 40/$sc+rem;
+          padding-top: 20/$sc+rem;
           display: inline-block;
           width: 100%;
           text-align: center;
