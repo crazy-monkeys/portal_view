@@ -51,7 +51,7 @@
       </div>
       <div class="box">
         <div class="btns">
-          <el-button size="small" type="primary" @click="defend">维护</el-button>
+          <el-button size="small" type="primary" @click="defend" v-if="userType=='内部客户'">维护</el-button>
         </div>
         <div class="tab">
           <el-table :data="tableData" border style="width: 100%" height="100%">
@@ -119,7 +119,19 @@
         total: 0,
       }
     },
-    
+    computed:{
+      userType() {
+        if(this.$store.state.loginUser.loginInfo.userType=='agent'){
+          return '代理商'
+        }else if(
+          this.$store.state.loginUser.loginInfo.userType=='subAgent'
+        ){
+          return '子代理商'
+        }else{
+          return '内部客户'
+        }
+      }
+    },
     created() {
       this.getList()
     },

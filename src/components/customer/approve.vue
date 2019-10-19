@@ -86,7 +86,7 @@
         top="10vh"
         >
         <el-form ref="form1" :model="form1" :rules='rules' size="small" class="form1" label-width="auto" label-position='top'  >
-          <el-form-item :label="rowData.reportDealerName ? '销售':'代理商'" v-if="title=='审批'" prop='value'>
+          <el-form-item :label="rowData.reportDealerName ? '销售':'代理商'" v-if="title=='审批'" :prop='(title=="审批"&&rowData.reportSalesName)?"":"value"'>
             <el-select v-model="form1.value" placeholder="请选择" > 
               <el-option
                 v-for='item in rowData.reportDealerName ? salers  : delears '
@@ -97,7 +97,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item :label="label" prop="msg">
+          <el-form-item :label="label" :prop="title=='审批'?'':'msg'">
             <el-input size='small' v-model="form1.msg" rows='4' resize="none" type="textarea" placeholder="请输入"></el-input>
           </el-form-item>
         </el-form>

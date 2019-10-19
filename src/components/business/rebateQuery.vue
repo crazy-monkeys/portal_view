@@ -66,7 +66,7 @@
                 </span>
               </template>
             </el-table-column>
-            <el-table-column prop="rebateAmount" width="150" label="释放金额" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="rebateAmount" width="150" label="释放金额($/K)" show-overflow-tooltip></el-table-column>
             <el-table-column prop="executor" width="150" label="执行方" show-overflow-tooltip></el-table-column>
             <el-table-column prop="executeStyle" width="150" label="执行方式" show-overflow-tooltip>
               <template slot-scope="scope">

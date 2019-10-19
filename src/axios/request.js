@@ -6,7 +6,7 @@ import { Message, Loading, MessageBox } from 'element-ui';
 // 配置API接口地址
 // used environment variable
 export const serverUrl = process.env.API_ROOT; // 本地
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 
 let loading

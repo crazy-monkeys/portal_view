@@ -43,7 +43,7 @@
             <el-table-column type="expand">
               <template slot-scope="props">
                 <el-table :data="props.row.itemList" border style="width: 90%">
-                  <el-table-column prop="rebateAmount"  show-overflow-tooltip label="释放金额">
+                  <el-table-column prop="rebateAmount"  show-overflow-tooltip label="释放金额($/K)">
                   </el-table-column>
                   <el-table-column prop="executor"  show-overflow-tooltip label="执行方">
                   </el-table-column>
@@ -76,7 +76,7 @@
                 </el-table>
               </template>
             </el-table-column>
-            <el-table-column prop="" width="150" label="释放金额" show-overflow-tooltip>
+            <el-table-column prop="" width="150" label="释放金额($/K)" show-overflow-tooltip>
               <template slot-scope="scope">
                 <el-input v-model="scope.row.money" size="small"></el-input>
               </template>
@@ -113,7 +113,7 @@
             <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip></el-table-column>
             <el-table-column prop="platform" width="150" label="平台" show-overflow-tooltip></el-table-column>
             <el-table-column prop="product" width="150" label="产品型号" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="qty" width="150" label="数量($/K)" show-overflow-tooltip>
+            <el-table-column prop="qty" width="150" label="数量(K)" show-overflow-tooltip>
               <template slot-scope="scope">
                 {{scope.row.qty/1000}}
               </template>
@@ -121,7 +121,7 @@
             <el-table-column prop="salesPrice" width="150" label="客户提货价格" show-overflow-tooltip></el-table-column>
             <el-table-column prop="poPrice" width="150" label="rebate计算价格" show-overflow-tooltip></el-table-column>
             <el-table-column prop="actualPrice" width="150" label="客户实际价格" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="rebateAmount"  width="150" label="Rebate金额" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="rebateAmount"  width="150" label="Rebate金额($/K)" show-overflow-tooltip></el-table-column>
             <el-table-column prop="releaseAmount" width="150" label="已释放金额" show-overflow-tooltip></el-table-column>
             <el-table-column prop="surplusRebateAmount" width="150" label="剩余可释放金额" show-overflow-tooltip></el-table-column>
             <el-table-column label="状态" width="150" show-overflow-tooltip>
