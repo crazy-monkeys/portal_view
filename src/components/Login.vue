@@ -206,8 +206,8 @@ export default {
               method : 'post',
               url :  process.env.API_ROOT+ '/user/login',
               data:data,
-              withCredentials:true,
-              crossDomain: true
+              // withCredentials:true,
+              // crossDomain: true
             }) .then(res => {
                 // console.log("登陆信息", res);
                 if (res.data.code===1) {
