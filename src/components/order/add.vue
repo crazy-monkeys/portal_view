@@ -31,7 +31,7 @@
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="销售组织" prop="salesOrg">
                   <el-select v-model="form.salesOrg" size="small" filterable placeholder="请选择">
-                    <el-option v-for="item in salesOrgIds" :key="item.groupCode" :value='item.groupCode' :label="item.groupCode 
+                    <el-option v-for="item in salesOrgIds" :key="item.groupCode" :value='item.groupCode' :label="item.groupCode
                     + '-'+item.groupName"></el-option>
                   </el-select>
                 </el-form-item>
@@ -120,9 +120,9 @@
                 </el-form-item>
               </el-col> -->
             </el-row>
-          
+
         <div class="btns">
-          <el-button type='primary' class="add" size='small' @click="download">下载模版</el-button>
+          <el-button type='primary' class="add" size='small'><a class="a" :href="download()">下载模版</a></el-button>
           <el-upload
             class="upload-demo"
             :action="serverUrl+'/order/apply/upload'"
@@ -174,7 +174,7 @@
           </div>
           <div>
             <p>二、包装费用和运费由乙方承担。</p>
-          </div> 
+          </div>
           <div>
             <p class="one">三、乙方按订单金额提供：
               <el-form-item prop="invoiceType">
@@ -185,35 +185,35 @@
                 </el-radio-group>
               </el-form-item >
             </p>
-            <p class="two">发票传递： 
+            <p class="two">发票传递：
               <el-form-item prop="invoiceDeliveryType">
                 <el-radio-group v-model="form.invoiceDeliveryType">
                   <el-radio label="1" value='1'>随货</el-radio>
                   <el-radio label="2" value='2'>甲方办公地或<el-input v-model="form.invoiceDeliveryAddress" size="small" style="border:none;border-bottom:1px solid #000"></el-input></el-radio>
                 </el-radio-group>
-              </el-form-item>  
+              </el-form-item>
                </p>
-          </div> 
+          </div>
           <div>
             <p>四、任何情况下，乙方因本订单产生的赔偿责任不应超过本订单项下甲方支付给乙方的总货款数。</p>
           </div>
           <div>
             <p>五、<span>不可抗力：在履行本订单时，如果任何一方由于不可抗力的原因，包括但不限于战争行为、火灾、风暴、水灾、台风及其他恶劣的天气状况、地震、政府或类似干预，以及其他不可预见、不可避免并不可克服的任何原因导致其不能履行本订单项下的义务，该方就由此造成的任何履行延误或履行不能对另一方不负任何责任。</span></p>
-          </div>                                            
+          </div>
           <div>
             <p>六、本订单项下的货物买卖不应被解释为授予甲方任何的相关知识产权。</p>
-          </div> 
+          </div>
           <div>
             <p>七、因本订单引起的任何争议应提交上海国际经济贸易仲裁委员会仲裁解决。</p>
-          </div> 
+          </div>
           <div>
             <p>八、本订单为不可撤销订单。本订单传真件有效。</p>
-          </div> 
+          </div>
           <div>
               <el-form-item prop="isAgreed">
                 <el-checkbox  @change="changeccc" v-model="form.isAgreed" label="是否同意以上条款" ></el-checkbox>
               </el-form-item>
-          </div> 
+          </div>
         </div>
         </el-form>
         </div>
@@ -333,7 +333,7 @@ export default {
           ]
         },
       ],
-      value: "", 
+      value: "",
       radio: "1",
       form: {
         orderType:'',
@@ -451,33 +451,8 @@ export default {
       this.fileList = []
     },
     download(){
-      this.$http({
-            method: "get",
-            url: "" + process.env.API_ROOT + "/order/apply/lineTmpl",
-            responseType: "arraybuffer",
-            headers:{
-              'Authorization': sessionStorage.getItem('data'),
-            }
-          })
-            .then(res => {
-              // console.log(res.data);
-              const blob = new Blob([res.data], {
-                type: "application/vnd.ms-excel"
-              });
-              const blobUrl = window.URL.createObjectURL(blob);
-              const a = document.createElement("a");
-              document.body.appendChild(a);
-              a.style.display = "none";
-              a.download = "订单行模版.xlsx";
-              a.href = blobUrl;
-              a.click();
-              document.body.removeChild(a);
-            })
-            .catch(err => {
-
-              // console.log(err);
-              alert("网络异常");
-            });
+      let strURL = "" + process.env.API_ROOT + '/file/template/order/order_line_template.xlsx';
+      return strURL;
     },
     async getCode(){
       const res = await getCode();
@@ -491,7 +466,7 @@ export default {
       if(this.form.orderLines.length==0){
         this.$message.error('请先上传订单行文件')
       }else{
-        var form =this.form 
+        var form =this.form
         form.isAgreed = form.isAgreed? 1:0
         const res = await apply(form);
         // console.log('申请结果',res)
@@ -507,7 +482,7 @@ export default {
       if(this.form.orderLines.length==0){
         this.$message.error('请先上传订单行文件')
       }else{
-        var form =this.form 
+        var form =this.form
         var data ={
           orderId : this.queryId
         }
@@ -614,6 +589,9 @@ $sc: 12;
       .upload-demo{
         display: inline-block;
       }
+      .a{
+        color: #fff
+      }
     }
     .selBox {
       padding: 0 20px 10px 20px;
@@ -635,7 +613,7 @@ $sc: 12;
             .el-input{
               width: 100%;
             }
-            
+
           }
           .el-input{
             width: 100%;
@@ -643,7 +621,7 @@ $sc: 12;
           .el-form-item__label {
             height: 30px;
           }
-          
+
         }
         }
         .txt{
