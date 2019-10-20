@@ -66,7 +66,7 @@
             <el-table-column width="200" label="操作" fixed='right'>
               <template slot-scope='scope'>
                 <el-button type='text' size='small' @click='getDetail(scope.row.deliverOrderId)'>明细</el-button>
-                <el-button type='text' size='small' @click='getProduct(scope.row.id)' :disabled="scope.row.actualDeliveryDate ? false:true">收货</el-button>
+                <el-button type='text' size='small' @click='getProduct(scope.row)' :disabled="scope.row.actualDeliveryDate ? false:true">收货</el-button>
                 <el-button type='text' size='small' @click='mod(scope.row)'>修改</el-button>
                 <el-button type='text' size='small' @click='getCancel(scope.row)'>取消</el-button>
               </template>
@@ -255,11 +255,66 @@
         <el-button size="small" type="primary" @click="sure">确 定</el-button>
       </span>
     </el-dialog>
+
+
+
+    <el-dialog title="收货" top="5vh" :visible.sync="recevieDia" width="600px">
+      <div class="tab">
+        <div class="tabBox">
+          <el-form ref="proForm" :model="proForm" :rules="rules" class="form" label-width="auto" label-position='top' >
+            <el-form-item label="授信额度初始值">
+              <el-input size='small' disabled v-model="credit.credit" ></el-input>
+            </el-form-item>
+            <el-form-item label="授信额度占用值">
+              <el-input size='small' disabled v-model="credit.creditUSE" ></el-input>
+            </el-form-item>
+            <el-form-item label="授信额度剩余值">
+              <el-input size='small' disabled v-model="credit.creditUnUSE" ></el-input>
+            </el-form-item>
+            <el-table :data="proForm.deliverOrderLineList" style="width: 100%" border height="400" @selection-change="handleSelectionChange">
+              <el-table-column
+                type="selection"
+                width="55">
+              </el-table-column>
+              <el-table-column  width="150" label="收货数量" show-overflow-tooltip>
+                <template slot-scope="scope">
+                  <el-form-item :prop="'deliverOrderLineList.'+scope.$index +'.num'" >
+                    <el-input type="number" size="small" v-model.number="scope.row.num"></el-input>
+                  </el-form-item>
+                </template>
+              </el-table-column>
+              <el-table-column prop="deliveryQuantity" width="150" label="提货数量" show-overflow-tooltip>
+              </el-table-column>
+              <el-table-column prop="receiveQuantity" width="150" label="已收货数量" show-overflow-tooltip>
+              </el-table-column>
+              <el-table-column prop="sapSalesOrderLineNo" width="150" label="订单行号" show-overflow-tooltip>
+              </el-table-column>
+              <el-table-column prop="sapDeliverOrderLineNo" width="150" label="提货单行号" show-overflow-tooltip>
+              </el-table-column>
+              <el-table-column prop="productId" width="150" label="物料号" show-overflow-tooltip>
+              </el-table-column>
+              <el-table-column prop="active" width="150" label="状态" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{scope.row.active==1 ? '生效' :scope.row.active==2 ? '取消中' :scope.row.active==0 ? '已取消':''}}
+                  </template>
+                </el-table-column>
+              <div slot="empty">
+                无数据
+              </div>
+            </el-table>
+          </el-form>
+        </div>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button size="small" @click="cancel">取 消</el-button>
+        <el-button size="small" type="primary" @click="submitForm('proForm',1)">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import {getCredit,getProList,getProDetail,modPro,calPro,delPro} from '@/api/order/list.js'
+import {getCredit,getProList,getProDetail,modPro,calPro,delPro,recevie} from '@/api/order/list.js'
 import {getShip,getDealerList} from '@/api/system/param.js'
 import Daterange from "../com/date";
 export default {
@@ -277,6 +332,9 @@ export default {
           {required:true,triggle:'change',message:'请选择提货日期'}
         ],
         deliveryQuantity:[
+          {required:true,triggle:'blur',message:'请输入提货数量',type:'number'},
+        ],
+        num:[
           {required:true,triggle:'blur',message:'请输入提货数量',type:'number'},
         ]
       },
@@ -311,6 +369,7 @@ export default {
         deliveryStartDate:"",
         deliveryEndDate:"",
       },
+      recevieDia:false,
       calDia:false,
       //筛选条件显示否
       selDia: false,
@@ -339,6 +398,9 @@ export default {
   },
   watch: {},
   methods: {
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
     del(id){
       this.$confirm('确定要删除吗？', '发布', {
             distinguishCancelAndClose: true,
@@ -393,8 +455,8 @@ export default {
         return  this.list.filter(item=>{return item.id == id})[0] ? this.list.filter(item=>{return item.id == id})[0].custName  :''
     },
     //表单验证
-    submitForm(formName){
-      this.$formTest.submitForm(this.$refs[formName],this.modPro)
+    submitForm(formName,type){
+      this.$formTest.submitForm(this.$refs[formName],type?this.recevie:this.modPro)
     },
     //提货确定按钮
     async modPro(){
@@ -412,6 +474,28 @@ export default {
         this.getProList()
       }
     },
+    async recevie(){
+      if(this.multipleSelection.length==0){
+        this.$message.error('请选择至少一条订单行数据')
+      }else{
+        const data ={
+          deliverOrderId:this.proForm.orderId,
+          shippingPoint:this.proForm.shippingPoint, 
+          deliverDate:this.proForm.deliverDate, 
+          // orderLine:this.proForm.deliverOrderLineList
+          orderLine:this.multipleSelection.map(item=>{
+            return{ id:item.deliverOrderLineId,deliveryQuantity:item.num}
+          })
+        }
+        const res = await recevie(data);
+        // console.log('提货结果',res);
+        if(res){
+          this.$message.success('操作成功')
+          this.cancel()
+          this.getProList()
+        }
+      }
+    },
     //提货取消按钮
     cancel(){
       this.multipleSelection = []
@@ -424,12 +508,15 @@ export default {
         orderId:''
       }
       this.proDia  = false
+      this.recevieDia  = false
       this.calDia  = false
       this.$formTest.resetForm(this.$refs['proForm'])
     },
     //获取提货详细信息
-    getProduct(id){
-      this.proDia = true
+    getProduct(row){
+      this.recevieDia = true
+      this.getProDetail(row.deliverOrderId)
+      this.getCredit(row.createUserId)
     },
     //修改按钮
     mod(row){
@@ -510,7 +597,9 @@ export default {
       // console.log('getProDetail',res)
       if(res){
         this.proForm.orderInvoiceList = res.data.data.orderInvoiceList
-        this.proForm.deliverOrderLineList = res.data.data.deliverOrderLineList
+        this.proForm.deliverOrderLineList = res.data.data.deliverOrderLineList.map(item=>{
+          return {...item,num:''}
+        })
         this.proForm.shippingPoint = res.data.data.shippingPoint
         this.proForm.deliverDate = res.data.data.deliverDate
         this.proForm.orderId = res.data.data.deliverOrderId

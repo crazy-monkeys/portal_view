@@ -229,7 +229,7 @@
               <el-table-column prop="" width="150" label="提货数量" show-overflow-tooltip>
                 <template slot-scope="scope">
                   <el-form-item :prop="'lines.'+scope.$index +'.deliveryQuantity'" :rules="rules.deliveryQuantity" >
-                    <el-input  size="small" v-model="scope.row.deliveryQuantity"></el-input>
+                    <el-input type="number"  size="small" v-model.number="scope.row.deliveryQuantity"></el-input>
                   </el-form-item>
                 </template>
               </el-table-column>
@@ -365,7 +365,7 @@ export default {
           {required:true,triggle:'change',message:'请选择提货日期'}
         ],
         deliveryQuantity:[
-          {required:true,triggle:'blur',message:'请输入提货数量'},
+          { required:false,triggle:'blur',message:'请输入提货数量',type:'number'},
         ],
         expectedDeliveryDate:[
           {required:true,triggle:'blur',message:'请输入期望提货日期'},

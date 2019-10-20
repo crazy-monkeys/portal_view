@@ -49,3 +49,8 @@ export const getProApprovalDetail = data => {
 export const cancelOrder = (data, param) => {
     return request('post', `${serverUrl}/order/apply/cancel/${data.orderId}?${stringify(param)}`).then(result => result)
 }
+
+
+export const recevie = data => {
+    return request('post', `${serverUrl}/order/apply/delivery/receiving`, data).then(result => result)
+}
