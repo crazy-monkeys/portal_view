@@ -58,9 +58,10 @@ axios.interceptors.request.use(
         return config
     },
     (error, response) => {
+            // console.log(111111)
 
-        // console.log(error)
-        // console.log(response)
+        console.log(error)
+        console.log(response)
     }
 )
 
@@ -73,13 +74,14 @@ axios.interceptors.response.use(
             // console.log(response)
         if (response.headers.authorization) {
             // console.log(111111)
-            // console.log(22222)
             // console.log(sessionStorage.getItem('data'))
             sessionStorage.setItem('data', response.headers.authorization)
         }
         return response
     }, (error, res) => {
-        // console.log(error, res)
+        console.log(error, res)
+            // console.log(22222)
+        endLoading()
         return Promise.reject(error)
     }
 )
