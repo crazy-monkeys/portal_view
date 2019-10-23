@@ -123,7 +123,7 @@ export default {
                 this.doing = false;
           }).catch((err)=>{
             // console.log(err);
-            alert('网络异常')
+            //alert('网络异常')
           })
           }else{
             this.$message({

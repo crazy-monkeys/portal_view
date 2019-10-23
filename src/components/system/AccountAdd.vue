@@ -215,7 +215,7 @@ export default {
             }
         }).catch((err)=>{
           // console.log(err);
-          alert('网络异常')
+          //alert('网络异常')
         })
     },
     //更新用户组
@@ -236,7 +236,7 @@ export default {
             }
         }).catch((err)=>{
           // console.log(err);
-          alert('网络异常')
+          //alert('网络异常')
         })
     },
     //更新角色
@@ -257,7 +257,7 @@ export default {
             }
         }).catch((err)=>{
           // console.log(err);
-          alert('网络异常')
+          //alert('网络异常')
         })
     },
     resetType(e){
@@ -318,7 +318,7 @@ export default {
             }
         }).catch((err)=>{
           // console.log(err);
-          alert('网络异常')
+          //alert('网络异常')
         })
     },
     //获取用户组列表
@@ -335,7 +335,7 @@ export default {
             }
         }).catch((err)=>{
           // console.log(err);
-          alert('网络异常')
+          //alert('网络异常')
         })
     },
   }

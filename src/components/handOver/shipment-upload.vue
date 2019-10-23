@@ -324,7 +324,7 @@
             })
             .catch(err => {
               // console.log(err);
-              alert("网络异常");
+              //alert("网络异常");
             });
       },
       async del(){
@@ -458,7 +458,7 @@
             })
             .catch(err => {
               // console.log(err);
-              alert("网络异常");
+              //alert("网络异常");
             });
       },
       downloadError(){
@@ -486,7 +486,7 @@
             })
             .catch(err => {
               // console.log(err);
-              alert("网络异常");
+              //alert("网络异常");
             });
       },
       suc(val){
@@ -593,7 +593,7 @@
             })
             .catch(err => {
               // console.log(err);
-              alert("网络异常");
+              //alert("网络异常");
             });
       },
      

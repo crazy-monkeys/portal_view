@@ -219,7 +219,7 @@
             })
             .catch(err => {
               // console.log(err);
-              alert("网络异常");
+              //alert("网络异常");
             });
       },
       search(){

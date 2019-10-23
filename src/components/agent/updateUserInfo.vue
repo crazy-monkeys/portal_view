@@ -498,7 +498,7 @@
         })
         .catch(error => {
           // console.log(error);
-          alert("系统异常");
+          //alert("系统异常");
         });
     },
       uploadSuccess(res,file,fileList){

@@ -243,7 +243,7 @@ export default {
         })
         .catch(error => {
           // console.log(error);
-          alert("系统异常");
+          //alert("系统异常");
         });
     },
     handleClose() {
@@ -285,7 +285,7 @@ export default {
         })
         .catch(error => {
           // console.log(error);
-          alert("系统异常");
+          //alert("系统异常");
         });
     },
     tb() {

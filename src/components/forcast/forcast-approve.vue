@@ -397,28 +397,33 @@
             url: "" + process.env.API_ROOT + "/forecast/amb/data/download?forecastIds="+this.multipleSelection.map(item=>{
               return item.id
             }).join(','),
-            responseType: "arraybuffer",
+            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
             headers:{
               'Authorization': sessionStorage.getItem('data'),
             }
           })
             .then(res => {
+              if(res.data.msg){
+                this.$message.error(res.data.msg)
+              }else{
+                const blob = new Blob([res.data], {
+                  type: "application/vnd.ms-excel"
+                });
+                const blobUrl = window.URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                document.body.appendChild(a);
+                a.style.display = "none";
+                a.download = "阿米巴队长数据.xlsx";
+                a.href = blobUrl;
+                a.click();
+                document.body.removeChild(a);
+              }
               // console.log(res.data);
-              const blob = new Blob([res.data], {
-                type: "application/vnd.ms-excel"
-              });
-              const blobUrl = window.URL.createObjectURL(blob);
-              const a = document.createElement("a");
-              document.body.appendChild(a);
-              a.style.display = "none";
-              a.download = "阿米巴队长数据.xlsx";
-              a.href = blobUrl;
-              a.click();
-              document.body.removeChild(a);
+              
             })
             .catch(err => {
               // console.log(err);
-              alert("网络异常");
+              //alert("网络异常");
             });
       },
       downloadSd(){
@@ -427,28 +432,32 @@
             url: "" + process.env.API_ROOT + "/forecast/sd/data/download?forecastIds="+this.multipleSelection.map(item=>{
               return item.id
             }).join(','),
-            responseType: "arraybuffer",
+            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
             headers:{
               'Authorization': sessionStorage.getItem('data'),
             }
           })
             .then(res => {
+               if(res.data.msg){
+                this.$message.error(res.data.msg)
+              }else{
+                const blob = new Blob([res.data], {
+                  type: "application/vnd.ms-excel"
+                });
+                const blobUrl = window.URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                document.body.appendChild(a);
+                a.style.display = "none";
+                a.download = "首代数据.xlsx";
+                a.href = blobUrl;
+                a.click();
+                document.body.removeChild(a);
+              }
               // console.log(res.data);
-              const blob = new Blob([res.data], {
-                type: "application/vnd.ms-excel"
-              });
-              const blobUrl = window.URL.createObjectURL(blob);
-              const a = document.createElement("a");
-              document.body.appendChild(a);
-              a.style.display = "none";
-              a.download = "首代数据.xlsx";
-              a.href = blobUrl;
-              a.click();
-              document.body.removeChild(a);
             })
             .catch(err => {
               // console.log(err);
-              alert("网络异常");
+              //alert("网络异常");
             });
       },
       async mod(){

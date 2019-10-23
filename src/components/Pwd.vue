@@ -104,7 +104,7 @@ export default {
             .catch(error => {
               // console.log(error);
               this.fileList = [];
-              alert("系统异常");
+              //alert("系统异常");
             });
           }
         }

@@ -372,7 +372,7 @@
         })
           .catch(error => {
             // console.log(error);
-            alert("登入失败");
+            //alert("登入失败");
           });
       },
 
@@ -408,7 +408,7 @@
         })
           .catch(error => {
             // console.log(error);
-            alert("登入失败");
+            //alert("登入失败");
           });
       },
 
@@ -467,7 +467,7 @@
               })
                 .catch(error => {
                   // console.log(error);
-                  alert("登入失败");
+                  //alert("登入失败");
                 });
             })
             .catch(action => {
@@ -507,7 +507,7 @@
             })
               .catch(error => {
                 // console.log(error);
-                alert("登入失败");
+                //alert("登入失败");
               });
           })
           .catch(action => {
@@ -544,7 +544,7 @@
         })
           .catch(error => {
             // console.log(error);
-            alert("登入失败");
+            //alert("登入失败");
           });
       },
 
@@ -566,7 +566,7 @@
         })
           .catch(error => {
             // console.log(error);
-            alert("登入失败");
+            //alert("登入失败");
           });
       },
       //获取营销活动列表
@@ -594,7 +594,7 @@
         }).catch((err) => {
           // console.log(err);
 
-          alert('网络异常')
+          //alert('网络异常')
         })
       },
 
