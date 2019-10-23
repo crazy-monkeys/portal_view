@@ -391,12 +391,16 @@ export default {
       this.$http({
             method: "get",
             url: "" + process.env.API_ROOT + "/order/apply/lineTmpl",
-            responseType: "arraybuffer",
+            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
+
             headers:{
               'Authorization': sessionStorage.getItem('data'),
             }
           })
             .then(res => {
+              if(res.data.msg){
+                this.$message.error(res.data.msg)
+              }else{
               // console.log(res.data);
               const blob = new Blob([res.data], {
                 type: "application/vnd.ms-excel"
@@ -409,6 +413,7 @@ export default {
               a.href = blobUrl;
               a.click();
               document.body.removeChild(a);
+              }
             })
             .catch(err => {
 

@@ -79,14 +79,16 @@
           this.$http({
             method: "get",
             url: "" + process.env.API_ROOT + "/agencyRate/download",
-            responseType: "arraybuffer",
+            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
             headers:{
               'Authorization': sessionStorage.getItem('data'),
             }
           })
             .then(res => {
-              // console.log(res.data);
-              const blob = new Blob([res.data], {
+              if(res.data.msg){
+                this.$message.error(res.data.msg)
+              }else{
+                 const blob = new Blob([res.data], {
                 type: "application/vnd.ms-excel"
               });
               const blobUrl = window.URL.createObjectURL(blob);
@@ -97,6 +99,9 @@
               a.href = blobUrl;
               a.click();
               document.body.removeChild(a);
+              }
+              // console.log(res.data);
+             
             })
             .catch(err => {
               // console.log(err);

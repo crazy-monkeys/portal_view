@@ -397,12 +397,16 @@
             url: "" + process.env.API_ROOT + "/forecast/amb/data/download?forecastIds="+this.multipleSelection.map(item=>{
               return item.id
             }).join(','),
-            responseType: "arraybuffer",
+            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
+
             headers:{
               'Authorization': sessionStorage.getItem('data'),
             }
           })
             .then(res => {
+              if(res.data.msg){
+                this.$message.error(res.data.msg)
+              }else{
               // console.log(res.data);
               const blob = new Blob([res.data], {
                 type: "application/vnd.ms-excel"
@@ -415,6 +419,7 @@
               a.href = blobUrl;
               a.click();
               document.body.removeChild(a);
+              }
             })
             .catch(err => {
               // console.log(err);
@@ -427,12 +432,16 @@
             url: "" + process.env.API_ROOT + "/forecast/sd/data/download?forecastIds="+this.multipleSelection.map(item=>{
               return item.id
             }).join(','),
-            responseType: "arraybuffer",
+            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
+
             headers:{
               'Authorization': sessionStorage.getItem('data'),
             }
           })
             .then(res => {
+              if(res.data.msg){
+                this.$message.error(res.data.msg)
+              }else{
               // console.log(res.data);
               const blob = new Blob([res.data], {
                 type: "application/vnd.ms-excel"
@@ -445,6 +454,7 @@
               a.href = blobUrl;
               a.click();
               document.body.removeChild(a);
+              }
             })
             .catch(err => {
               // console.log(err);

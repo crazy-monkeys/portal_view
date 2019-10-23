@@ -108,12 +108,16 @@
         this.$http({
             method: "get",
             url: "" + process.env.API_ROOT + "/archive/file/download?id="+id,
-            responseType: "arraybuffer",
+            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
+
             headers:{
               'Authorization': sessionStorage.getItem('data'),
             }
           })
             .then(res => {
+              if(res.data.msg){
+                this.$message.error(res.data.msg)
+              }else{
               // console.log(res.data);
               const blob = new Blob([res.data], {
                 // type: "application/vnd.ms-excel"
@@ -126,6 +130,7 @@
               a.href = blobUrl;
               a.click();
               document.body.removeChild(a);
+              }
             })
             .catch(err => {
               // console.log(err);
