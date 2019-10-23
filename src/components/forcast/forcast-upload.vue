@@ -115,7 +115,45 @@
                 <el-table-column prop="line.currentWriteSix" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="line.gapSix" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="line.remarkSix" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="poPrice" width='180' label="PO价格" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="" width='180' label="本次代理填写值1销售" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{scope.row.line.currentWriteOne*scope.row.poPrice}}
+                  </template>
+                </el-table-column>
+
+                <el-table-column prop="" width='180' label="本次代理填写值2销售" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{scope.row.line.currentWriteTwo*scope.row.poPrice}}
+                  </template>
+                </el-table-column>
+
+                <el-table-column prop="" width='180' label="本次代理填写值3销售" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{scope.row.line.currentWriteThree*scope.row.poPrice}}
+                  </template>
+                </el-table-column>
+
+                <el-table-column prop="" width='180' label="本次代理填写值4销售" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{scope.row.line.currentWriteFour*scope.row.poPrice}}
+                  </template>
+                </el-table-column>
+
+                <el-table-column prop="" width='180' label="本次代理填写值5销售" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{scope.row.line.currentWriteFive*scope.row.poPrice}}
+                  </template>
+                </el-table-column>
+
+                <el-table-column prop="" width='180' label="本次代理填写值6销售" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{scope.row.line.currentWriteSix*scope.row.poPrice}}
+                  </template>
+                </el-table-column>
+
                 <el-table-column prop="" width='100' fixed='right'   label="操作" >
+                  
                   <template slot-scope="scope">
                     <el-button size="small" type="text" @click="mod">修改</el-button>
                   </template>

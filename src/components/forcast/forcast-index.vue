@@ -75,12 +75,14 @@
                   </el-table-column>
                   <el-table-column label="首代备注" prop='sdRemark' show-overflow-tooltip>
                   </el-table-column>
+                  <el-table-column prop="" width='180' label="本次代理填写值销售" show-overflow-tooltip>
+                    <template slot-scope="scope">
+                      {{scope.row.currentWrite*props.row.poPrice}}
+                    </template>
+                  </el-table-column>
                 </el-table>
               </template>
             </el-table-column>
-
-
-            
                 <el-table-column prop="createTimeStr" width='100' label="上传日期" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="operationYearMonth" width='80' label="年月" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="company" width='80' label="出货公司" show-overflow-tooltip></el-table-column>
@@ -100,6 +102,7 @@
                 <el-table-column prop="productModel" width='100'  label="产品型号" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="closeDate" width='100'  label="截止日期" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="delayStock" width='180'  label="未完成专货库存" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="poPrice" width='180' label="PO价格" show-overflow-tooltip></el-table-column>
             <div slot="empty">
               <p>无数据</p>
             </div>
@@ -164,6 +167,46 @@
                 <el-table-column prop="line.currentWriteSix" width='100'  label="本次填写" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="line.gapSix" width='100'  label="GAP" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="line.remarkSix" width='100'  label="备注" show-overflow-tooltip></el-table-column>
+
+
+                <el-table-column prop="poPrice" width='180' label="PO价格" show-overflow-tooltip></el-table-column>
+
+                <el-table-column prop="" width='180' label="本次代理填写值1销售" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{scope.row.line.currentWriteOne*scope.row.poPrice}}
+                  </template>
+                </el-table-column>
+
+                <el-table-column prop="" width='180' label="本次代理填写值2销售" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{scope.row.line.currentWriteTwo*scope.row.poPrice}}
+                  </template>
+                </el-table-column>
+
+                <el-table-column prop="" width='180' label="本次代理填写值3销售" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{scope.row.line.currentWriteThree*scope.row.poPrice}}
+                  </template>
+                </el-table-column>
+
+                <el-table-column prop="" width='180' label="本次代理填写值4销售" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{scope.row.line.currentWriteFour*scope.row.poPrice}}
+                  </template>
+                </el-table-column>
+
+                <el-table-column prop="" width='180' label="本次代理填写值5销售" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{scope.row.line.currentWriteFive*scope.row.poPrice}}
+                  </template>
+                </el-table-column>
+
+                <el-table-column prop="" width='180' label="本次代理填写值6销售" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{scope.row.line.currentWriteSix*scope.row.poPrice}}
+                  </template>
+                </el-table-column>
+
             <div slot="empty">
               <p>无数据</p>
             </div>
@@ -269,9 +312,17 @@
     },
     created() {
       this.getList()
-      this.getSdList()
+      // this.getSdList()
     },
     watch: {
+      way: {
+        handler: function(n, o) {
+          // console.log(n);
+          if(n==3){
+            this.getSdList()
+          }
+        }
+      }
     },
     methods: {
       search(){

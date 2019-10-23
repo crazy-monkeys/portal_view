@@ -86,6 +86,7 @@
               </template>
             </el-table-column>
             <el-table-column prop="dlExecuteDate" width="150" label="代理执行日期" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="zrExecuteDate" width="150" label="执行日期" show-overflow-tooltip></el-table-column>
             <el-table-column prop="dlFileId" width="150" label="代理商上传文件" show-overflow-tooltip>
               <template slot-scope="scope">
                 <el-button v-if="scope.row.dlFileId" size="small" type="text" @click="downloadFile(scope.row.dlFileId)">点击下载</el-button>

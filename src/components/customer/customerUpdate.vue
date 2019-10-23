@@ -31,7 +31,7 @@
             <el-select v-model="form.custRole" size="small"  placeholder="请选择">
                   <el-option label="中国客户" value="Z001"></el-option>
                   <el-option label="亚太客户" value="Z002"></el-option>
-                  <el-option label="北美客户" value="Z003"></el-option>
+                  <!-- <el-option label="北美客户" value="Z003"></el-option> -->
                   <el-option label="内部客户" value="Z010"></el-option>
             </el-select>
           </el-form-item>
@@ -304,7 +304,7 @@
                 </el-table-column>
                 <el-table-column prop="" label="股东占比"  width="150">
                   <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.strValue"></el-input></el-input>
+                    <el-input size="small" v-model="scope.row.strValue"></el-input>
                   </template>
                 </el-table-column>
                 <el-table-column prop="" label="股东性质" width="150">
@@ -382,7 +382,7 @@
               </el-table>
             </div>
           </el-tab-pane> -->
-          <el-tab-pane label="展瑞销售团队" name="eight">
+          <el-tab-pane label="展锐销售团队" name="eight">
             <div class="tabBox">
               <el-table :data="form.zrAccountTeams" style="width: 100%" height="300">
                 <el-table-column  label="角色类型" show-overflow-tooltip>

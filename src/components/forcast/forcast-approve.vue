@@ -91,6 +91,11 @@
                   </el-table-column>
                   <el-table-column label="首代备注" prop='sdRemark' show-overflow-tooltip>
                   </el-table-column>
+                  <el-table-column prop="" width='180' label="本次代理填写值销售" show-overflow-tooltip>
+                    <template slot-scope="scope">
+                      {{scope.row.currentWrite*props.row.poPrice}}
+                    </template>
+                  </el-table-column>
                   <el-table-column  label="操作" width="100"  fixed="left" >
                     <template slot-scope="scope">
                       <el-button size="small" type="text" @click="adjust">预测调整</el-button>
@@ -99,10 +104,10 @@
                 </el-table>
               </template>
             </el-table-column>
-            <el-table-column
-              type="selection"
-              width="55">
-            </el-table-column>
+                <el-table-column
+                  type="selection"
+                  width="55">
+                </el-table-column>
                 <el-table-column prop="" width='100' label="审批状态" show-overflow-tooltip>
                   <template slot-scope="scope">
                     <span v-if="scope.row.status==-1">驳回</span>
@@ -131,15 +136,16 @@
                 <el-table-column prop="productModel" width='100'  label="产品型号" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="closeDate" width='100'  label="截止日期" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="delayStock" width='180'  label="未完成专货库存" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="poPrice" width='180' label="PO价格" show-overflow-tooltip></el-table-column>
             <div slot="empty">
               <p>无数据</p>
             </div>
           </el-table>
-          <div class="block">
+          <!-- <div class="block">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
             :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
           </el-pagination>
-        </div>
+        </div> -->
         </div>
         
       </div>
@@ -497,8 +503,8 @@
       },
       async getList(){
         const data ={
-          pageSize:this.pageSize,
-          pageNum:this.currentPage,
+          // pageSize:this.pageSize,
+          // pageNum:this.currentPage,
           customerAbbreviation:this.form.customerAbbreviation,  
           isUpdate:this.form.isUpdate,  
           channel:this.form.channel,
@@ -513,7 +519,7 @@
         // console.log('审批列表',res);
         if(res){
           this.tableData = res.data.data.list
-          this.total = res.data.data.total
+          // this.total = res.data.data.total
           this.tableData.map((item,index)=>{
             this.tableData[index].list = [
               {

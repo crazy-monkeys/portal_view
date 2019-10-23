@@ -352,7 +352,7 @@
               </el-table>
             </div>
           </el-tab-pane> -->
-          <el-tab-pane label="展瑞销售团队" name="eight">
+          <el-tab-pane label="展锐销售团队" name="eight">
             <div class="tabBox">
               <el-table :data="form.zrAccountTeams" style="width: 100%" height="300">
                 <el-table-column  label="角色类型" show-overflow-tooltip>
