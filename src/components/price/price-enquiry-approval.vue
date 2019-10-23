@@ -66,6 +66,8 @@
             </el-table-column>
             <el-table-column prop="applyTime" width='200' label="申请时间" show-overflow-tooltip>
             </el-table-column>
+            <el-table-column prop="inCustomer" width='200' label="内部客户" show-overflow-tooltip>
+            </el-table-column>
             <el-table-column show-overflow-tooltip prop="remark" width='150' label="备注">
             </el-table-column>
             <el-table-column width="100" label="操作" fixed='right'>
@@ -138,7 +140,7 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="内部客户">
-                <el-input size='small'  v-model="detail.inCustomer" :readonly="true" placeholder="请输入"></el-input>
+                <el-input size='small'  v-model="detail.inCustomer" :readonly="true" placeholder=""></el-input>
               </el-form-item>
               <!-- <div class="detailBox"><div>内部客户 : </div>{{detail.inCustomer}}</div> -->
             </el-col>

@@ -67,6 +67,7 @@ export default {
   created() {
     // console.log(1111)
     this.getData()
+    this.getUploadData()
   },
   computed:{
     outCode(){
@@ -106,6 +107,7 @@ export default {
       const res = await getUpload(params)
       // console.log('新增结果',res)
       if(res){
+        this.getUploadData()
         this.$message.success('保存成功')
       }
     },
