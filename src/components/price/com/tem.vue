@@ -18,7 +18,7 @@
                报价时间：{{time}}
            </div>
            <div class="box clear">
-               <span class="box-left" >报价方：北京紫光展锐科技有限公司</span>
+               <span class="box-left" >报价方：XXXX有限公司</span>
                <span class="box-right">询价方：{{queryPrice}}</span> 
            </div>
            <div class="tab">
@@ -92,9 +92,9 @@
                 <div><span> 三.</span><p>上述价格若以人民币采购不包含相关税费（仅限样品）</p></div>   
                 <div><span> 四.</span><p>上述套片价格无拆分价格</p></div>   
                 <div><span> 五.</span><p>上述产品的交货周期为询价方提供准确有效的需求预测后十二周</p></div>   
-                <div><span> 六.</span><p>上述产品需以最小包装的整数倍向展锐或展锐代理商下单采购（样品除外）</p></div>   
+                <div><span> 六.</span><p>上述产品需以最小包装的整数倍向或代理商下单采购（样品除外）</p></div>   
                 <div><span> 七.</span><p>上述报价信息属高度机密，未经报价方事先书面同意，不得向贵司以外的任何第三方直接或间接透露</p></div>   
-                <div><span> 八.</span><p>本报价单取代展锐之前已向贵司发出的相同型号报价单</p></div>   
+                <div><span> 八.</span><p>本报价单取代之前已向贵司发出的相同型号报价单</p></div>   
                 <div><span> 九.</span><p>报价有效期：{{start}}—{{end}}</p></div>   
            </div>
            <div class="desc" v-if="type=='empty'">
@@ -104,8 +104,8 @@
                 <div><span> 三.</span><p>上述价格若以人民币采购不包含相关税费（仅限样品）</p></div>   
                 <div><span> 四.</span><p>上述套片价格无拆分价格</p></div>   
                 <div><span> 五.</span><p>上述产品的交货周期为询价方提供准确有效的需求预测后十二周</p></div>   
-                <div><span> 六.</span><p>上述产品需以最小包装的整数倍向展锐下单采购（样品除外）</p></div>   
-                <div><span> 七.</span><p>本报价单取代展锐之前已向贵司发出的相同型号报价单</p></div>   
+                <div><span> 六.</span><p>上述产品需以最小包装的整数倍向下单采购（样品除外）</p></div>   
+                <div><span> 七.</span><p>本报价单取代之前已向贵司发出的相同型号报价单</p></div>   
                 <div><span> 八.</span><p>报价有效期：{{start}}—{{end}}</p></div>   
            </div>
            <div class="desc" v-if="type=='noEmpty'">
@@ -116,9 +116,9 @@
                 <div><span> 四.</span><p>上述价格若以人民币采购不包含相关税费（仅限样品）</p></div>   
                 <div><span> 五.</span><p>上述套片价格无拆分价格</p></div>   
                 <div><span> 六.</span><p>上述产品的交货周期为询价方提供准确有效的需求预测后十二周</p></div>   
-                <div><span> 七.</span><p>上述产品需以最小包装的整数倍向展锐下单采购（样品除外）</p></div>   
+                <div><span> 七.</span><p>上述产品需以最小包装的整数倍向下单采购（样品除外）</p></div>   
                 <div><span> 八.</span><p>上述报价信息属高度机密，未经报价方事先书面同意，不得向贵司以外的任何第三方直接或间接透露</p></div>   
-                <div><span> 九.</span><p>本报价单取代展锐之前已向贵司发出的相同型号报价单</p></div>   
+                <div><span> 九.</span><p>本报价单取代之前已向贵司发出的相同型号报价单</p></div>   
                 <div><span> 十.</span><p>报价有效期：{{start}}—{{end}}</p></div>   
            </div>
 
@@ -127,9 +127,9 @@
                 <div><span> 一.</span><p>上述价格币别为美金</p></div>   
                 <div><span> 二.</span><p>上述套片价格无拆分价格</p></div>   
                 <div><span> 三.</span><p>上述产品的交货周期为询价方提供准确有效的需求预测后十二周</p></div>   
-                <div><span> 四.</span><p>上述产品需以最小包装的整数倍向展锐或展锐代理商下单采购（样品除外）</p></div>   
+                <div><span> 四.</span><p>上述产品需以最小包装的整数倍向或代理商下单采购（样品除外）</p></div>   
                 <div><span> 五.</span><p>上述报价信息属高度机密，未经报价方事先书面同意，不得向贵司以外的任何第三方直接或间接透露</p></div>   
-                <div><span> 六.</span><p>本报价单取代展锐之前已向贵司发出的相同型号报价单</p></div>   
+                <div><span> 六.</span><p>本报价单取代之前已向贵司发出的相同型号报价单</p></div>   
                 <div><span> 七.</span><p>报价有效期：{{start}}—{{end}}</p></div>   
            </div>
            <div class="desc" v-if="type==2">
@@ -137,9 +137,9 @@
                 <div><span> 一.</span><p>上述价格币别为美金</p></div>   
                 <div><span> 二.</span><p>上述套片价格无拆分价格</p></div>   
                 <div><span> 三.</span><p>上述产品的交货周期为询价方提供准确有效的需求预测后十二周</p></div>   
-                <div><span> 四.</span><p>上述产品需以最小包装的整数倍向展锐或展锐代理商下单采购（样品除外）</p></div>   
+                <div><span> 四.</span><p>上述产品需以最小包装的整数倍向或代理商下单采购（样品除外）</p></div>   
                 <div><span> 五.</span><p>上述报价信息属高度机密，未经报价方事先书面同意，不得向贵司以外的任何第三方直接或间接透露</p></div>   
-                <div><span> 六.</span><p>本报价单取代展锐之前已向贵司发出的相同型号报价单</p></div>   
+                <div><span> 六.</span><p>本报价单取代之前已向贵司发出的相同型号报价单</p></div>   
                 <div><span> 七.</span><p>报价有效期：{{start}}—{{end}}</p></div>   
            </div>
            <div class="desc" v-if="type==4">
@@ -147,13 +147,13 @@
                 <div><span> 一.</span><p>上述价格币别为美金</p></div>   
                 <div><span> 二.</span><p>上述套片价格无拆分价格</p></div>   
                 <div><span> 三.</span><p>上述产品的交货周期为询价方提供准确有效的需求预测后十二周</p></div>   
-                <div><span> 四.</span><p>上述产品需以最小包装的整数倍向展锐或展锐代理商下单采购（样品除外）</p></div>   
+                <div><span> 四.</span><p>上述产品需以最小包装的整数倍向或代理商下单采购（样品除外）</p></div>   
                 <div><span> 五.</span><p>上述报价信息属高度机密，未经报价方事先书面同意，不得向贵司以外的任何第三方直接或间接透露</p></div>   
-                <div><span> 六.</span><p>本报价单取代展锐之前已向贵司发出的相同型号报价单</p></div>   
+                <div><span> 六.</span><p>本报价单取代之前已向贵司发出的相同型号报价单</p></div>   
                 <div><span> 七.</span><p>报价有效期：{{start}}—{{end}}</p></div>   
            </div>
            <div class="company">
-               北京紫光展锐科技有限公司
+               XXXX有限公司
            </div>
         </div>
     </div>
@@ -192,7 +192,7 @@
                 },
                 {
                     value:7,
-                    label:'上述产品需以最小包装的整数倍向展锐下单采购（样品除外）'
+                    label:'上述产品需以最小包装的整数倍向下单采购（样品除外）'
                 },
                 {
                     value:8,
@@ -200,7 +200,7 @@
                 },
                 {
                     value:9,
-                    label:'本报价单取代展锐之前已向贵司发出的相同型号报价单'
+                    label:'本报价单取代之前已向贵司发出的相同型号报价单'
                 },
                 {
                     value:10,

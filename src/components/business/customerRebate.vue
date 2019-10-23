@@ -54,7 +54,7 @@
                       <span v-if="scope.row.executeStyle==3">返款</span>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="zrExecuteDate" show-overflow-tooltip label="展锐执行日期">
+                  <el-table-column prop="zrExecuteDate" show-overflow-tooltip label="执行日期">
                   </el-table-column>
                   <el-table-column prop="dlExecuteDate" show-overflow-tooltip label="代理执行日期">
                   </el-table-column>

@@ -382,7 +382,7 @@
               </el-table>
             </div>
           </el-tab-pane> -->
-          <el-tab-pane label="展锐销售团队" name="eight">
+          <el-tab-pane label="销售团队" name="eight">
             <div class="tabBox">
               <el-table :data="form.zrAccountTeams" style="width: 100%" height="300">
                 <el-table-column  label="角色类型" show-overflow-tooltip>
@@ -446,7 +446,7 @@
               </el-table>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="展锐产品型号" name="sixth">
+          <el-tab-pane label="产品型号" name="sixth">
             <div class="tabBox">
               <el-table :data="form.customerProducts" style="width: 100%" height="300">
                 <el-table-column prop="" label="物料"  width="150">
