@@ -397,7 +397,7 @@
             url: "" + process.env.API_ROOT + "/forecast/amb/data/download?forecastIds="+this.multipleSelection.map(item=>{
               return item.id
             }).join(','),
-            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
+            responseType: "arraybuffer",
 
             headers:{
               'Authorization': sessionStorage.getItem('data'),
@@ -432,7 +432,7 @@
             url: "" + process.env.API_ROOT + "/forecast/sd/data/download?forecastIds="+this.multipleSelection.map(item=>{
               return item.id
             }).join(','),
-            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
+            responseType: "arraybuffer",
 
             headers:{
               'Authorization': sessionStorage.getItem('data'),

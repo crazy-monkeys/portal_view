@@ -108,7 +108,7 @@
         this.$http({
             method: "get",
             url: "" + process.env.API_ROOT + "/archive/file/download?id="+id,
-            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
+            responseType: "arraybuffer",
 
             headers:{
               'Authorization': sessionStorage.getItem('data'),

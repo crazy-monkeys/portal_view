@@ -419,7 +419,7 @@
         this.$http({
             method: "get",
             url: "" + process.env.API_ROOT + "/handover/dealer/reject/download?recordId="+row.id+'&type=receive',
-            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
+            responseType: "arraybuffer",
 
             headers:{
               'Authorization': sessionStorage.getItem('data'),
@@ -452,7 +452,7 @@
         this.$http({
             method: "get",
             url: "" + process.env.API_ROOT + "/handover/receive/detail/error/download?recordId="+id,
-            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
+            responseType: "arraybuffer",
 
             headers:{
               'Authorization': sessionStorage.getItem('data'),
@@ -564,7 +564,7 @@
           this.$http({
             method: "get",
             url: "" + process.env.API_ROOT + "/handover/template?type=receive",
-            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
+            responseType: "arraybuffer",
 
             headers:{
               'Authorization': sessionStorage.getItem('data'),

@@ -391,7 +391,7 @@ export default {
       this.$http({
             method: "get",
             url: "" + process.env.API_ROOT + "/order/apply/lineTmpl",
-            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
+            responseType: "arraybuffer",
 
             headers:{
               'Authorization': sessionStorage.getItem('data'),

@@ -663,7 +663,7 @@
         this.$http({
             method: "get",
             url: "" + process.env.API_ROOT + "/forecast/agency/reject/download?forecastIds="+id,
-            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
+            responseType: "arraybuffer",
 
             headers:{
               'Authorization': sessionStorage.getItem('data'),
@@ -696,7 +696,7 @@
         this.$http({
             method: "get",
             url: "" + process.env.API_ROOT + "/forecast/agency/error/download?batchNo=" +this.batchNo,
-            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
+            responseType: "arraybuffer",
 
             headers:{
               'Authorization': sessionStorage.getItem('data'),
@@ -775,7 +775,7 @@
           this.$http({
             method: "get",
             url: "" + process.env.API_ROOT + "/forecast/agency/template/download?yearMonth="+value,
-            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
+            responseType: "arraybuffer",
 
             headers:{
               'Authorization': sessionStorage.getItem('data'),

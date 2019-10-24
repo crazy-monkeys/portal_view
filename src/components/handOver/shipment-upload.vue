@@ -303,7 +303,7 @@
           this.$http({
             method: "get",
             url: "" + process.env.API_ROOT + "/handover/detail/update/download?ids="+ids+'&type=deliver',
-            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
+            responseType: "arraybuffer",
 
             headers:{
               'Authorization': sessionStorage.getItem('data'),
@@ -442,7 +442,7 @@
         this.$http({
             method: "get",
             url: "" + process.env.API_ROOT + "/handover/dealer/reject/download?recordId="+row.id+'&type=deliver',
-            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
+            responseType: "arraybuffer",
 
             headers:{
               'Authorization': sessionStorage.getItem('data'),
@@ -475,7 +475,7 @@
         this.$http({
             method: "get",
             url: "" + process.env.API_ROOT + "/handover/error?type=deliver"+"&fileName=" + this.fileName,
-            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
+            responseType: "arraybuffer",
 
             headers:{
               'Authorization': sessionStorage.getItem('data'),
@@ -587,7 +587,7 @@
           this.$http({
             method: "get",
             url: "" + process.env.API_ROOT + "/handover/template?type=deliver",
-            responseType: ["arraybuffer",'application/json;charset=UTF-8'],
+            responseType: "arraybuffer",
 
             headers:{
               'Authorization': sessionStorage.getItem('data'),
