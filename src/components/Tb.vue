@@ -115,8 +115,19 @@
             }
           })
             .then(res => {
-              if(res.data.msg){
-                this.$message.error(res.data.msg)
+              if(res.headers['content-type'].includes('application/json')){
+                var  data = new Blob([res.data], {
+                  type: "application/vnd.ms-excel"
+                });
+                var reader = new FileReader();
+                reader.readAsText(data, 'utf-8');
+                var that = this
+                reader.onload = function () {
+                  console.log(reader.result)
+                  data = JSON.parse(reader.result);
+                  console.log(data)
+                  that.$message.error(data.msg)
+                }
               }else{
               // console.log(res.data);
               const blob = new Blob([res.data], {
