@@ -19,7 +19,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          
+
           <el-form-item label="下单类型">
             <el-select v-model="form.underOrderType" size="small" filterable placeholder="请选择">
               <el-option value="ZFD" label="交货免费"></el-option>
@@ -168,7 +168,7 @@
           </el-pagination>
         </div>
         </div>
-        
+
       </div>
     </div>
     <el-dialog title="订单行信息" :visible.sync="dialogVisible1" width="600px">
@@ -179,11 +179,15 @@
             </el-table-column>
             <el-table-column prop="platform"  label="平台" show-overflow-tooltip>
             </el-table-column>
+            <el-table-column prop="rPrice"  label="含税金额" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="rNetPrice"  label="不含税金额" show-overflow-tooltip>
+            </el-table-column>
             <el-table-column prop="num"  label="数量" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="expectedDeliveryMonth" width="150" label="期望交货月份" show-overflow-tooltip>
             </el-table-column>
-            
+
             <div slot="empty">
               无数据
             </div>
@@ -202,17 +206,17 @@
         <el-form ref="form1" :model="form1" :rules='rules' size="small" class="form" label-width="auto" label-position='top'  >
           <el-form-item label="授信额度初始值" >
             <el-input size='small' v-model="credit.credit"  resize="none"  disabled></el-input>
-            
+
           </el-form-item>
           <el-form-item label="授信额度剩余值" >
             <el-input size='small'  v-model="credit.creditUSE"    resize="none"  disabled></el-input>
-            
+
           </el-form-item>
           <el-form-item label="授信额度可用值" >
             <el-input size='small' v-model="credit.creditUnUSE"   resize="none"  disabled></el-input>
-            
+
           </el-form-item>
-          
+
           <el-form-item label="需求交货日期" >
             <el-date-picker
             style="width:100%"
@@ -366,7 +370,7 @@ export default {
       }else{
         this.$message.error('请填写驳回原因')
       }
-      
+
     },
     async approvePass(approvalStatus){
       const data ={
@@ -457,7 +461,7 @@ $sc: 12;
         }
         .date {
           width: 414px;
-          
+
         }
     }
     .box{
