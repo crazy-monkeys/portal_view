@@ -455,7 +455,7 @@ export default {
       this.fileList = []
     },
     download(){
-      let strURL = "" + process.env.API_ROOT + '/file/template/order/order_line_template.xlsx';
+      let strURL = "" + process.env.API_ROOT + '/file/portal_file/template/order/order_line_template.xlsx';
       return strURL;
     },
     async getCode(){
