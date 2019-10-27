@@ -29,6 +29,7 @@
               prefix-icon="el-icon-key"
               v-model="verifyCode"
               autocomplete="off"
+              :maxlength="4"
               @keyup.enter.native="sub"
             ></el-input>
             <img class="yzm" :src="baseUrl+'/verifyCode?timestamp='+newtime" alt="验证码图片" @click="clickImg">
@@ -237,7 +238,7 @@ export default {
                     message:error.response.data.msg
                   })
                   this.newtime = new Date().getTime()
-
+                  this.verifyCode = ''
                 } else if (error.request) {
                   // The request was made but no response was received
                   // `error.request` is an instance of XMLHttpRequest in the browser and an instance of

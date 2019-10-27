@@ -173,12 +173,9 @@
           <el-table :data="lines" style="width: 100%" border height="100%">
             <el-table-column prop="rItemNo" width="150" label="订单行号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="actice" width="150" label="状态" show-overflow-tooltip>
-              <template slot-scope="scope">
-                {{scope.row.actice ==1 ? '生效' :'失效'}}
-              </template>
+            <el-table-column prop="product" width="150" label="物料号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="productId" width="150" label="物料号" show-overflow-tooltip>
+            <el-table-column prop="productId" width="150" label="虚拟物料号" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="platform" width="150"  label="平台" show-overflow-tooltip>
             </el-table-column>
@@ -191,6 +188,11 @@
             <el-table-column prop="num" width="150" label="订单数量" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="remainingNum" width="150" label="剩余数量" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="actice" width="150" label="状态" show-overflow-tooltip>
+              <template slot-scope="scope">
+                {{scope.row.actice ==1 ? '生效' :'失效'}}
+              </template>
             </el-table-column>
             <div slot="empty">
               无数据
