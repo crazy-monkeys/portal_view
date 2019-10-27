@@ -62,6 +62,8 @@
             </el-table-column>
             <el-table-column prop="bu" width='100' label="BU" show-overflow-tooltip>
             </el-table-column>
+            <el-table-column prop="pdt" width='100' label="PDT" show-overflow-tooltip>
+            </el-table-column>
             <el-table-column prop="productModel" width='240' label="产品型号" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="applyTime" width='200' label="申请时间" show-overflow-tooltip>
@@ -293,7 +295,8 @@ export default {
       const data ={
         productModel:row.productModel,
         bu:row.bu,
-        inCustomer:row.inCustomer
+        inCustomer:row.inCustomer,
+        pdt:row.pdt
       }
       const res = await getDetail(data);
       // console.log('详情',res);
