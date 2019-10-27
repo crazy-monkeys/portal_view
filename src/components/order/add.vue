@@ -142,6 +142,8 @@
           <el-table :data="tableData" border  style="width: 100%" height="300">
             <el-table-column prop="productId" label="物料号" show-overflow-tooltip>
             </el-table-column>
+            <el-table-column prop="custAbbreviation" width="150" label="客户简称" show-overflow-tooltip>
+            </el-table-column>
             <el-table-column prop="platform" width="150" label="平台" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="num" width="150" label="数量" show-overflow-tooltip>
