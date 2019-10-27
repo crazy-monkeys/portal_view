@@ -671,8 +671,19 @@
           })
             .then(res => {
               // console.log(res.data);
-              if(res.data.msg){
-                this.$message.error(res.data.msg)
+              if(res.headers['content-type'].includes('application/json')){
+                var  data = new Blob([res.data], {
+                  type: "application/vnd.ms-excel"
+                });
+                var reader = new FileReader();
+                reader.readAsText(data, 'utf-8');
+                var that = this
+                reader.onload = function () {
+                  console.log(reader.result)
+                  data = JSON.parse(reader.result);
+                  console.log(data)
+                  that.$message.error(data.msg)
+                }
               }else{
               const blob = new Blob([res.data], {
                 type: "application/vnd.ms-excel"
@@ -703,8 +714,19 @@
             }
           })
             .then(res => {
-              if(res.data.msg){
-                this.$message.error(res.data.msg)
+              if(res.headers['content-type'].includes('application/json')){
+                var  data = new Blob([res.data], {
+                  type: "application/vnd.ms-excel"
+                });
+                var reader = new FileReader();
+                reader.readAsText(data, 'utf-8');
+                var that = this
+                reader.onload = function () {
+                  console.log(reader.result)
+                  data = JSON.parse(reader.result);
+                  console.log(data)
+                  that.$message.error(data.msg)
+                }
               }else{
               // console.log(res.data);
               const blob = new Blob([res.data], {
@@ -781,8 +803,19 @@
               'Authorization': sessionStorage.getItem('data'),
             }
           }).then(res => {
-            if(res.data.msg){
-                this.$message.error(res.data.msg)
+            if(res.headers['content-type'].includes('application/json')){
+                var  data = new Blob([res.data], {
+                  type: "application/vnd.ms-excel"
+                });
+                var reader = new FileReader();
+                reader.readAsText(data, 'utf-8');
+                var that = this
+                reader.onload = function () {
+                  console.log(reader.result)
+                  data = JSON.parse(reader.result);
+                  console.log(data)
+                  that.$message.error(data.msg)
+                }
               }else{
               // console.log(res.data);
               const blob = new Blob([res.data], {
@@ -823,18 +856,24 @@
       handleSizeChange(val) {
         // console.log(`每页 ${val} 条`);
         this.pageSize = val;
+        this.queryList()
       },
       handleCurrentChange(val) {
         // console.log(`当前页: ${val}`);
         this.currentPage = val;
+        this.queryList()
+
       },
       handleSizeChange1(val) {
         // console.log(`每页 ${val} 条`);
         this.pageSize1 = val;
+        this.rejectList()
+
       },
       handleCurrentChange1(val) {
         // console.log(`当前页: ${val}`);
         this.currentPage1 = val;
+        this.rejectList()
       },
     }
   }

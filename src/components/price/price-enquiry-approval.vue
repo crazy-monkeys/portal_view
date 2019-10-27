@@ -58,7 +58,7 @@
                 {{scope.row.approvalStatus=='pass'?'通过':scope.row.approvalStatus=='reject'? '驳回':'待审批'}}
               </template>
             </el-table-column>
-            <el-table-column prop="applyRemark"  width='150' label="审批说明" show-overflow-tooltip>
+            <el-table-column prop="applyRemark"  width='150' label="申请说明" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="bu" width='100' label="BU" show-overflow-tooltip>
             </el-table-column>
@@ -116,25 +116,25 @@
           <el-row :gutter="20">
             <el-col :span="12">
               <el-form-item label="BU">
-                <el-input size='small'  v-model="detail.bu" :readonly="true" placeholder="请输入"></el-input>
+                <el-input size='small'  v-model="detail.bu" :readonly="true" placeholder=""></el-input>
               </el-form-item>
               <!-- <div class="detailBox"><div>bu : </div>{{detail.bu}}</div> -->
             </el-col>
             <el-col :span="12">
               <el-form-item label="PDT">
-                <el-input size='small'  v-model="detail.pdt" :readonly="true" placeholder="请输入"></el-input>
+                <el-input size='small'  v-model="detail.pdt" :readonly="true" placeholder=""></el-input>
               </el-form-item>
               <!-- <div class="detailBox"><div>bu : </div>{{detail.bu}}</div> -->
             </el-col>
             <el-col :span="12">
               <el-form-item label="目录价格">
-                <el-input size='small'  v-model="detail.catalogPrice" :readonly="true" placeholder="请输入"></el-input>
+                <el-input size='small'  v-model="detail.catalogPrice" :readonly="true" placeholder=""></el-input>
               </el-form-item>
               <!-- <div class="detailBox"><div>目录价格 : </div>{{detail.catalogPrice}}</div> -->
             </el-col>
             <el-col :span="12">
               <el-form-item label="生效时间">
-                <el-input size='small'  v-model="detail.effectTime" :readonly="true" placeholder="请输入"></el-input>
+                <el-input size='small'  v-model="detail.effectTime" :readonly="true" placeholder=""></el-input>
               </el-form-item>
               <!-- <div class="detailBox"><div>生效时间 : </div>{{detail.effectTime}}</div> -->
             </el-col>
@@ -146,44 +146,44 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="平台">
-                <el-input size='small'  v-model="detail.platform" :readonly="true" placeholder="请输入"></el-input>
+                <el-input size='small'  v-model="detail.platform" :readonly="true" placeholder=""></el-input>
               </el-form-item>
               <!-- <div class="detailBox"><div>平台 : </div>{{detail.platform}}</div> -->
             </el-col>
             <el-col :span="12">
               <el-form-item label="价格类型">
-                <el-input size='small'  v-model="detail.priceType" :readonly="true" placeholder="请输入"></el-input>
+                <el-input size='small'  v-model="detail.priceType" :readonly="true" placeholder=""></el-input>
               </el-form-item>
               <!-- <div class="detailBox"><div>Price Type : </div>{{detail.priceType}}</div> -->
             </el-col>
             <el-col :span="12">
               <el-form-item label="产品类型">
-                <el-input size='small'  v-model="detail.productType" :readonly="true" placeholder="请输入"></el-input>
+                <el-input size='small'  v-model="detail.productType" :readonly="true" placeholder=""></el-input>
               </el-form-item>
               <!-- <div class="detailBox"><div>Product Type : </div>{{detail.productType}}</div> -->
             </el-col>
             <el-col :span="12">
               <el-form-item label="状态">
-                <el-input size='small'  v-model="status" :readonly="true" placeholder="请输入"></el-input>
+                <el-input size='small'  v-model="status" :readonly="true" placeholder=""></el-input>
               </el-form-item>
-              
+
               <!-- <div class="detailBox"><div>虚拟料号 : </div>{{detail.sapCode}}</div> -->
             </el-col>
             <el-col :span="12">
               <el-form-item label="虚拟料号">
-                <el-input size='small'  v-model="detail.sapCode" :readonly="true" placeholder="请输入"></el-input>
+                <el-input size='small'  v-model="detail.sapCode" :readonly="true" placeholder=""></el-input>
               </el-form-item>
               <!-- <div class="detailBox"><div>状态 : </div>{{detail.status=='True' ?'生效':'失效'}}</div> -->
             </el-col>
             <el-col :span="24">
               <el-form-item label="备注">
-                <el-input size='small'  v-model="detail.remark" :readonly="true" placeholder="请输入"></el-input>
+                <el-input size='small'  v-model="detail.remark" :readonly="true" placeholder=""></el-input>
               </el-form-item>
               <!-- <div class="detailBox"><div>备注 : </div>{{detail.remark}}</div> -->
             </el-col>
             <el-col :span="24">
               <el-form-item label="产品型号">
-                <el-input size='small'  v-model="detail.productModel" :readonly="true" placeholder="请输入"></el-input>
+                <el-input size='small'  v-model="detail.productModel" :readonly="true" placeholder=""></el-input>
               </el-form-item>
               <!-- <div class="detailBox"><div>Product Model : </div>{{detail.productModel}}</div> -->
             </el-col>
@@ -361,7 +361,7 @@ export default {
         approvalStatus:this.form.approvalStatus,
         productModel:this.form.productModel,
         bu:this.form.bu
-      } 
+      }
       const res = await getList(data);
       // console.log('审批列表',res);
       if(res){
@@ -409,7 +409,7 @@ $sc: 12;
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;
-  
+
   .detailDialog{
     .el-dialog__body{
       padding: 0 20px;
@@ -424,7 +424,7 @@ $sc: 12;
     }
   }
   .el-dialog{
-    
+
     .form {
         .el-form-item__label {
           height: 30px;
@@ -477,7 +477,7 @@ $sc: 12;
         }
         .date {
           width: 414px;
-          
+
         }
     }
     .box{

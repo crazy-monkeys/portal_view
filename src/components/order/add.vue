@@ -351,7 +351,9 @@ export default {
         invoiceDeliveryAddress :'',
         invoiceDeliveryType   :'',
         invoiceType :'',
-        isAgreed:''
+        isAgreed:'',
+        grossValue:'',
+        netValue:''
       },
       tableData: [
       ],
@@ -445,6 +447,8 @@ export default {
            grossValue:val.data.grossValue,
            netValue:val.data.netValue,
         }
+        this.form.grossValue = val.data.grossValue;
+        this.form.netValue = val.data.netValue;
       }else{
         this.$message.error(val.msg)
       }

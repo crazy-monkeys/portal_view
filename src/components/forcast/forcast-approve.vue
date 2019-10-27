@@ -394,18 +394,30 @@
       downloadAmb(){
         this.$http({
             method: "get",
-            url: "" + process.env.API_ROOT + "/forecast/amb/data/download?forecastIds="+this.multipleSelection.map(item=>{
+            url: "" + process.env.API_ROOT + "/forecast/amb/data/download?2="+this.multipleSelection.map(item=>{
               return item.id
             }).join(','),
             responseType: "arraybuffer",
-
+            // contentType:'application/json;charset=UTF-8',
             headers:{
               'Authorization': sessionStorage.getItem('data'),
             }
           })
             .then(res => {
-              if(res.data.msg){
-                this.$message.error(res.data.msg)
+              // console.log(res)
+              if(res.headers['content-type'].includes('application/json')){
+                var  data = new Blob([res.data], {
+                  type: "application/vnd.ms-excel"
+                });
+                var reader = new FileReader();
+                reader.readAsText(data, 'utf-8');
+                var that = this
+                reader.onload = function () {
+                  console.log(reader.result)
+                  data = JSON.parse(reader.result);
+                  console.log(data)
+                  that.$message.error(data.msg)
+                }
               }else{
               // console.log(res.data);
               const blob = new Blob([res.data], {
@@ -439,8 +451,19 @@
             }
           })
             .then(res => {
-              if(res.data.msg){
-                this.$message.error(res.data.msg)
+              if(res.headers['content-type'].includes('application/json')){
+                var  data = new Blob([res.data], {
+                  type: "application/vnd.ms-excel"
+                });
+                var reader = new FileReader();
+                reader.readAsText(data, 'utf-8');
+                var that = this
+                reader.onload = function () {
+                  console.log(reader.result)
+                  data = JSON.parse(reader.result);
+                  console.log(data)
+                  that.$message.error(data.msg)
+                }
               }else{
               // console.log(res.data);
               const blob = new Blob([res.data], {
