@@ -131,8 +131,12 @@ export default {
           label: "Mass Market"
         },
         {
+          value: "A02",
+          label: "Account Market(非直供)"
+        },
+        {
           value: "A01",
-          label: "Account Market"
+          label: "Account Market(直供)"
         }
       ],
       custTypes:[
@@ -264,12 +268,12 @@ export default {
     handleSizeChange(val) {
       // console.log(`每页 ${val} 条`);
       this.pageSize = val;
-      this.getList(this.form)
+      this.getList()
     },
     handleCurrentChange(val) {
       // console.log(`当前页: ${val}`);
       this.currentPage = val;
-      this.getList(this.form)
+      this.getList()
     }
   }
 };

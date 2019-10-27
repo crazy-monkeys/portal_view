@@ -135,7 +135,7 @@
           </el-pagination>
         </div>
         </div>
-        
+
       </div>
     </div>
     <el-dialog title="销售单明细" :visible.sync="dialogVisible1" width="600px">
@@ -146,11 +146,15 @@
             </el-table-column>
             <el-table-column prop="platform"  label="平台" show-overflow-tooltip>
             </el-table-column>
+             <el-table-column prop="rPrice"  label="含税金额" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="rNetPrice"  label="不含税金额" show-overflow-tooltip>
+            </el-table-column>
             <el-table-column prop="num"  label="数量" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="expectedDeliveryMonth" width="150" label="期望交货月份" show-overflow-tooltip>
             </el-table-column>
-            
+
             <div slot="empty">
               无数据
             </div>
@@ -160,7 +164,7 @@
     </el-dialog>
 
 
-  
+
   </div>
 </template>
 
@@ -230,7 +234,7 @@ export default {
           this.delPro(id)
       })
       .catch(action => {
-        
+
       });
     },
     async delPro(id){
@@ -296,7 +300,7 @@ export default {
         this.total = res.data.data.total
       }
     },
-    
+
     change() {
       this.selDia = !this.selDia;
     },
@@ -362,7 +366,7 @@ $sc: 12;
         }
         .date {
           width: 414px;
-          
+
         }
     }
     .box{
