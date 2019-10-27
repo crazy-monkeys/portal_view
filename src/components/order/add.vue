@@ -414,6 +414,7 @@ export default {
       console.log('detail',res)
       if(res){
         this.form = res.data.data
+        this.form.salesOrg = res.data.data.salesOrg*1
         this.form.invoiceType += ''
         this.form.invoiceDeliveryType += ''
         this.form.isAgreed = false
