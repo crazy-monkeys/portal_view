@@ -856,18 +856,24 @@
       handleSizeChange(val) {
         // console.log(`每页 ${val} 条`);
         this.pageSize = val;
+        this.queryList()
       },
       handleCurrentChange(val) {
         // console.log(`当前页: ${val}`);
         this.currentPage = val;
+        this.queryList()
+
       },
       handleSizeChange1(val) {
         // console.log(`每页 ${val} 条`);
         this.pageSize1 = val;
+        this.rejectList()
+
       },
       handleCurrentChange1(val) {
         // console.log(`当前页: ${val}`);
         this.currentPage1 = val;
+        this.rejectList()
       },
     }
   }
