@@ -16,7 +16,7 @@
             <el-row :gutter="22">
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="下单类型" prop="underOrderType">
-                  <el-select v-model="form.underOrderType" size="small"  placeholder="请选择">
+                  <el-select v-model="form.underOrderType" size="small"  placeholder="请选择" :disabled="queryId?true:false">
                     <el-option value="ZFD" label="交货免费"></el-option>
                     <el-option value="ZOR" label="标准订单"></el-option>
                     <el-option value="ZORT" label="标准订单（ZORT）"></el-option>
@@ -38,7 +38,7 @@
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="售达方" prop="soldTo">
-                  <el-select v-model="form.soldTo" size="small" filterable placeholder="">
+                  <el-select v-model="form.soldTo" size="small" filterable placeholder="" :disabled="queryId?true:false">
                     <el-option v-for="item in tos" :key='item.id' :label='item.custName' :value="item.id+''"></el-option>
                   </el-select>
                 </el-form-item>
@@ -53,13 +53,14 @@
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
 
                 <el-form-item label="采购订单编号"  prop="purchaseNo">
-                  <el-input size='small' placeholder=""  v-model='form.purchaseNo'></el-input>
+                  <el-input size='small' placeholder=""  v-model='form.purchaseNo' ></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
 
                 <el-form-item label="采购订单下达日期" prop="purchaseDate">
                   <el-date-picker
+                    
                     v-model="form.purchaseDate"
                     type="date"
                     size="small"
@@ -70,12 +71,12 @@
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="国际贸易条款一" prop="incoterms1">
-                  <el-input v-model="form.incoterms1" size="small"  disabled></el-input>
+                  <el-input v-model="form.incoterms1" size="small"  disabled ></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="国际贸易条款二"  prop="incoterms2">
-                  <el-input v-model="form.incoterms2" :disabled="form.incoterms1=='CIP'" size="small" filterable placeholder="">
+                  <el-input v-model="form.incoterms2" :disabled="queryId ? true: form.incoterms1=='CIP'?true:false" size="small" filterable placeholder="">
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -90,7 +91,7 @@
               </el-col> -->
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="订单类型" prop="orderType">
-                  <el-select v-model="form.orderType" size="small" filterable placeholder="">
+                  <el-select v-model="form.orderType" size="small" filterable placeholder="" :disabled="queryId?true:false">
                     <el-option value="A01" label="客户专货订单"></el-option>
                     <el-option value="A02" label="Buffer订单"></el-option>
                     <el-option value="A03" label="新产品订单"></el-option>
@@ -102,7 +103,7 @@
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="客户属性" prop="customerAttr">
-                  <el-select v-model="form.customerAttr" size="small" filterable placeholder="">
+                  <el-select v-model="form.customerAttr" size="small" filterable placeholder="" >
                     <el-option value="B1" label="Account Market"></el-option>
                     <el-option value="B2" label="Mass Market"></el-option>
                   </el-select>
@@ -122,8 +123,9 @@
             </el-row>
 
         <div class="btns">
-          <el-button type='primary' class="add" size='small'><a class="a" :href="download()">下载模版</a></el-button>
+          <el-button type='primary' class="add" size='small' :disabled="queryId?true:false"><a class="a" :href="!queryId?download() :'javascript:;'" >下载模版</a></el-button>
           <el-upload
+          :disabled="queryId?true:false"
             class="upload-demo"
             :action="serverUrl+'/order/apply/upload'"
             :auto-upload="true"
@@ -135,11 +137,11 @@
             :show-file-list="false"
             :file-list="fileList"
             >
-            <el-button size="small" type="primary">上传</el-button>
+            <el-button size="small" type="primary" :disabled="queryId?true:false">上传</el-button>
           </el-upload>
         </div>
         <div class="tab">
-          <el-table :data="tableData" border  style="width: 100%" height="300">
+          <el-table :data="form.tableData" border  style="width: 100%" height="300">
             <el-table-column prop="productId" label="物料号" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="custAbbreviation" width="150" label="客户简称" show-overflow-tooltip>
@@ -147,6 +149,11 @@
             <el-table-column prop="platform" width="150" label="平台" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="num" width="150" label="数量" show-overflow-tooltip>
+              <template slot-scope="scope">
+                <el-form-item   :prop='"tableData." +scope.$index +".num"' :rules='rules.num'>
+                  <el-input type="number" v-model.number="scope.row.num" size="small"></el-input>
+                </el-form-item>
+              </template>
             </el-table-column>
             <el-table-column prop="rPrice" width="150" label="含税价格" show-overflow-tooltip>
             </el-table-column>
@@ -180,7 +187,7 @@
           <div>
             <p class="one">三、乙方按订单金额提供：
               <el-form-item prop="invoiceType">
-                <el-radio-group v-model="form.invoiceType" size="mini" @change="changeaaa">
+                <el-radio-group v-model="form.invoiceType" :disabled="queryId?true:false" size="mini" @change="changeaaa">
                   <el-radio label="1" >出口发票</el-radio>
                   <el-radio label="2" >增值税普通发票</el-radio>
                   <el-radio label="3" >增值税专业发票（13%）</el-radio>
@@ -189,7 +196,7 @@
             </p>
             <p class="two">发票传递：
               <el-form-item prop="invoiceDeliveryType">
-                <el-radio-group v-model="form.invoiceDeliveryType">
+                <el-radio-group v-model="form.invoiceDeliveryType" :disabled="queryId?true:false">
                   <el-radio label="1" value='1'>随货</el-radio>
                   <el-radio label="2" value='2'>甲方办公地或<el-input v-model="form.invoiceDeliveryAddress" size="small" style="border:none;border-bottom:1px solid #000"></el-input></el-radio>
                 </el-radio-group>
@@ -244,6 +251,7 @@ export default {
       tos:[],
       rules:{
         orderType:[{required:true,triggle:'blur',message:'订单类型不能为空'}],
+        num:[{required:true,type:'number',triggle:['blur','change'],message:'数量不能为空'}],
         salesOrg:[{required:true,triggle:'blur',validator: (rule, value, callback) => {
           if (!value) {
             callback(new Error('销售组织不能为空'))
@@ -355,10 +363,9 @@ export default {
         invoiceType :'',
         isAgreed:'',
         grossValue:'',
-        netValue:''
+        netValue:'',
+        tableData:[]
       },
-      tableData: [
-      ],
       currentPage: 1,
       pageSize: 10,
       total: 0
@@ -434,7 +441,7 @@ export default {
         this.form.invoiceType += ''
         this.form.invoiceDeliveryType += ''
         this.form.isAgreed = false
-        this.tableData = res.data.data.lines
+        this.form.tableData = res.data.data.lines
         this.order.grossValue = res.data.data.rGrossValue ? res.data.data.rGrossValue :0
         this.order.netValue = res.data.data.rNetValue ? res.data.data.rNetValue:0
         // this.lines = res.data.data.lines
@@ -459,7 +466,7 @@ export default {
       // console.log(val)
       if(val.code==1){
         this.$message.success('上传成功')
-        this.tableData = val.data.lines
+        this.form.tableData = val.data.lines
         this.order = {
            grossValue:val.data.grossValue,
            netValue:val.data.netValue,
@@ -483,7 +490,7 @@ export default {
       }
     },
     async apply(){
-      this.form.orderLines = this.tableData
+      this.form.orderLines = this.form.tableData
       if(this.form.orderLines.length==0){
         this.$message.error('请先上传订单行文件')
       }else{
@@ -499,7 +506,7 @@ export default {
       }
     },
     async mod(){
-      this.form.orderLines = this.tableData
+      this.form.orderLines = this.form.tableData
       if(this.form.orderLines.length==0){
         this.$message.error('请先上传订单行文件')
       }else{
