@@ -129,7 +129,7 @@
             :auto-upload="true"
             :headers="{'Authorization':auth}"
             name='lineFile'
-            :data='form'
+            :data='formData()'
             :on-success="uploadSuccess"
             :limit="1"
             :show-file-list="false"
@@ -408,6 +408,20 @@ export default {
     }
   },
   methods: {
+    formData(){
+      var data ={}
+      for(let i in this.form){
+        console.log(i)
+        if(i=='isAgreed' || i=='createTime' || i =='updateTime'){
+
+        }else{
+          data[i] = this.form[i]
+        }
+
+      }
+      console.log(data)
+      return data
+    },
     async detail(id){
       const data ={
         id:id
