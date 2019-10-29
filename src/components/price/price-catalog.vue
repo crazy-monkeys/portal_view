@@ -343,6 +343,7 @@
             }
             this.queryPrice = this.form1.inquirer.split(',')[0]
             this.dialogVisible1 = false
+            this.cancel()
             this.$nextTick(()=>{
               this.$print(this.$refs.print)
             })
@@ -354,6 +355,8 @@
             this.type = 'all'
             this.queryPrice = this.form1.inquirer.split(',')[0]
             // console.log(this.form1.inquirer.split(',')[0])
+            this.dialogVisible1 = false
+            this.cancel()
             this.$nextTick(()=>{
               this.$print(this.$refs.print)
             })
