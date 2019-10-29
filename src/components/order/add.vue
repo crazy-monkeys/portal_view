@@ -149,8 +149,9 @@
             <el-table-column prop="platform" width="150" label="平台" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="num" width="150" label="数量" show-overflow-tooltip>
-              <template slot-scope="scope">
-                <el-form-item   :prop='"tableData." +scope.$index +".num"' :rules='rules.num'>
+              <template slot-scope="scope" >
+                <span v-if="!queryId" >{{scope.row.num}}</span>
+                <el-form-item  v-if="queryId"  :prop='"tableData." +scope.$index +".num"' :rules='rules.num'>
                   <el-input type="number" v-model.number="scope.row.num" size="small"></el-input>
                 </el-form-item>
               </template>
