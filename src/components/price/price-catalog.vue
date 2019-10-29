@@ -319,10 +319,10 @@
         })
         var empty =  arr.filter(item=>{
           if(item===null){
-            return true
+            return false
           }else{
             if(item.length==0){
-              return item
+              return true
             }
           }
         })
@@ -330,8 +330,6 @@
         // console.log(this.form1.inquirer.split(',')[1]=='agent')
         if(this.form1.inquirer.split(',')[1]=='A04'){
           //询价方为代理商
-          // console.log(empty.length)
-          // console.log(arr.length)
           if(noEmpty.length==arr.length || empty.length==arr.length){
             //客户内部名称全不为空
             if(noEmpty.length==arr.length){
