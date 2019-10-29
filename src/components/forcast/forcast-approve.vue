@@ -394,7 +394,7 @@
       downloadAmb(){
         this.$http({
             method: "get",
-            url: "" + process.env.API_ROOT + "/forecast/amb/data/download?2="+this.multipleSelection.map(item=>{
+            url: "" + process.env.API_ROOT + "/forecast/amb/data/download?forecastIds="+this.multipleSelection.map(item=>{
               return item.id
             }).join(','),
             responseType: "arraybuffer",
