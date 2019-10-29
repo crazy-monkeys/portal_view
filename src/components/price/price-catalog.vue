@@ -132,7 +132,7 @@
       <el-form ref="form1" :model="form1" :rules="rules" class="form" label-width="auto" label-position='top' >
           <el-form-item label="询价方" prop="inquirer">
             <el-select  size='small' v-model='form1.inquirer' placeholder="请选择询价方">
-              <el-option v-for="item in options" :key="item.name" :label="item.name" :value='item.name+","+item.type'></el-option>
+              <el-option v-for="(item,index) in options" :key="index" :label="item.custName" :value='item.custName+","+item.businessType'></el-option>
             </el-select>
           </el-form-item>
           
@@ -150,6 +150,7 @@
 <script>
   import Daterange from "../com/date";
   import {getList} from "@/api/price/priceCatalog.js";
+  import {getAll} from "@/api/business/rebate.js";
   import Tem from "./com/tem";
 
   export default {
@@ -166,18 +167,6 @@
           ]
         },
         options:[
-          {
-            name:'代理商1',
-            type:'agent',
-          },
-          {
-            name:'代理商2',
-            type:'agent',
-          },
-          {
-            name:'客户',
-            type:'customer',
-          }
         ],
         form1:{
           inquirer:''
@@ -223,9 +212,16 @@
     },
     created() {
       this.getList()
+      
     },
     methods: {
-      
+      async getAll(){
+        const res = await getAll();
+        // console.log('所有执行方',res);
+        if(res){
+          this.options = res.data.data;
+        }
+      },
       cancel(){
         this.dialogVisible1 = false
         this.form1 = {
@@ -332,10 +328,10 @@
         })
         // console.log(empty)
         // console.log(this.form1.inquirer.split(',')[1]=='agent')
-        if(this.form1.inquirer.split(',')[1]=='agent'){
+        if(this.form1.inquirer.split(',')[1]=='A04'){
           //询价方为代理商
-        // console.log(empty.length)
-        // console.log(arr.length)
+          // console.log(empty.length)
+          // console.log(arr.length)
           if(noEmpty.length==arr.length || empty.length==arr.length){
             //客户内部名称全不为空
             if(noEmpty.length==arr.length){
@@ -367,8 +363,8 @@
         
       },
       add(){
+        this.getAll()
         this.dialogVisible1 = true;
-        
       },
       // 分页
       handleSizeChange(val) {
