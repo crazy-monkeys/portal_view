@@ -131,7 +131,7 @@
       :before-close="cancel">
       <el-form ref="form1" :model="form1" :rules="rules" class="form" label-width="auto" label-position='top' >
           <el-form-item label="询价方" prop="inquirer">
-            <el-select  size='small' v-model='form1.inquirer' placeholder="请选择询价方">
+            <el-select  size='small' v-model='form1.inquirer' placeholder="请选择询价方" clearable filterable>
               <el-option v-for="(item,index) in options" :key="index" :label="item.custName" :value='item.custName+","+item.businessType'></el-option>
             </el-select>
           </el-form-item>
