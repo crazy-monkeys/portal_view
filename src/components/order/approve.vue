@@ -201,6 +201,7 @@
         title="审批"
         :visible.sync="dialogVisible5"
         width="400px"
+        custom-class='jobBox'
         top="10vh"
         >
         <el-form ref="form1" :model="form1" :rules='rules' size="small" class="form" label-width="auto" label-position='top'  >

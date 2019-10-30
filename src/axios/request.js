@@ -31,7 +31,7 @@ let cancelPending = (config) => {
 
 let startLoading = () => { // 使用Element loading-start 方法
     loading = Loading.service({
-        target: '.jobBox',
+        // target: '.jobBox',
         lock: true,
         text: '加载中……',
         background: 'rgba(0, 0, 0, 0)'
@@ -58,7 +58,7 @@ axios.interceptors.request.use(
         return config
     },
     (error, response) => {
-            // console.log(111111)
+        // console.log(111111)
 
         console.log(error)
         console.log(response)

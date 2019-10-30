@@ -35,7 +35,7 @@ $sc: 12;
 .home {
   height: 100%;
   overflow: hidden;
-  .jobBox {
+  &>.jobBox {
     height: 100%;
     background: #f5f5f5;
     overflow: auto;

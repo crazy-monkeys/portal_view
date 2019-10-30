@@ -447,6 +447,7 @@ export default {
       if(res){
         this.$message.success('取消成功')
         this.getList()
+        this.cancel()
       }
     },
     sure(){
@@ -457,7 +458,7 @@ export default {
         if(this.multipleSelection.map((item)=>{return item.actice}).indexOf(0)!=-1){
         this.$message.error('无法操作状态为失效的数据行')
         }else{
-        this.cancelOrder()
+          this.cancelOrder()
 
         }
       }
