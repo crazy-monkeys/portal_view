@@ -177,7 +177,7 @@
               </el-table>
               <div class="block">
               <el-pagination @size-change="handleSizeChange1" @current-change="handleCurrentChange1" :current-page="currentPage1"
-                :page-sizes="[10, 20,50]" :page-size="pageSize1" layout="sizes,total, jumper, prev, pager, next" :total="total1">
+                :page-sizes="[50, 100,150]" :page-size="pageSize1" layout="sizes,total, jumper, prev, pager, next" :total="total1">
               </el-pagination>
             </div>
             </div>
@@ -318,13 +318,13 @@
                 reader.readAsText(data, 'utf-8');
                 var that = this
                 reader.onload = function () {
-                  console.log(reader.result)
+                  //console.log(reader.result)
                   data = JSON.parse(reader.result);
-                  console.log(data)
+                  //console.log(data)
                   that.$message.error(data.msg)
                 }
               }else{
-              // console.log(res.data);
+              // //console.log(res.data);
               const blob = new Blob([res.data], {
                 type: "application/vnd.ms-excel"
               });
@@ -339,7 +339,7 @@
               }
             })
             .catch(err => {
-              // console.log(err);
+              // //console.log(err);
               alert("网络异常");
             });
       },
@@ -351,7 +351,7 @@
           type:'deliver'
         }
         const res = await del(data);
-        // console.log('删除结果',res)
+        // //console.log('删除结果',res)
         if(res){
           this.$message.success('删除成功')
           this.getList()
@@ -418,7 +418,7 @@
           pageNum:this.currentPage1,
         }
         const res = await getReject(data)
-        // console.log('驳回记录',res)
+        // //console.log('驳回记录',res)
         if(res){
           this.rejectData=res.data.data.list
           this.total1 = res.data.data.total
@@ -443,7 +443,7 @@
           deliveryCompany:this.form.deliveryCompany
         }
         const res = await getList(data)
-        // console.log('上传查询部分列表',res)
+        // //console.log('上传查询部分列表',res)
         if(res){
           this.queryList=res.data.data.list
           this.total = res.data.data.total
@@ -468,13 +468,13 @@
                 reader.readAsText(data, 'utf-8');
                 var that = this
                 reader.onload = function () {
-                  console.log(reader.result)
+                  //console.log(reader.result)
                   data = JSON.parse(reader.result);
-                  console.log(data)
+                  //console.log(data)
                   that.$message.error(data.msg)
                 }
               }else{
-              // console.log(res.data);
+              // //console.log(res.data);
               const blob = new Blob([res.data], {
                 type: "application/vnd.ms-excel"
               });
@@ -489,7 +489,7 @@
               }
             })
             .catch(err => {
-              // console.log(err);
+              // //console.log(err);
               alert("网络异常");
             });
       },
@@ -512,13 +512,13 @@
                 reader.readAsText(data, 'utf-8');
                 var that = this
                 reader.onload = function () {
-                  console.log(reader.result)
+                  //console.log(reader.result)
                   data = JSON.parse(reader.result);
-                  console.log(data)
+                  //console.log(data)
                   that.$message.error(data.msg)
                 }
               }else{
-              // console.log(res.data);
+              // //console.log(res.data);
               const blob = new Blob([res.data], {
                 type: "application/vnd.ms-excel"
               });
@@ -533,12 +533,12 @@
               }
             })
             .catch(err => {
-              // console.log(err);
+              // //console.log(err);
               alert("网络异常");
             });
       },
       suc(val){
-        // console.log(val)
+        // //console.log(val)
         if(val.code!=1){
           this.$message.error(val.msg)
         }else{
@@ -560,13 +560,13 @@
             fileName:this.fileName,
           },
           this.tableData = val.data.deliverDetails 
-          // console.log(this.tableData)
+          // //console.log(this.tableData)
 
-          // console.log(this.recordId,this.fileName)
+          // //console.log(this.recordId,this.fileName)
         }
       },
       suc1(val){
-        // console.log(val)
+        // //console.log(val)
         if(val.code!=1){
           this.$message.error(val.msg)
         }else{
@@ -635,13 +635,13 @@
                 reader.readAsText(data, 'utf-8');
                 var that = this
                 reader.onload = function () {
-                  console.log(reader.result)
+                  //console.log(reader.result)
                   data = JSON.parse(reader.result);
-                  console.log(data)
+                  //console.log(data)
                   that.$message.error(data.msg)
                 }
               }else{
-              // console.log(res.data);
+              // //console.log(res.data);
               const blob = new Blob([res.data], {
                 type: "application/vnd.ms-excel"
               });
@@ -656,7 +656,7 @@
               }
             })
             .catch(err => {
-              // console.log(err);
+              // //console.log(err);
               alert("网络异常");
             });
       },
@@ -671,22 +671,22 @@
       },
       // 分页
       handleSizeChange(val) {
-        // console.log(`每页 ${val} 条`);
+        // //console.log(`每页 ${val} 条`);
         this.pageSize = val;
         this.getList()
       },
       handleCurrentChange(val) {
-        // console.log(`当前页: ${val}`);
+        // //console.log(`当前页: ${val}`);
         this.currentPage = val;
         this.getList()
       },
       handleSizeChange1(val) {
-        // console.log(`每页 ${val} 条`);
+        // //console.log(`每页 ${val} 条`);
         this.pageSize1 = val;
         this.getReject()
       },
       handleCurrentChange1(val) {
-        // console.log(`当前页: ${val}`);
+        // //console.log(`当前页: ${val}`);
         this.currentPage1 = val;
         this.getReject()
 

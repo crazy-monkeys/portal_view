@@ -308,7 +308,7 @@ export default {
   },
   methods: {
     remove(file,fileList){
-      // console.log(file,fileList)
+      // //console.log(file,fileList)
       this.form.files=fileList.map(item=>{return {fileName:item.name,filePath:item.path,fileType:item.fileType}})
     },
     beforeUpload1(file){
@@ -325,16 +325,16 @@ export default {
         timeout: 20000,
         data: data
       }).then(res=>{
-        // console.log(res)
+        // //console.log(res)
         if(res.data.code==1){
           this.$message.success('上传成功')
           this.form.files.push(res.data.data)
-          // console.log(this.form.file)
+          // //console.log(this.form.file)
         }else{
           this.$message.error(res.data.msg)
         }
       }).catch(err=>{
-        // console.log(err)
+        // //console.log(err)
       })
       return false
     },
@@ -352,7 +352,7 @@ export default {
         timeout: 20000,
         data: data
       }).then(res=>{
-        // console.log(res)
+        // //console.log(res)
         if(res.data.code==1){
           this.$message.success('上传成功')
           if(this.form.type==1){
@@ -370,7 +370,7 @@ export default {
           this.$message.error(res.data.msg)
         }
       }).catch(err=>{
-        // console.log(err)
+        // //console.log(err)
       })
       return false
     },
@@ -394,13 +394,13 @@ export default {
                 reader.readAsText(data, 'utf-8');
                 var that = this
                 reader.onload = function () {
-                  console.log(reader.result)
+                  //console.log(reader.result)
                   data = JSON.parse(reader.result);
-                  console.log(data)
+                  //console.log(data)
                   that.$message.error(data.msg)
                 }
               }else{
-              // console.log(res.data);
+              // //console.log(res.data);
               const blob = new Blob([res.data], {
                 type: "application/vnd.ms-excel"
               });
@@ -423,7 +423,7 @@ export default {
               }
             })
             .catch(err => {
-              // console.log(err);
+              // //console.log(err);
               alert("网络异常");
             });
       },
@@ -433,7 +433,7 @@ export default {
     },
     async getIn(){
       const res = await getIn();
-      // console.log('内部客户',res)
+      // //console.log('内部客户',res)
       if(res){
         this.options3 = res.data.data.outShips
         this.form.inCustomerName = res.data.data.inShip ? res.data.data.inShip.corporateName :''
@@ -441,7 +441,7 @@ export default {
     },
     async getCode(){
       const res = await getCode();
-      // console.log('发货方编码',res)
+      // //console.log('发货方编码',res)
       if(res){
         this.options2 = res.data.data
       }
@@ -453,7 +453,7 @@ export default {
     cancel() {},
     async submit() {
       const res = await commit(this.form);
-      // console.log('提交结果',res)
+      // //console.log('提交结果',res)
       if(res){
         this.back()
       }

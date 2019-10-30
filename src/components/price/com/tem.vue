@@ -229,12 +229,12 @@
         }
     },
     created(){
-        // console.log(this.table)
-        // console.log(this.type)
+        // //console.log(this.table)
+        // //console.log(this.type)
     },
     updated(){
-        // console.log(this.table)
-        // console.log(this.type)
+        // //console.log(this.table)
+        // //console.log(this.type)
     }
   }
 </script>

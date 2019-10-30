@@ -276,7 +276,7 @@
         //第几页
         currentPage: 1,
         //每页的容量
-        pageSize: 10,
+        pageSize: 50,
         urlAmb:serverUrl+'/forecast/amb/data/upload',
         urlSd:serverUrl+'/forecast/sd/data/upload',
         auth:sessionStorage.getItem('data')
@@ -287,7 +287,7 @@
     },
     created() {
       this.getList()
-      // console.log(this.serverUrl)
+      // //console.log(this.serverUrl)
     },
     watch: {
     },
@@ -298,7 +298,7 @@
       this.downloadLabel = '上传类型'
     },
     uploadSuccess(val){
-      // console.log(val)
+      // //console.log(val)
       if(val.code==1){
         this.$message.success('上传成功');
         this.quit()
@@ -335,7 +335,7 @@
         this.search()
       },
       watchTime(data){
-        // console.log(data)
+        // //console.log(data)
         this.form.uploadStartTime = data.startTime
         this.form.uploadEndTime = data.endTime
         this.resetData = false
@@ -350,7 +350,7 @@
         this.$formTest.resetForm(this.$refs['form2'])
       },
       rowClick(row){
-        // console.log(row)
+        // //console.log(row)
         this.rowData = row
         this.form2.lastWrite = this.rowData.lastWrite
       },
@@ -404,7 +404,7 @@
             }
           })
             .then(res => {
-              // console.log(res)
+              // //console.log(res)
               if(res.headers['content-type'].includes('application/json')){
                 var  data = new Blob([res.data], {
                   type: "application/vnd.ms-excel"
@@ -413,13 +413,13 @@
                 reader.readAsText(data, 'utf-8');
                 var that = this
                 reader.onload = function () {
-                  console.log(reader.result)
+                  //console.log(reader.result)
                   data = JSON.parse(reader.result);
-                  console.log(data)
+                  //console.log(data)
                   that.$message.error(data.msg)
                 }
               }else{
-              // console.log(res.data);
+              // //console.log(res.data);
               const blob = new Blob([res.data], {
                 type: "application/vnd.ms-excel"
               });
@@ -434,7 +434,7 @@
               }
             })
             .catch(err => {
-              // console.log(err);
+              // //console.log(err);
               alert("网络异常");
             });
       },
@@ -459,13 +459,13 @@
                 reader.readAsText(data, 'utf-8');
                 var that = this
                 reader.onload = function () {
-                  console.log(reader.result)
+                  //console.log(reader.result)
                   data = JSON.parse(reader.result);
-                  console.log(data)
+                  //console.log(data)
                   that.$message.error(data.msg)
                 }
               }else{
-              // console.log(res.data);
+              // //console.log(res.data);
               const blob = new Blob([res.data], {
                 type: "application/vnd.ms-excel"
               });
@@ -480,7 +480,7 @@
               }
             })
             .catch(err => {
-              // console.log(err);
+              // //console.log(err);
               alert("网络异常");
             });
       },
@@ -494,7 +494,7 @@
           "sortNum":this.rowData.index
           }
         const res = await mod(data);
-        // console.log('调整结果',res);
+        // //console.log('调整结果',res);
         if(res){
           this.$message.success('预测调整成功')
           this.close()
@@ -509,7 +509,7 @@
           passMsg:this.form1.msg
         }
         const res = await pass(data);
-        // console.log('通过结果',res);
+        // //console.log('通过结果',res);
         if(res){
           this.$message.success('审批成功')
           this.cancel()
@@ -524,7 +524,7 @@
           rejectMsg:this.form1.msg
         }
         const res = await reject(data);
-        // console.log('驳回结果',res);
+        // //console.log('驳回结果',res);
         if(res){
           this.$message.success('驳回成功')
           this.cancel()
@@ -549,7 +549,7 @@
           agencyAbbreviation :this.form.agencyAbbreviation
         }
         const res = await getList(data);
-        // console.log('审批列表',res);
+        // //console.log('审批列表',res);
         if(res){
           this.tableData = res.data.data.list
           // this.total = res.data.data.total
@@ -635,7 +635,7 @@
               }
             ]
           })
-          // console.log(this.tableData)
+          // //console.log(this.tableData)
         }
 
       },
@@ -659,11 +659,11 @@
       },
       // 分页
       handleSizeChange(val) {
-        // console.log(`每页 ${val} 条`);
+        // //console.log(`每页 ${val} 条`);
         this.pageSize = val;
       },
       handleCurrentChange(val) {
-        // console.log(`当前页: ${val}`);
+        // //console.log(`当前页: ${val}`);
         this.currentPage = val;
       },
     }

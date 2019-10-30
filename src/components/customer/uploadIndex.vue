@@ -65,7 +65,7 @@ export default {
     };
   },
   created() {
-    // console.log(1111)
+    // //console.log(1111)
     this.getData()
     this.getUploadData()
   },
@@ -80,13 +80,13 @@ export default {
       var data =this.form
       var params = new FormData()
       for (let i in data) {
-        // // console.log(i,data[i])
+        // // //console.log(i,data[i])
         if(typeof(data[i]) == 'object'){
           for(let j in data[i]){
-            // console.log(data[i][j])
+            // //console.log(data[i][j])
             if(typeof(data[i][j]) == 'object'){
               for(let x in data[i][j]){
-                // console.log(data[i][j][x])
+                // //console.log(data[i][j][x])
                 if(data[i][j][x] || data[i][j][x]===0){
                   params.append(i+'['+j+']'+'.'+x,data[i][j][x])
                 }
@@ -103,9 +103,9 @@ export default {
           }
         }
       }
-        // console.log(params)
+        // //console.log(params)
       const res = await getUpload(params)
-      // console.log('新增结果',res)
+      // //console.log('新增结果',res)
       if(res){
         this.getUploadData()
         this.$message.success('保存成功')
@@ -113,16 +113,16 @@ export default {
     },
     changeFile(val){},
     rowClick(row){
-      // // console.log(row)
+      // // //console.log(row)
       this.rowData = row
     },
     httpReq1(val){
-      // console.log(val)
-      // console.log(val.file)
+      // //console.log(val)
+      // //console.log(val.file)
       this.form.files[this.rowData.index].file = val.file
     },
     del(type,index){
-      // console.log(index)
+      // //console.log(index)
       this.form.files.splice(index,1)
     },
     addRow(){
@@ -137,8 +137,8 @@ export default {
           'create_time'	:'',
           "create_user_name":''	
         })
-        console.log(this.rowData)
-        console.log(this.form.files)
+        //console.log(this.rowData)
+        //console.log(this.form.files)
     },
     getData(){
       this.getType(2,5)
@@ -149,7 +149,7 @@ export default {
         func:func,
       }
       const res = await getType(data);
-      // console.log('关系类型',res)
+      // //console.log('关系类型',res)
       if(res){
         this.types = res.data.data
       }
@@ -159,7 +159,7 @@ export default {
         outCode:this.outCode
       }
       const res = await getUploadData(data);
-      // console.log('关系类型',res)
+      // //console.log('关系类型',res)
       if(res){
         this.form.files = res.data.data
       }

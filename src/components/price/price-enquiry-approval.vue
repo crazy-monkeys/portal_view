@@ -267,7 +267,7 @@ export default {
       //第几页
       currentPage: 1,
       //每页的容量
-      pageSize: 10,
+      pageSize: 50,
       total: 0,
       multipleSelection:[],
       rules:{
@@ -286,7 +286,7 @@ export default {
   watch: {},
   methods: {
     watchTime(data){
-        // console.log(data)
+        // //console.log(data)
         this.form.applyBeginTime = data.startTime
         this.form.applyEndTime = data.endTime
         this.resetData = false
@@ -299,7 +299,7 @@ export default {
         pdt:row.pdt
       }
       const res = await getDetail(data);
-      // console.log('详情',res);
+      // //console.log('详情',res);
       if(res){
         this.detail = res.data.data
       }
@@ -350,7 +350,7 @@ export default {
         approvalStatus:this.form1.approvalStatus,
       }
       const res = await approve(data);
-      // console.log('审批结果',res);
+      // //console.log('审批结果',res);
       if(res){
         this.cancel()
         this.getList()
@@ -366,7 +366,7 @@ export default {
         bu:this.form.bu
       }
       const res = await getList(data);
-      // console.log('审批列表',res);
+      // //console.log('审批列表',res);
       if(res){
         this.tableData = res.data.data.list
         this.total = res.data.data.total
@@ -392,12 +392,12 @@ export default {
     },
     // 分页
     handleSizeChange(val) {
-      // console.log(`每页 ${val} 条`);
+      // //console.log(`每页 ${val} 条`);
       this.pageSize = val;
       this.getList()
     },
     handleCurrentChange(val) {
-      // console.log(`当前页: ${val}`);
+      // //console.log(`当前页: ${val}`);
       this.currentPage = val;
       this.getList()
     }

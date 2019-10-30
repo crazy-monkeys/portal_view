@@ -50,6 +50,7 @@ function toType(obj) {
 
 axios.interceptors.request.use(
     config => {
+        //console.log(config)
         cancelPending(config)
         config.cancelToken = new CancelToken(res => {
             pending.push({ 'UrlPath': config.url, 'Cancel': res })
@@ -58,10 +59,10 @@ axios.interceptors.request.use(
         return config
     },
     (error, response) => {
-        // console.log(111111)
+        // //console.log(111111)
 
-        console.log(error)
-        console.log(response)
+        //console.log(error)
+        //console.log(response)
     }
 )
 
@@ -71,16 +72,16 @@ axios.interceptors.response.use(
         endLoading()
         cancelPending(response.config)
             // }, 500);
-            // console.log(response)
+            // //console.log(response)
         if (response.headers.authorization) {
-            // console.log(111111)
-            // console.log(sessionStorage.getItem('data'))
+            // //console.log(111111)
+            // //console.log(sessionStorage.getItem('data'))
             sessionStorage.setItem('data', response.headers.authorization)
         }
         return response
     }, (error, res) => {
-        console.log(error, res)
-            // console.log(22222)
+        //console.log(error, res)
+        // //console.log(22222)
         endLoading()
         return Promise.reject(error)
     }
@@ -103,7 +104,7 @@ export const request = (method, url, data = {}, header = {}) => {
     return axios(options)
         .then(result => {
             if (result.data && result.data.code === 1) {
-                // console.log(result)
+                // //console.log(result)
 
                 return result
             }
@@ -117,7 +118,7 @@ export const request = (method, url, data = {}, header = {}) => {
                     Message.error('错误的请求')
                 }
                 if (err.response.data.code == 10005) {
-                    // console.log(err.response.data);
+                    // //console.log(err.response.data);
                     // Message.error(err.response.data.msg)
                     MessageBox.alert('会话已经过期', '提示', {
                             showClose: false,
@@ -126,7 +127,7 @@ export const request = (method, url, data = {}, header = {}) => {
                             // cancelButtonText: '取消'
                         })
                         .then(() => {
-                            // console.log(window)
+                            // //console.log(window)
                             window.location.href = '/portal'
                         })
                         .catch(action => {
@@ -134,7 +135,7 @@ export const request = (method, url, data = {}, header = {}) => {
                         });
                 }
                 if (err.response.data.code == 10004) {
-                    // console.log(err.response.data);
+                    // //console.log(err.response.data);
                     // Message.error(err.response.data.msg)
                     MessageBox.alert('未登录', '提示', {
                             showClose: false,
@@ -143,7 +144,7 @@ export const request = (method, url, data = {}, header = {}) => {
                             // cancelButtonText: '取消'
                         })
                         .then(() => {
-                            // console.log(window)
+                            // //console.log(window)
                             window.location.href = '/portal'
                         })
                         .catch(action => {
@@ -156,11 +157,11 @@ export const request = (method, url, data = {}, header = {}) => {
                 // The request was made but no response was received
                 // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
                 // http.ClientRequest in node.js
-                // // console.log(err.request);
+                // // //console.log(err.request);
             } else {
                 // Something happened in setting up the request that triggered an Error
-                // // console.log('Error', err.message);
+                // // //console.log('Error', err.message);
             }
-            // // console.log(err)
+            // // //console.log(err)
         })
 }

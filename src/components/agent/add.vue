@@ -453,7 +453,7 @@
     methods: {
       async getAll(){
         const res = await getAll();
-        // console.log('所有执行方',res);
+        // //console.log('所有执行方',res);
         if(res){
           this.executors = res.data.data;
         }
@@ -464,11 +464,11 @@
         url: "static/cityL3.json"
       })
         .then(res => {
-          // console.log("城市list", res);
+          // //console.log("城市list", res);
           this.province = res.data;
         })
         .catch(error => {
-          // console.log(error);
+          // //console.log(error);
           alert("系统异常");
         });
     },
@@ -484,7 +484,7 @@
           func:func,
         }
         const res = await getType(data);
-        // console.log('关系类型',res)
+        // //console.log('关系类型',res)
         if(res){
           if(func==11){
             this.corporateTypes = res.data.data
@@ -504,7 +504,7 @@
       },
       async getDealerInfo(){
         const res = await getDealerInfo();
-        // console.log('代理商信息',res)
+        // //console.log('代理商信息',res)
         if(res){
           this.form = res.data.data 
           this.form.custBankInfo.bankCountry = JSON.parse(res.data.data.custBankInfo.bankCountry)
@@ -514,13 +514,13 @@
         }
       },
       handleChange(val){
-        // console.log(val)
+        // //console.log(val)
       },
       goBack(){
         window.history.go(-1)
       },
       handleClick(tab, event) {
-        // console.log(tab, event);
+        // //console.log(tab, event);
       },
       changeCon() { },
       changeSign(val) { },
@@ -553,7 +553,7 @@
         this.csdialogVisible = true;
       },
       handleSelect(item) {
-        // console.log(item);
+        // //console.log(item);
       },
       //创建主题按钮
       create() {

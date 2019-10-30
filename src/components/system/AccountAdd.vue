@@ -187,7 +187,7 @@ export default {
   },
   methods:{
     a(){
-      // console.log(this.$refs.tree.getCheckedKeys())
+      // //console.log(this.$refs.tree.getCheckedKeys())
       this.baseForm.groups = this.$refs.tree.getCheckedKeys()
     },
     //更新基本信息
@@ -204,7 +204,7 @@ export default {
       this.$http.post(''+process.env.API_ROOT+'/system/loginUser/saveUser',data
       )
       .then((res)=>{
-            // console.log('新增结果',res)
+            // //console.log('新增结果',res)
             if(res.data.code ==1){
               this.$router.push(
                 {
@@ -214,7 +214,7 @@ export default {
             }else{
             }
         }).catch((err)=>{
-          // console.log(err);
+          // //console.log(err);
           alert('网络异常')
         })
     },
@@ -230,12 +230,12 @@ export default {
       this.$http.post(''+process.env.API_ROOT+'/system/loginUser/saveUser',data
       )
       .then((res)=>{
-            // console.log('新增结果',res)
+            // //console.log('新增结果',res)
             if(res.data.code ==1){
             }else{
             }
         }).catch((err)=>{
-          // console.log(err);
+          // //console.log(err);
           alert('网络异常')
         })
     },
@@ -251,19 +251,19 @@ export default {
       this.$http.post(''+process.env.API_ROOT+'/system/loginUser/saveUser',data
       )
       .then((res)=>{
-            // console.log('新增结果',res)
+            // //console.log('新增结果',res)
             if(res.data.code ==1){
             }else{
             }
         }).catch((err)=>{
-          // console.log(err);
+          // //console.log(err);
           alert('网络异常')
         })
     },
     resetType(e){
-      // console.log(e)
-      // console.log(this.$refs)
-      // console.log(this.$refs['input1'])
+      // //console.log(e)
+      // //console.log(this.$refs)
+      // //console.log(this.$refs['input1'])
       this.type='password'
       // this.$refs['input1'].type='password'
       // this.$refs['input2'].type='password'
@@ -282,7 +282,7 @@ export default {
           this.addBase()
           // this.$refs[formName].clearValidate();
         } else {
-          // console.log("error submit!!");
+          // //console.log("error submit!!");
           return false;
         }
       });
@@ -300,7 +300,7 @@ export default {
       }
     },
     filterNode(value, data) {
-      // console.log(value,data)
+      // //console.log(value,data)
       if (!value) return true;
       return data.userGroupName.indexOf(value) !== -1;
     },
@@ -310,14 +310,14 @@ export default {
       this.$http.get(''+process.env.API_ROOT+'/system/permission/roleInfo?pageIndex=1&pageSize=100000'
       )
       .then((res)=>{
-            // console.log('角色列表',res)
+            // //console.log('角色列表',res)
             if(res.data.code ==1){
               this.roles = res.data.data.list
             }else{
 
             }
         }).catch((err)=>{
-          // console.log(err);
+          // //console.log(err);
           alert('网络异常')
         })
     },
@@ -327,14 +327,14 @@ export default {
       this.$http.get(''+process.env.API_ROOT+'/system/userGroup/getAllUserGroup'
       )
       .then((res)=>{
-            // console.log('用户组列表',res)
+            // //console.log('用户组列表',res)
             if(res.data.code ==1){
               this.groups = res.data.data
             }else{
 
             }
         }).catch((err)=>{
-          // console.log(err);
+          // //console.log(err);
           alert('网络异常')
         })
     },

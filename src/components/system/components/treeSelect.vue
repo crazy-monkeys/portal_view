@@ -67,19 +67,19 @@ export default {
   },
   mounted(){
     this.initHandle()
-    // console.log(this.props)
-    // console.log(this.valueId)
-    // console.log(this.clear)
+    // //console.log(this.props)
+    // //console.log(this.valueId)
+    // //console.log(this.clear)
   },
   methods: {
     filterNode(value, data) {
-        // console.log(value,data)
+        // //console.log(value,data)
         if (!value) return true;
         return data.resourceName.indexOf(value) !== -1;
     },
     // 初始化值
     initHandle(){
-      // // console.log(this.$refs.selectTree.getNode(this.valueId))
+      // // //console.log(this.$refs.selectTree.getNode(this.valueId))
       
       if(this.valueId || this.valueId===0){
         // this.valueTitle = this.$refs.selectTree.getNode(this.valueId).data[this.props.label]     // 初始化显示
@@ -126,9 +126,9 @@ export default {
     value:{
       handler:function(n,o){
         if(n!==null){
-          // console.log(n,o)
+          // //console.log(n,o)
           this.valueId = n
-          // console.log(this.$refs['selectTree'].getNode('1'))
+          // //console.log(this.$refs['selectTree'].getNode('1'))
           this.valueTitle = this.$refs['selectTree'].getNode(n+'').label
           this.initHandle()
         }else{
@@ -138,7 +138,7 @@ export default {
     },
     filterText: {
         handler:function(n,o){
-            // console.log(11111)
+            // //console.log(11111)
             this.$refs.selectTree.filter(n);
         }
         

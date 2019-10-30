@@ -201,7 +201,7 @@
             {
               required: true, trigger: 'blur', validator: (rule, value, callback) => {
                 if (value) {
-                  // // console.log('time1',new Date(value[0]).getTime(),new Date(value[1]).getTime())
+                  // // //console.log('time1',new Date(value[0]).getTime(),new Date(value[1]).getTime())
                   if (value.length == 0) {
                     callback(new Error('请选择roi时间段!'))
                   } else {
@@ -238,7 +238,7 @@
             {
               required: true, trigger: 'blur', validator: (rule, value, callback) => {
                 if (value) {
-                  // // console.log('time1',new Date(value[0]).getTime(),new Date(value[1]).getTime())
+                  // // //console.log('time1',new Date(value[0]).getTime(),new Date(value[1]).getTime())
                   if (value.length == 0) {
                     callback(new Error('请选择执行时间段!'))
                   } else {
@@ -294,7 +294,7 @@
         //第几页
         currentPage: 1,
         //每页的容量
-        pageSize: 10,
+        pageSize: 50,
         //店铺列表
         shopList: [],
         //主题列表
@@ -317,11 +317,11 @@
       }
     },
     created() {
-      // console.log(this.shopId)
+      // //console.log(this.shopId)
       // this.getShopList()
       // this.getList(this.currentPage,this.pageSize,this.shopId)
 
-      // console.log(this.$refs)
+      // //console.log(this.$refs)
     },
     watch: {
       shopId: {
@@ -359,7 +359,7 @@
           "activityId": activityId
         }
         ).then(res => {
-          // console.log("忽略并发送", res);
+          // //console.log("忽略并发送", res);
           if (res.data.code == 1) {
             this.childdialogVisible = false
 
@@ -371,7 +371,7 @@
 
         })
           .catch(error => {
-            // console.log(error);
+            // //console.log(error);
             alert("登入失败");
           });
       },
@@ -387,7 +387,7 @@
 
           }
         ).then(res => {
-          // console.log("重试", res);
+          // //console.log("重试", res);
           if (res.data.code == 1) {
             this.csdialogVisible = false
             this.getChildren(activityId)
@@ -407,7 +407,7 @@
           }
         })
           .catch(error => {
-            // console.log(error);
+            // //console.log(error);
             alert("登入失败");
           });
       },
@@ -440,7 +440,7 @@
 
       },
       rowClick(row, event, column) {
-        // console.log(row)
+        // //console.log(row)
         this.id = row.marketingActivityId
       },
       // 启用按钮
@@ -456,7 +456,7 @@
                 method: 'get',
                 url: '' + process.env.API_ROOT + '/marketing/activity/recovery' + '?activityId=' + activityId,
               }).then(res => {
-                // console.log("启用", res);
+                // //console.log("启用", res);
                 if (res.data.code == 1) {
                   this.$message({
                     type: 'success',
@@ -466,7 +466,7 @@
                 }
               })
                 .catch(error => {
-                  // console.log(error);
+                  // //console.log(error);
                   alert("登入失败");
                 });
             })
@@ -496,7 +496,7 @@
               method: 'get',
               url: '' + process.env.API_ROOT + '/marketing/activity/cancel' + '?activityId=' + activityId,
             }).then(res => {
-              // console.log("禁用", res);
+              // //console.log("禁用", res);
               if (res.data.code === 1) {
                 this.getList(this.currentPage, this.pageSize, this.shopId);
                 this.$message({
@@ -506,7 +506,7 @@
               }
             })
               .catch(error => {
-                // console.log(error);
+                // //console.log(error);
                 alert("登入失败");
               });
           })
@@ -527,7 +527,7 @@
       //时间选择 事件
       selTime() {
         this.value4 = this.value4 ? this.value4 : []
-        // console.log(this.value4)
+        // //console.log(this.value4)
       },
 
       //获取子流程
@@ -536,14 +536,14 @@
           method: 'get',
           url: '' + process.env.API_ROOT + '/marketing/activity/childrenBusiness' + '?activityId=' + activityId
         }).then(res => {
-          // console.log("子流程", res);
+          // //console.log("子流程", res);
           if (res.data.code == 1) {
             this.children = res.data.data
             this.fob = false;
           }
         })
           .catch(error => {
-            // console.log(error);
+            // //console.log(error);
             alert("登入失败");
           });
       },
@@ -557,7 +557,7 @@
           method: 'get',
           url: '' + process.env.API_ROOT + '/getCurentUserShopList',
         }).then(res => {
-          // console.log("店铺列表", res);
+          // //console.log("店铺列表", res);
           if (res.data.code == 1) {
             this.shopList = res.data.data;
             this.ruleForm.shop = res.data.data[0].shop_name
@@ -565,7 +565,7 @@
           }
         })
           .catch(error => {
-            // console.log(error);
+            // //console.log(error);
             alert("登入失败");
           });
       },
@@ -585,14 +585,14 @@
 
 
         this.$http.get('' + process.env.API_ROOT + '/marketing/batch/activities?' + this.toQueryString(data)).then((res) => {
-          // console.log('营销活动列表', res)
+          // //console.log('营销活动列表', res)
           if (res.data.code == 1) {
             this.tableData = res.data.data.list
             this.total = res.data.data.total
           }
 
         }).catch((err) => {
-          // console.log(err);
+          // //console.log(err);
 
           alert('网络异常')
         })
@@ -667,19 +667,19 @@
 
       // 分页
       handleSizeChange(val) {
-        // console.log(`每页 ${val} 条`);
+        // //console.log(`每页 ${val} 条`);
         this.pageSize = val;
         this.getList(this.currentPage, this.pageSize, this.shopId)
       },
       handleCurrentChange(val) {
-        // console.log(`当前页: ${val}`);
+        // //console.log(`当前页: ${val}`);
         this.currentPage = val;
         this.getList(this.currentPage, this.pageSize, this.shopId)
       },
       // 选择全部，活动或者快照名称
       a(command) {
         this.select = command.name
-        // console.log(this.select)
+        // //console.log(this.select)
         if (this.select == '全部名称') {
           this.photo = this.value3;
           this.actName = this.value3;
@@ -689,7 +689,7 @@
           this.actName = '';
         }
         if (this.select == '活动名称') {
-          // console.log(3)
+          // //console.log(3)
           this.actName = this.value3;
           this.photo = '';
         }
@@ -705,7 +705,7 @@
           this.actName = '';
         }
         if (this.select == '活动名称') {
-          // console.log(3)
+          // //console.log(3)
           this.actName = this.value3;
           this.photo = '';
         }
@@ -735,14 +735,14 @@
           this.report.id = command.id
           this.report.createTime = command.createTime
           this.date = command.createTime
-          // console.log(this.report.createTime)
-          // console.log(new Date(this.report.createTime).getTime())
-          // // console.log(Date.now())
+          // //console.log(this.report.createTime)
+          // //console.log(new Date(this.report.createTime).getTime())
+          // // //console.log(Date.now())
         }
         if (command.name == '短信内容') {
           this.smsdialogVisible = true;
           this.sms = command.sms
-          // console.log(command.sms)
+          // //console.log(command.sms)
         }
         if (command.name == '查看流程') {
           this.getChildren(command.id)

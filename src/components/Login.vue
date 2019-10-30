@@ -107,7 +107,7 @@ export default {
           if(this.value.length!=0){
           this.doing = true;
              this.$http.post(''+process.env.API_ROOT+'/user/forgetPwd/sendEmail/'+this.value).then((res)=>{
-              // console.log('修改密码申请',res)
+              // //console.log('修改密码申请',res)
               if(res.data.code==1){
                 this.$message({
                   type:'success',
@@ -123,7 +123,7 @@ export default {
               }
                 this.doing = false;
           }).catch((err)=>{
-            // console.log(err);
+            // //console.log(err);
             alert('网络异常')
           })
           }else{
@@ -140,7 +140,7 @@ export default {
               url :  process.env.API_ROOT+ '/ad/index',
               // data:data
             }) .then(res => {
-                // console.log("登陆信息", res);
+                // //console.log("登陆信息", res);
                 if (res.data.code===1) {
                     this.$store.commit('getMenu',res.data.data.permissions);
                     this.$store.commit('getLoginInfo',res.data.data.user);
@@ -162,7 +162,7 @@ export default {
                 if (error.response) {
                     // The request was made and the server responded with a status code
                     // that falls out of the range of 2xx
-                    // console.log(error.response.data);
+                    // //console.log(error.response.data);
                     this.$message({
                       type:'error',
                       message:error.response.data.msg
@@ -171,10 +171,10 @@ export default {
                     // The request was made but no response was received
                     // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
                     // http.ClientRequest in node.js
-                    // console.log(error.request);
+                    // //console.log(error.request);
                   } else {
                     // Something happened in setting up the request that triggered an Error
-                    // // console.log('Error', error.message);
+                    // // //console.log('Error', error.message);
                   }
               });
     },
@@ -209,7 +209,7 @@ export default {
               data:data,
               withCredentials:true
             }) .then(res => {
-                // console.log("登陆信息", res);
+                // //console.log("登陆信息", res);
                 if (res.data.code===1) {
                     this.$store.commit('getMenu',res.data.data.permissions);
                     this.$store.commit('getLoginInfo',res.data.data.user);
@@ -230,9 +230,9 @@ export default {
                 if (error.response) {
                   // The request was made and the server responded with a status code
                   // that falls out of the range of 2xx
-                  // console.log(error.response.data);
-                  // console.log(11111111)
-                  console.log(error)
+                  // //console.log(error.response.data);
+                  // //console.log(11111111)
+                  //console.log(error)
                   this.$message({
                     type:'error',
                     message:error.response.data.msg
@@ -243,10 +243,10 @@ export default {
                   // The request was made but no response was received
                   // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
                   // http.ClientRequest in node.js
-                  // console.log(error.request);
+                  // //console.log(error.request);
                 } else {
                   // Something happened in setting up the request that triggered an Error
-                  // console.log('Error', error.message);
+                  // //console.log('Error', error.message);
                 }
             });
             }
@@ -256,7 +256,7 @@ export default {
       },
     forget(){
        this.dialogVisible = true
-        // console.log('找回密码')
+        // //console.log('找回密码')
       },
   }
 };

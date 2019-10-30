@@ -99,7 +99,7 @@
           </el-table>
           <div class="block">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-            :page-sizes="[10, 20,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
+            :page-sizes="[50, 100,150]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
           </el-pagination>
         </div>
         </div>
@@ -192,7 +192,7 @@ export default {
       //第几页
       currentPage: 1,
       //每页的容量
-      pageSize: 10,
+      pageSize: 50,
       total: 0,
     };
   },
@@ -207,7 +207,7 @@ export default {
   methods: {
      async getShip(){
       const res = await getShip();
-      // console.log('tos',res)
+      // //console.log('tos',res)
       if(res){
         this.tos = res.data.data
       }
@@ -221,7 +221,7 @@ export default {
     },
     async getDealerList(){
       const res = await getDealerList();
-      // console.log('list',res)
+      // //console.log('list',res)
       if(res){
         this.list = res.data.data
       }
@@ -238,7 +238,7 @@ export default {
       this.getList()
     },
     watchTime(data){
-      // console.log(data)
+      // //console.log(data)
       this.form.createStartDate = data.startTime
       this.form.createEndDate = data.endTime
       this.resetData = false
@@ -262,14 +262,14 @@ export default {
         queryType:1
       }
       const res = await approveProList(data);
-      // console.log('提货单审批列表',res)
+      // //console.log('提货单审批列表',res)
       if(res){
         this.tableData = res.data.data.list
         this.total = res.data.data.total
       }
     },
     getDetail(id) {
-      // console.log(id)
+      // //console.log(id)
       this.getProApprovalDetail(id)
       this.dialogVisible1 = true;
     },
@@ -303,7 +303,7 @@ export default {
         remark:this.form1.reason,
         approvalStatus:1,
       }
-      // console.log(data)
+      // //console.log(data)
       const res = await approvePro(data);
       if(res){
         this.$message.success('审批成功')
@@ -333,11 +333,11 @@ export default {
     },
     // 分页
     handleSizeChange(val) {
-      // console.log(`每页 ${val} 条`);
+      // //console.log(`每页 ${val} 条`);
       this.pageSize = val;
     },
     handleCurrentChange(val) {
-      // console.log(`当前页: ${val}`);
+      // //console.log(`当前页: ${val}`);
       this.currentPage = val;
     }
   }

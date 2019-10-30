@@ -368,7 +368,7 @@ export default {
         tableData:[]
       },
       currentPage: 1,
-      pageSize: 10,
+      pageSize: 50,
       total: 0
     };
   },
@@ -387,11 +387,11 @@ export default {
   watch:{
     'form.currency':{
       handler:function(n,o){
-        // console.log(n)
+        // //console.log(n)
         if(n=='CNY'){
           if(this.form.salesOrg==3000){
             this.form.incoterms1 = 'DDU'
-            // console.log(this.form.icon1)
+            // //console.log(this.form.icon1)
           }
         }else{
             this.form.incoterms1 = 'CIP'
@@ -401,12 +401,12 @@ export default {
     },
     'form.salesOrg':{
       handler:function(n,o){
-        // console.log(n)
+        // //console.log(n)
         if(n==3000){
-          // console.log(11111111)
+          // //console.log(11111111)
           if(this.form.currency=='CNY'){
             this.form.incoterms1 = 'DDU'
-            // console.log(this.form.icon1)
+            // //console.log(this.form.icon1)
           }
         }else{
             this.form.incoterms1 = 'CIP'
@@ -419,7 +419,7 @@ export default {
     formData(){
       var data ={}
       for(let i in this.form){
-        console.log(i)
+        //console.log(i)
         if(i=='isAgreed' || i=='createTime' || i =='updateTime'){
 
         }else{
@@ -427,7 +427,7 @@ export default {
         }
 
       }
-      console.log(data)
+      //console.log(data)
       return data
     },
     async detail(id){
@@ -435,7 +435,7 @@ export default {
         id:id
       }
       const res = await detail(data);
-      console.log('detail',res)
+      //console.log('detail',res)
       if(res){
         this.form = res.data.data
         this.form.salesOrg = res.data.data.salesOrg*1
@@ -452,19 +452,19 @@ export default {
     },
     async getShip(){
       const res = await getShip();
-      // console.log('tos',res)
+      // //console.log('tos',res)
       if(res){
         this.tos = res.data.data
       }
     },
     changeccc(val){
-      // console.log(val)
+      // //console.log(val)
     },
     changeaaa(val){
-      // console.log(val)
+      // //console.log(val)
     },
     uploadSuccess(val){
-      // console.log(val)
+      // //console.log(val)
       if(val.code==1){
         this.$message.success('上传成功')
         this.form.tableData = val.data.lines
@@ -485,7 +485,7 @@ export default {
     },
     async getCode(){
       const res = await getCode();
-      // console.log('发货方编码',res)
+      // //console.log('发货方编码',res)
       if(res){
         this.salesOrgIds = res.data.data
       }
@@ -498,7 +498,7 @@ export default {
         var form =this.form
         form.isAgreed = form.isAgreed? 1:0
         const res = await apply(form);
-        // console.log('申请结果',res)
+        // //console.log('申请结果',res)
         if(res){
           this.$message.success('订单申请成功')
           this.$router.push({name:'saleList'})
@@ -517,7 +517,7 @@ export default {
         }
         form.isAgreed = form.isAgreed? 1:0
         const res = await mod(data,form);
-        // console.log('申请结果',res)
+        // //console.log('申请结果',res)
         if(res){
           this.$message.success('订单申请修改成功')
           this.$router.push({name:'saleList'})
@@ -532,7 +532,7 @@ export default {
       window.history.go(-1)
     },
     handleClick(tab, event) {
-      // console.log(tab, event);
+      // //console.log(tab, event);
     },
     changeCon() {},
     changeSign(val) {},
@@ -565,7 +565,7 @@ export default {
       this.csdialogVisible = true;
     },
     handleSelect(item) {
-      // console.log(item);
+      // //console.log(item);
     },
     //创建主题按钮
     create() {

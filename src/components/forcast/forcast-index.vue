@@ -238,7 +238,7 @@
           </el-table>
           <div class="block">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-            :page-sizes="[10, 20,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
+            :page-sizes="[50, 100,150]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
           </el-pagination>
         </div>
         </div>
@@ -303,7 +303,7 @@
         //第几页
         currentPage: 1,
         //每页的容量
-        pageSize: 10,
+        pageSize: 50,
         total: 0,
 
       }
@@ -317,7 +317,7 @@
     watch: {
       way: {
         handler: function(n, o) {
-          // console.log(n);
+          // //console.log(n);
           if(n==3){
             this.getSdList()
           }
@@ -342,7 +342,7 @@
         this.search()
       },
       watchTime(data){
-        // console.log(data)
+        // //console.log(data)
         this.form.uploadStartTime = data.startTime
         this.form.uploadEndTime = data.endTime
         this.resetData = false
@@ -359,7 +359,7 @@
           agencyAbbreviation :this.form.agencyAbbreviation
         }
         const res = await getList(data);
-        // console.log('查询列表',res);
+        // //console.log('查询列表',res);
         if(res){
           this.tableData = res.data.data.list
           this.total = res.data.data.total
@@ -453,7 +453,7 @@
           pageNum:this.currentPage,
         }
         const res = await getSdList(data);
-        // console.log('sd查询列表',res);
+        // //console.log('sd查询列表',res);
         if(res){
           this.sdTableData = res.data.data.list
           this.total = res.data.data.total
@@ -547,12 +547,12 @@
       },
       // 分页
       handleSizeChange(val) {
-        // console.log(`每页 ${val} 条`);
+        // //console.log(`每页 ${val} 条`);
         this.pageSize = val;
         this.getList()
       },
       handleCurrentChange(val) {
-        // console.log(`当前页: ${val}`);
+        // //console.log(`当前页: ${val}`);
         this.currentPage = val;
         this.getList()
       },

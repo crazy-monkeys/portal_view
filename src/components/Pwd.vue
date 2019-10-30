@@ -29,8 +29,8 @@ export default {
     }
   },
   created(){
-    // console.log(this.sid)
-    // console.log(this.userId)
+    // //console.log(this.sid)
+    // //console.log(this.userId)
   },
   computed:{
     sid(){
@@ -71,7 +71,7 @@ export default {
           }else{
             this.$http.post("" + process.env.API_ROOT + "/user/forgetPwd/modifyPwd/"+this.loginName +"?sid="+this.sid +"&newPwd="+this.form.newPwd)
             .then(res => {
-              // console.log("修改密码结果", res);
+              // //console.log("修改密码结果", res);
               if (res.data.code == 1) {
                 
                 this.$alert('密码修改成功,前往登陆页', '提示', {
@@ -81,7 +81,7 @@ export default {
                         // cancelButtonText: '取消'
                     })
                     .then(() => {
-                        // console.log(window)
+                        // //console.log(window)
                         window.location.href = '/portal'
                     })
                     .catch(action => {
@@ -102,7 +102,7 @@ export default {
               }
             })
             .catch(error => {
-              // console.log(error);
+              // //console.log(error);
               this.fileList = [];
               alert("系统异常");
             });

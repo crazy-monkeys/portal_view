@@ -339,14 +339,14 @@ export default {
   },
   methods: {
     handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+      //console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
-      console.log(key, keyPath);
+      //console.log(key, keyPath);
     }
   },
   created() {
-    console.log(this.list)
+    //console.log(this.list)
   },
   computed: {
     list(){
@@ -355,7 +355,7 @@ export default {
   },
   mounted() {
     Bus.$on("data", res => {
-      console.log(res);
+      //console.log(res);
       this.isCollapse = res;
     });
   }

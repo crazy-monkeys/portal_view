@@ -34,6 +34,9 @@
     height: 10% !important;
 }
 
+.el-table tbody tr{
+    height:100px;
+}
 .el-table tbody tr td {
     padding: 0;
     border: none;

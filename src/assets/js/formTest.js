@@ -141,7 +141,7 @@ export default {
     },
     phoneTest: (rule, value, callback) => {
         let phoneReg = /^1[34578]\d{9}$/;
-        // console.log(value)
+        // //console.log(value)
         if (value.length == 0) {
             callback(new Error('手机号码不能为空'))
         } else {
@@ -432,7 +432,7 @@ export default {
         }
     },
     valueTest: (rule, value, callback) => {
-        // console.log(value)
+        // //console.log(value)
 
         if (!value) {
             callback(new Error('属性值不能为空'))
@@ -446,7 +446,7 @@ export default {
     },
     time1Test: (rule, value, callback) => {
         if (value) {
-            // // console.log('time1',new Date(value[0]).getTime(),new Date(value[1]).getTime())
+            // // //console.log('time1',new Date(value[0]).getTime(),new Date(value[1]).getTime())
             if (value.length == 0) {
                 callback(new Error('请选择执行时间段!'))
             } else {
@@ -466,7 +466,7 @@ export default {
     },
     roiTest: (rule, value, callback) => {
         if (value) {
-            // // console.log('time1',new Date(value[0]).getTime(),new Date(value[1]).getTime())
+            // // //console.log('time1',new Date(value[0]).getTime(),new Date(value[1]).getTime())
             if (value.length == 0) {
                 callback(new Error('请选择roi时间段!'))
             } else {
@@ -486,7 +486,7 @@ export default {
     },
     time11Test: (rule, value, callback) => {
         if (value) {
-            // // console.log('time1',new Date(value[0]).getTime(),new Date(value[1]).getTime())
+            // // //console.log('time1',new Date(value[0]).getTime(),new Date(value[1]).getTime())
             if (value.length == 0) {
                 callback(new Error('请选择执行时间段!'))
             } else {
@@ -502,7 +502,7 @@ export default {
     },
     numTest: (rule, value, callback) => {
         let passWordReg = /^[0-9]+$/;
-        // console.log(value)
+        // //console.log(value)
         if (value.length == 0) {
             callback(new Error('内容不能为空'))
         }
@@ -543,7 +543,7 @@ export default {
             if (valid) {
                 fun()
             } else {
-                // console.log("error submit!!");
+                // //console.log("error submit!!");
                 return false;
             }
         });

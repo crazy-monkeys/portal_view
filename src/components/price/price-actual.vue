@@ -92,7 +92,7 @@
           </el-table>
           <div class="block">
             <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-              :page-sizes="[10, 20,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
+              :page-sizes="[50, 100,150]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
             </el-pagination>
           </div>
         </div>
@@ -176,7 +176,7 @@
         //第几页
         currentPage: 1,
         //每页的容量
-        pageSize: 10,
+        pageSize: 50,
         total: 0,
       }
     },
@@ -199,18 +199,18 @@
       },
       sub(){
         var arr = this.multipleSelection.map(item=>{return item.settlementType})
-        // console.log(arr)
+        // //console.log(arr)
         var filter =  arr.filter(item=>{
           if(item == arr[0]){
             return true
           }
         })
-        // console.log(filter)
+        // //console.log(filter)
         if(filter.length == arr.length){
           this.type=filter[0]
-          // console.log(this.type)
+          // //console.log(this.type)
           this.queryPrice = this.form1.inquirer.split(',')[0]
-          // console.log(this.queryPrice)
+          // //console.log(this.queryPrice)
           this.dialogVisible1 = false
           this.$nextTick(()=>{
             this.$print(this.$refs.print)
@@ -227,7 +227,7 @@
         this.getList()
       },
       watchTime(data){
-        // console.log(data)
+        // //console.log(data)
         this.form.effectBeginTime = data.startTime
         this.form.effectEndTime = data.endTime
         this.resetData = false
@@ -248,7 +248,7 @@
            effectEndTime:this.form.effectEndTime
         } 
         const res = await getList(data);
-        // console.log('实际价格查询列表',res);
+        // //console.log('实际价格查询列表',res);
         if(res){
           this.tableData = res.data.data.list
           this.total = res.data.data.total
@@ -282,13 +282,13 @@
       },
       // 分页
       handleSizeChange(val) {
-        // console.log(`每页 ${val} 条`);
+        // //console.log(`每页 ${val} 条`);
         this.pageSize = val;
         this.getList()
 
       },
       handleCurrentChange(val) {
-        // console.log(`当前页: ${val}`);
+        // //console.log(`当前页: ${val}`);
         this.currentPage = val;
         this.getList()
       },

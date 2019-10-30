@@ -93,9 +93,9 @@
                 reader.readAsText(data, 'utf-8');
                 var that = this
                 reader.onload = function () {
-                  console.log(reader.result)
+                  //console.log(reader.result)
                   data = JSON.parse(reader.result);
-                  console.log(data)
+                  //console.log(data)
                   that.$message.error(data.msg)
                 }
               }else{
@@ -111,16 +111,16 @@
               a.click();
               document.body.removeChild(a);
               }
-              // console.log(res.data);
+              // //console.log(res.data);
              
             })
             .catch(err => {
-              // console.log(err);
+              // //console.log(err);
               alert("网络异常");
             });
       },
       suc(val){
-        // console.log(val)
+        // //console.log(val)
         if(val.code==1){
           this.$message.success('上传成功')
           this.isEmpty = false
@@ -135,7 +135,7 @@
             return item.id
           }).join(',')
         }
-        // console.log(data)
+        // //console.log(data)
         const res = await approve(data);
         if(res){
           this.$message.success('发布成功')

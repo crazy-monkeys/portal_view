@@ -52,7 +52,7 @@
         rowData: {},
         list:[],
         currentPage: 1,
-        pageSize: 10,
+        pageSize: 50,
         total: 0,
       }
     },
@@ -83,7 +83,7 @@
           func:2,
         }
         const res = await getType(data);
-        // console.log('公告类型',res)
+        // //console.log('公告类型',res)
         if(res){
           this.types = res.data.data
           this.types.unshift({
@@ -97,7 +97,7 @@
           id:id
         }
         const res = await view(data);
-        // console.log('url',res)
+        // //console.log('url',res)
         if(res){
           let url = 'portal-api/file/'+ res.data.data
           window.open('/static/pdf/web/viewer.html?file=' + encodeURIComponent(url))
@@ -123,13 +123,13 @@
                 reader.readAsText(data, 'utf-8');
                 var that = this
                 reader.onload = function () {
-                  console.log(reader.result)
+                  //console.log(reader.result)
                   data = JSON.parse(reader.result);
-                  console.log(data)
+                  //console.log(data)
                   that.$message.error(data.msg)
                 }
               }else{
-              // console.log(res.data);
+              // //console.log(res.data);
               const blob = new Blob([res.data], {
                 // type: "application/vnd.ms-excel"
               });
@@ -144,7 +144,7 @@
               }
             })
             .catch(err => {
-              // console.log(err);
+              // //console.log(err);
               alert("网络异常");
             });
       },
@@ -163,12 +163,12 @@
       },
       // 分页
       handleSizeChange(val) {
-        // console.log(`每页 ${val} 条`);
+        // //console.log(`每页 ${val} 条`);
         this.pageSize = val;
         this.getList()
       },
       handleCurrentChange(val) {
-        // console.log(`当前页: ${val}`);
+        // //console.log(`当前页: ${val}`);
         this.currentPage = val;
         this.getList()
       },
@@ -182,7 +182,7 @@
           data.typeId = this.aciveName
         }
         const res = await getList(data)
-        // console.log('公告列表',res)
+        // //console.log('公告列表',res)
         if(res){
           this.tableData = res.data.data.list
           this.list = this.tableData
@@ -190,13 +190,13 @@
         }
       },
       rowClick(row) {
-        // console.log(row)
+        // //console.log(row)
         this.rowData = row
       },
       //切换tab
       handleClick(tab, event) {
-        // console.log(tab, event);
-        // console.log(this.aciveName)
+        // //console.log(tab, event);
+        // //console.log(this.aciveName)
         this.getList()
       },
     }

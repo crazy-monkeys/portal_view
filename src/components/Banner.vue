@@ -187,7 +187,7 @@ export default {
       this.dialogVisible2 = true
     },
     a(command) {
-      // console.log(command);
+      // //console.log(command);
       if (command == 3) {
         this.quit();
       }
@@ -231,7 +231,7 @@ export default {
         }
       })
         .then(res => {
-          // console.log("修改密码结果", res);
+          // //console.log("修改密码结果", res);
           if(res.data.code==1){
             this.$message.success('密码修改成功，请重新登陆')
             sessionStorage.removeItem("data");
@@ -242,7 +242,7 @@ export default {
           }
         })
         .catch(error => {
-          // console.log(error);
+          // //console.log(error);
           alert("系统异常");
         });
     },
@@ -268,7 +268,7 @@ export default {
     },
     fnToggle(e) {
       this.toggle = !this.toggle;
-      // // console.log(e);
+      // // //console.log(e);
     },
     quit() {
       this.$http({
@@ -279,12 +279,12 @@ export default {
         }
       })
         .then(res => {
-          // console.log("退出登陆", res);
+          // //console.log("退出登陆", res);
           sessionStorage.removeItem("data");
           this.$router.push("/login");
         })
         .catch(error => {
-          // console.log(error);
+          // //console.log(error);
           alert("系统异常");
         });
     },

@@ -297,7 +297,7 @@
         list: [
         ],
         currentPage: 1,
-        pageSize: 10,
+        pageSize: 50,
         total: 0,
       }
     },
@@ -346,7 +346,7 @@
           data.id = this.rowData.id
         }
         const res = await addAndEdit(data)
-        // console.log('新增或者编辑结果',res)
+        // //console.log('新增或者编辑结果',res)
         if(res){
           this.$message.success('操作成功')
           this.dialogVisible = false;
@@ -385,9 +385,9 @@
         this.dialogVisible1 = !this.dialogVisible1;
       },
       rowClick(row) {
-        // console.log(row)
+        // //console.log(row)
         this.rowData = row
-        // console.log(row.id)
+        // //console.log(row.id)
       },
       //获取角色列表
       async getList() {
@@ -399,7 +399,7 @@
           active: this.selForm.active,
         }
         const res = await getList(data)
-        // console.log('系统参数列表',res)
+        // //console.log('系统参数列表',res)
         if(res){
           this.list = res.data.data.list
           this.total = res.data.data.total
@@ -430,12 +430,12 @@
       },
       // 分页
       handleSizeChange(val) {
-        // console.log(`每页 ${val} 条`);
+        // //console.log(`每页 ${val} 条`);
         this.pageSize = val;
         this.getList()
       },
       handleCurrentChange(val) {
-        // console.log(`当前页: ${val}`);
+        // //console.log(`当前页: ${val}`);
         this.currentPage = val;
         this.getList()
       }

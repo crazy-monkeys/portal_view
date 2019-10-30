@@ -331,7 +331,7 @@ export default {
         }
       ],
       currentPage: 1,
-      pageSize: 10,
+      pageSize: 50,
       total: 0
     };
   },
@@ -341,11 +341,11 @@ export default {
   watch:{
     'form.currency':{
       handler:function(n,o){
-        // console.log(n)
+        // //console.log(n)
         if(n=='CNY'){
           if(this.form.salesOrgId==3000){
             this.form.inco1 = 'DDU'
-            // console.log(this.form.icon1)
+            // //console.log(this.form.icon1)
           }
         }else{
             this.form.inco1 = 'CIP'
@@ -355,12 +355,12 @@ export default {
     },
     'form.salesOrgId':{
       handler:function(n,o){
-        // console.log(n)
+        // //console.log(n)
         if(n==3000){
-          // console.log(11111111)
+          // //console.log(11111111)
           if(this.form.currency=='CNY'){
             this.form.inco1 = 'DDU'
-            // console.log(this.form.icon1)
+            // //console.log(this.form.icon1)
           }
         }else{
             this.form.inco1 = 'CIP'
@@ -379,7 +379,7 @@ export default {
   },
   methods: {
     uploadSuccess(val){
-      // console.log(val)
+      // //console.log(val)
       if(val.code==1){
         this.$message.success('上传成功')
         this.tableData = val.data
@@ -406,13 +406,13 @@ export default {
                 reader.readAsText(data, 'utf-8');
                 var that = this
                 reader.onload = function () {
-                  console.log(reader.result)
+                  //console.log(reader.result)
                   data = JSON.parse(reader.result);
-                  console.log(data)
+                  //console.log(data)
                   that.$message.error(data.msg)
                 }
               }else{
-              // console.log(res.data);
+              // //console.log(res.data);
               const blob = new Blob([res.data], {
                 type: "application/vnd.ms-excel"
               });
@@ -428,13 +428,13 @@ export default {
             })
             .catch(err => {
 
-              // console.log(err);
+              // //console.log(err);
               alert("网络异常");
             });
     },
     async getCode(){
       const res = await getCode();
-      // console.log('发货方编码',res)
+      // //console.log('发货方编码',res)
       if(res){
         this.salesOrgIds = res.data.data
       }
@@ -445,7 +445,7 @@ export default {
         this.$message.error('请先上传订单行文件')
       }else{
         const res = await apply(this.form);
-        // console.log('申请结果',res)
+        // //console.log('申请结果',res)
         if(res){
           this.$message.success('订单申请成功')
         }
@@ -456,7 +456,7 @@ export default {
     },
     cancel(){},
     handleClick(tab, event) {
-      // console.log(tab, event);
+      // //console.log(tab, event);
     },
     changeCon() {},
     changeSign(val) {},
@@ -489,7 +489,7 @@ export default {
       this.csdialogVisible = true;
     },
     handleSelect(item) {
-      // console.log(item);
+      // //console.log(item);
     },
     //创建主题按钮
     create() {

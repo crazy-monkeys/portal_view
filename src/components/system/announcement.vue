@@ -175,7 +175,7 @@
         dialogVisible1: false,
         list: [],
         currentPage: 1,
-        pageSize: 10,
+        pageSize: 50,
         total: 0,
       }
     },
@@ -187,20 +187,20 @@
     watch:{
       fileList:{
         handler:function(n,o){
-          // console.log(n)
+          // //console.log(n)
         }
       }
     },
     methods: {
       async getUserList(){
        const res = await getRolesAll();
-       console.log('角色列表',res)
+       //console.log('角色列表',res)
        if(res){
          this.userList = res.data.data
        }
       },
       beforeUpload(val){
-        // console.log(val)
+        // //console.log(val)
         if(val.type=='application/pdf'){
           return true
         }else{
@@ -214,13 +214,13 @@
           func:1,
         }
         const res = await getType(data);
-        // console.log('公告类型',res)
+        // //console.log('公告类型',res)
         if(res){
           this.types = res.data.data
         }
       },
       watchTime(data){
-      // console.log(data)
+      // //console.log(data)
       this.selForm.startTime = data.startTime
       this.selForm.endTime = data.endTime
       this.resetData = false
@@ -241,15 +241,15 @@
         var data ={
           id:id
         }
-        // console.log(data)
+        // //console.log(data)
         const res = await cancel(data)
-        // console.log('撤销结果',res)
+        // //console.log('撤销结果',res)
         if(res){
           this.getList()
         }
       },
       uploadSuccess(res, file, fileList){
-        // console.log(res,file,fileList)
+        // //console.log(res,file,fileList)
         if(res){
           this.fileList = res.data.map(item=>{
             return {
@@ -266,10 +266,10 @@
       //   // }
       //   const res = await upload(data)
         
-      //   // console.log('上传文件',res)
+      //   // //console.log('上传文件',res)
       //   if(res){
       //     this.fileList=res.data.data
-      //     // console.log(this.fileList)
+      //     // //console.log(this.fileList)
       //   }
       // },
       search(){
@@ -298,7 +298,7 @@
           }),
         }
         const res = await addAndEdit(data)
-        // console.log('新增或编辑结果',res)
+        // //console.log('新增或编辑结果',res)
         if(res){
           this.resetForm('form')
           this.clearForm()
@@ -323,9 +323,9 @@
         this.dialogVisible1 = !this.dialogVisible1;
       },
       rowClick(row) {
-        // console.log(row)
+        // //console.log(row)
         this.rowData = row
-        // console.log(row.id)
+        // //console.log(row.id)
       },
       //获取角色列表
       async getList() {
@@ -338,7 +338,7 @@
           typeId: this.selForm.typeId,
         }
         const res = await getList(data)
-        // console.log('公告列表',res)
+        // //console.log('公告列表',res)
         if(res){
           this.list = res.data.data.list
           this.total = res.data.data.total
@@ -358,12 +358,12 @@
       },
       // 分页
       handleSizeChange(val) {
-        // console.log(`每页 ${val} 条`);
+        // //console.log(`每页 ${val} 条`);
         this.pageSize = val;
         this.getList()
       },
       handleCurrentChange(val) {
-        // console.log(`当前页: ${val}`);
+        // //console.log(`当前页: ${val}`);
         this.currentPage = val;
         this.getList()
       }

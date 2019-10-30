@@ -90,7 +90,7 @@
           </el-table>
           <div class="block">
             <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-              :page-sizes="[10, 30,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
+              :page-sizes="[50, 100,150]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
             </el-pagination>
           </div>
         </div>
@@ -162,7 +162,7 @@ export default {
       //第几页
       currentPage: 1,
       //每页的容量
-      pageSize: 10,
+      pageSize: 50,
       total: 0,
     };
   },
@@ -195,13 +195,13 @@ export default {
       this.getList(this.form)
     },
     watchCreatTime(data){
-      // console.log(data)
+      // //console.log(data)
       this.form.createStartDate = data.startTime
       this.form.createEndDate = data.endTime
       this.resetData = false
     },
     watchRepTime(data){
-      // console.log(data)
+      // //console.log(data)
       this.form.reportStartDate = data.startTime
       this.form.reportEndDate = data.endTime
       this.resetData1 = false
@@ -224,7 +224,7 @@ export default {
         queryType:1,
       }
       const res = await getList(data);
-      // console.log('客户列表',res)
+      // //console.log('客户列表',res)
       if(res){
         this.tableData = res.data.data.list;
         this.total = res.data.data.total;
@@ -266,12 +266,12 @@ export default {
     },
     // 分页
     handleSizeChange(val) {
-      // console.log(`每页 ${val} 条`);
+      // //console.log(`每页 ${val} 条`);
       this.pageSize = val;
       this.getList()
     },
     handleCurrentChange(val) {
-      // console.log(`当前页: ${val}`);
+      // //console.log(`当前页: ${val}`);
       this.currentPage = val;
       this.getList()
     }

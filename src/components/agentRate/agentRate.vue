@@ -153,7 +153,7 @@
         this.getList()
       },
       watchTime(data){
-        // console.log(data)
+        // //console.log(data)
         this.form.startTime = data.startTime
         this.form.endTime = data.endTime
         this.resetData = false
@@ -171,7 +171,7 @@
           "endTime":this.form.endTime, //sap物料号
         }
         const res = await getList(data);
-        // console.log('代理费率列表',res)
+        // //console.log('代理费率列表',res)
         if(res){
           this.tableData = res.data.data.list
           this.total = res.data.data.total
@@ -192,12 +192,12 @@
       
       // 分页
       handleSizeChange(val) {
-        // console.log(`每页 ${val} 条`);
+        // //console.log(`每页 ${val} 条`);
         this.pageSize = val;
         this.getList()
       },
       handleCurrentChange(val) {
-        // console.log(`当前页: ${val}`);
+        // //console.log(`当前页: ${val}`);
         this.currentPage = val;
         this.getList()
 

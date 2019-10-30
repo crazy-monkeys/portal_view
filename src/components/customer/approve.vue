@@ -73,7 +73,7 @@
           </el-table>
           <div class="block">
             <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-              :page-sizes="[10, 20,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
+              :page-sizes="[50, 100,150]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
             </el-pagination>
           </div>
         </div> 
@@ -164,7 +164,7 @@ export default {
       //第几页
       currentPage: 1,
       //每页的容量
-      pageSize: 10,
+      pageSize: 50,
       total:0,
 
     };
@@ -191,14 +191,14 @@ export default {
   methods: {
     async getEmployeeIds(){
       const res = await getEmployeeIds();
-      // console.log('销售列表',res)
+      // //console.log('销售列表',res)
       if(res){
        this.salers = res.data.data
       }
     },
     async getDealers(){
       const res = await getDealers();
-      // console.log('代理商列表',res)
+      // //console.log('代理商列表',res)
       if(res){
        this.delears = res.data.data
       }
@@ -221,7 +221,7 @@ export default {
       this.dialogVisible1 = false
     },
     watchCreatTime(data){
-      // console.log(data)
+      // //console.log(data)
       this.form.reportStartDate = data.startTime
       this.form.reportEndDate = data.endTime
       this.resetData = false
@@ -257,7 +257,7 @@ export default {
         queryType:2,
       }
       const res = await getList(data);
-      // console.log('报备审批列表',res)
+      // //console.log('报备审批列表',res)
       if(res){
         this.tableData = res.data.data.list;
         this.total = res.data.data.total;
@@ -312,7 +312,7 @@ export default {
         approvalType:0
       }
       const res = await ret(data);
-      // console.log('驳回结果',res);
+      // //console.log('驳回结果',res);
       if(res){
         this.$message.success('已驳回')
         this.close()
@@ -334,7 +334,7 @@ export default {
         data.dealerId= this.form1.value
       }
       const res = await approve(data);
-      // console.log('审批结果',res);
+      // //console.log('审批结果',res);
       if(res){
         this.$message.success('审批通过')
         this.close()
@@ -364,12 +364,12 @@ export default {
     },
     // 分页
     handleSizeChange(val) {
-      // console.log(`每页 ${val} 条`);
+      // //console.log(`每页 ${val} 条`);
       this.pageSize = val;
       this.getList()
     },
     handleCurrentChange(val) {
-      // console.log(`当前页: ${val}`);
+      // //console.log(`当前页: ${val}`);
       this.currentPage = val;
       this.getList()
     }

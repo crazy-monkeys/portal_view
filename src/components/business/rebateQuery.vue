@@ -212,7 +212,7 @@ import {queryList,send,downloadFiles} from '@/api/business/rebate.js'
           id:id
         }
         const res = await downloadFiles(data);
-        console.log('下载结果',res)
+        //console.log('下载结果',res)
         if(res){
           const a = document.createElement("a");
           document.body.appendChild(a);
@@ -225,13 +225,13 @@ import {queryList,send,downloadFiles} from '@/api/business/rebate.js'
         }
       },
       watchTime(data){
-        // console.log(data)
+        // //console.log(data)
         this.form.noticeBeginDate= data.startTime
         this.form.noticeEndDate = data.endTime
         this.resetData = false
       },
       uploadSuccess(res, file, fileList){
-        // console.log(res)
+        // //console.log(res)
         if(res.code==1){
           this.search()
           this.$message({
@@ -300,7 +300,7 @@ import {queryList,send,downloadFiles} from '@/api/business/rebate.js'
           noticeEndDate:this.form.noticeEndDate,
         }
         const res = await queryList(data);
-        // console.log('rebate查询列表',res);
+        // //console.log('rebate查询列表',res);
         if(res){
           this.tableData = res.data.data.list
           this.total = res.data.data.total
@@ -332,12 +332,12 @@ import {queryList,send,downloadFiles} from '@/api/business/rebate.js'
         this.dialogVisible = !this.dialogVisible
       },
       handleSizeChange(val) {
-        // console.log(`每页 ${val} 条`);
+        // //console.log(`每页 ${val} 条`);
         this.pageSize = val;
         this.getList()
       },
       handleCurrentChange(val) {
-        // console.log(`当前页: ${val}`);
+        // //console.log(`当前页: ${val}`);
         this.currentPage = val;
         this.getList()
       },

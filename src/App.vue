@@ -42,13 +42,13 @@
       // this.$http.interceptors.request.use(
       //   function(response) {
       //     // 对响应数据做点什么
-      //     // // console.log(response)
+      //     // // //console.log(response)
 
       //     return response;
       //   },
       //   function(error) {
       //     // 对响应错误做点什么
-      //     // console.log(error);
+      //     // //console.log(error);
       //     return Promise.reject(error);
       //   }
       // );
@@ -57,9 +57,9 @@
       //   function(response) {
       //     // 对响应数据做点什么
 
-      //     // // console.log(response)
+      //     // // //console.log(response)
       //     if (response.data.code == 10016) {
-      //       // console.log("未登录");
+      //       // //console.log("未登录");
       //       router.replace({
       //         path: "/"
       //         // query: {redirect: router.currentRoute.fullPath}//登录成功后跳入浏览的当前页面
@@ -67,7 +67,7 @@
 
       //     }
       //     if ( response.data.code == 10007) {
-      //       // console.log("异地登陆");
+      //       // //console.log("异地登陆");
       //       router.replace({
       //         path: "/"
       //         // query: {redirect: router.currentRoute.fullPath}//登录成功后跳入浏览的当前页面
@@ -77,7 +77,7 @@
       //   },
       //   function(error) {
       //     // 对响应错误做点什么
-      //     // console.log(error);
+      //     // //console.log(error);
       //     return Promise.reject(error);
 
       //   }

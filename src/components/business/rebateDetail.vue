@@ -48,7 +48,7 @@
               </el-table>
               <!-- <div class="block">
                 <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-                  :page-sizes="[10, 20,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
+                  :page-sizes="[50, 100,150]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
                 </el-pagination>
               </div> -->
             </div>
@@ -83,7 +83,7 @@
               </el-table>
               <!-- <div class="block">
                 <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-                  :page-sizes="[10, 20,50]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
+                  :page-sizes="[50, 100,150]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
                 </el-pagination>
               </div> -->
             </div>
@@ -111,7 +111,7 @@ import {detail} from '@/api/business/rebate.js'
         //第几页
         currentPage: 1,
         //每页的容量
-        pageSize: 10,
+        pageSize: 50,
         total: 0,
         activeName:'first'
       }
@@ -135,7 +135,7 @@ import {detail} from '@/api/business/rebate.js'
           id:this.id
         }
         const res =await detail(data);
-        // console.log('明细',res);
+        // //console.log('明细',res);
         if(res){
           this.form = res.data.data
         }
@@ -143,11 +143,11 @@ import {detail} from '@/api/business/rebate.js'
       handleClick(){},
       // 分页
       handleSizeChange(val) {
-        // console.log(`每页 ${val} 条`);
+        // //console.log(`每页 ${val} 条`);
         this.pageSize = val;
       },
       handleCurrentChange(val) {
-        // console.log(`当前页: ${val}`);
+        // //console.log(`当前页: ${val}`);
         this.currentPage = val;
       },
       

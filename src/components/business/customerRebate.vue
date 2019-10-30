@@ -267,7 +267,7 @@ import {getList,send,getAll,detail,mark} from '@/api/business/rebate.js'
       },
       async getAll(){
         const res = await getAll();
-        // console.log('所有执行方',res);
+        // //console.log('所有执行方',res);
         if(res){
           this.executors = res.data.data;
         }
@@ -275,12 +275,12 @@ import {getList,send,getAll,detail,mark} from '@/api/business/rebate.js'
       send(){
          var re= /^[1-9]\d*$|^[1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0$/
          var sucArr =  this.multipleSelection.filter(item=>{
-             console.log(re.test(item.money))
+             //console.log(re.test(item.money))
            if(re.test(item.money)){
              return item
            }
          })
-         console.log(sucArr)
+         //console.log(sucArr)
          if(sucArr.length==this.multipleSelection.length){
           this.success = true
           this.sendVis = true
@@ -315,7 +315,7 @@ import {getList,send,getAll,detail,mark} from '@/api/business/rebate.js'
           status:this.form.status,
         }
         const res = await getList(data);
-        // console.log('客户rebate列表',res);
+        // //console.log('客户rebate列表',res);
         if(res){
           this.tableData = res.data.data.list.map(item=>{
             return {money:item.surplusRebateAmount,...item}
@@ -349,12 +349,12 @@ import {getList,send,getAll,detail,mark} from '@/api/business/rebate.js'
         this.dialogVisible = !this.dialogVisible
       },
       handleSizeChange(val) {
-        // console.log(`每页 ${val} 条`);
+        // //console.log(`每页 ${val} 条`);
         this.pageSize = val;
         this.getList()
       },
       handleCurrentChange(val) {
-        // console.log(`当前页: ${val}`);
+        // //console.log(`当前页: ${val}`);
         this.currentPage = val;
         this.getList()
       },

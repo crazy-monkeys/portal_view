@@ -662,7 +662,7 @@ export default {
       workAddress:'',
       activeName: "eighth",
       currentPage: 1,
-      pageSize: 10,
+      pageSize: 50,
       total: 0
     };
   },
@@ -678,12 +678,12 @@ export default {
   watch:{
     workAddress:{
       handler:function(n,o){
-        // console.log(n)
+        // //console.log(n)
       }
     },
     'form.files':{
       handler:function(n,o){
-        // console.log(n)
+        // //console.log(n)
       },
       deep:true
     },
@@ -699,7 +699,7 @@ export default {
   methods: {
     async getAll(){
         const res = await getAll();
-        // console.log('所有执行方',res);
+        // //console.log('所有执行方',res);
         if(res){
           this.executors = res.data.data;
         }
@@ -717,7 +717,7 @@ export default {
           func:func,
         }
         const res = await getType(data);
-        // console.log('关系类型',res)
+        // //console.log('关系类型',res)
         if(res){
           if(func==11){
             this.corporateTypes = res.data.data
@@ -742,7 +742,7 @@ export default {
         name:this.name
       }
        const res = await checkCust(data);
-       // console.log('检查客户',res)
+       // //console.log('检查客户',res)
        if(res){
          this.form.custName = res.data.data.custName
          
@@ -752,20 +752,20 @@ export default {
 
     },
     httpReq1(val){
-      // console.log(val)
-      // // console.log(this.form.custFile.length - this.rowData.index-1)
+      // //console.log(val)
+      // // //console.log(this.form.custFile.length - this.rowData.index-1)
       this.form.files[this.rowData.index].file = val.file
       // this.form.custFile[this.form.custFile.length - this.rowData.index-1].fileList.push(val.file)
-      // console.log(val.file)
+      // //console.log(val.file)
           // this.form.custFile[this.form.custFile.length - this.rowData.index-1].fileList = fileList
     },
     rowClick(row){
-      // // console.log(row)
+      // // //console.log(row)
       this.rowData = row
     },
     changeFile(file,fileList){
-      // console.log(this.rowData.index)
-      // console.log(this.form.files.length -this.rowData.index)
+      // //console.log(this.rowData.index)
+      // //console.log(this.form.files.length -this.rowData.index)
       // this.form.custFile.forEach(item=>{
         // if(item.index == this.rowData.index){
           // this.form.custFile[this.form.custFile.length - this.rowData.index-1].file = file
@@ -774,7 +774,7 @@ export default {
       // })
     },
     del(type,index){
-      // console.log(index)
+      // //console.log(index)
       switch (type) {
         case 1:
           this.form.invoiceInfos.splice(index,1)
@@ -881,7 +881,7 @@ export default {
             'create_time'	:'',
             "create_user_name":''	
           })
-          // // console.log(this.form.custFile)
+          // // //console.log(this.form.custFile)
           break;
           case 9:
           this.form.quotas.push({
@@ -890,7 +890,7 @@ export default {
             'unit':'',
             'salesNumber':'',
           })
-          // // console.log(this.form.custFile)
+          // // //console.log(this.form.custFile)
           break;
           case 10:
           this.form.addresses.push({
@@ -936,13 +936,13 @@ export default {
       // ]
       var params = new FormData()
       for (let i in data) {
-        // // console.log(i,data[i])
+        // // //console.log(i,data[i])
         if(typeof(data[i]) == 'object'){
           for(let j in data[i]){
-            // console.log(data[i][j])
+            // //console.log(data[i][j])
             if(typeof(data[i][j]) == 'object'){
               for(let x in data[i][j]){
-                // console.log(data[i][j][x])
+                // //console.log(data[i][j][x])
                 if(data[i][j][x] || data[i][j][x]===0){
                   params.append(i+'['+j+']'+'.'+x,data[i][j][x])
                 }
@@ -961,9 +961,9 @@ export default {
           }
         }
       }
-        // console.log(params)
+        // //console.log(params)
       const res = await add(params)
-      // console.log('新增结果',res)
+      // //console.log('新增结果',res)
       if(res){
         this.$message.success('保存成功')
         this.cancel()
@@ -978,12 +978,12 @@ export default {
         url: "static/cityL3.json"
       })
         .then(res => {
-          // console.log("城市list", res);
+          // //console.log("城市list", res);
           this.province = res.data;
             
         })
         .catch(error => {
-          // console.log(error);
+          // //console.log(error);
           alert("系统异常");
         });
     },
@@ -992,7 +992,7 @@ export default {
         id:this.queryId
       }
       const res = await detail(data);
-      // console.log('详情',res);
+      // //console.log('详情',res);
       if(res){
         this.form = res.data.data;
         this.form.addresses.forEach(item=>{
@@ -1008,13 +1008,13 @@ export default {
             this.regAddress.push(item.province)
             this.regAddress.push(item.city)
             this.regAddress.push(item.district)
-            // console.log(this.regAddress)
+            // //console.log(this.regAddress)
           }
         })
       }
     },
     handleClick(tab, event) {
-      // // console.log(tab, event);
+      // // //console.log(tab, event);
     },
     back() {
       window.history.back();
