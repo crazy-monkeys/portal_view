@@ -66,7 +66,7 @@
             <el-table-column width="200" label="操作" fixed='right'>
               <template slot-scope='scope'>
                 <el-button type='text' size='small' @click='getDetail(scope.row.deliverOrderId)'>明细</el-button>
-                <el-button type='text' size='small' @click='getProduct(scope.row)' :disabled="scope.row.actualDeliveryDate ? false:true">收货</el-button>
+                <el-button type='text' size='small' @click='getProduct(scope.row)' >收货</el-button>
                 <el-button type='text' size='small' @click='mod(scope.row)'>修改</el-button>
                 <el-button type='text' size='small' @click='getCancel(scope.row)'>取消</el-button>
               </template>
