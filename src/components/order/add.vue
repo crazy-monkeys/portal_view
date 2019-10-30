@@ -21,10 +21,10 @@
                     <el-option value="ZOR" label="标准订单"></el-option>
                     <el-option value="ZORT" label="标准订单（ZORT）"></el-option>
                     <el-option value="ZRET" label="退货"></el-option>
-                    <el-option value="nKB" label="客户库存补货"></el-option>
+                    <!-- <el-option value="nKB" label="客户库存补货"></el-option>
                     <el-option value="KE" label="客户库存出货"></el-option>
                     <el-option value="ZKE" label="标准客户库存出货"></el-option>
-                    <el-option value="ZKB" label="标准客户库存补货"></el-option>
+                    <el-option value="ZKB" label="标准客户库存补货"></el-option> -->
                   </el-select>
                 </el-form-item>
               </el-col>
