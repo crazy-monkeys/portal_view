@@ -10,7 +10,7 @@ export const detail = data => {
         return request('get', `${serverUrl}/order/query/detail/${data.id}`).then(result => result)
     }
     //销售单明细
-export const detailApply = data => {
+export const applyDetail = data => {
         return request('get', `${serverUrl}/order/apply/detail/${data.id}`).then(result => result)
     }
     //u获取授信额度

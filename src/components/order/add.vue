@@ -483,7 +483,7 @@ export default {
       const data ={
         id:id
       }
-      const res = await detail(data);
+      const res = await applyDetail(data);
       //console.log('detail',res)
       if(res){
         this.form = res.data.data
@@ -495,7 +495,7 @@ export default {
         }else{
           this.form.isAgreed = false
         }
-        this.form.tableData = res.data.data.lines
+        this.form.tableData = res.data.data.jsonLines
         this.order.grossValue = res.data.data.rGrossValue ? res.data.data.rGrossValue :0
         this.order.netValue = res.data.data.rNetValue ? res.data.data.rNetValue:0
         // this.lines = res.data.data.lines
