@@ -146,7 +146,7 @@
             </el-table-column>
             <el-table-column width="250" label="操作" fixed='right'>
               <template slot-scope='scope'>
-                <el-button type='text' size='small' @click='getDetail(scope.row.id)'>明细</el-button>
+                <el-button type='text' size='small' @click='check(scope.row)'>明细</el-button>
                 <el-button type='text' size='small' @click='getProduct(scope.row.dealerId,scope.row.id)'>提货</el-button>
                 <el-button type='text' size='small' @click='mod(scope.row)' :disabled="scope.row.approvalStatus!=0 ? false:true">修改</el-button>
                 <el-button type='text' size='small' @click='cal(scope.row)'  >取消</el-button>
@@ -171,9 +171,19 @@
       <div class="tab">
         <div class="tabBox">
           <el-table :data="lines" style="width: 100%" border height="100%">
+            <el-table-column prop="num" width="150" label="订单数量" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="remainingNum" width="150" label="剩余数量" show-overflow-tooltip>
+            </el-table-column>
             <el-table-column prop="rItemNo" width="150" label="订单行号" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="product" width="150" label="物料号" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="product" width="150"  label="产品型号" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="bu" label="BU" width="150"  show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="productId" width="150" label="虚拟物料号" show-overflow-tooltip>
             </el-table-column>
@@ -185,10 +195,7 @@
             </el-table-column>
             <el-table-column prop="rNetPrice" width="150" label="不含税价格" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="num" width="150" label="订单数量" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="remainingNum" width="150" label="剩余数量" show-overflow-tooltip>
-            </el-table-column>
+            
             <el-table-column prop="actice" width="150" label="状态" show-overflow-tooltip>
               <template slot-scope="scope">
                 {{scope.row.actice ==1 ? '生效' :'失效'}}
@@ -235,14 +242,21 @@
                   </el-form-item>
                 </template>
               </el-table-column>
-              <el-table-column prop="rItemNo" width="150" label="订单行号" show-overflow-tooltip>
-              </el-table-column>
-              <el-table-column prop="productId" width="150" label="物料号" show-overflow-tooltip>
-              </el-table-column>
               <el-table-column prop="num" width="150" label="订单数量" show-overflow-tooltip>
               </el-table-column>
               <el-table-column prop="remainingNum" width="150" label="剩余数量" show-overflow-tooltip>
               </el-table-column>
+              <el-table-column prop="rItemNo" width="150" label="订单行号" show-overflow-tooltip>
+              </el-table-column>
+              <el-table-column prop="productId" width="150" label="物料号" show-overflow-tooltip>
+              </el-table-column>
+              <el-table-column prop="product" width="150"  label="产品型号" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="bu" label="BU" width="150"  show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip>
+            </el-table-column>
+              
               <div slot="empty">
                 无数据
               </div>
@@ -287,6 +301,12 @@
               </el-table-column>
               <el-table-column prop="productId" width="150" label="物料号" show-overflow-tooltip>
               </el-table-column>
+              <el-table-column prop="product" width="150"  label="产品型号" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="bu" label="BU" width="150"  show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip>
+            </el-table-column>
               <el-table-column prop="num" width="150" label="订单数量" show-overflow-tooltip>
               </el-table-column>
               <el-table-column prop="remainingNum" width="150" label="剩余数量" show-overflow-tooltip>
@@ -309,6 +329,10 @@
             <el-table :data="lines" style="width: 100%" border height="400" @selection-change="handleSelectionChange">
                <el-table-column type="selection" width="60" >
             </el-table-column>
+            <el-table-column prop="num" width="150" label="订单数量" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="remainingNum" width="150" label="剩余数量" show-overflow-tooltip>
+            </el-table-column>
               <el-table-column prop="rItemNo" width="150" label="订单行号" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="actice" width="150" label="状态" show-overflow-tooltip>
@@ -318,6 +342,12 @@
             </el-table-column>
             <el-table-column prop="productId" width="150" label="物料号" show-overflow-tooltip>
             </el-table-column>
+            <el-table-column prop="product" width="150"  label="产品型号" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="bu" label="BU" width="150"  show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip>
+            </el-table-column>
             <el-table-column prop="platform" width="150"  label="平台" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="expectedDeliveryDate" width="150" label="需求交货日期" show-overflow-tooltip>
@@ -326,10 +356,7 @@
             </el-table-column>
             <el-table-column prop="rNetPrice" width="150" label="不含税价格" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="num" width="150" label="订单数量" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="remainingNum" width="150" label="剩余数量" show-overflow-tooltip>
-            </el-table-column>
+            
             <div slot="empty">
               无数据
             </div>
@@ -649,11 +676,23 @@ export default {
       this.selDia = !this.selDia;
     },
     //点击明细按钮事件
-    getDetail(id) {
-      // //console.log(id)
-      this.detail(id)
-      this.lineDia = true;
+    check(row){
+      this.$router.push(
+        {
+          name:'orderAdd',
+          query:{
+            id:row.id,
+            type:row.approvalStatus,
+            check:true
+          }
+        }
+      )
     },
+    // getDetail(id) {
+    //   // //console.log(id)
+    //   this.detail(id)
+    //   this.lineDia = true;
+    // },
     // 分页
     handleSizeChange(val) {
       // //console.log(`每页 ${val} 条`);

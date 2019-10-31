@@ -97,6 +97,12 @@
                 </el-table-column>
                 <el-table-column prop="productId" width="150" label="物料号" show-overflow-tooltip>
                 </el-table-column>
+                <el-table-column prop="product" width="150"  label="产品型号" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="bu" label="BU" width="150"  show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip>
+            </el-table-column>
                 <el-table-column prop="deliveryQuantity" width="150" label="提货数量" show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column prop="active" width="150" label="状态" show-overflow-tooltip>
@@ -197,6 +203,12 @@
               </el-table-column>
               <el-table-column prop="productId" width="150" label="物料号" show-overflow-tooltip>
               </el-table-column>
+              <el-table-column prop="product" width="150"  label="产品型号" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="bu" label="BU" width="150"  show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip>
+            </el-table-column>
               <el-table-column prop="active" width="150" label="状态" show-overflow-tooltip>
                   <template slot-scope="scope">
                     {{scope.row.active==1 ? '生效' :scope.row.active==2 ? '取消中' :scope.row.active==0 ? '已取消':''}}
@@ -238,6 +250,12 @@
               </el-table-column>
               <el-table-column prop="productId" width="150" label="物料号" show-overflow-tooltip>
               </el-table-column>
+              <el-table-column prop="product" width="150"  label="产品型号" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="bu" label="BU" width="150"  show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip>
+            </el-table-column>
               <el-table-column prop="active" width="150" label="状态" show-overflow-tooltip>
                   <template slot-scope="scope">
                     {{scope.row.active==1 ? '生效' :scope.row.active==2 ? '取消中' :scope.row.active==0 ? '已取消':''}}
@@ -293,6 +311,12 @@
               </el-table-column>
               <el-table-column prop="productId" width="150" label="物料号" show-overflow-tooltip>
               </el-table-column>
+              <el-table-column prop="product" width="150"  label="产品型号" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="bu" label="BU" width="150"  show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip>
+            </el-table-column>
               <el-table-column prop="active" width="150" label="状态" show-overflow-tooltip>
                   <template slot-scope="scope">
                     {{scope.row.active==1 ? '生效' :scope.row.active==2 ? '取消中' :scope.row.active==0 ? '已取消':''}}

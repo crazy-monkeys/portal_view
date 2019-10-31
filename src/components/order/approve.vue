@@ -153,7 +153,7 @@
             </el-table-column>
             <el-table-column width="100" label="操作" fixed='right'>
               <template slot-scope='scope'>
-                <el-button type='text' size='small' @click='getDetail(scope.row.id)'>明细</el-button>
+                <el-button type='text' size='small' @click='check(scope.row)'>明细</el-button>
                 <el-button type='text' size='small' @click='getApprove(scope.row.dealerId)' :disabled="scope.row.approvalStatus==0 ? false:true">审批</el-button>
               </template>
             </el-table-column>
@@ -175,6 +175,8 @@
       <div class="tab">
         <div class="tabBox">
           <el-table :data="rowData.jsonLines" style="width: 100%" border height="100%">
+            <el-table-column prop="num"  label="数量" show-overflow-tooltip>
+            </el-table-column>
             <el-table-column prop="productId"  label="物料号" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="platform"  label="平台" show-overflow-tooltip>
@@ -183,8 +185,7 @@
             </el-table-column>
             <el-table-column prop="rNetPrice"  label="不含税金额" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="num"  label="数量" show-overflow-tooltip>
-            </el-table-column>
+            
             <el-table-column prop="expectedDeliveryMonth" width="150" label="期望交货月份" show-overflow-tooltip>
             </el-table-column>
 
@@ -288,6 +289,18 @@ export default {
     this.getCode()
   },
   methods: {
+    check(row){
+      this.$router.push(
+        {
+          name:'orderAdd',
+          query:{
+            id:row.id,
+            type:row.approvalStatus,
+            check:true
+          }
+        }
+      )
+    },
     sale(id){
         return  this.salesOrgIds.filter(item=>{return item.groupCode == id})[0] ? this.salesOrgIds.filter(item=>{return item.groupCode == id})[0].groupName  :''
     },

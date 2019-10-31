@@ -1,8 +1,11 @@
 <template>
   <!-- 添加新增控件 -->
   <div class="orderAdd">
-    <div class="head clear" v-if="queryId">
+    <div class="head clear" v-if="queryId &&!queryCheck">
         <el-page-header @back="back" content="订单申请修改"></el-page-header>
+      </div>
+      <div class="head clear" v-if="queryCheck">
+        <el-page-header @back="back" content="明细"></el-page-header>
       </div>
       <div class="head clear" v-if="!queryId">
         <el-breadcrumb separator="/">
@@ -12,7 +15,7 @@
       </div>
       <div class="content">
         <div class="selBox">
-          <el-form ref="form" :model="form"  :rules="rules" class="form" label-position='top' :inline='true'>
+          <el-form ref="form" :disabled="queryCheck" :model="form"  :rules="rules" class="form" label-position='top' :inline='true'>
             <el-row :gutter="22">
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="下单类型" prop="underOrderType">
@@ -142,12 +145,6 @@
         </div>
         <div class="tab">
           <el-table :data="form.tableData" border  style="width: 100%" height="300">
-            <el-table-column prop="productId" label="物料号" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="custAbbreviation" width="150" label="客户简称" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="platform" width="150" label="平台" show-overflow-tooltip>
-            </el-table-column>
             <el-table-column prop="num" width="150" label="数量" show-overflow-tooltip>
               <template slot-scope="scope" >
                 <span v-if="!queryId" >{{scope.row.num}}</span>
@@ -156,6 +153,17 @@
                 </el-form-item>
               </template>
             </el-table-column>
+            <el-table-column prop="productId" width="150"  label="物料号" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="product" width="150"  label="产品型号" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="bu" label="BU" width="150"  show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="platform" width="150" label="平台" show-overflow-tooltip>
+            </el-table-column>
+            
             <el-table-column prop="rPrice" width="150" label="含税价格" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="rNetPrice" width="150" label="不含税价格" show-overflow-tooltip>
@@ -227,7 +235,7 @@
         </div>
         </el-form>
         </div>
-        <div class="sub">
+        <div class="sub" v-if="!queryCheck">
           <el-button type="primary" size="small"  @click="sub">提交</el-button>
           <el-button type="primary" size="small" plain @click="cancel">取消</el-button>
         </div>
@@ -382,6 +390,9 @@ export default {
   computed: {
     queryId(){
       return this.$route.query.id
+    },
+    queryCheck(){
+      return this.$route.query.check ? true: false
     }
   },
   watch:{
@@ -441,7 +452,11 @@ export default {
         this.form.salesOrg = res.data.data.salesOrg*1
         this.form.invoiceType += ''
         this.form.invoiceDeliveryType += ''
-        this.form.isAgreed = false
+        if(this.queryCheck){
+          this.form.isAgreed = true
+        }else{
+          this.form.isAgreed = false
+        }
         this.form.tableData = res.data.data.lines
         this.order.grossValue = res.data.data.rGrossValue ? res.data.data.rGrossValue :0
         this.order.netValue = res.data.data.rNetValue ? res.data.data.rNetValue:0
