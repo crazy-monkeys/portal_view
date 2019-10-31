@@ -496,8 +496,8 @@ export default {
           this.form.isAgreed = false
         }
         this.form.tableData = res.data.data.jsonLines
-        this.order.grossValue = res.data.data.rGrossValue ? res.data.data.rGrossValue :0
-        this.order.netValue = res.data.data.rNetValue ? res.data.data.rNetValue:0
+        this.order.grossValue = res.data.data.grossValue ? res.data.data.grossValue :0
+        this.order.netValue = res.data.data.netValue ? res.data.data.netValue:0
         // this.lines = res.data.data.lines
         // this.proForm.lines = res.data.data.lines.map(item=>{return {...item,deliveryQuantity:''}})
         // this.proForm.orderId = res.data.data.id
