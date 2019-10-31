@@ -1,6 +1,6 @@
 <template>
   <!-- 添加新增控件 -->
-  <div class="orderAdd">
+  <div class="orderAdd" v-loading='loading'>
     <div class="head clear" v-if="queryId &&!queryCheck">
         <el-page-header @back="back" content="订单申请修改"></el-page-header>
       </div>
@@ -135,6 +135,7 @@
             :headers="{'Authorization':auth}"
             name='lineFile'
             :data='formData()'
+            :before-upload='beforeUpload'
             :on-success="uploadSuccess"
             :limit="1"
             :show-file-list="false"
@@ -162,6 +163,8 @@
             <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="platform" width="150" label="平台" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="custAbbreviation" width="150" label="客户简称" show-overflow-tooltip>
             </el-table-column>
             
             <el-table-column prop="rPrice" width="150" label="含税价格" show-overflow-tooltip>
@@ -257,6 +260,7 @@ export default {
   name: "orderAdd",
   data() {
     return {
+      loading:false,
       tos:[],
       rules:{
         orderType:[{required:true,triggle:'blur',message:'订单类型不能为空'}],
@@ -427,6 +431,9 @@ export default {
     }
   },
   methods: {
+    beforeUpload(){
+      this.loading = true
+    },
     formData(){
       var data ={}
       for(let i in this.form){
@@ -481,6 +488,7 @@ export default {
     uploadSuccess(val){
       // //console.log(val)
       if(val.code==1){
+        this.loading = false
         this.$message.success('上传成功')
         this.form.tableData = val.data.lines
         this.order = {
@@ -490,6 +498,7 @@ export default {
         this.form.grossValue = val.data.grossValue;
         this.form.netValue = val.data.netValue;
       }else{
+        this.loading = false
         this.$message.error(val.msg)
       }
       this.fileList = []
