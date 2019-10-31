@@ -296,7 +296,8 @@ export default {
           query:{
             id:row.id,
             type:row.approvalStatus,
-            check:true
+            check:true,
+            apply:true
           }
         }
       )

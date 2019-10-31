@@ -247,7 +247,7 @@
 </template>
 
 <script>
-import {detail} from '@/api/order/list.js'
+import {detail,applyDetail} from '@/api/order/list.js'
 
 import formTest from "../../assets/js/formTest";
 import {getCode} from '@/api/business/idr.js'
@@ -388,7 +388,11 @@ export default {
     this.getCode()
     this.getShip()
     if(this.queryId){
-      this.detail(this.queryId)
+      if(this.queryApply){
+        this.applyDetail(this.queryId)
+      }else{
+        this.detail(this.queryId)
+      }
     }
   },
   computed: {
@@ -397,6 +401,9 @@ export default {
     },
     queryCheck(){
       return this.$route.query.check ? true: false
+    },
+    queryApply(){
+      return this.$route.query.apply ? true: false
     }
   },
   watch:{
@@ -449,6 +456,30 @@ export default {
       return data
     },
     async detail(id){
+      const data ={
+        id:id
+      }
+      const res = await detail(data);
+      //console.log('detail',res)
+      if(res){
+        this.form = res.data.data
+        this.form.salesOrg = res.data.data.salesOrg*1
+        this.form.invoiceType += ''
+        this.form.invoiceDeliveryType += ''
+        if(this.queryCheck){
+          this.form.isAgreed = true
+        }else{
+          this.form.isAgreed = false
+        }
+        this.form.tableData = res.data.data.lines
+        this.order.grossValue = res.data.data.rGrossValue ? res.data.data.rGrossValue :0
+        this.order.netValue = res.data.data.rNetValue ? res.data.data.rNetValue:0
+        // this.lines = res.data.data.lines
+        // this.proForm.lines = res.data.data.lines.map(item=>{return {...item,deliveryQuantity:''}})
+        // this.proForm.orderId = res.data.data.id
+      }
+    },
+    async applyDetail(id){
       const data ={
         id:id
       }
