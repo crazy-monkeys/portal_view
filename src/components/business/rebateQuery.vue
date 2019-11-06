@@ -100,13 +100,11 @@
                 </template>
             </el-table-column>
             <el-table-column  label="操作" width="80" fixed="right">
-              <template slot-scope="scope" v-if="scope.row.status==2">
-                <el-upload style='display:inline-block' :data='rowdata' class="upload-demo" :headers="{'Authorization':auth}" :show-file-list="false" ref='upload' name='file'  :on-success='uploadSuccess' :action='serverUrl+"/business/rebate/upload"' >
+              <template slot-scope="scope" >
+                <el-upload v-if="scope.row.status==2" style='display:inline-block' :data='rowdata' class="upload-demo" :headers="{'Authorization':auth}" :show-file-list="false" ref='upload' name='file'  :on-success='uploadSuccess' :action='serverUrl+"/business/rebate/upload"' >
                   <el-button size="small"  type="text" >上传</el-button>
                 </el-upload>
-              </template>
-              <template slot-scope="scope" v-if="scope.row.status==3">
-                <el-button type='text'   @click='showUploadZrFile(scope.row)'>上传</el-button>
+                <el-button type='text' v-if="scope.row.status==3"  @click='showUploadZrFile(scope.row)'>上传</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -152,7 +150,7 @@
           </span>
     </el-dialog>
     <el-dialog
-        title="上传"
+        title="展锐上传文件"
         :visible.sync="dialogVisibleZrFileUpload"
         width="400px"
         top="10vh"
@@ -163,7 +161,7 @@
                 <el-date-picker size="small" v-model="zrExecuteDate" value-format="yyyy-MM-dd" type="date"  placeholder="选择日期"></el-date-picker>
               </el-form-item>
               <el-form-item label="文件">
-                <el-upload class="upload-demo" :before-upload="beforeUpload" ref='upload' name='file' :auto-upload="false" :action='serverUrl+"/business/rebate/upload"'>
+                <el-upload class="upload-demo" :before-upload="beforeUpload" ref='zrFileUpload' name='file' :auto-upload="false" :action='serverUrl+"/business/rebate/upload"'>
                   <el-button size="mini" type="" >上传文件</el-button>
                 </el-upload>
               </el-form-item>
@@ -373,7 +371,7 @@ import {queryList,send,downloadFiles} from '@/api/business/rebate.js'
             this.dialogVisibleZrFileUpload = true
       },
       sure3(){
-
+        this.$refs.zrFileUpload.submit();
       },
       submitUploadZrFileForm(formName){
             this.$formTest.submitForm(this.$refs[formName],this.sure3)
