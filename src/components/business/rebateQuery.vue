@@ -156,7 +156,7 @@
         top="10vh"
         :before-close="cancel"
         >
-        <el-form ref="uploadZrFileForm" class="form1" label-width="auto" label-position='top' :inline='true' >
+        <el-form ref="uploadZrFileForm" ref="form1" :model="form1" class="form1" label-width="auto" label-position='top' :inline='true' >
               <el-form-item label="执行日期" >
                 <el-date-picker size="small" v-model="zrExecuteDate" value-format="yyyy-MM-dd" type="date"  placeholder="选择日期"></el-date-picker>
               </el-form-item>
@@ -209,6 +209,9 @@ import {queryList,send,downloadFiles} from '@/api/business/rebate.js'
           executeStyle:'',
           noticeBeginDate:'',
           noticeEndDate:''
+        },
+        form1:{
+
         },
         dialogVisible: false,
         sendVis: false,
