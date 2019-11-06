@@ -157,14 +157,14 @@
         :before-close="cancel"
         >
         <el-form ref="uploadZrFileForm" :model="form1" class="form1" label-width="auto" label-position='top' :inline='true' >
-          <el-form-item label="执行日期" >
-            <el-date-picker size="small" v-model="zrExecuteDate" value-format="yyyy-MM-dd" type="date"  placeholder="选择日期"></el-date-picker>
-          </el-form-item>
-          <el-form-item label="文件">
-            <el-upload class="upload-demo" :before-upload="beforeUpload" ref='zrFileUpload' name='file' :auto-upload="false" :action='serverUrl+"/business/rebate/upload"'>
-              <el-button size="mini" type="" >上传文件</el-button>
-            </el-upload>
-          </el-form-item>
+              <el-form-item label="执行日期" >
+                <el-date-picker size="small" v-model="zrExecuteDate" value-format="yyyy-MM-dd" type="date"  placeholder="选择日期"></el-date-picker>
+              </el-form-item>
+              <el-form-item label="文件">
+                <el-upload class="upload-demo" :before-upload="beforeUpload" ref='zrFileUpload' name='file' :auto-upload="false" :action='serverUrl+"/business/rebate/upload"'>
+                  <el-button size="mini" type="" >上传文件</el-button>
+                </el-upload>
+              </el-form-item>
         </el-form>
           <span slot="footer" class="dialog-footer">
             <el-button @click="cancel" size="small" type="primary" plain>取 消</el-button>
