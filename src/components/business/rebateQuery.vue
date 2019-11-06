@@ -158,12 +158,12 @@
         top="10vh"
         :before-close="cancel"
         >
-        <el-form ref="uploadZrFileForm" :model="form1" class="form1" label-width="auto" label-position='top' :inline='true' >
+        <el-form ref="uploadZrFileForm" class="form1" label-width="auto" label-position='top' :inline='true' >
               <el-form-item label="执行日期" >
                 <el-date-picker size="small" v-model="zrExecuteDate" value-format="yyyy-MM-dd" type="date"  placeholder="选择日期"></el-date-picker>
               </el-form-item>
               <el-form-item label="文件">
-                <el-upload class="upload-demo" :before-upload="beforeUpload" ref='upload' name='file' :auto-upload="false" :data="data" :action='serverUrl+"/business/rebate/upload"'>
+                <el-upload class="upload-demo" :before-upload="beforeUpload" ref='upload' name='file' :auto-upload="false" :action='serverUrl+"/business/rebate/upload"'>
                   <el-button size="mini" type="" >上传文件</el-button>
                 </el-upload>
               </el-form-item>
@@ -283,7 +283,7 @@ import {queryList,send,downloadFiles} from '@/api/business/rebate.js'
           executeStyle:'',
           remark:'',
         }
-        this.$formTest.resetForm(this.$refs[formName])
+        this.$formTest.resetForm(this.$refs['uploadZrFileForm'])
         this.dialogVisibleZrFileUpload= false
       },
       rowClick(row){
@@ -435,6 +435,20 @@ import {queryList,send,downloadFiles} from '@/api/business/rebate.js'
             width: 100%;
           }
         }
+    }
+    .form1 {
+            .el-form-item__label {
+              height: 30px;
+            }
+            .el-form-item {
+              width: 100%;
+              .el-input{
+                width: 100%;
+              }
+              .el-select{
+                width: 100%;
+              }
+            }
     }
   }
   .sellBox{
