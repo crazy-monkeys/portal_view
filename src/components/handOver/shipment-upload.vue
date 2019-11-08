@@ -542,27 +542,8 @@
         if(val.code!=1){
           this.$message.error(val.msg)
         }else{
-          if(val.data.isError){
-            this.isError1 = false
-            this.isError2 = true
-            this.$message.error(val.data.msg)
-          }else{
             this.$message.success('上传成功')
-            this.isError1 = true
-            this.isError2 = false
-          }
-          this.recordId = val.data.recordId
-          this.fileName = val.data.errorFileName
-          
-          this.da1={
-            type:'deliver' ,
-            recordId:this.recordId,
-            fileName:this.fileName,
-          },
-          this.tableData = val.data.deliverDetails 
-          // //console.log(this.tableData)
-
-          // //console.log(this.recordId,this.fileName)
+           
         }
       },
       suc1(val){
