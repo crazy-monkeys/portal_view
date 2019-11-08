@@ -23,7 +23,7 @@
                   <el-option value='1' label="新增待处理"></el-option>
                   <el-option value='2' label="已提交"></el-option>
                   <el-option value='3' label="删除待处理"></el-option>
-                  <el-option value='3' label="修改待处理"></el-option>
+                  <el-option value='4' label="修改待处理"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="销售">

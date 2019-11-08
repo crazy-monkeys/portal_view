@@ -23,21 +23,21 @@
             <el-input size='small' clearable v-model="form.executor" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="执行方式">
-            <el-select v-model="form.executeStyle" clearable size="small"> 
-              <el-option label="抵扣代理商AR" value='1'></el-option> 
-              <el-option label="返货" value='2'></el-option> 
-              <el-option label="返款" value='3'></el-option> 
+            <el-select v-model="form.executeStyle" clearable size="small">
+              <el-option label="抵扣代理商AR" value='1'></el-option>
+              <el-option label="返货" value='2'></el-option>
+              <el-option label="返款" value='3'></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="通知日期" class="date">
             <Daterange @data='watchTime' :resetDataCreate='resetData' />
           </el-form-item>
           <el-form-item label="状态">
-            <el-select v-model="form.status" clearable size="small"> 
-              <el-option label="结算中" value='1'></el-option> 
-              <el-option label="客户未确认" value='2'></el-option> 
-              <el-option label="客户已确认" value='3'></el-option> 
-              <el-option label="执行完毕" value='4'></el-option> 
+            <el-select v-model="form.status" clearable size="small">
+              <el-option label="结算中" value='1'></el-option>
+              <el-option label="客户未确认" value='2'></el-option>
+              <el-option label="客户已确认" value='3'></el-option>
+              <el-option label="执行完毕" value='4'></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label=' '>
@@ -86,7 +86,6 @@
               </template>
             </el-table-column>
             <el-table-column prop="dlExecuteDate" width="150" label="代理执行日期" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="zrExecuteDate" width="150" label="执行日期" show-overflow-tooltip></el-table-column>
             <el-table-column prop="dlFileId" width="150" label="代理商上传文件" show-overflow-tooltip>
               <template slot-scope="scope">
                 <el-button v-if="scope.row.dlFileId" size="small" type="text" @click="downloadFile(scope.row.dlFileId)">点击下载</el-button>
@@ -101,10 +100,11 @@
                 </template>
             </el-table-column>
             <el-table-column  label="操作" width="80" fixed="right">
-              <template slot-scope="scope">
-                <el-upload style='display:inline-block' :data='rowdata' class="upload-demo" :headers="{'Authorization':auth}" :show-file-list="false" ref='upload' name='file'  :on-success='uploadSuccess' :action='serverUrl+"/business/rebate/upload"' >
+              <template slot-scope="scope" >
+                <el-upload v-if="scope.row.status==2" style='display:inline-block' :data='rowdata' class="upload-demo" :headers="{'Authorization':auth}" :show-file-list="false" ref='upload' name='file'  :on-success='uploadSuccess' :action='serverUrl+"/business/rebate/upload"' >
                   <el-button size="small"  type="text" >上传</el-button>
                 </el-upload>
+                <el-button type='text' v-if="scope.row.status==3"  @click='showUploadZrFile(scope.row)'>上传</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -126,18 +126,18 @@
       :before-close="cancel">
         <el-form ref="sendForm" :model="sendForm" :rules='rules' class="sendForm" label-width="auto" label-position='top' >
           <el-form-item label="执行方">
-            <el-select v-model="sendForm.executor" size="small"> 
-              <el-option label="客户已确认" value='1'></el-option> 
-              <el-option label="客户未确认" value='2'></el-option> 
+            <el-select v-model="sendForm.executor" size="small">
+              <el-option label="客户已确认" value='1'></el-option>
+              <el-option label="客户未确认" value='2'></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="释放金额">
             <el-input size='small' v-model="sendForm.surplusRebateAmount" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="执行方式">
-            <el-select v-model="sendForm.executeStyle" size="small"> 
-              <el-option label="客户已确认" value='1'></el-option> 
-              <el-option label="客户未确认" value='2'></el-option> 
+            <el-select v-model="sendForm.executeStyle" size="small">
+              <el-option label="客户已确认" value='1'></el-option>
+              <el-option label="客户未确认" value='2'></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="备注">
@@ -149,10 +149,33 @@
             <el-button size="small" type="primary" @click="submitForm('sendForm')">确 定</el-button>
           </span>
     </el-dialog>
+    <el-dialog
+        title="展锐上传文件"
+        :visible.sync="dialogVisibleZrFileUpload"
+        width="400px"
+        top="10vh"
+        :before-close="cancel"
+        >
+        <el-form ref="uploadZrFileForm" :model="form1" class="form1" label-width="auto" label-position='top' :inline='true' >
+              <el-form-item label="执行日期" >
+                <el-date-picker size="small" v-model="zrExecuteDate" value-format="yyyy-MM-dd" type="date"  placeholder="选择日期"></el-date-picker>
+              </el-form-item>
+              <el-form-item label="文件">
+                <el-upload class="upload-demo" :before-upload="beforeUpload" ref='zrFileUpload' name='file' :auto-upload="false" :action='serverUrl+"/business/rebate/upload"'>
+                  <el-button size="mini" type="" >上传文件</el-button>
+                </el-upload>
+              </el-form-item>
+        </el-form>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="cancel" size="small" type="primary" plain>取 消</el-button>
+            <el-button type="primary" @click="submitUploadZrFileForm('uploadZrFileForm')"  size="small">确 定</el-button>
+          </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import formTest from "../../assets/js/formTest";
 import Daterange from "../com/date";
 
 import {serverUrl} from "@/axios/request.js";
@@ -167,6 +190,8 @@ import {queryList,send,downloadFiles} from '@/api/business/rebate.js'
         rowData:{},
         rowdata:{},
       resetData:false,
+      dialogVisibleZrFileUpload:false,
+      zrExecuteDate:'',
       auth:sessionStorage.getItem('data'),
         serverUrl:serverUrl,
         rules:{},
@@ -184,6 +209,9 @@ import {queryList,send,downloadFiles} from '@/api/business/rebate.js'
           executeStyle:'',
           noticeBeginDate:'',
           noticeEndDate:''
+        },
+        form1:{
+
         },
         dialogVisible: false,
         sendVis: false,
@@ -256,7 +284,8 @@ import {queryList,send,downloadFiles} from '@/api/business/rebate.js'
           executeStyle:'',
           remark:'',
         }
-        this.$formTest.resetForm(this.$refs[formName])
+        this.$formTest.resetForm(this.$refs['uploadZrFileForm'])
+        this.dialogVisibleZrFileUpload= false
       },
       rowClick(row){
         this.rowData = row
@@ -341,6 +370,47 @@ import {queryList,send,downloadFiles} from '@/api/business/rebate.js'
         this.currentPage = val;
         this.getList()
       },
+      showUploadZrFile(){
+            this.dialogVisibleZrFileUpload = true
+      },
+      sure3(){
+        this.$refs.zrFileUpload.submit();
+      },
+      submitUploadZrFileForm(formName){
+            this.$formTest.submitForm(this.$refs[formName],this.sure3)
+      },
+      beforeUpload(file){
+            let data = new FormData()
+            data.append('file', file)
+            data.append('zrExecuteDate',this.zrExecuteDate)
+            data.append('noticeDate', this.rowdata.noticeDate)
+            data.append('shipmentCompany', this.rowdata.shipmentCompany)
+            data.append('customerShortName', this.rowdata.customerShortName)
+            data.append('salesName', this.rowdata.salesName)
+            data.append('amebaHeader', this.rowdata.amebaHeader)
+            data.append('amebaDepartment', this.rowdata.amebaDepartment)
+            data.append('executor', this.rowdata.executor)
+
+            this.$http({
+              method: 'post',
+              url: this.serverUrl+"/business/rebate/upload",
+              headers:{'Authorization': this.auth},
+              timeout: 20000,
+              data: data
+            }).then(res=>{
+              if(res.data.code == 1){
+                this.$message.success('上传成功')
+                this.cancel()
+                this.getList()
+              }else{
+                this.$message.error(res.data.msg)
+              }
+            }).catch(err=>{
+              // //console.log(err)
+            })
+            return false
+      }
+
     }
   }
 </script>
@@ -366,6 +436,20 @@ import {queryList,send,downloadFiles} from '@/api/business/rebate.js'
             width: 100%;
           }
         }
+    }
+    .form1 {
+            .el-form-item__label {
+              height: 30px;
+            }
+            .el-form-item {
+              width: 100%;
+              .el-input{
+                width: 100%;
+              }
+              .el-select{
+                width: 100%;
+              }
+            }
     }
   }
   .sellBox{

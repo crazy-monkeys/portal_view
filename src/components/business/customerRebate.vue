@@ -159,7 +159,7 @@
       :before-close="cancel">
         <el-form ref="sendForm" :model="sendForm" :rules='rules' class="sendForm" label-width="auto" label-position='top' >
           <el-form-item label="执行方">
-            <el-select v-model="sendForm.executor" size="small"> 
+            <el-select v-model="sendForm.executor" size="small" clearable filterable> 
               <el-option v-for="item in executors" :key='item.id' :value="item.custName" :label="item.custName"> </el-option> 
             </el-select>
           </el-form-item>
