@@ -566,12 +566,12 @@ export default {
       if(this.form.orderLines.length==0){
         this.$message.error('请先上传订单行文件')
       }else{
-        var form =this.form
         var data ={
-          orderId : this.queryId
+          orderId : this.queryId,
+          ...this.form
         }
-        form.isAgreed = form.isAgreed? 1:0
-        const res = await mod(data,form);
+        this.form.isAgreed = this.form.isAgreed? 1:0
+        const res = await mod(data);
         // //console.log('申请结果',res)
         if(res){
           this.$message.success('订单申请修改成功')

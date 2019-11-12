@@ -290,6 +290,9 @@ export default {
       }
     },
     async approvalReject(approvalStatus){
+      if(this.form1.reason.lenght==0){
+        this.$message.error('请填写驳回信息')
+      }else{
       const data ={
         deliveryOrderApprovalId:this.rowData.deliverOrderId,
         sapDeliveryOrderNo:this.rowData.sapOrderNo,
@@ -301,6 +304,7 @@ export default {
         this.$message.success('审批成功')
         this.dialogVisible5 = false
         this.getList()
+      }
       }
     },
     async approvePass(approvalStatus){

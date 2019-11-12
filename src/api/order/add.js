@@ -5,6 +5,6 @@ export const apply = data => {
     return request('post', `${serverUrl}/order/apply/create`, data).then(result => result)
 }
 
-export const mod = (data, param) => {
-    return request('post', `${serverUrl}/order/apply/modify/${data.orderId}`, param).then(result => result)
+export const mod = data => {
+    return request('post', `${serverUrl}/order/apply/modify`, data).then(result => result)
 }

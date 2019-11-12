@@ -744,8 +744,9 @@ export default {
        const res = await checkCust(data);
        // //console.log('检查客户',res)
        if(res){
-         this.form.custName = res.data.data.custName
-         
+         console.log(111111)
+        //  this.form.custName = res.data.data.custName
+         this.form = res.data.data
        }else{
          this.$router.push({name:'customerRep'})
        }
