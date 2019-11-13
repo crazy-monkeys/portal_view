@@ -121,7 +121,8 @@
             </el-table-column>
             <el-table-column width="60" label="操作" fixed='right'>
               <template slot-scope='scope'>
-                <el-button type='text' size='small' @click='check(scope.row)' >明细</el-button>
+                <el-button type='text' size='small' v-if="scope.row.approvalStatus!=2 || scope.row.appalyType!=1" @click='check(scope.row)' >明细</el-button>
+                <el-button type='text' size='small' v-if="scope.row.approvalStatus==2 && scope.row.appalyType==1" @click='mod(scope.row)'>操作</el-button>
               </template>
             </el-table-column>
             <div slot="empty">
@@ -213,6 +214,19 @@ export default {
   },
   watch: {},
   methods: {
+    //修改按钮
+    mod(row){
+      this.$router.push(
+        {
+          name:'orderAdd',
+          query:{
+            id:row.id,
+            type:row.approvalStatus,
+            apply:true
+          }
+        }
+      )
+    },
     check(row){
       this.$router.push(
         {
