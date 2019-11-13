@@ -76,7 +76,7 @@
         </div>
       </div>
       
-      <el-dialog title="公告发布" :visible.sync="dialogVisible" width="50%" :center="true">
+      <el-dialog title="文档发布" :visible.sync="dialogVisible" width="50%" :center="true">
         <el-form ref="form" label-position="top" :rules="rules" :model="form" class="form" :inline='true'>
             <el-form-item label="标题" prop='title'>
               <el-input size='small' v-model="form.title" placeholder=""  ></el-input>
