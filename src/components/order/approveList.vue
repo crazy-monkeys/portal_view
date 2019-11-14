@@ -75,7 +75,7 @@
             </el-table-column>
             <el-table-column prop="deliverDate" label="提货日期" show-overflow-tooltip  width="150" >
             </el-table-column>
-            <el-table-column prop="shippingPoint" label="装运点" show-overflow-tooltip  width="150" >
+            <el-table-column prop="shippingPoint" label="下单公司" show-overflow-tooltip  width="150" >
             </el-table-column>
             <el-table-column prop="approvalUser" label="审批人" show-overflow-tooltip  width="150" >
             </el-table-column>

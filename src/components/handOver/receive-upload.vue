@@ -50,7 +50,7 @@
           </div>
           <div class="box">
             <div class="btns clear">
-              <el-button class="add"  size='small' type='primary' @click="deleteRows" :disabled="multipleSelection.length==0">批量删除</el-button>
+              <!-- <el-button class="add"  size='small' type='primary' @click="deleteRows" :disabled="multipleSelection.length==0">批量删除</el-button> -->
               <!-- <el-button class="add"  size='small' type='primary'>批量修改</el-button> -->
             </div>
             <div class="tab">

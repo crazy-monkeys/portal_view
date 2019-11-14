@@ -221,7 +221,7 @@
             <el-form-item label="授信额度剩余值">
               <el-input size='small' disabled v-model="credit.creditUnUSE" ></el-input>
             </el-form-item>
-            <el-form-item label="装运点" prop="shippingPoint">
+            <el-form-item label="下单公司" prop="shippingPoint">
               <el-input size='small'  v-model="proForm.shippingPoint" ></el-input>
             </el-form-item>
             <el-form-item label="提货日期" prop="deliverDate">
@@ -388,7 +388,7 @@ export default {
       salesOrgIds:[],
       rules:{
         shippingPoint:[
-          {required:true,triggle:'blur',message:'请输入装运点'}
+          {required:true,triggle:'blur',message:'请输入下单公司'}
         ],
         deliverDate:[
           {required:true,triggle:'change',message:'请选择提货日期'}
