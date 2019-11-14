@@ -300,6 +300,9 @@ export default new Router({
                     component: resolve => require(['@/components/handOver/shipment-upload'], resolve),
                 },
 
+
+
+
                 //商务管理
                 //rebate列表
                 {
@@ -339,6 +342,19 @@ export default new Router({
                 },
 
 
+
+                //库存管理
+                //查询1
+                {
+                    path: 'stock/query/one',
+                    name: 'stockQueryOne',
+                    component: resolve => require(['@/components/stock/queryOne'], resolve),
+                },
+                {
+                    path: 'stock/query/two',
+                    name: 'stockQueryTwo',
+                    component: resolve => require(['@/components/stock/queryTwo'], resolve),
+                },
 
             ]
         },
