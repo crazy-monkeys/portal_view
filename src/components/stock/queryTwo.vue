@@ -100,20 +100,13 @@
             </el-table-column>
             <el-table-column prop="inventory_total_amount" label="金额" show-overflow-tooltip width="150">
             </el-table-column>
-            <!-- <el-table-column show-overflow-tooltip prop="" label="状态" width="150">
-              <template slot-scope="scope">
-              <span >
-                {{tableData[scope.$index].userStatus==0 ?'冻结' :tableData[scope.$index].userStatus==1 ?'正常':'失效'}}
-              </span>
-              </template>
-            </el-table-column> -->
-            <el-table-column label="操作" width="150" fixed="right">
+            <!-- <el-table-column label="操作" width="150" fixed="right">
               <template slot-scope="scope">
                 <el-button size="small" type="text" @click="authorize">授权</el-button>
                 <el-button v-if="tableData[scope.$index].userStatus==1 " size="small" type="text" :disabled="userId==scope.row.id" @click="getFreeze(scope.row.loginName)">冻结</el-button>
                 <el-button v-if="tableData[scope.$index].userStatus==0 " size="small" type="text" :disabled="userId==scope.row.id" @click="getAct(scope.row.loginName)">激活</el-button>
               </template>
-            </el-table-column>
+            </el-table-column> -->
             <div slot="empty">
               <p>无数据</p>
             </div>
@@ -207,7 +200,7 @@ export default {
       //搜索框
       dialogVisible3: false,
       //用户列表
-      tableData: [],
+      tableDataTotal:[],
       //第几页
       currentPage: 1,
       //每页的容量
@@ -217,11 +210,23 @@ export default {
   },
   created(){
     this.getList();
-    this.getRolesAll();
+    // this.getRolesAll();
   },
   computed:{
     userId(){
       return this.$store.state.loginUser.loginInfo.id
+    },
+    tableData:{
+      get: function() {
+        var arr = this.tableDataTotal.filter((item,index)=>{
+          if(index>=(this.currentPage-1)*this.pageSize && index<=(this.pageSize)*this.currentPage){
+            return  item
+          }
+        })
+        return arr
+      },
+      set: function() {
+      }
     }
   },
   methods: {
@@ -283,7 +288,7 @@ export default {
     rowClick(row){
       // //console.log(row)
       this.rowData = row
-      this.roleForm.role = this.rowData.role.roleCode
+      // this.roleForm.role = this.rowData.role.roleCode
     },
     submitForm(formName) {
       this.$formTest.submitForm(this.$refs[formName],this.authorizeSure)
@@ -344,12 +349,10 @@ export default {
     },
     async getList(){
       var data =this.form
-      
       const res = await inventoryDetail(data);
-      // //console.log('用户列表',res)
       if(res){
-        this.tableData = res.data.data
-        // this.total = res.data.data.total
+        this.tableDataTotal = res.data.data
+        this.total = res.data.data.length
       }
     },
     change() {
@@ -362,12 +365,12 @@ export default {
     handleSizeChange(val) {
       // //console.log(`每页 ${val} 条`);
       this.pageSize = val;
-      this.getList()
+      // this.getList()
     },
     handleCurrentChange(val) {
       // //console.log(`当前页: ${val}`);
       this.currentPage = val;
-      this.getList()
+      // this.getList()
     }
   }
 };
