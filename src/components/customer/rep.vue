@@ -699,7 +699,6 @@ export default {
   methods: {
     async getAll(){
         const res = await getAll();
-        // //console.log('所有执行方',res);
         if(res){
           this.executors = res.data.data;
         }
@@ -717,7 +716,6 @@ export default {
           func:func,
         }
         const res = await getType(data);
-        // //console.log('关系类型',res)
         if(res){
           if(func==11){
             this.corporateTypes = res.data.data
@@ -742,11 +740,13 @@ export default {
         name:this.name
       }
        const res = await checkCust(data);
-       // //console.log('检查客户',res)
        if(res){
          console.log(111111)
-        //  this.form.custName = res.data.data.custName
-         this.form = res.data.data
+         for(let i in res.data.data){
+          if(res.data.data[i]){
+            this.form[i] = res.data.data[i]
+          }
+        }
        }else{
          this.$router.push({name:'customerRep'})
        }
@@ -995,7 +995,14 @@ export default {
       const res = await detail(data);
       // //console.log('详情',res);
       if(res){
-        this.form = res.data.data;
+        // this.form = res.data.data;
+        for(let i in res.data.data){
+          console.log(i)
+          console.log(res.data.data[i])
+          if(res.data.data[i]){
+            this.form[i] = res.data.data[i]
+          }
+        }
         this.form.addresses.forEach(item=>{
           if(item.addressType=='办公地址'){
             this.workDetailAddress = item.addressDetail
