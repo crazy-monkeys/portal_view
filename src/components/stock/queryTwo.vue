@@ -326,14 +326,11 @@ export default {
     }
   },
   methods: {
-    dogetCustList(){
-      getCustList().then(res=>{
-        if(res.data.code==1){
+    async dogetCustList(){
+       const res = await getCustList
+       if(res){
           this.customerList = res.data.data
-        }
-      }).catch(err=>{
-        console.log(err)
-      })
+       }
     },
     exchange(){
       this.exchangeDia = true
