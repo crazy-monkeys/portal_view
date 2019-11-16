@@ -257,7 +257,10 @@
                 </el-table-column>
                 <el-table-column prop="" label="股东性质" width="150">
                   <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.strTwo"></el-input>
+                    <el-select size="small"   v-model="scope.row.strTwo">
+                      <el-option value="A1" label="公司"></el-option>
+                      <el-option value="A2" label="自然人"></el-option>
+                    </el-select>
                   </template>
                 </el-table-column>
                 <el-table-column prop="" label="公司性质" width="150">
@@ -267,7 +270,10 @@
                 </el-table-column>
                 <el-table-column prop="" label="是否公司管理层" width="150">
                   <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.strFour"></el-input>
+                    <el-select size="small"   v-model="scope.row.strFour">
+                      <el-option value="Y" label="Y"></el-option>
+                      <el-option value="N" label="N"></el-option>
+                    </el-select>
                   </template>
                 </el-table-column>
                 <el-table-column prop="" label="职务" width="150">
