@@ -109,34 +109,34 @@
         </div>
       </div>
     </div>
-    <el-dialog title="转移" :visible.sync="moveDia"  width="400px">
+    <el-dialog title="转移" :visible.sync="moveDia"  width="400px" :before-close='cancel'>
       <el-form :model="moveForm" :rules='rules' ref='moveForm' size="small" label-position='top'>
-        <el-form-item label="年月" prop="">
+        <el-form-item label="年月" prop="transferYearMonth">
           <el-date-picker
-            v-model="moveForm.yearMonth"
+            v-model="moveForm.transferYearMonth"
             type="month"
             size="small"
             placeholder="选择日期"
             value-format="yyyyMM">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="转入客户" prop="inputCust">
-          <el-select v-model="moveForm.inputCust" size="small" filterable placeholder="请选择">
+        <el-form-item label="转入客户" prop="transferIntoCustomer">
+          <el-select v-model="moveForm.transferIntoCustomer" size="small" filterable placeholder="请选择">
             <el-option
               v-for="item in customerList"
-              :key="item.roleCode"
-              :label="item.roleName"
-              :value="item.roleCode">
+              :key="item.outCode"
+              :label="item.custName"
+              :value="item.outCode">
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="转出客户" prop="outputCust">
-          <el-select v-model="moveForm.outputCust" size="small" filterable placeholder="请选择">
+        <el-form-item label="转出客户" prop="transferOutCustomer">
+          <el-select v-model="moveForm.transferOutCustomer " size="small" filterable placeholder="请选择">
             <el-option
               v-for="item in customerList"
-              :key="item.roleCode"
-              :label="item.roleName"
-              :value="item.roleCode">
+              :key="item.outCode"
+              :label="item.custName"
+              :value="item.outCode  ">
             </el-option>
           </el-select>
         </el-form-item>
@@ -144,23 +144,23 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="cancel" size='small'>取 消</el-button>
-        <el-button type="primary" @click="submitForm('moveForm')" size='small'>授 权</el-button>
+        <el-button type="primary" @click="submitForm('moveForm')" size='small'>确 定</el-button>
       </span>
     </el-dialog>
 
-    <el-dialog title="转移" :visible.sync="exchangeDia"  width="400px">
+    <el-dialog title="转换" :visible.sync="exchangeDia"  width="400px" :before-close='cancel'>
       <el-form :model="exchangeForm" :rules='rules' ref='exchangeForm' size="small" label-position='top'>
-        <el-form-item label="年月" prop="yearMonth">
+        <el-form-item label="年月" prop="conversionYearMonth">
           <el-date-picker
-            v-model="exchangeForm.yearMonth"
+            v-model="exchangeForm.conversionYearMonth"
             type="month"
             size="small"
             placeholder="选择日期"
             value-format="yyyyMM">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="客户属性" prop="customerType">
-          <el-select v-model="exchangeForm.customerType" size="small" filterable placeholder="请选择">
+        <el-form-item label="客户属性" prop="conversionCustomerType">
+          <el-select v-model="exchangeForm.conversionCustomerType" size="small" filterable placeholder="请选择">
             <el-option
               v-for="item in customerTypes"
               :key="item.value"
@@ -169,8 +169,8 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="库存类别" prop="inventoryType">
-          <el-select v-model="exchangeForm.inventoryType" size="small" filterable placeholder="请选择">
+        <el-form-item label="库存类别" prop="conversionInventoryType">
+          <el-select v-model="exchangeForm.conversionInventoryType" size="small" filterable placeholder="请选择">
             <el-option
               v-for="item in inventoryTypes"
               :key="item.value"
@@ -183,14 +183,14 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="cancel" size='small'>取 消</el-button>
-        <el-button type="primary" @click="submitForm('exchangeForm')" size='small'>授 权</el-button>
+        <el-button type="primary" @click="submitForm('exchangeForm')" size='small'>确 定</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { inventoryDetail } from '@/api/stock/query.js'
+import { inventoryDetail,inventoryConversion,inventoryTransfer,getCustList } from '@/api/stock/query.js'
 import {   getRolesAll } from '@/api/system/role.js'
 export default {
   name: "stockQueryTwo",
@@ -199,14 +199,14 @@ export default {
     return {
       rowData:{},
       moveForm:{
-        inputCust:'',
-        outputCust:'',
-        yearMonth:''
+        transferOutCustomer:'',
+        transferIntoCustomer:'',
+        transferYearMonth:''
       },
       exchangeForm:{
-        yearMonth:'',
-        customerType:'',
-        inventoryType:'',
+        conversionYearMonth:'',
+        conversionCustomerType:'',
+        conversionInventoryType:'',
       },
       customerTypes:[
         {
@@ -256,8 +256,23 @@ export default {
       },
       //验证规则
       rules:{
-        role: [
-          { required: true, trigger: 'blur',message:'角色不能为空'}
+        transferOutCustomer: [
+          { required: true, trigger: ['blur','change'],message:'转出客户不能为空'}
+        ],
+        transferIntoCustomer: [
+          { required: true, trigger: ['blur','change'],message:'转入客户不能为空'}
+        ],
+        transferYearMonth: [
+          { required: true, trigger: ['blur','change'],message:'年月不能为空'}
+        ],
+        conversionYearMonth: [
+          { required: true, trigger: ['blur','change'],message:'年月不能为空'}
+        ],
+        conversionCustomerType: [
+          { required: true, trigger: ['blur','change'],message:'客户属性不能为空'}
+        ],
+        conversionInventoryType: [
+          { required: true, trigger: ['blur','change'],message:'库存类别不能为空'}
         ]
       },
       //角色列表
@@ -280,6 +295,7 @@ export default {
   },
   created(){
     this.getList();
+    this.dogetCustList()
   },
   computed:{
     tableData:{
@@ -310,6 +326,15 @@ export default {
     }
   },
   methods: {
+    dogetCustList(){
+      getCustList().then(res=>{
+        if(res.data.code==1){
+          this.customerList = res.data.data
+        }
+      }).catch(err=>{
+        console.log(err)
+      })
+    },
     exchange(){
       this.exchangeDia = true
     },
@@ -325,27 +350,45 @@ export default {
       // this.moveForm.role = this.rowData.role.roleCode
     },
     submitForm(formName) {
-      this.$formTest.submitForm(this.$refs[formName],this.authorizeSure)
+      this.$formTest.submitForm(this.$refs[formName],formName=='moveForm' ?  this.domove : this.doexchange)
     },
     resetForm(formName) {
       this.$formTest.resetForm(this.$refs[formName]) 
     },
-    async authorizeSure(){
-      var data = {
-        loginName :this.rowData.loginName,
-        roleCode :this.moveForm.role,
-      };
-      const res = await saveUserRole(data)
-      // //console.log('授权结果',res)
-      if(res){
-        this.cancel()
-        this.getList()
-      }
-      
+    domove(){
+      var data =this.multipleSelection.map(item=>{
+        return {...item,...this.moveForm}
+      })
+      inventoryTransfer(data).then(res=>{
+        if(res.data.code==1){
+          this.$message.success('转移成功')
+          // this.getList()
+          this.cancel()
+
+        }
+      }).catch(err=>{
+        console.log(err)
+      })
+    },
+    doexchange(){
+      var data =this.multipleSelection.map(item=>{
+        return {...item,...this.exchangeForm}
+      })
+      inventoryConversion(data).then(res=>{
+        if(res.data.code==1){
+          this.$message.success('转换成功')
+          // this.getList()
+          this.cancel()
+        }
+      }).catch(err=>{
+        console.log(err)
+      })
     },
     cancel(){
       this.moveDia = false;
+      this.exchangeDia = false;
       this.resetForm('moveForm')
+      this.resetForm('exchangeForm')
     },
     search(){
       this.getList()
