@@ -583,8 +583,8 @@ export default {
         positions:[],
       currences:[
         {
-          pValue:'RMB',
-          zhName:'RMB'
+          pValue:'CNY',
+          zhName:'CNY'
         },
         {
           pValue:'USD',

@@ -63,7 +63,14 @@
             </el-table-column>
             <el-table-column prop="approveStatus" width="150" show-overflow-tooltip label="审批状态">
               <template slot-scope="scope">
-                {{scope.row.approveStatus==2?'审批中':scope.row.approveStatus==3?'审批通过 ':'审批驳回'}}
+                {{scope.row.approveStatus==0?'初始化':
+                scope.row.approveStatus==1?'可报备':
+                scope.row.approveStatus==2?'审批中':
+                scope.row.approveStatus==3?'审批通过':
+                scope.row.approveStatus==4?'审批驳回':
+                scope.row.approveStatus==5?'已报备':
+                scope.row.approveStatus==6?'未报备':
+                '未知'}}
               </template>
             </el-table-column>
             <el-table-column prop="custName" width="150" label="客户名称" show-overflow-tooltip>
