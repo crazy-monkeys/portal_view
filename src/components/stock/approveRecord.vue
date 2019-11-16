@@ -45,7 +45,7 @@
       <div class="box">
         <div class="tab">
           <el-table :data="tableData" border style="width: 100%" height="100%" @row-click="rowClick">
-            <el-table-column prop="" show-overflow-tooltip label="审批状态" width="150">
+            <el-table-column prop="" show-overflow-tooltip label="审批状态" width="100" fixed="right"> 
               <template slot-scope="scope">
                 <span v-if="scope.row.approvalStatus===0">待审批</span>
                 <span v-if="scope.row.approvalStatus===1">通过</span>
@@ -90,9 +90,11 @@
             </el-table-column>
             <el-table-column prop="inventoryTotalAmount" label="金额" show-overflow-tooltip width="150">
             </el-table-column>
+            <el-table-column prop="createTime" label="申请时间" show-overflow-tooltip width="150">
+            </el-table-column>
             <el-table-column label="操作" width="60" fixed="right">
               <template slot-scope="scope">
-                <el-button size="small" type="text" @click="approve">审批</el-button>
+                <el-button size="small" type="text" @click="approve" :disabled="scope.row.approvalStatus!==0">审批</el-button>
               </template>
 
             </el-table-column>
