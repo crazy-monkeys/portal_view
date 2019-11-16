@@ -4,7 +4,7 @@
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item >库存管理</el-breadcrumb-item>
-          <el-breadcrumb-item>查询列表2</el-breadcrumb-item>
+          <el-breadcrumb-item>代理库存明细查询</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="sels clear">
@@ -46,15 +46,6 @@
           <el-form-item label="期末库存周期">
             <el-input size='small' v-model="form.sMonthEndInventoryPeriod" placeholder="请输入"></el-input>
           </el-form-item>
-          <!-- <el-form-item label="用户类型">
-            <el-select v-model="form.userType" size='small' clearable filterable placeholder="请选择">
-              <el-option v-for="item in userTypes" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="开通日期" class="date">
-            <Daterange @data='watchTime' :resetDataReg='resetData' />
-          </el-form-item> -->
           <el-form-item label=" ">
             <el-button size='small' type='primary' plain @click="search">搜索</el-button>
             <el-button  size='small' type='primary' plain @click="reset">重置</el-button>
@@ -62,8 +53,14 @@
         </el-form>
       </div>
       <div class="box">
+        <div class="btns">
+          <el-button type='primary' class="add" size='small' @click="move" :disabled="dis">转移</el-button>
+          <el-button type='primary' class="add" size='small' @click="exchange" :disabled="dis">转换</el-button>
+        </div>
         <div class="tab">
-          <el-table :data="tableData" border style="width: 100%" height="100%" @row-click="rowClick">
+          <el-table :data="tableData" border style="width: 100%" height="100%" @row-click="rowClick" @selection-change="handleSelectionChange"> 
+            <el-table-column type="selection" show-overflow-tooltip label="" width="60">
+            </el-table-column>
             <el-table-column prop="year_month" show-overflow-tooltip label="年月" width="150">
             </el-table-column>
             <el-table-column prop="agency_short_name" label="代理简称" show-overflow-tooltip width="150">
@@ -100,13 +97,6 @@
             </el-table-column>
             <el-table-column prop="inventory_total_amount" label="金额" show-overflow-tooltip width="150">
             </el-table-column>
-            <!-- <el-table-column label="操作" width="150" fixed="right">
-              <template slot-scope="scope">
-                <el-button size="small" type="text" @click="authorize">授权</el-button>
-                <el-button v-if="tableData[scope.$index].userStatus==1 " size="small" type="text" :disabled="userId==scope.row.id" @click="getFreeze(scope.row.loginName)">冻结</el-button>
-                <el-button v-if="tableData[scope.$index].userStatus==0 " size="small" type="text" :disabled="userId==scope.row.id" @click="getAct(scope.row.loginName)">激活</el-button>
-              </template>
-            </el-table-column> -->
             <div slot="empty">
               <p>无数据</p>
             </div>
@@ -119,45 +109,137 @@
         </div>
       </div>
     </div>
-    <el-dialog title="授权" :visible.sync="dialogVisible" width="400px">
-      <el-form :model="roleForm" :rules='rules' ref='roleForm'>
-        <el-form-item label="角色设置" prop="role">
-          <el-select v-model="roleForm.role" size="small" filterable placeholder="请选择">
+    <el-dialog title="转移" :visible.sync="moveDia"  width="400px">
+      <el-form :model="moveForm" :rules='rules' ref='moveForm' size="small" label-position='top'>
+        <el-form-item label="年月" prop="">
+          <el-date-picker
+            v-model="moveForm.yearMonth"
+            type="month"
+            size="small"
+            placeholder="选择日期"
+            value-format="yyyyMM">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="转入客户" prop="inputCust">
+          <el-select v-model="moveForm.inputCust" size="small" filterable placeholder="请选择">
             <el-option
-              v-for="item in roles"
+              v-for="item in customerList"
               :key="item.roleCode"
               :label="item.roleName"
               :value="item.roleCode">
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="转出客户" prop="outputCust">
+          <el-select v-model="moveForm.outputCust" size="small" filterable placeholder="请选择">
+            <el-option
+              v-for="item in customerList"
+              :key="item.roleCode"
+              :label="item.roleName"
+              :value="item.roleCode">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="cancel" size='small'>取 消</el-button>
-        <el-button type="primary" @click="submitForm('roleForm')" size='small'>授 权</el-button>
+        <el-button type="primary" @click="submitForm('moveForm')" size='small'>授 权</el-button>
+      </span>
+    </el-dialog>
+
+    <el-dialog title="转移" :visible.sync="exchangeDia"  width="400px">
+      <el-form :model="exchangeForm" :rules='rules' ref='exchangeForm' size="small" label-position='top'>
+        <el-form-item label="年月" prop="yearMonth">
+          <el-date-picker
+            v-model="exchangeForm.yearMonth"
+            type="month"
+            size="small"
+            placeholder="选择日期"
+            value-format="yyyyMM">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="客户属性" prop="customerType">
+          <el-select v-model="exchangeForm.customerType" size="small" filterable placeholder="请选择">
+            <el-option
+              v-for="item in customerTypes"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="库存类别" prop="inventoryType">
+          <el-select v-model="exchangeForm.inventoryType" size="small" filterable placeholder="请选择">
+            <el-option
+              v-for="item in inventoryTypes"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="cancel" size='small'>取 消</el-button>
+        <el-button type="primary" @click="submitForm('exchangeForm')" size='small'>授 权</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import Daterange from "../com/date";
 import { inventoryDetail } from '@/api/stock/query.js'
-
 import {   getRolesAll } from '@/api/system/role.js'
 export default {
   name: "stockQueryTwo",
-  components:{
-    Daterange
-  },
+  
   data() {
     return {
-      resetData:false,
-     time:{},
       rowData:{},
-      roleForm:{
-        role:''
+      moveForm:{
+        inputCust:'',
+        outputCust:'',
+        yearMonth:''
       },
+      exchangeForm:{
+        yearMonth:'',
+        customerType:'',
+        inventoryType:'',
+      },
+      customerTypes:[
+        {
+          label:'Account Market',
+          value:'Account Market',
+        },
+         {
+          label:'Mass Market',
+          value:'Mass Market',
+        }
+      ],
+      inventoryTypes:[
+        {
+          label:'客户专货',
+          value:'客户专货'
+        },
+        {
+          label:'分销商专货',
+          value:'分销商专货'
+        },
+        {
+          label:'Buffer',
+          value:'Buffer'
+        },
+        {
+          label:'样品',
+          value:'样品'
+        },
+        {
+          label:'Last buy',
+          value:'Last buy'
+        }
+      ],
       form:{
         sYearMonth	:'',
         sAgencyShortName		:'',
@@ -178,25 +260,12 @@ export default {
           { required: true, trigger: 'blur',message:'角色不能为空'}
         ]
       },
-      //客户类型选项
-      userTypes: [
-        {
-          value: 'agent',
-          label: "代理商"
-        },
-        {
-          value: 'subAgent',
-          label: "子代理商"
-        },
-        {
-          value: 'internal',
-          label: "内部客户"
-        }
-      ],
       //角色列表
-      roles: [],
-      //授权框
-      dialogVisible: false,
+      customerList: [],
+      //转移框
+      moveDia: false,
+      //转换框
+      exchangeDia: false,
       //搜索框
       dialogVisible3: false,
       //用户列表
@@ -205,17 +274,14 @@ export default {
       currentPage: 1,
       //每页的容量
       pageSize: 50,
-      total: 0
+      total: 0,
+      multipleSelection:[]
     };
   },
   created(){
     this.getList();
-    // this.getRolesAll();
   },
   computed:{
-    userId(){
-      return this.$store.state.loginUser.loginInfo.id
-    },
     tableData:{
       get: function() {
         var arr = this.tableDataTotal.filter((item,index)=>{
@@ -227,68 +293,36 @@ export default {
       },
       set: function() {
       }
+    },
+    dis(){
+      if(this.multipleSelection.length==0){
+       return true
+      }else{
+        var len = this.multipleSelection.filter(item=>{
+          return item.sales_org == 3000
+        }).length
+        if(len==this.multipleSelection.length || len==0){
+          return false
+        }else{
+          return true
+        }
+      }
     }
   },
   methods: {
-    getFreeze(name){
-      this.$confirm('确定冻结此账号吗？', '冻结', {
-        distinguishCancelAndClose: true,
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
-      })
-      .then(() => {
-          this.freeze(name)
-      })
-      .catch(action => {
-        
-      });
+    exchange(){
+      this.exchangeDia = true
     },
-    getAct(name){
-      this.$confirm('确定激活此账号吗？', '激活', {
-        distinguishCancelAndClose: true,
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
-      })
-      .then(() => {
-          this.act(name)
-      })
-      .catch(action => {
-        
-      });
+    move(){
+      this.moveDia = true
     },
-    async freeze(name){
-      const data ={
-        name:name,
-        userStatus:0
-      }
-      const res = await freeze(data);
-      //console.log('冻结结果',res);
-      if(res){
-        this.$message.success('操作成功');
-        this.getList()
-      }
-    },
-    async act(name){
-      const data ={
-        name:name,
-        userStatus:1
-      }
-      const res = await freeze(data);
-      //console.log('激活结果',res);
-      if(res){
-        this.$message.success('操作成功');
-        this.getList()
-      }
-    },
-    watchTime(data){
-      // //console.log(data)
-      this.time = data
-      this.resetData = false
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
     },
     rowClick(row){
       // //console.log(row)
       this.rowData = row
-      // this.roleForm.role = this.rowData.role.roleCode
+      // this.moveForm.role = this.rowData.role.roleCode
     },
     submitForm(formName) {
       this.$formTest.submitForm(this.$refs[formName],this.authorizeSure)
@@ -299,7 +333,7 @@ export default {
     async authorizeSure(){
       var data = {
         loginName :this.rowData.loginName,
-        roleCode :this.roleForm.role,
+        roleCode :this.moveForm.role,
       };
       const res = await saveUserRole(data)
       // //console.log('授权结果',res)
@@ -310,25 +344,13 @@ export default {
       
     },
     cancel(){
-      this.dialogVisible = false;
-      this.resetForm('roleForm')
-    },
-    authorize(){
-      this.dialogVisible = true
-    },
-    async getRolesAll(){
-      const res = await getRolesAll();
-      // //console.log('角色列表',res)
-      if(res){
-        this.roles = res.data.data
-      }
+      this.moveDia = false;
+      this.resetForm('moveForm')
     },
     search(){
       this.getList()
     },
     reset(){
-      this.resetData = true
-      this.time={}
       this.clearForm()
       this.getList()
     },
@@ -363,14 +385,10 @@ export default {
     },
     // 分页
     handleSizeChange(val) {
-      // //console.log(`每页 ${val} 条`);
       this.pageSize = val;
-      // this.getList()
     },
     handleCurrentChange(val) {
-      // //console.log(`当前页: ${val}`);
       this.currentPage = val;
-      // this.getList()
     }
   }
 };
@@ -386,6 +404,9 @@ $sc: 12;
 
   .el-dialog{
     .el-select{
+      width: 100%;
+    }
+    .el-date-editor{
       width: 100%;
     }
   }

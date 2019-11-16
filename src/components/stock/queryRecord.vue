@@ -1,10 +1,10 @@
 <template>
-  <div class="stockQuery">
+  <div class="queryRecord">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item >库存管理</el-breadcrumb-item>
-          <el-breadcrumb-item>代理库存汇总查询</el-breadcrumb-item>
+          <el-breadcrumb-item>转移转换查询</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="sels clear">
@@ -141,7 +141,7 @@ import Daterange from "../com/date";
 import { inventorySummary } from '@/api/stock/query.js'
 import {   getRolesAll } from '@/api/system/role.js'
 export default {
-  name: "stockQueryOne",
+  name: "queryRecord",
   components:{
     Daterange
   },
@@ -374,7 +374,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
 $sc: 12;
-.stockQuery{
+.queryRecord{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;
