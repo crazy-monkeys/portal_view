@@ -191,6 +191,7 @@
         // //console.log('提交结果',res);
         if(res){
           this.$message.success('提交成功');
+          this.uploadData = []
           this.activeName = 'first'
         }
       },
