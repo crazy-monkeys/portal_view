@@ -1,10 +1,10 @@
 <template>
-  <div class="queryRecord">
+  <div class="approveRecord">
     <div class="sellBox">
       <div class="head clear">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item >库存管理</el-breadcrumb-item>
-          <el-breadcrumb-item>转移转换查询</el-breadcrumb-item>
+          <el-breadcrumb-item>转移转换审批</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="sels clear">
@@ -90,11 +90,12 @@
             </el-table-column>
             <el-table-column prop="inventoryTotalAmount" label="金额" show-overflow-tooltip width="150">
             </el-table-column>
-            <!-- <el-table-column label="操作" width="150" fixed="right">
+            <el-table-column label="操作" width="60" fixed="right">
               <template slot-scope="scope">
-                <el-button size="small" type="text" @click="authorize">授权</el-button>
+                <el-button size="small" type="text" @click="approve">审批</el-button>
               </template>
-            </el-table-column> -->
+
+            </el-table-column>
             <div slot="empty">
               <p>无数据</p>
             </div>
@@ -107,22 +108,11 @@
         </div>
       </div>
     </div>
-    <el-dialog title="授权" :visible.sync="dialogVisible" width="400px">
-      <el-form :model="roleForm" :rules='rules' ref='roleForm'>
-        <el-form-item label="角色设置" prop="role">
-          <el-select v-model="roleForm.role" size="small" filterable placeholder="请选择">
-            <el-option
-              v-for="item in roles"
-              :key="item.roleCode"
-              :label="item.roleName"
-              :value="item.roleCode">
-            </el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
+    <el-dialog title="审批" :visible.sync="dialogVisible" width="400px">
+      <div>请确认通过或者驳回</div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="cancel" size='small'>取 消</el-button>
-        <el-button type="primary" @click="submitForm('roleForm')" size='small'>授 权</el-button>
+        <el-button @click="doapprove(-1)" size='small'>驳 回</el-button>
+        <el-button type="primary" @click="doapprove(1)" size='small'>通 过</el-button>
       </span>
     </el-dialog>
   </div>
@@ -130,10 +120,10 @@
 
 <script>
 import Daterange from "../com/date";
-import { inventorySummary,getApplyList } from '@/api/stock/query.js'
+import { inventorySummary,getApplyList,approveOk } from '@/api/stock/query.js'
 import {   getRolesAll } from '@/api/system/role.js'
 export default {
-  name: "queryRecord",
+  name: "approveRecord",
   components:{
     Daterange
   },
@@ -168,7 +158,7 @@ export default {
         role:''
       },
       form:{
-        approvalStatus:'',
+        approvalStatus:0,
         applyType:'transfer',
         createUserName:'',
       },
@@ -198,6 +188,25 @@ export default {
   },
   computed:{},
   methods: {
+    approve(){
+      this.dialogVisible = true
+    },
+    doapprove(type){
+      var data ={
+        approvalStatus:type,
+        applyType:this.rowData.applyType,
+        id:this.rowData.id,
+      }
+      approveOk(data).then(res=>{
+        if(res.data.code==1){
+          this.$message.success('操作成功')
+          this.dialogVisible = false
+          this.getList()
+        }
+      }).catch(err=>{
+        console.log(err)
+      })
+    },
     rowClick(row){
       this.rowData = row
     },
@@ -237,7 +246,7 @@ export default {
     },
     clearForm(){
       this.form={
-        approvalStatus:'',
+        approvalStatus:0,
         applyType:'transfer',
         createUserName:'',
       }
@@ -291,7 +300,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss'>
 $sc: 12;
-.queryRecord{
+.approveRecord{
   height: 100%;
   box-sizing: border-box;
   padding: 0 20px 20px;

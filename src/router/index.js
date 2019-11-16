@@ -355,7 +355,16 @@ export default new Router({
                     name: 'stockQueryTwo',
                     component: resolve => require(['@/components/stock/queryTwo'], resolve),
                 },
-
+                {
+                    path: '/home/stock/record/query',
+                    name: 'queryRecord',
+                    component: resolve => require(['@/components/stock/queryRecord'], resolve),
+                },
+                {
+                    path: 'stock/record/approve',
+                    name: 'approveRecord',
+                    component: resolve => require(['@/components/stock/approveRecord'], resolve),
+                },
             ]
         },
         {

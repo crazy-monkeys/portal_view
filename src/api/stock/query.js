@@ -26,3 +26,14 @@ export const inventoryTransfer = data => {
 export const getCustList = data => {
     return request('get', `${serverUrl}/sys/dealer/incustomer`).then(result => result)
 }
+
+
+//转移转换申请列表
+export const getApplyList = data => {
+    return request('post', `${serverUrl}/inventoryApply/list`, data).then(result => result)
+}
+
+//转移转换申请审批
+export const approveOk = data => {
+    return request('post', `${serverUrl}/inventoryApproval/${data.applyType}/${data.approvalStatus}/${data.id}`).then(result => result)
+}
