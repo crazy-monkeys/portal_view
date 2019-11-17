@@ -192,6 +192,7 @@ export default {
       this.getList(this.form)
     },
     search(){
+        this.currentPage =1
       this.getList(this.form)
     },
     watchCreatTime(data){

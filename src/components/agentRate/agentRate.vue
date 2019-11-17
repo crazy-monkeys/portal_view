@@ -150,6 +150,7 @@
         this.getList()
       },
       search(){
+        this.currentPage=1
         this.getList()
       },
       watchTime(data){

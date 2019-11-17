@@ -558,6 +558,8 @@
 
       //搜索事件
       search() {
+
+        this.currentPage = 1
         this.getList(this.currentPage, this.pageSize, this.shopId)
       },
       //时间选择 事件

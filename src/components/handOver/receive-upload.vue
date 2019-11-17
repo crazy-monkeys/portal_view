@@ -50,8 +50,22 @@
           </div>
           <div class="box">
             <div class="btns clear">
-              <!-- <el-button class="add"  size='small' type='primary' @click="deleteRows" :disabled="multipleSelection.length==0">批量删除</el-button> -->
-              <!-- <el-button class="add"  size='small' type='primary'>批量修改</el-button> -->
+              <el-button class="add"  size='small' type='primary' @click="deleteRows" :disabled="multipleSelection.length==0">批量删除</el-button>
+              <el-button class="add" style="margin-left:0"  size='small' type='primary'  @click="mods" :disabled="multipleSelection.length==0">批量修改</el-button>
+              <el-upload
+                class="upload-demo"
+                ref="upload"
+                :action="url2"
+                :data='da'
+                :headers='headers'
+                name="excel"
+                accept=".xlsx,.xls"
+                :auto-upload="true"
+                :show-file-list="false"
+                :on-success="suc"
+                >
+                <el-button size="small"  type="primary">上传修改文件</el-button>
+              </el-upload>
             </div>
             <div class="tab">
               <el-table :data="queryList" border style="width: 100%" height="100%" @selection-change="handleSelectionChange">
@@ -214,6 +228,7 @@
         isError2:true,
         url:serverUrl + '/handover/template',
         url1:serverUrl+'/handover/error/retry',
+        url2:serverUrl + '/handover/detail/update/upload',
         headers:{
           "Authorization": sessionStorage.getItem("data"),
         },
@@ -296,6 +311,55 @@
     methods: {
       handleSelectionChange(val) {
         this.multipleSelection = val;
+      },
+      mods(){
+
+        var ids = this.multipleSelection.map(item=>{
+            return item.id
+          }).join(',')
+
+          this.$http({
+            method: "get",
+            url: "" + process.env.API_ROOT + "/handover/detail/update/download?ids="+ids+'&type=receive',
+            responseType: "arraybuffer",
+
+            headers:{
+              'Authorization': sessionStorage.getItem('data'),
+            }
+          })
+            .then(res => {
+              if(res.headers['content-type'].includes('application/json')){
+                var  data = new Blob([res.data], {
+                  type: "application/vnd.ms-excel"
+                });
+                var reader = new FileReader();
+                reader.readAsText(data, 'utf-8');
+                var that = this
+                reader.onload = function () {
+                  //console.log(reader.result)
+                  data = JSON.parse(reader.result);
+                  //console.log(data)
+                  that.$message.error(data.msg)
+                }
+              }else{
+              // //console.log(res.data);
+              const blob = new Blob([res.data], {
+                type: "application/vnd.ms-excel"
+              });
+              const blobUrl = window.URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              document.body.appendChild(a);
+              a.style.display = "none";
+              a.download = "数据列表.xlsx";
+              a.href = blobUrl;
+              a.click();
+              document.body.removeChild(a);
+              }
+            })
+            .catch(err => {
+              // //console.log(err);
+              alert("网络异常");
+            });
       },
       async del(){
         const data ={
@@ -503,34 +567,43 @@
               alert("网络异常");
             });
       },
-      suc(val){
+       suc(val){
         // //console.log(val)
         if(val.code!=1){
           this.$message.error(val.msg)
         }else{
-          if(val.data.isError){
-            this.isError1 = false
-            this.isError2 = true
-            this.$message.error(val.data.msg)
-          }else{
             this.$message.success('上传成功')
-            this.isError1 = true
-            this.isError2 = false
-          }
-          this.recordId = val.data.recordId
-          this.fileName = val.data.errorFileName
-          
-          this.da1={
-            type:'receive',
-            recordId:this.recordId,
-            fileName:this.fileName,
-          },
-          this.tableData = val.data.receiveDetails
-          // //console.log(this.tableData)
-
-          // //console.log(this.recordId,this.fileName)
+           
         }
       },
+      // suc(val){
+      //   // //console.log(val)
+      //   if(val.code!=1){
+      //     this.$message.error(val.msg)
+      //   }else{
+      //     if(val.data.isError){
+      //       this.isError1 = false
+      //       this.isError2 = true
+      //       this.$message.error(val.data.msg)
+      //     }else{
+      //       this.$message.success('上传成功')
+      //       this.isError1 = true
+      //       this.isError2 = false
+      //     }
+      //     this.recordId = val.data.recordId
+      //     this.fileName = val.data.errorFileName
+          
+      //     this.da1={
+      //       type:'receive',
+      //       recordId:this.recordId,
+      //       fileName:this.fileName,
+      //     },
+      //     this.tableData = val.data.receiveDetails
+      //     // //console.log(this.tableData)
+
+      //     // //console.log(this.recordId,this.fileName)
+      //   }
+      // },
       suc1(val){
         // //console.log(val)
         if(val.code!=1){

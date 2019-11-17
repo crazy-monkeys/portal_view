@@ -151,6 +151,8 @@
         this.getList()
       },
       search(){
+        this.currentPage = 1
+
         this.getList()
       },
       async getList(){
