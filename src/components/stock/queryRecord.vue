@@ -58,6 +58,21 @@
             </el-table-column>
             <el-table-column prop="agencyShortName" label="代理简称" show-overflow-tooltip width="150">
             </el-table-column>
+            <el-table-column prop="transferIntoCustomer" label="转入客户" show-overflow-tooltip width="150" v-if='form.applyType=="transfer"'>
+              <template slot-scope="scope">
+                {{to(scope.row.transferIntoCustomer)}}
+              </template>
+            </el-table-column>
+            <el-table-column prop="transferOutCustomer" label="转出客户" show-overflow-tooltip width="150" v-if='form.applyType=="transfer"'>
+              <template slot-scope="scope">
+                {{to(scope.row.transferOutCustomer)}}
+              </template>
+            </el-table-column>
+            <el-table-column prop="custCode" label="客户" show-overflow-tooltip width="150" v-if='form.applyType!="transfer"'>
+              <template slot-scope="scope">
+                {{to(scope.row.custCode)}}
+              </template>
+            </el-table-column>
             <el-table-column prop="productLine" label="BU" show-overflow-tooltip width="150">
             </el-table-column>
             <el-table-column prop="subProductLine" label="PDT" show-overflow-tooltip width="150">
@@ -128,7 +143,7 @@
 
 <script>
 import Daterange from "../com/date";
-import { inventorySummary,getApplyList } from '@/api/stock/query.js'
+import { inventorySummary,getApplyList,getCustList } from '@/api/stock/query.js'
 import {   getRolesAll } from '@/api/system/role.js'
 export default {
   name: "queryRecord",
@@ -137,6 +152,7 @@ export default {
   },
   data() {
     return {
+      customerList:[],
       applyTypes:[
         {
           value:'transfer',
@@ -193,9 +209,19 @@ export default {
   },
   created(){
     this.getList();
+    this.dogetCustList()
   },
   computed:{},
   methods: {
+    async dogetCustList(){
+       const res = await getCustList()
+       if(res){
+          this.customerList = res.data.data
+       }
+    },
+    to(id){
+        return  this.customerList.filter(item=>{return item.outCode == id})[0] ? this.customerList.filter(item=>{return item.outCode == id})[0].custName  :''
+    },
     rowClick(row){
       this.rowData = row
     },

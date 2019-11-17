@@ -338,7 +338,7 @@ export default {
   },
   methods: {
     async dogetCustList(){
-       const res = await getCustList
+       const res = await getCustList()
        if(res){
           this.customerList = res.data.data
        }
