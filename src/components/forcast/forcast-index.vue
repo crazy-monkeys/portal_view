@@ -318,8 +318,13 @@
       way: {
         handler: function(n, o) {
           // //console.log(n);
+            this.currentPage = 1
+
           if(n==3){
             this.getSdList()
+          }else{
+            this.getList()
+
           }
         }
       }
@@ -327,7 +332,11 @@
     methods: {
       search(){
         this.currentPage = 1;
-        this.getList()
+         if(this.way==3){
+          this.getSdList()
+        }else{
+          this.getList()
+        }
       },
       reset(){
         this.form ={
@@ -549,12 +558,22 @@
       handleSizeChange(val) {
         // //console.log(`每页 ${val} 条`);
         this.pageSize = val;
-        this.getList()
+
+        if(this.way==3){
+          this.getSdList()
+        }else{
+          this.getList()
+        }
+        
       },
       handleCurrentChange(val) {
         // //console.log(`当前页: ${val}`);
         this.currentPage = val;
-        this.getList()
+         if(this.way==3){
+          this.getSdList()
+        }else{
+          this.getList()
+        }
       },
     }
   }
