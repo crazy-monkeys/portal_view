@@ -27,6 +27,11 @@ export const getCustList = data => {
     return request('get', `${serverUrl}/sys/dealer/incustomer`).then(result => result)
 }
 
+//获取转入客户
+export const getCustListAll = data => {
+    return request('get', `${serverUrl}/sys/incustomer/all`).then(result => result)
+}
+
 
 //转移转换申请列表
 export const getApplyList = data => {

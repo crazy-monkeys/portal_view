@@ -137,7 +137,7 @@
 
 <script>
 import Daterange from "../com/date";
-import { inventorySummary,getApplyList,approveOk,getCustList } from '@/api/stock/query.js'
+import { inventorySummary,getApplyList,approveOk,getCustListAll } from '@/api/stock/query.js'
 import {   getRolesAll } from '@/api/system/role.js'
 export default {
   name: "approveRecord",
@@ -208,7 +208,7 @@ export default {
   computed:{},
   methods: {
     async dogetCustList(){
-       const res = await getCustList()
+       const res = await getCustListAll()
        if(res){
           this.customerList = res.data.data
        }

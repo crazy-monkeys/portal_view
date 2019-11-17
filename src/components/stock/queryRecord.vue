@@ -143,7 +143,7 @@
 
 <script>
 import Daterange from "../com/date";
-import { inventorySummary,getApplyList,getCustList } from '@/api/stock/query.js'
+import { inventorySummary,getApplyList,getCustListAll } from '@/api/stock/query.js'
 import {   getRolesAll } from '@/api/system/role.js'
 export default {
   name: "queryRecord",
@@ -208,13 +208,17 @@ export default {
     };
   },
   created(){
-    this.getList();
-    this.dogetCustList()
+    this.getData()
   },
   computed:{},
   methods: {
+    getData(){
+    this.dogetCustList()
+    this.getList();
+
+    },
     async dogetCustList(){
-       const res = await getCustList()
+       const res = await getCustListAll()
        if(res){
           this.customerList = res.data.data
        }
