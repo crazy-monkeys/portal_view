@@ -179,6 +179,16 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="客户" prop="">
+          <el-select v-model="exchangeForm.custCode" size="small" filterable placeholder="请选择">
+            <el-option
+              v-for="item in customerList"
+              :key="item.outCode"
+              :label="item.custName"
+              :value="item.outCode">
+            </el-option>
+          </el-select>
+        </el-form-item>
 
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -204,6 +214,7 @@ export default {
         transferYearMonth:''
       },
       exchangeForm:{
+        custCode:'',
         conversionYearMonth:'',
         conversionCustomerType:'',
         conversionInventoryType:'',
