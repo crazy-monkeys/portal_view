@@ -46,7 +46,7 @@ export const checkCust = data => {
 
 //新增客户
 export const getEmployeeIds = () => {
-        return request('get', `${serverUrl}/sys/sales/list`).then(result => result)
+        return request('get', `${serverUrl}/sys/inuser/list`).then(result => result)
     }
     //新增客户
 export const getDealers = () => {

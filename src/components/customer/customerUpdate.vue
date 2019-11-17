@@ -396,6 +396,8 @@
                     <el-select size="small"   v-model="scope.row.roleType">
                       <el-option value="142" label="负责销售"></el-option>
                       <el-option value="46" label="销售人员"></el-option>
+                      <el-option value="211" label="客户团队成员"></el-option>
+                      <el-option value="213" label="合作伙伴联系人"></el-option>
                     </el-select>
                   </template>
                 </el-table-column>
