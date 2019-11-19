@@ -72,7 +72,7 @@
             </el-table-column>
             <el-table-column prop="" width="150" show-overflow-tooltip label="客户状态" >
               <template slot-scope="scope">
-                {{scope.row.custType==1?'未报备':scope.row.custType==2?'已报备':scope.row.custType===0?'潜在客户':scope.row.custType==4?'open客户':''}}
+                {{scope.row.custType==0?'潜在客户':scope.row.custType==1?'未报备':scope.row.custType===2?'已报备':scope.row.custType==3?'报备中':'OPEN 客户'}}
               </template>
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="approveTime" width="180" label="报备日期" sortable> 
