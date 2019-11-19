@@ -56,7 +56,7 @@
                 accept=".xlsx,.xls"
                 :auto-upload="true"
                 :show-file-list="false"
-                :on-success="suc"
+                :on-success="suc2"
                 >
                 <el-button size="small"  type="primary">上传修改文件</el-button>
               </el-upload>
@@ -240,7 +240,8 @@
         },
         total: 0,
         dialogVisible: false,
-        tableData: [],
+        // tableData: [{"categoryOne":null,"categoryThree":"SC9832E","categoryTow":"LSP","confirmMsg":null,"confirmStatus":null,"currency":null,"customerExternalNumber":"300226","customerFullName":"TECNO REALLYTEK LIMITED","customerOrderNumber":"CEACTEXT001","dealerName":"中国电子器材国际有限公司","deliverNumber":"30000","deliveryCompany":"7100","deliveryDate":"2019-11-26","deliveryType":"客户专货","errorMsg":null,"id":null,"idStr":null,"margin":0.0155,"orderMonth":"201911","poPrice":5.5,"productModel":"SC9832E+SR3593A+SC2721G","recordId":445,"remark":null,"salePrice":5.5,"sales":"黄亮奇","salesOrganization":"7100","thirdId":null}],
+        tableData:[],
         rejectData:[],
         queryList:[],
         //第几页
@@ -537,17 +538,34 @@
               alert("网络异常");
             });
       },
-      suc(val){
+      suc2(val){
         // //console.log(val)
         if(val.code!=1){
           this.$message.error(val.msg)
         }else{
+          this.$message.success('上传成功')
+        }
+      },
+      suc(val){
+        if(val.code!=1){
+          this.$message.error(val.msg)
+        }else{
+          if(val.data.isError){
+            this.$message.error(val.data.msg)
+            this.fileName = val.data.errorFileName
+            this.da1={
+              type:'deliver' ,
+              recordId:this.recordId,
+              fileName:this.fileName,
+            }
+          }else{
+            this.isError2 = false
             this.$message.success('上传成功')
-           
+          }
+          this.tableData =val.data.deliverDetails
         }
       },
       suc1(val){
-        // //console.log(val)
         if(val.code!=1){
           this.$message.error(val.msg)
         }else{
