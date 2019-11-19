@@ -20,3 +20,8 @@ export const update = data => {
 export const del = data => {
     return request('get', `${serverUrl}/forecast/agency/data/delete?${stringify(data)}`).then(result => result)
 }
+
+
+export const temUpload = (data) => {
+    return request('post', `${serverUrl}/forecast/agency/template/upload`, data).then(result => result)
+}

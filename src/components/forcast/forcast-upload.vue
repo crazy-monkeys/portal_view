@@ -180,13 +180,10 @@
                 class="upload-demo"
                 ref="upload"
                 :action="url"
-                :data='da'
-                :headers='headers'
-                name="excel"
                 accept=".xlsx,.xls"
                 :auto-upload="true"
                 :show-file-list="false"
-                :on-success="suc"
+                :http-request="dotemUpload"
                 >
                 <el-button size="small"  type="primary">上传</el-button>
               </el-upload>
@@ -402,7 +399,7 @@
 <script>
   import Daterange from "../com/date";
   import {serverUrl} from '../../axios/request'
-  import{submit,queryList,rejectList,update,del} from '@/api/forcast/upload.js'
+  import{submit,queryList,rejectList,update,del,temUpload} from '@/api/forcast/upload.js'
   export default {
     name: 'forcastUpload',
     components:{
@@ -461,7 +458,7 @@
         currentPage1: 1,
         //每页的容量
         pageSize: 50,
-        pageSize1: 10,
+        pageSize1: 50,
         //总量
         total: 0,
         total1: 0,
@@ -478,6 +475,35 @@
     watch: {
     },
     methods: {
+      dotemUpload(val){
+        var _file = val.file
+        var formData = new FormData()
+        formData.append('excel',_file)
+        console.log(formData)
+        temUpload(formData).then((res)=>{
+          if(res.data.code!=1){
+            this.$message.error(res.data.msg)
+          }else{
+            if(!res.data.data.success){
+              this.isError1 = false
+              this.isError2 = true
+              this.$message({
+                type:'error',
+                message:'请下载错误数据'
+              })
+            }else{
+              this.$message.success('上传成功')
+              this.da1={
+                batchNo :res.data.data.batchNo
+              }
+              this.isError1 = true
+              this.isError2 = false
+            }
+            this.batchNo = res.data.data.batchNo
+            this.tableData = res.data.data.data
+          }
+        })
+      },
       async del(){
         const data ={
           forecastIds:this.multipleSelection.map(item=>{

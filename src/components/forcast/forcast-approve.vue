@@ -513,18 +513,22 @@
         }
       },
       async reject(){
-        const data ={
-          forecastIds:this.multipleSelection.map(item=>{
-            return item.id
-          }).join(','),
-          rejectMsg:this.form1.msg
-        }
-        const res = await reject(data);
-        // //console.log('驳回结果',res);
-        if(res){
-          this.$message.success('驳回成功')
-          this.cancel()
-          this.getList()
+        if(this.form1.msg.length==0){
+          this.$message.error('请输入驳回信息')
+        }else{
+          const data ={
+            forecastIds:this.multipleSelection.map(item=>{
+              return item.id
+            }).join(','),
+            rejectMsg:this.form1.msg
+          }
+          const res = await reject(data);
+          // //console.log('驳回结果',res);
+          if(res){
+            this.$message.success('驳回成功')
+            this.cancel()
+            this.getList()
+          }
         }
       },
       handleSelectionChange(val) {
