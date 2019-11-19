@@ -290,7 +290,7 @@ export default {
       }
     },
     async approvalReject(approvalStatus){
-      if(this.form1.reason.lenght==0){
+      if(this.form1.reason.length==0){
         this.$message.error('请填写驳回信息')
       }else{
       const data ={
@@ -333,7 +333,9 @@ export default {
       }
     },
     getApprove(id){
-      this.getCreditInfo(id)
+      // this.getCreditInfo(id)
+        this.dialogVisible5 = true
+
     },
     change() {
       this.selDia = !this.selDia;
