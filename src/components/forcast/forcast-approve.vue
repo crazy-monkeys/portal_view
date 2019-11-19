@@ -117,6 +117,7 @@
                     <span v-if="scope.row.status==4">修改待处理</span>
                   </template>
                 </el-table-column>
+                <el-table-column prop="errorMsg" width='100' label="错误信息" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="createTimeStr" width='100' label="上传日期" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="operationYearMonth" width='80' label="年月" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="company" width='80' label="出货公司" show-overflow-tooltip></el-table-column>
@@ -141,11 +142,6 @@
               <p>无数据</p>
             </div>
           </el-table>
-          <!-- <div class="block">
-          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-            :page-sizes="[10, 100]" :page-size="10" layout="sizes,total, jumper, prev, pager, next" :total="total">
-          </el-pagination>
-        </div> -->
         </div>
         
       </div>
@@ -656,15 +652,6 @@
       change(){
         this.dialogVisible = !this.dialogVisible
 
-      },
-      // 分页
-      handleSizeChange(val) {
-        // //console.log(`每页 ${val} 条`);
-        this.pageSize = val;
-      },
-      handleCurrentChange(val) {
-        // //console.log(`当前页: ${val}`);
-        this.currentPage = val;
       },
     }
   }
