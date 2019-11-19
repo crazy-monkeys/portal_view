@@ -333,9 +333,7 @@ export default {
       }
     },
     getApprove(id){
-      // this.getCreditInfo(id)
-        this.dialogVisible5 = true
-
+      this.getCreditInfo(id)
     },
     change() {
       this.selDia = !this.selDia;
