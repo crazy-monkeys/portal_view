@@ -41,6 +41,7 @@
         <div class="tab">
         <div v-if='type=="deliver"' style="height:100%">
           <el-table :data="tableData" border height="100%" style="width:100%">
+            <el-table-column prop="errorMsg" width='100' label="错误信息" show-overflow-tooltip></el-table-column>
             <el-table-column prop="customerExternalNumber" width='150' label="客户外部号" show-overflow-tooltip></el-table-column>
             <el-table-column prop="customerFullName" width='150' label="客户全称" show-overflow-tooltip></el-table-column>
             <el-table-column prop="sales" width='150' label="销售" show-overflow-tooltip></el-table-column>
@@ -74,7 +75,7 @@
           </div>
         <div v-if='type=="receive"' style="height:100%">
           <el-table :data="tableData" border height="100%" style="width:100%">
-
+                <el-table-column prop="errorMsg" width='100' label="错误信息" show-overflow-tooltip></el-table-column>
                   <el-table-column prop="productModel" width='150' label="产品型号" show-overflow-tooltip></el-table-column>
                   <el-table-column prop="inventoryCategory" width='150' label="库存类别" show-overflow-tooltip></el-table-column>
                   <el-table-column prop="inventoryUnitPrice" width='150' label="库存单价" show-overflow-tooltip></el-table-column>
