@@ -240,7 +240,6 @@
         },
         total: 0,
         dialogVisible: false,
-        // tableData: [{"categoryOne":null,"categoryThree":"SC9832E","categoryTow":"LSP","confirmMsg":null,"confirmStatus":null,"currency":null,"customerExternalNumber":"300226","customerFullName":"TECNO REALLYTEK LIMITED","customerOrderNumber":"CEACTEXT001","dealerName":"中国电子器材国际有限公司","deliverNumber":"30000","deliveryCompany":"7100","deliveryDate":"2019-11-26","deliveryType":"客户专货","errorMsg":null,"id":null,"idStr":null,"margin":0.0155,"orderMonth":"201911","poPrice":5.5,"productModel":"SC9832E+SR3593A+SC2721G","recordId":445,"remark":null,"salePrice":5.5,"sales":"黄亮奇","salesOrganization":"7100","thirdId":null}],
         tableData:[],
         rejectData:[],
         queryList:[],
@@ -550,13 +549,14 @@
         if(val.code!=1){
           this.$message.error(val.msg)
         }else{
+          this.recordId = val.data.recordId
           if(val.data.isError){
             this.$message.error(val.data.msg)
             this.fileName = val.data.errorFileName
             this.da1={
               type:'deliver' ,
-              recordId:this.recordId,
-              fileName:this.fileName,
+              recordId:val.data.recordId,
+              fileName:val.data.fileName,
             }
           }else{
             this.isError2 = false
@@ -569,13 +569,14 @@
         if(val.code!=1){
           this.$message.error(val.msg)
         }else{
+          this.recordId = val.data.recordId
           if(val.data.isError){
             this.$message.error(val.data.msg)
             this.fileName = val.data.errorFileName
             this.da1={
               type:'deliver' ,
-              recordId:this.recordId,
-              fileName:this.fileName,
+              recordId:val.data.recordId,
+              fileName:val.data.fileName,
             }
           }else{
             this.isError2 = false
@@ -601,13 +602,14 @@
         param.append('recordId' ,this.recordId)
         param.append('type' ,'deliver' )
         const res = await sub(param);
+        this.recordId = res.data.recordId
         if(res.data.isError){
           this.$message.error(res.data.msg)
           this.fileName = res.data.errorFileName
           this.da1={
             type:'receive',
-            recordId:this.recordId,
-            fileName:this.fileName,
+            recordId:res.data.recordId,
+            fileName:res.data.fileName,
           }
         }else{
           this.isError2 = true
