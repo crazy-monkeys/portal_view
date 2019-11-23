@@ -67,6 +67,10 @@
               <el-button  size="small" type="primary" @click="beforeUpload">上传</el-button>
               
             <!-- </el-upload> -->
+          <el-button size="small" type="primary" @click="monthDialogVisible=true">AMB数据下载</el-button>
+          <el-upload style="display: inline-block;margin-left: 10px;" v-bind="AMBuploadParams">
+            <el-button size="small" type="primary">AMB数据上传</el-button>
+          </el-upload>
         </div>
         <div class="tab">
           <el-table :data="tableData" border style="width: 100%" height="100%" @selection-change="handleSelectionChange">
@@ -212,6 +216,31 @@
             <el-button type="primary" @click="submitForm2('form3',form3.type,downloadLabel=='下载类型'?1:2)" size="small">确 定</el-button>
           </span>
     </el-dialog>
+    <el-dialog
+      title="选择月份"
+      width="400px"
+      :visible.sync="monthDialogVisible"
+      @open="downloadMonth=''">
+      <el-form size="small" ref="downloadMonthForm" :model="{ downloadMonth }">
+        <el-form-item
+          prop="downloadMonth"
+          :rules="[
+            { required: true, message: '请选择月份', trigger: 'blue' }
+          ]">
+          <el-date-picker
+            style="width: 100%;"
+            type="month"
+            v-model="downloadMonth"
+            value-format="yyyy-MM"
+            placeholder="选择月">
+          </el-date-picker>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" size="small" plain @click="monthDialogVisible=false">取 消</el-button>
+        <el-button type="primary" size="small" @click="AMBDownload">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -228,6 +257,7 @@
       Daterange
     },
     data() {
+      const headers = {Authorization:sessionStorage.getItem('data')};
       return {
         form3:{
           type:''
@@ -244,7 +274,7 @@
         form1:{
           msg:''
         },
-        headers:{Authorization:sessionStorage.getItem('data')},
+        headers,
         multipleSelection:[],
         title:'',
         label:'',
@@ -275,7 +305,16 @@
         pageSize: 50,
         urlAmb:serverUrl+'/forecast/amb/data/upload',
         urlSd:serverUrl+'/forecast/sd/data/upload',
-        auth:sessionStorage.getItem('data')
+        auth:sessionStorage.getItem('data'),
+        AMBuploadParams: {
+          action: `${serverUrl}/forecast/amb/data/upload`,
+          headers,
+          showFileList: false,
+          name: 'MultipartFile',
+          onSuccess: this.AMBuploadSuccess.bind(this),
+        },
+        monthDialogVisible: false,
+        downloadMonth: '',
       }
     },
     computed: {
@@ -292,6 +331,52 @@
       this.dialogVisible3 = true
       this.downloadTitle = '上传类型选择'
       this.downloadLabel = '上传类型'
+    },
+    AMBDownload() {
+      this.$refs.downloadMonthForm.validate(valid => {
+        if(valid) {
+          this.$http({
+            method: "get",
+            url: `${serverUrl}/forecast/amb/month/data/download?yearMonth=${this.downloadMonth}`,
+            responseType: "arraybuffer",
+            headers: this.headers,
+          }).then(res => {
+            const blob = new Blob([res.data], {
+              type: "application/vnd.ms-excel"
+            });
+            if (res.code !== 1) {
+              this.$message.error(res.msg);
+            } else {
+              if(res.headers['content-type'].includes('application/json')){
+                const reader = new FileReader();
+                reader.readAsText(data, 'utf-8');
+                reader.onload = () => {
+                  data = JSON.parse(reader.result);
+                  this.$message.error(data.msg)
+                }
+              }else{
+                const blobUrl = window.URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                document.body.appendChild(a);
+                a.style.display = "none";
+                a.download = "AMB数据.xlsx";
+                a.href = blobUrl;
+                a.click();
+                document.body.removeChild(a);
+              }
+            }
+          }).catch(err => {
+            this.$message.error("网络异常");
+          });
+        }
+      });
+    },
+    AMBuploadSuccess(res) {
+      if(res.code === 1) {
+        this.$message('上传成功');
+      } else {
+        this.$message.error(res.msg);
+      }
     },
     uploadSuccess(val){
       // //console.log(val)
