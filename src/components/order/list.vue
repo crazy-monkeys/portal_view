@@ -436,7 +436,6 @@ export default {
       proDia:false,
       //首页list数据
       tableData: [],
-      //分页
       //第几页
       currentPage: 1,
       //每页的容量
