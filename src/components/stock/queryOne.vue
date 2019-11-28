@@ -362,12 +362,12 @@ export default {
     handleSizeChange(val) {
       // //console.log(`每页 ${val} 条`);
       this.pageSize = val;
-      // this.getList()
+      this.getList()
     },
     handleCurrentChange(val) {
       // //console.log(`当前页: ${val}`);
       this.currentPage = val;
-      // this.getList()
+      this.getList()
     }
   }
 };

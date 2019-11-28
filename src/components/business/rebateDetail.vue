@@ -46,11 +46,6 @@
                   <p>无数据</p>
                 </div>
               </el-table>
-              <!-- <div class="block">
-                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-                  :page-sizes="[50, 100,150]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
-                </el-pagination>
-              </div> -->
             </div>
             
           </div>
@@ -81,11 +76,6 @@
                   <p>无数据</p>
                 </div>
               </el-table>
-              <!-- <div class="block">
-                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-                  :page-sizes="[50, 100,150]" :page-size="pageSize" layout="sizes,total, jumper, prev, pager, next" :total="total">
-                </el-pagination>
-              </div> -->
             </div>
             
           </div>
@@ -141,16 +131,6 @@ import {detail} from '@/api/business/rebate.js'
         }
       },
       handleClick(){},
-      // 分页
-      handleSizeChange(val) {
-        // //console.log(`每页 ${val} 条`);
-        this.pageSize = val;
-      },
-      handleCurrentChange(val) {
-        // //console.log(`当前页: ${val}`);
-        this.currentPage = val;
-      },
-      
     }
   }
 </script>

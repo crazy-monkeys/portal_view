@@ -439,9 +439,12 @@ export default {
     // 分页
     handleSizeChange(val) {
       this.pageSize = val;
+      this.getList()
+
     },
     handleCurrentChange(val) {
       this.currentPage = val;
+      this.getList()
     }
   }
 };
