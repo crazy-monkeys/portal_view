@@ -147,7 +147,7 @@
             <el-input size='small' v-model="credit.credit"  resize="none"  disabled></el-input>
             
           </el-form-item>
-          <el-form-item label="授信额度剩余值" >
+          <el-form-item label="授信额度占用值" >
             <el-input size='small'  v-model="credit.creditUSE"    resize="none"  disabled></el-input>
             
           </el-form-item>
