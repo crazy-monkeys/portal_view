@@ -13,6 +13,13 @@
               <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
             </div>
             <el-form ref="form" :model="form" size="small" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
+              
+             
+           
+             
+             
+             
+             
               <el-form-item label="客户">
                 <el-input size='small' placeholder="请输入" v-model='form.customerFullName'></el-input>
               </el-form-item>
@@ -33,12 +40,6 @@
               </el-form-item>
               <el-form-item label="产品型号">
                 <el-input size='small' placeholder="请输入" v-model='form.productModel'></el-input>
-              </el-form-item>
-              <el-form-item label="仓储地">
-                <el-input size='small' placeholder="请输入" v-model='form.warehouse'></el-input>
-              </el-form-item>
-              <el-form-item label="发货公司">
-                <el-input size='small' placeholder="请输入" v-model='form.deliveryCompany'></el-input>
               </el-form-item>
               <el-form-item :label="' '">
                 <el-button size='small' type='primary' plain @click="search">查询</el-button>
