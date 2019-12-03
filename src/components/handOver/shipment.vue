@@ -53,6 +53,8 @@
                 <!-- <el-table-column prop="uploadTime" width='150' label="上传时间" show-overflow-tooltip></el-table-column> -->
                 <el-table-column prop="customerExternalNumber" width='100' label="客户外部号" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="customerFullName" width='250' label="客户全称" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="dealerName" width='250' label="代理商" show-overflow-tooltip>
+                </el-table-column>
                 <el-table-column prop="sales" width='100' label="销售" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="categoryTow" width='150' label="类别二(子类)" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="categoryThree" width='150' label="类别三(平台)" show-overflow-tooltip></el-table-column>
@@ -86,6 +88,7 @@
 <script>
   import Daterange from '../com/date'
   import {getList} from '@/api/handover/query.js'
+  // import {getDealerList} from '@/api/system/param.js'
   import {serverUrl} from '../../axios/request'
   export default {
     name: 'saleShipment',
@@ -121,6 +124,7 @@
         },
         total: 0,
         queryList:[],
+        list:[],
         //第几页
         currentPage: 1,
         //每页的容量
@@ -133,11 +137,22 @@
       }
     },
     created() {
+      this.getDealerList()
       this.getList()
     },
     watch: {
     },
     methods: {
+      // to(id){
+      //     return  this.list.filter(item=>{return item.id == id})[0] ? this.list.filter(item=>{return item.id == id})[0].custName  :''
+      // },
+      // async getDealerList(){
+      //   const res = await getDealerList();
+      //   //console.log('list',res)
+      //   if(res){
+      //     this.list = res.data.data
+      //   }
+      // },
       watchTime1(data){
         this.form.uploadStartTime = data.startTime 
         this.form.uploadEndTime = data.endTime 
