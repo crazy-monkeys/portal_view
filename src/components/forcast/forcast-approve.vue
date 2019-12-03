@@ -302,7 +302,7 @@
         //第几页
         currentPage: 1,
         //每页的容量
-        pageSize: 50,
+        pageSize: 500000,
         urlAmb:serverUrl+'/forecast/amb/data/upload',
         urlSd:serverUrl+'/forecast/sd/data/upload',
         auth:sessionStorage.getItem('data'),

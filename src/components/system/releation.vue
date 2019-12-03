@@ -57,7 +57,7 @@
                 <el-option 
                 v-for="item in custs" 
                 :key='item.id'
-                :label='item.custAbbreviation'
+                :label='item.loginName'
                 :value='item.id'
                 ></el-option>
               </el-select>
@@ -155,7 +155,7 @@
                 <el-option 
                 v-for="item in custs" 
                 :key='item.id'
-                :label='item.custAbbreviation'
+                :label='item.loginName'
                 :value='item.id'
                 ></el-option>
               </el-select>
@@ -183,7 +183,7 @@
         custs:[],
         models:[
           {
-            label:'forecast',
+            label:'预测、销售数据',
             value:'forecast',
           },
           {
@@ -251,7 +251,7 @@
           arr.forEach(item => {
             this.custs.forEach(cust=>{
               if(item==cust.id){
-                nameArr.push(cust.custAbbreviation)
+                nameArr.push(cust.loginName)
               }
             })
           });
