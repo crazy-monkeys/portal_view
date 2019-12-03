@@ -300,8 +300,19 @@ export default new Router({
                     component: resolve => require(['@/components/handOver/shipment-upload'], resolve),
                 },
 
-
-
+                // 销售权限
+                // 收货
+                {
+                    path: 'handover/sale/receive',
+                    name: 'saleReceive',
+                    component: resolve => require(['@/components/handOver/receive'], resolve),
+                },
+                // 出货
+                {
+                    path: 'handover/sale/shipment',
+                    name: 'saleShipment',
+                    component: resolve => require(['@/components/handOver/shipment'], resolve),
+                },
 
                 //商务管理
                 //rebate列表
