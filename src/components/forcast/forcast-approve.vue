@@ -621,8 +621,8 @@
       },
       async getList(){
         const data ={
-          // pageSize:this.pageSize,
-          // pageNum:this.currentPage,
+          pageSize:999999,
+          pageNum:1,
           customerAbbreviation:this.form.customerAbbreviation,  
           isUpdate:this.form.isUpdate,  
           channel:this.form.channel,
