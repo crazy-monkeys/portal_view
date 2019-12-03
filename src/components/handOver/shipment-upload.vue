@@ -558,8 +558,11 @@
               recordId:val.data.recordId,
               fileName:val.data.fileName,
             }
+            this.isError1 = false
+
           }else{
             this.isError2 = false
+            
             this.$message.success('上传成功')
           }
           this.tableData =val.data.deliverDetails
@@ -578,6 +581,7 @@
               recordId:val.data.recordId,
               fileName:val.data.fileName,
             }
+            this.isError1 = false
           }else{
             this.isError2 = false
             this.$message.success('上传成功')
