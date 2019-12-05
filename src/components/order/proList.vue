@@ -85,12 +85,12 @@
         
       </div>
     </div>
-    <el-dialog title="订单行信息" :visible.sync="lineDia" width="600px">
+    <el-dialog title="订单行信息" :visible.sync="lineDia" width="600px" v-if="lineDia" v-dialogDrag >
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="发货信息" name="first">
           <div class="tab">
             <div class="tabBox">
-              <el-table :data="proForm.deliverOrderLineList" style="width: 100%" border height="100%">
+              <el-table :data="proForm.deliverOrderLineList" style="width: 100%" border height="300">
                 <el-table-column prop="sapSalesOrderLineNo" width="150" label="订单行号" show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column prop="sapDeliverOrderLineNo" width="150" label="提货单行号" show-overflow-tooltip>
@@ -120,7 +120,7 @@
         <el-tab-pane label="发票信息" name="second">
           <div class="tab">
             <div class="tabBox">
-              <el-table :data="proForm.orderInvoiceList" style="width: 100%" border height="100%">
+              <el-table :data="proForm.orderInvoiceList" style="width: 100%" border height="300">
                 <el-table-column prop="sapInvoiceId" width="150" label="发票号" show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column prop="slodTo" width="150" label="付款方" show-overflow-tooltip>
@@ -161,9 +161,8 @@
           </div>
         </el-tab-pane>
       </el-tabs>
-      
     </el-dialog>
-    <el-dialog title="修改" top="5vh" :visible.sync="proDia" width="600px">
+    <el-dialog title="修改" top="5vh" :visible.sync="proDia" width="600px" v-dialogDrag>
       <div class="tab">
         <div class="tabBox">
           <el-form ref="proForm" :model="proForm" :rules="rules" class="form" label-width="auto" label-position='top' >
@@ -226,7 +225,7 @@
         <el-button size="small" type="primary" @click="submitForm('proForm')">确 定</el-button>
       </span>
     </el-dialog>
-    <el-dialog title="取消" top="5vh" :visible.sync="calDia" width="600px">
+    <el-dialog title="取消" top="5vh" :visible.sync="calDia" width="600px" v-dialogDrag>
       <div class="tab">
         <div class="tabBox">
           <el-form ref="proForm" :model="proForm" :rules="rules" class="form" label-width="auto" label-position='top' >
@@ -273,10 +272,7 @@
         <el-button size="small" type="primary" @click="sure">确 定</el-button>
       </span>
     </el-dialog>
-
-
-
-    <el-dialog title="收货" top="5vh" :visible.sync="recevieDia" width="600px">
+    <el-dialog title="收货" top="5vh" :visible.sync="recevieDia" width="600px" v-dialogDrag>
       <div class="tab">
         <div class="tabBox">
           <el-form ref="proForm" :model="proForm" :rules="rules" class="form" label-width="auto" label-position='top' >

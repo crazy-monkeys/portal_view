@@ -6,7 +6,6 @@ import router from './router'
 import moment from 'moment'
 Vue.use(moment)
 Vue.prototype.$moment = moment;
-
 //引入echarts
 import VCharts from 'v-charts'
 import echarts from "echarts"
@@ -43,6 +42,7 @@ import './assets/css/el.css'
 import Print from '@/vendor/print.js'
 
 Vue.use(Print); //注册
+import './utils/drog.js'
 
 /* eslint-disable no-new */
 new Vue({
