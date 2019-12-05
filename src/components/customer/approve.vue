@@ -87,7 +87,7 @@
         >
         <el-form ref="form1" :model="form1" :rules='rules' size="small" class="form1" label-width="auto" label-position='top'  >
           <el-form-item :label="rowData.reportDealerName ? '销售':'代理商'" v-if="title=='审批'" :prop='(title=="审批"&&rowData.reportSalesName)?"":"value"'>
-            <el-select v-model="form1.value" placeholder="请选择" > 
+            <el-select v-model="form1.value"  filterable placeholder="请选择" > 
               <el-option
                 v-for='item in rowData.reportDealerName ? salers  : delears '
                 :key='rowData.reportDealerName ? item.userNo : item.id '
