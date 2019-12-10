@@ -18,6 +18,11 @@
                 <el-input size="small" v-model="form.custEnName"></el-input>
               </el-form-item>
             </el-col>
+             <el-col :span="6">
+              <el-form-item label="客户简称">
+                <el-input size="small" v-model="form.custAbbreviation"></el-input>
+              </el-form-item>
+            </el-col>
             <el-col :span="6">
               <el-form-item label="客户类型">
                 <el-select v-model="form.businessType" size="small" filterable placeholder="请选择">
@@ -159,6 +164,11 @@
                       :props="prop"
                       placeholder="请选择省市区">
                       </el-cascader>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="200" label="城市" >
+                  <template slot-scope="scope">
+                    <el-input disabled size="small" v-model="scope.row.city"></el-input>
                   </template>
                 </el-table-column>
                 <el-table-column prop="" width="200" label="详细地址" >

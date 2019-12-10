@@ -19,6 +19,11 @@
           </el-form-item>
             </el-col>
             <el-col :span="6">
+              <el-form-item label="客户简称">
+                <el-input size="small" v-model="form.custAbbreviation"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
               <el-form-item label="是否License客户">
             <el-select v-model="form.isLicense" size="small"  placeholder="请选择">
               <el-option  label="是" :value="1"></el-option>
@@ -150,6 +155,11 @@
                       :props="prop"
                       placeholder="请选择省市区">
                       </el-cascader>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="" width="200" label="城市" >
+                  <template slot-scope="scope">
+                    <el-input  size="small" v-model="scope.row.city"></el-input>
                   </template>
                 </el-table-column>
                 <el-table-column prop="" width="200" label="详细地址" >
@@ -955,6 +965,7 @@ export default {
             'addressType':'',
             'country':'',
             'district':'',
+            'city':'',
             'mobile':'',
             'eamil':'',
           })
