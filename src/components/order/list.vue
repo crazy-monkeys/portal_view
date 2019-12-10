@@ -20,7 +20,7 @@
                 <el-input size='small' v-model="form.rSapOrderId" placeholder="请输入"></el-input>
               </el-form-item>
               <el-form-item label="下单人">
-                <el-select v-model="form.dealerId" size="small" filterable placeholder="请选择">
+                <el-select v-model="form.dealerId" size="small" clearable filterable placeholder="请选择">
                   <el-option v-for="item in list" :key="item.id" :label="item.custName" :value="item.id">
                   </el-option>
                 </el-select>
@@ -51,14 +51,14 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="售达方">
-                <el-select v-model="form.soldTo" size="small" filterable placeholder="">
-                  <el-option v-for="item in list" :key="item.id" :label="item.custName" :value="item.id">
+                <el-select v-model="form.soldTo" size="small" clearable filterable placeholder="">
+                  <el-option v-for="item in list" :key="item.id" :label="item.custName" :value="item.custName">
                   </el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="送达方">
-                <el-select v-model="form.sendTo" size="small" filterable placeholder="">
-                  <el-option v-for="item in list" :key="item.id" :label="item.custName" :value="item.id">
+                <el-select v-model="form.sendTo" size="small" clearable filterable placeholder="">
+                  <el-option v-for="item in list" :key="item.id" :label="item.custName" :value="item.custName">
                   </el-option>
                 </el-select>
               </el-form-item>
@@ -675,7 +675,7 @@ export default {
         pageSize:this.pageSize,
         pageIndex:this.currentPage,
         rSapOrderId:this.form.rSapOrderId,
-        custName:this.form.custName,
+        dealerId:this.form.dealerId,
         createBeginTime:this.form.createBeginTime,
         createEndTime:this.form.createEndTime,
         orderType:this.form.orderType,
