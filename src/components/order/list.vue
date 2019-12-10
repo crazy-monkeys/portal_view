@@ -167,7 +167,7 @@
         
       </div>
     </div>
-    <el-dialog title="订单行信息" :visible.sync="lineDia" width="600px">
+    <el-dialog title="订单行信息" :visible.sync="lineDia" width="1000px">
       <div class="tab">
         <div class="tabBox">
           <el-table :data="lines" style="width: 100%" border height="100%">
@@ -208,23 +208,33 @@
         </div>
       </div>
     </el-dialog>
-    <el-dialog title="提货" top="5vh" :visible.sync="proDia" width="600px">
+    <el-dialog title="提货" top="5vh" :visible.sync="proDia" width="1000px">
       <div class="tab">
         <div class="tabBox">
           <el-form ref="proForm" :model="proForm" :rules="rules" class="form" label-width="auto" label-position='top' >
-            <el-form-item label="授信额度初始值">
+            <el-row :gutter="20">
+              <el-col :span="8">
+                <el-form-item label="授信额度初始值">
               <el-input size='small' disabled v-model="credit.credit" ></el-input>
             </el-form-item>
-            <el-form-item label="授信额度占用值">
+              </el-col>
+              <el-col :span="8">
+                  <el-form-item label="授信额度占用值">
               <el-input size='small' disabled v-model="credit.creditUSE" ></el-input>
             </el-form-item>
-            <el-form-item label="授信额度剩余值">
+              </el-col>
+              <el-col :span="8">
+                  <el-form-item label="授信额度剩余值">
               <el-input size='small' disabled v-model="credit.creditUnUSE" ></el-input>
             </el-form-item>
-            <el-form-item label="下单公司" prop="shippingPoint">
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="下单公司" prop="shippingPoint">
               <el-input size='small'  v-model="proForm.shippingPoint" ></el-input>
             </el-form-item>
-            <el-form-item label="提货日期" prop="deliverDate">
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="提货日期" prop="deliverDate">
               <el-date-picker
                 v-model="proForm.deliverDate"
                 type="date"
@@ -234,6 +244,8 @@
                 placeholder="选择日期">
               </el-date-picker>
             </el-form-item>
+              </el-col>
+            </el-row>
             <el-table :data="proForm.lines" style="width: 100%" border height="400">
               <el-table-column prop="" width="150" label="提货数量" show-overflow-tooltip>
                 <template slot-scope="scope">
@@ -269,19 +281,27 @@
         <el-button size="small" type="primary" @click="submitForm('proForm')">确 定</el-button>
       </span>
     </el-dialog>
-    <el-dialog title="变更交期" top="5vh" :visible.sync="modDateDia" width="600px">
+    <el-dialog title="变更交期" top="5vh" :visible.sync="modDateDia" width="1000px">
       <div class="tab">
         <div class="tabBox">
           <el-form ref="modDateForm" :model="modDateForm" :rules="rules" class="form" label-width="auto" label-position='top' >
-            <el-form-item label="授信额度初始值">
+            <el-row :gutter="20">
+              <el-col :span="8">
+                <el-form-item label="授信额度初始值">
               <el-input size='small' disabled v-model="credit.credit" ></el-input>
             </el-form-item>
-            <el-form-item label="授信额度占用值">
+              </el-col>
+              <el-col :span="8">
+                  <el-form-item label="授信额度占用值">
               <el-input size='small' disabled v-model="credit.creditUSE" ></el-input>
             </el-form-item>
-            <el-form-item label="授信额度剩余值">
+              </el-col>
+              <el-col :span="8">
+                  <el-form-item label="授信额度剩余值">
               <el-input size='small' disabled v-model="credit.creditUnUSE" ></el-input>
             </el-form-item>
+              </el-col>
+            </el-row>
             <el-table :data="modDateForm.lines" style="width: 100%" border height="400">
               <el-table-column prop="" width="200" label="期望交货日期" show-overflow-tooltip>
                 <template slot-scope="scope">
@@ -323,7 +343,7 @@
         <el-button size="small" type="primary" @click="submitForm('modDateForm',true)">确 定</el-button>
       </span>
     </el-dialog>
-    <el-dialog title="取消" top="5vh" :visible.sync="calDia" width="600px">
+    <el-dialog title="取消" top="5vh" :visible.sync="calDia" width="1000px">
       <div class="tab">
         <div class="tabBox">
             <el-table :data="lines" style="width: 100%" border height="400" @selection-change="handleSelectionChange">

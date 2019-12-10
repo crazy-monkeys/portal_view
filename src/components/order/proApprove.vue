@@ -106,7 +106,7 @@
         
       </div>
     </div>
-    <el-dialog title="提货单明细" :visible.sync="dialogVisible1" width="600px">
+    <el-dialog title="提货单明细" :visible.sync="dialogVisible1" width="1000px">
       <div class="tab">
         <div class="tabBox">
           <el-table :data="deliveryOrderLine" style="width: 100%" border height="300">
@@ -116,9 +116,9 @@
             </el-table-column>
             <el-table-column prop="productId"  label="物料号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="product" width="150"  label="产品型号" show-overflow-tooltip>
+            <el-table-column prop="product" width="200"  label="产品型号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="bu" label="BU" width="150"  show-overflow-tooltip>
+            <el-table-column prop="bu" label="BU" width="200"  show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip>
             </el-table-column>

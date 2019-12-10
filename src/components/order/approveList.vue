@@ -110,7 +110,7 @@
         
       </div>
     </div>
-    <el-dialog title="提货单明细" :visible.sync="dialogVisible1" width="600px">
+    <el-dialog title="提货单明细" :visible.sync="dialogVisible1" width="1000px">
       <div class="tab">
         <div class="tabBox">
           <el-table :data="deliveryOrderLine" style="width: 100%" border height="300">

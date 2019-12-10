@@ -139,7 +139,7 @@
 
       </div>
     </div>
-    <el-dialog title="销售单明细" :visible.sync="dialogVisible1" width="600px">
+    <el-dialog title="销售单明细" :visible.sync="dialogVisible1" width="1000px">
       <div class="tab">
         <div class="tabBox">
           <el-table :data="rowData.jsonLines" style="width: 100%" border height="100%">

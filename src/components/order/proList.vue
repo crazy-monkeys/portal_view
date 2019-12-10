@@ -85,7 +85,7 @@
         
       </div>
     </div>
-    <el-dialog title="订单行信息" :visible.sync="lineDia" width="600px" v-if="lineDia" v-dialogDrag >
+    <el-dialog title="订单行信息" :visible.sync="lineDia" width="1000px" v-if="lineDia" v-dialogDrag >
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="发货信息" name="first">
           <div class="tab">
@@ -97,12 +97,12 @@
                 </el-table-column>
                 <el-table-column prop="productId" width="150" label="物料号" show-overflow-tooltip>
                 </el-table-column>
-                <el-table-column prop="product" width="150"  label="产品型号" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="bu" label="BU" width="150"  show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip>
-            </el-table-column>
+                <el-table-column prop="product" width="200"  label="产品型号" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="bu" label="BU" width="200"  show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="pdt" width="200" label="PDT" show-overflow-tooltip>
+                </el-table-column>
                 <el-table-column prop="deliveryQuantity" width="150" label="提货数量" show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column prop="active" width="150" label="状态" show-overflow-tooltip>
@@ -162,23 +162,33 @@
         </el-tab-pane>
       </el-tabs>
     </el-dialog>
-    <el-dialog title="修改" top="5vh" :visible.sync="proDia" width="600px" v-dialogDrag>
+    <el-dialog title="修改" top="5vh" :visible.sync="proDia" width="1000px" v-dialogDrag>
       <div class="tab">
         <div class="tabBox">
           <el-form ref="proForm" :model="proForm" :rules="rules" class="form" label-width="auto" label-position='top' >
-            <el-form-item label="授信额度初始值">
+            <el-row :gutter="20">
+              <el-col :span="8">
+                <el-form-item label="授信额度初始值">
               <el-input size='small' disabled v-model="credit.credit" ></el-input>
             </el-form-item>
-            <el-form-item label="授信额度占用值">
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="授信额度占用值">
               <el-input size='small' disabled v-model="credit.creditUSE" ></el-input>
             </el-form-item>
-            <el-form-item label="授信额度剩余值">
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="授信额度剩余值">
               <el-input size='small' disabled v-model="credit.creditUnUSE" ></el-input>
             </el-form-item>
-            <el-form-item label="下单公司" prop="shippingPoint">
+              </el-col>
+              <el-col :span="12">
+                  <el-form-item label="下单公司" prop="shippingPoint">
               <el-input size='small'  v-model="proForm.shippingPoint" ></el-input>
             </el-form-item>
-            <el-form-item label="提货日期" prop="shippingPoint">
+              </el-col> 
+              <el-col :span="12">
+                  <el-form-item label="提货日期" prop="shippingPoint">
               <el-date-picker
                 v-model="proForm.deliverDate"
                 type="date"
@@ -188,6 +198,13 @@
                 placeholder="选择日期">
               </el-date-picker>
             </el-form-item>
+                </el-col> 
+            </el-row>
+            
+            
+            
+            
+            
             <el-table :data="proForm.deliverOrderLineList" style="width: 100%" border height="400">
               <el-table-column  width="150" label="提货数量" show-overflow-tooltip>
                 <template slot-scope="scope">
@@ -202,11 +219,11 @@
               </el-table-column>
               <el-table-column prop="productId" width="150" label="物料号" show-overflow-tooltip>
               </el-table-column>
-              <el-table-column prop="product" width="150"  label="产品型号" show-overflow-tooltip>
+              <el-table-column prop="product" width="200"  label="产品型号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="bu" label="BU" width="150"  show-overflow-tooltip>
+            <el-table-column prop="bu" label="BU" width="200"  show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip>
+            <el-table-column prop="pdt" width="200" label="PDT" show-overflow-tooltip>
             </el-table-column>
               <el-table-column prop="active" width="150" label="状态" show-overflow-tooltip>
                   <template slot-scope="scope">
@@ -225,19 +242,27 @@
         <el-button size="small" type="primary" @click="submitForm('proForm')">确 定</el-button>
       </span>
     </el-dialog>
-    <el-dialog title="取消" top="5vh" :visible.sync="calDia" width="600px" v-dialogDrag>
+    <el-dialog title="取消" top="5vh" :visible.sync="calDia" width="1000px" v-dialogDrag>
       <div class="tab">
         <div class="tabBox">
           <el-form ref="proForm" :model="proForm" :rules="rules" class="form" label-width="auto" label-position='top' >
-            <el-form-item label="授信额度初始值">
+            <el-row :gutter="20">
+              <el-col :span="8">
+                <el-form-item label="授信额度初始值">
               <el-input size='small' disabled v-model="credit.credit" ></el-input>
             </el-form-item>
-            <el-form-item label="授信额度占用值">
+              </el-col>
+              <el-col :span="8">
+                  <el-form-item label="授信额度占用值">
               <el-input size='small' disabled v-model="credit.creditUSE" ></el-input>
             </el-form-item>
-            <el-form-item label="授信额度剩余值">
+              </el-col>
+              <el-col :span="8">
+                  <el-form-item label="授信额度剩余值">
               <el-input size='small' disabled v-model="credit.creditUnUSE" ></el-input>
             </el-form-item>
+              </el-col>
+            </el-row>
             <el-table :data="proForm.deliverOrderLineList" style="width: 100%" border height="400" @selection-change="handleSelectionChange">
               <el-table-column width="60" type="selection">
               </el-table-column>
@@ -249,11 +274,11 @@
               </el-table-column>
               <el-table-column prop="productId" width="150" label="物料号" show-overflow-tooltip>
               </el-table-column>
-              <el-table-column prop="product" width="150"  label="产品型号" show-overflow-tooltip>
+              <el-table-column prop="product" width="200"  label="产品型号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="bu" label="BU" width="150"  show-overflow-tooltip>
+            <el-table-column prop="bu" label="BU" width="200"  show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip>
+            <el-table-column prop="pdt" width="200" label="PDT" show-overflow-tooltip>
             </el-table-column>
               <el-table-column prop="active" width="150" label="状态" show-overflow-tooltip>
                   <template slot-scope="scope">
@@ -272,19 +297,30 @@
         <el-button size="small" type="primary" @click="sure">确 定</el-button>
       </span>
     </el-dialog>
-    <el-dialog title="收货" top="5vh" :visible.sync="recevieDia" width="600px" v-dialogDrag>
+    <el-dialog title="收货" top="5vh" :visible.sync="recevieDia" width="1000px" v-dialogDrag>
       <div class="tab">
         <div class="tabBox">
           <el-form ref="proForm" :model="proForm" :rules="rules" class="form" label-width="auto" label-position='top' >
-            <el-form-item label="授信额度初始值">
+            <el-row :gutter="20">
+              <el-col :span="8">
+                <el-form-item label="授信额度初始值">
               <el-input size='small' disabled v-model="credit.credit" ></el-input>
             </el-form-item>
-            <el-form-item label="授信额度占用值">
+              </el-col>
+              <el-col :span="8">
+                  <el-form-item label="授信额度占用值">
               <el-input size='small' disabled v-model="credit.creditUSE" ></el-input>
             </el-form-item>
-            <el-form-item label="授信额度剩余值">
+              </el-col>
+              <el-col :span="8">
+                  <el-form-item label="授信额度剩余值">
               <el-input size='small' disabled v-model="credit.creditUnUSE" ></el-input>
             </el-form-item>
+              </el-col>
+            </el-row>
+            
+            
+            
             <el-table :data="proForm.deliverOrderLineList" style="width: 100%" border height="400" @selection-change="handleSelectionChange">
               <el-table-column
                 type="selection"
@@ -307,11 +343,11 @@
               </el-table-column>
               <el-table-column prop="productId" width="150" label="物料号" show-overflow-tooltip>
               </el-table-column>
-              <el-table-column prop="product" width="150"  label="产品型号" show-overflow-tooltip>
+              <el-table-column prop="product" width="200"  label="产品型号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="bu" label="BU" width="150"  show-overflow-tooltip>
+            <el-table-column prop="bu" label="BU" width="200"  show-overflow-tooltip>
             </el-table-column>
-            <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip>
+            <el-table-column prop="pdt" width="200" label="PDT" show-overflow-tooltip>
             </el-table-column>
               <el-table-column prop="active" width="150" label="状态" show-overflow-tooltip>
                   <template slot-scope="scope">
