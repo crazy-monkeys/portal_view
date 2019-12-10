@@ -91,10 +91,7 @@
           <div class="tab">
             <div class="tabBox">
               <el-table :data="proForm.deliverOrderLineList" style="width: 100%" border height="300">
-                <el-table-column prop="sapSalesOrderLineNo" width="150" label="订单行号" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column prop="sapDeliverOrderLineNo" width="150" label="提货单行号" show-overflow-tooltip>
-                </el-table-column>
+                
                 <el-table-column prop="productId" width="150" label="物料号" show-overflow-tooltip>
                 </el-table-column>
                 <el-table-column prop="product" width="200"  label="产品型号" show-overflow-tooltip>
@@ -109,6 +106,10 @@
                   <template slot-scope="scope">
                     {{scope.row.active==1 ? '生效' :scope.row.active==2 ? '取消中' :scope.row.active==0 ? '已取消':''}}
                   </template>
+                </el-table-column>
+                <el-table-column prop="sapSalesOrderLineNo" width="150" label="订单行号" show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column prop="sapDeliverOrderLineNo" width="150" label="提货单行号" show-overflow-tooltip>
                 </el-table-column>
                 <div slot="empty">
                   无数据

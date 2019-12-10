@@ -110,8 +110,7 @@
       <div class="tab">
         <div class="tabBox">
           <el-table :data="deliveryOrderLine" style="width: 100%" border height="300">
-            <el-table-column prop="deliveryQuantity"  label="提货数量" show-overflow-tooltip>
-            </el-table-column>
+            
             <el-table-column prop="sapSalesOrderLineNo"  label="订单行号" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="productId"  label="物料号" show-overflow-tooltip>
@@ -122,7 +121,8 @@
             </el-table-column>
             <el-table-column prop="pdt" width="150" label="PDT" show-overflow-tooltip>
             </el-table-column>
-            
+            <el-table-column prop="deliveryQuantity"  label="提货数量" show-overflow-tooltip>
+            </el-table-column>
             <div slot="empty">
               无数据
             </div>
