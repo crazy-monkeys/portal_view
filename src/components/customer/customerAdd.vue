@@ -297,7 +297,7 @@
                     <el-input size="small" disabled v-model="scope.row.strName"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="股东占比" show-overflow-tooltip>
+                <el-table-column prop="" label="股东占比（%）" show-overflow-tooltip>
                   <template slot-scope="scope">
                     <el-input size="small" disabled v-model="scope.row.strValue"></el-input>
                   </template>

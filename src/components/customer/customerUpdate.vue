@@ -312,7 +312,7 @@
                     <el-input size="small" v-model="scope.row.strName"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="股东占比"  width="150">
+                <el-table-column prop="" label="股东占比（%）"  width="150">
                   <template slot-scope="scope">
                     <el-input size="small" v-model="scope.row.strValue"></el-input>
                   </template>

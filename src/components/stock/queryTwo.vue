@@ -369,7 +369,7 @@ export default {
       })
       inventoryTransfer(data).then(res=>{
         if(res.data.code==1){
-          this.$message.success('转移成功')
+          this.$message.success('转移申请提交成功，请等待审批。')
           // this.getList()
           this.cancel()
 
@@ -384,7 +384,7 @@ export default {
       })
       inventoryConversion(data).then(res=>{
         if(res.data.code==1){
-          this.$message.success('转换成功')
+          this.$message.success('转换申请提交成功，请等待审批。')
           // this.getList()
           this.cancel()
         }

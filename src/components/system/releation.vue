@@ -201,6 +201,10 @@
           {
             label:'订单',
             value:'订单',
+          },
+          {
+            label:'库存转移转换',
+            value:'inventory',
           }
         ],
         rules: {
