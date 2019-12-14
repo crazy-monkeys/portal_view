@@ -52,13 +52,13 @@
               </el-form-item>
               <el-form-item label="售达方">
                 <el-select v-model="form.soldTo" size="small" clearable filterable placeholder="">
-                  <el-option v-for="item in list" :key="item.id" :label="item.custName" :value="item.custName">
+                  <el-option v-for="item in list" :key="item.id" :label="item.custName" :value="item.id">
                   </el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="送达方">
                 <el-select v-model="form.sendTo" size="small" clearable filterable placeholder="">
-                  <el-option v-for="item in list" :key="item.id" :label="item.custName" :value="item.custName">
+                  <el-option v-for="item in list" :key="item.id" :label="item.custName" :value="item.id">
                   </el-option>
                 </el-select>
               </el-form-item>
