@@ -29,18 +29,29 @@ let cancelPending = (config) => {
 }
 
 
-let startLoading = () => { // 使用Element loading-start 方法
+let startLoading = (config) => { // 使用Element loading-start 方法
     loading = Loading.service({
         // target: '.jobBox',
         lock: true,
         text: '加载中……',
-        background: 'rgba(0, 0, 0, 0)'
+        background: 'rgba(0, 0, 0, 0)',
+        url: config.url
     })
     loadingArr.push(loading)
 }
-let endLoading = () => { // 使用Element loading-close 方法
+let endLoading = (config) => { // 使用Element loading-close 方法
     // loading.close()
-    loadingArr.forEach(item => item.close())
+    loadingArr.forEach(item => {
+        if (config) {
+            if (item.url === config.url) {
+                item.close()
+            };
+        } else {
+            item.close() // 取消请求
+        }
+    })
+
+
 }
 
 // 自定义判断元素类型JS
@@ -55,7 +66,7 @@ axios.interceptors.request.use(
         config.cancelToken = new CancelToken(res => {
             pending.push({ 'UrlPath': config.url, 'Cancel': res })
         })
-        startLoading()
+        startLoading(config)
         return config
     },
     (error, response) => {
@@ -69,7 +80,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     response => {
         // setTimeout(() => {
-        endLoading()
+        endLoading(response.config)
         cancelPending(response.config)
             // }, 500);
             // //console.log(response)
@@ -82,7 +93,7 @@ axios.interceptors.response.use(
     }, (error, res) => {
         //console.log(error, res)
         // //console.log(22222)
-        endLoading()
+        endLoading(error.config)
         return Promise.reject(error)
     }
 )
