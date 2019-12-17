@@ -27,11 +27,15 @@ export const getCustList = data => {
     return request('get', `${serverUrl}/sys/dealer/incustomer`).then(result => result)
 }
 
+//获取运营商列表
+export const getDealerList = data => {
+    return request('get', `${serverUrl}/sys/dealer/list`).then(result => result)
+}
+
 //获取转入客户
 export const getCustListAll = data => {
     return request('get', `${serverUrl}/sys/incustomer/all`).then(result => result)
 }
-
 
 //转移转换申请列表
 export const getApplyList = data => {
@@ -41,4 +45,9 @@ export const getApplyList = data => {
 //转移转换申请审批
 export const approveOk = data => {
     return request('post', `${serverUrl}/inventoryApproval/${data.applyType}/${data.approvalStatus}/${data.id}`).then(result => result)
+}
+
+//获取客户专户库存
+export const getStackDealer = data => {
+    return request('post', `${serverUrl}/inventory/customer`, data).then(result => result)
 }
