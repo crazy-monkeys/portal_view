@@ -83,7 +83,11 @@
             </el-table-column>
             <el-table-column prop="product" label="产品型号" show-overflow-tooltip width="150">
             </el-table-column>
+            <el-table-column prop="conversionCustomerType" label="转换客户属性"  width="150" >
+            </el-table-column>
             <el-table-column prop="customerType" label="客户属性" show-overflow-tooltip width="150">
+            </el-table-column>
+             <el-table-column prop="conversionInventoryType" label="转换库存属性" show-overflow-tooltip width="150">
             </el-table-column>
             <el-table-column prop="inventoryType" label="库存类别" show-overflow-tooltip width="150">
             </el-table-column>
