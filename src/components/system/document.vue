@@ -92,7 +92,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="可见人" prop='roleList'>
-              <el-select  size="small" v-model="form.roleList" filterable multiple collapse-tags>
+              <el-select  size="small" v-model="form.roleList" filterable multiple >
                 <el-option
                   v-for="item in userList"
                   :key="item.id"
