@@ -22,6 +22,9 @@
           <el-form-item label="发货方编号">
             <el-input size='small' v-model="form.shipperCode"  placeholder="请输入"></el-input>
           </el-form-item>
+          <el-form-item label="订单号">
+            <el-input size='small' v-model="form.orderNo"  placeholder="请输入"></el-input>
+          </el-form-item>
           <el-form-item label="公司">
             <el-input size='small' v-model="form.company" placeholder="请输入"></el-input>
           </el-form-item>
@@ -67,7 +70,10 @@
             
             <el-table-column prop="shipperCode" label="发货方编号" show-overflow-tooltip width="150">
             </el-table-column>
-
+            <el-table-column prop="orderNo" label="订单号" show-overflow-tooltip width="150">
+            </el-table-column>
+            <el-table-column prop="applyPeople" label="申请人" show-overflow-tooltip width="150">
+            </el-table-column>
             <el-table-column prop="company" label="公司" show-overflow-tooltip width="150">
             </el-table-column>
             <el-table-column prop="applyTime" label="申请时间" show-overflow-tooltip sortable="" width="150">
@@ -167,6 +173,8 @@ export default {
       dialogVisible2:false,
       dialogVisible3:false,
       form:{
+        //订单号
+        orderNo:'',
         // 类别
         type:'',
         // 发货方编号
@@ -297,6 +305,8 @@ export default {
     },
     reset(){
       this.form = {
+        //订单号
+        orderNo:'',
          // 类别
         type:'',
         // 发货方编号
