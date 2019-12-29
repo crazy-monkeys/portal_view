@@ -49,6 +49,8 @@
                   </el-table-column>
                   <el-table-column prop="inCustomer"  show-overflow-tooltip label="客户简称">
                   </el-table-column>
+                  <el-table-column prop="currency"  show-overflow-tooltip label="货币">
+                  </el-table-column>
                   <el-table-column prop="qty" show-overflow-tooltip label="数量">
                   </el-table-column>
                   <el-table-column prop="price"  show-overflow-tooltip label="目录价格($)">
@@ -83,7 +85,7 @@
             </el-table-column>
             <el-table-column prop="productType" width='150' label="Product Type" show-overflow-tooltip>
             </el-table-column>
-            
+
             <el-table-column prop="platform" width='100' show-overflow-tooltip label="平台">
             </el-table-column>
             <el-table-column prop="productModel" width='240' label="产品型号" show-overflow-tooltip>
@@ -95,6 +97,8 @@
 
             </el-table-column>
              <el-table-column show-overflow-tooltip width='150' prop="inCustomer" label="客户简称">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip width='150' prop="currency" label="货币">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="effectTime" width='150' label="生效时间">
             </el-table-column>
@@ -133,7 +137,7 @@
           <el-form-item label="内部客户"  prop="inCustomer" class="inp">
             <el-input size="small" v-model="addForm.inCustomer" placeholder="请输入"></el-input>
           </el-form-item>
-          
+
           <el-form-item label="申请说明" prop="applyRemark" class="last">
              <el-input type='textarea' v-model='addForm.applyRemark' :rows="2" placeholder="" resize='none'></el-input>
           </el-form-item>
@@ -155,7 +159,7 @@
               <el-option v-for="item in options" :key="item.name" :label="item.name" :value='item.name+","+item.type'></el-option>
             </el-select>
           </el-form-item>
-          
+
         </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button size="small" plain @click="cancel1">取 消</el-button>
@@ -277,7 +281,7 @@
           this.delEnquiry(id)
         })
         .catch(action => {
-          
+
         });
     },
     cancel(){
@@ -312,7 +316,7 @@
            inCustomer:this.addForm.inCustomer,
            applyRemark:this.addForm.applyRemark,
            bu:this.addForm.bu
-        } 
+        }
         const res = await addEnquiry(data);
         // //console.log('提交结果',res);
         if(res){
@@ -328,7 +332,7 @@
            productModel:this.form.productModel,
            inCustomer:this.form.inCustomer,
            bu:this.form.bu
-        } 
+        }
         const res = await getList(data);
         // //console.log('询价列表',res);
         if(res){
@@ -378,7 +382,7 @@
             //客户内部名称全不为空
             if(noEmpty.length==arr.length){
             this.type = 'noEmpty'
-              
+
             }
             //客户内部名称为空
             if(empty.length==arr.length){
@@ -401,11 +405,11 @@
               this.$print(this.$refs.print)
             })
         }
-        
+
       },
       add(){
         this.dialogVisible1 = true;
-        
+
       },
       create(){
         this.dialogCreate = true
@@ -505,7 +509,7 @@ $sc: 12;
         }
         .date {
           width: 414px;
-          
+
         }
     }
     .box{

@@ -69,6 +69,8 @@
                   </el-table-column>
                   <el-table-column prop="inCustomer"  show-overflow-tooltip label="客户简称">
                   </el-table-column>
+                  <el-table-column prop="currency"  show-overflow-tooltip label="货币">
+                  </el-table-column>
                   <el-table-column prop="qty" show-overflow-tooltip label="实体芯片数量比">
                   </el-table-column>
                 </el-table>
@@ -89,7 +91,7 @@
             </el-table-column>
             <el-table-column prop="productType" width='150' label="Product Type" show-overflow-tooltip>
             </el-table-column>
-            
+
             <el-table-column prop="platform" width='100' show-overflow-tooltip label="平台">
             </el-table-column>
             <el-table-column show-overflow-tooltip width='240' prop="productModel" label="产品型号">
@@ -100,6 +102,8 @@
               </template>
             </el-table-column>
             <el-table-column show-overflow-tooltip width='150' prop="inCustomer" label="客户简称">
+            </el-table-column>
+            <el-table-column show-overflow-tooltip width='150' prop="currency" label="货币">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="effectTime" width='200' label="生效时间">
             </el-table-column>
@@ -121,7 +125,7 @@
             </el-pagination>
           </div>
         </div>
-        
+
       </div>
     </div>
      <el-dialog
@@ -135,7 +139,7 @@
               <el-option v-for="(item,index) in options" :key="index" :label="item.custName" :value='item.custName+","+item.businessType'></el-option>
             </el-select>
           </el-form-item>
-          
+
         </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button size="small" plain @click="cancel">取 消</el-button>
@@ -212,7 +216,7 @@
     },
     created() {
       this.getList()
-      
+
     },
     methods: {
       async getAll(){
@@ -270,7 +274,7 @@
            effectEndTime:this.form.effectEndTime,
            priceType:this.form.priceType,
            status:this.form.status,
-        } 
+        }
         const res = await getList(data);
         // //console.log('目录价格查询列表',res);
         if(res){
@@ -334,7 +338,7 @@
             //客户内部名称全不为空
             if(noEmpty.length==arr.length){
             this.type = 'noEmpty'
-              
+
             }
             //客户内部名称为空
             if(empty.length==arr.length){
@@ -361,7 +365,7 @@
               this.$print(this.$refs.print)
             })
         }
-        
+
       },
       add(){
         this.getAll()
@@ -430,7 +434,7 @@
         }
         .date {
           width: 414px;
-          
+
         }
     }
     .box{

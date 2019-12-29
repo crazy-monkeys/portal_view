@@ -177,18 +177,25 @@
               </el-form-item>
               <!-- <div class="detailBox"><div>状态 : </div>{{detail.status=='True' ?'生效':'失效'}}</div> -->
             </el-col>
+            <el-col :span="12">
+              <el-form-item label="产品型号">
+                <el-input size='small'  v-model="detail.productModel" :readonly="true" placeholder=""></el-input>
+              </el-form-item>
+              <!-- <div class="detailBox"><div>Product Model : </div>{{detail.productModel}}</div> -->
+            </el-col>
+            <el-col :span="12">
+               <el-form-item label="货币">
+                <el-input size='small'  v-model="detail.currency" :readonly="true" placeholder=""></el-input>
+              </el-form-item>
+              <!-- <div class="detailBox"><div>Product Model : </div>{{detail.productModel}}</div> -->
+            </el-col>
             <el-col :span="24">
               <el-form-item label="备注">
                 <el-input size='small'  v-model="detail.remark" :readonly="true" placeholder=""></el-input>
               </el-form-item>
               <!-- <div class="detailBox"><div>备注 : </div>{{detail.remark}}</div> -->
             </el-col>
-            <el-col :span="24">
-              <el-form-item label="产品型号">
-                <el-input size='small'  v-model="detail.productModel" :readonly="true" placeholder=""></el-input>
-              </el-form-item>
-              <!-- <div class="detailBox"><div>Product Model : </div>{{detail.productModel}}</div> -->
-            </el-col>
+
           </el-row>
           <el-table class="tab" :data="detail.boms" border style="width: 100%">
             <el-table-column prop="bomName"  show-overflow-tooltip label="实体产品型号">
@@ -199,6 +206,8 @@
                     </template>
                   </el-table-column>
                   <el-table-column prop="inCustomer"  show-overflow-tooltip label="内部客户">
+                  </el-table-column>
+                  <el-table-column prop="currency"  show-overflow-tooltip label="货币">
                   </el-table-column>
                   <el-table-column prop="qty" show-overflow-tooltip label="实体芯片数量比">
                   </el-table-column>
