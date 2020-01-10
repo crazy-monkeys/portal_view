@@ -62,14 +62,14 @@
                 <el-table :data="props.row.boms" border style="width: 90%">
                   <el-table-column prop="bomName"  show-overflow-tooltip label="实体产品型号">
                   </el-table-column>
-                  <el-table-column prop="price"  show-overflow-tooltip label="拆分价($)">
+                  <el-table-column prop="price"  show-overflow-tooltip label="拆分价">
                     <template slot-scope="scope">
                       {{scope.row.price.toFixed(4)}}
                     </template>
                   </el-table-column>
                   <el-table-column prop="inCustomer"  show-overflow-tooltip label="客户简称">
                   </el-table-column>
-                  <el-table-column prop="currency"  show-overflow-tooltip label="货币">
+                  <el-table-column prop="currency"  show-overflow-tooltip label="币别">
                   </el-table-column>
                   <el-table-column prop="qty" show-overflow-tooltip label="实体芯片数量比">
                   </el-table-column>
@@ -103,7 +103,7 @@
             </el-table-column>
             <el-table-column show-overflow-tooltip width='150' prop="inCustomer" label="客户简称">
             </el-table-column>
-            <el-table-column show-overflow-tooltip width='150' prop="currency" label="货币">
+            <el-table-column show-overflow-tooltip width='150' prop="currency" label="币别">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="effectTime" width='200' label="生效时间">
             </el-table-column>

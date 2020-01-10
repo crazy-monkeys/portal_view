@@ -49,11 +49,11 @@
                   </el-table-column>
                   <el-table-column prop="inCustomer"  show-overflow-tooltip label="客户简称">
                   </el-table-column>
-                  <el-table-column prop="currency"  show-overflow-tooltip label="货币">
+                  <el-table-column prop="currency"  show-overflow-tooltip label="币别">
                   </el-table-column>
                   <el-table-column prop="qty" show-overflow-tooltip label="数量">
                   </el-table-column>
-                  <el-table-column prop="price"  show-overflow-tooltip label="目录价格($)">
+                  <el-table-column prop="price"  show-overflow-tooltip label="目录价格">
                     <template slot-scope="scope" >
                         {{scope.row.price}}
                     </template>
@@ -90,7 +90,7 @@
             </el-table-column>
             <el-table-column prop="productModel" width='240' label="产品型号" show-overflow-tooltip>
             </el-table-column>
-            <el-table-column show-overflow-tooltip width='150' prop="catalogPrice" label="目录价格($)">
+            <el-table-column show-overflow-tooltip width='150' prop="catalogPrice" label="目录价格">
                     <template slot-scope="scope">
                         {{scope.row.catalogPrice }}
                     </template>
@@ -98,7 +98,7 @@
             </el-table-column>
              <el-table-column show-overflow-tooltip width='150' prop="inCustomer" label="客户简称">
             </el-table-column>
-            <el-table-column show-overflow-tooltip width='150' prop="currency" label="货币">
+            <el-table-column show-overflow-tooltip width='150' prop="currency" label="币别">
             </el-table-column>
             <el-table-column show-overflow-tooltip prop="effectTime" width='150' label="生效时间">
             </el-table-column>

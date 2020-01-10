@@ -184,7 +184,7 @@
               <!-- <div class="detailBox"><div>Product Model : </div>{{detail.productModel}}</div> -->
             </el-col>
             <el-col :span="12">
-               <el-form-item label="货币">
+               <el-form-item label="币别">
                 <el-input size='small'  v-model="detail.currency" :readonly="true" placeholder=""></el-input>
               </el-form-item>
               <!-- <div class="detailBox"><div>Product Model : </div>{{detail.productModel}}</div> -->
@@ -207,7 +207,7 @@
                   </el-table-column>
                   <el-table-column prop="inCustomer"  show-overflow-tooltip label="内部客户">
                   </el-table-column>
-                  <el-table-column prop="currency"  show-overflow-tooltip label="货币">
+                  <el-table-column prop="currency"  show-overflow-tooltip label="币别">
                   </el-table-column>
                   <el-table-column prop="qty" show-overflow-tooltip label="实体芯片数量比">
                   </el-table-column>
