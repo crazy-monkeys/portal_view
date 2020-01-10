@@ -63,7 +63,7 @@
 
                 <el-form-item label="采购订单下达日期" prop="purchaseDate">
                   <el-date-picker
-                    
+
                     v-model="form.purchaseDate"
                     type="date"
                     size="small"
@@ -109,6 +109,13 @@
                   <el-select v-model="form.customerAttr" size="small" filterable placeholder="" >
                     <el-option value="B1" label="Account Market"></el-option>
                     <el-option value="B2" label="Mass Market"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24' v-if="form.orderType==='A01'">
+                <el-form-item label="客户名称" prop="outCode">
+                  <el-select v-model="form.outCode" size="small" filterable placeholder="" >
+                    <el-option :key='item.outCode' v-for="item in custList" :value="item.outCode" :label="item.custName"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -166,7 +173,7 @@
             </el-table-column>
             <el-table-column prop="custAbbreviation" width="150" label="客户简称" show-overflow-tooltip>
             </el-table-column>
-            
+
             <el-table-column prop="rPrice" width="150" label="含税价格" show-overflow-tooltip>
             </el-table-column>
             <el-table-column prop="rNetPrice" width="150" label="不含税价格" show-overflow-tooltip>
@@ -248,6 +255,7 @@
 
 <script>
 import {detail,applyDetail} from '@/api/order/list.js'
+import {getCustList} from '@/api/stock/query.js'
 
 import formTest from "../../assets/js/formTest";
 import {getCode} from '@/api/business/idr.js'
@@ -260,10 +268,12 @@ export default {
   name: "orderAdd",
   data() {
     return {
+      custList:[],
       loading:false,
       tos:[],
       rules:{
         orderType:[{required:true,triggle:'blur',message:'订单类型不能为空'}],
+        outCode:[{required:true,triggle:'blur',message:'客户名称不能为空'}],
         num:[{required:true,type:'number',triggle:['blur','change'],message:'数量不能为空'}],
         salesOrg:[{required:true,triggle:'blur',validator: (rule, value, callback) => {
           if (!value) {
@@ -359,6 +369,7 @@ export default {
       value: "",
       radio: "1",
       form: {
+        outCode:'',
         orderType:'',
         salesOrg:'',
         underOrderType:'',
@@ -385,6 +396,7 @@ export default {
     };
   },
   created(){
+    this.getCustList()
     this.getCode()
     this.getShip()
     if(this.queryId){
@@ -454,6 +466,14 @@ export default {
       }
       //console.log(data)
       return data
+    },
+
+    async getCustList(){
+      const res = await getCustList();
+      console.log('getCustList',res)
+      if(res){
+        this.custList = res.data.data
+      }
     },
     async detail(id){
       const data ={
