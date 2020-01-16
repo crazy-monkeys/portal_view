@@ -120,7 +120,7 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24' v-if="form.isAdd==='是'">
+              <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24' v-if="form.isAdd==='是'&form.orderType==='A01'">
                 <el-form-item label="客户名称" prop="outCode">
                   <el-select v-model="form.outCode" size="small" filterable placeholder="" >
                     <el-option :key='item.outCode' v-for="item in custList" :value="item.outCode" :label="item.custName"></el-option>
@@ -386,7 +386,7 @@ export default {
         purchaseNo:'',
         purchaseDate:'',
         customerAttr:'',
-        isAdd:'0',
+        isAdd:'否',
         priceDate:'',
         incoterms1:'CIP',
         incoterms2:'HK',
