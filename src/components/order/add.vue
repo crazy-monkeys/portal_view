@@ -113,6 +113,14 @@
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24' v-if="form.orderType==='A01'">
+                <el-form-item label="是否加单" prop="isAdd">
+                  <el-select v-model="form.isAdd" size="small" filterable placeholder="" >
+                    <el-option value="否" label="否"></el-option>
+                    <el-option value="是" label="是"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24' v-if="form.isAdd==='是'">
                 <el-form-item label="客户名称" prop="outCode">
                   <el-select v-model="form.outCode" size="small" filterable placeholder="" >
                     <el-option :key='item.outCode' v-for="item in custList" :value="item.outCode" :label="item.custName"></el-option>
@@ -378,6 +386,7 @@ export default {
         purchaseNo:'',
         purchaseDate:'',
         customerAttr:'',
+        isAdd:'0',
         priceDate:'',
         incoterms1:'CIP',
         incoterms2:'HK',
