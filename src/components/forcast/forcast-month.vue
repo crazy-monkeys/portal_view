@@ -273,7 +273,7 @@
         const data ={
           pageIndex:this.currentPage,
           pageSize:this.pageSize,
-          dealerId:1150,
+          dealerName:this.form.dealerName,
           insertS:this.form.insertS,
           updateS:this.form.updateS,
         }
