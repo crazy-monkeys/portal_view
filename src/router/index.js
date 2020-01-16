@@ -257,6 +257,12 @@ export default new Router({
                     name: 'forcastApprove',
                     component: resolve => require(['@/components/forcast/forcast-approve'], resolve),
                 },
+                //销售预测月结
+                {
+                    path: 'forcast/month',
+                    name: 'forcast-month',
+                    component: resolve => require(['@/components/forcast/forcast-month'], resolve),
+                },
 
                 //代理商费率管理
                 //查询
