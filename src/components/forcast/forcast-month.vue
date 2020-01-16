@@ -87,13 +87,13 @@
         </span>
     </el-dialog>
     <el-dialog
-        :title="title"
+        title="恢复"
         :visible.sync="dia"
         width="400px"
         :before-close='close'
         >
         <el-form ref="modForm" :model="modForm" class="form" label-width="auto" label-position='top' :rules='rules' >
-          <el-form-item label="输入年月" prop='date'>
+          <el-form-item label="输入年月">
             <el-input  v-model="modForm.date" size="small" placeholder="YYYYMM"></el-input>
           </el-form-item>
         </el-form>
@@ -112,13 +112,11 @@
     data() {
       return {
         dia:false,
-        title:'',
         modForm:{
           date:''
         },
         rules: {
           dealer: [{ required: true, trigger: "change",message:'请选择代理商' }],
-          date: [{ required: true, trigger: "blur",message:'请输入年月' }],
         },
         options:[
           {
@@ -164,15 +162,23 @@
         this.id = id
         this.type = type
         this.val = val
-        this.dia = true
-        this.title = '冻结'
+        this.$confirm('是否确定冻结代理商'+(this.type ==1?'修改' :'上传')+'权限？', '冻结', {
+          distinguishCancelAndClose: true,
+          confirmButtonText: '确认',
+          cancelButtonText: '取消'
+        })
+          .then(() => {
+            this.sub()
+          })
+          .catch(action => {
+           
+          });
       },
       recover(type,id,val){
         this.id = id
         this.type = type
         this.val = val
         this.dia = true
-        this.title = '恢复'
       },
       sub(){
         if(this.type==1){
@@ -180,13 +186,13 @@
           var data ={
             "mkId":this.id,
             "updateS":this.val,
-            "updateM":""
+            "updateM":this.modForm.date
           }
         }else{
           var data ={
             "mkId":this.id,
             "insertS":this.val,
-            "insertM":""
+            "insertM":this.modForm.date
           }
         }
         mod(data).then(res=>{
