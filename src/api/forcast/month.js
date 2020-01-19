@@ -8,7 +8,7 @@ export const getList = data => {
 
 
 export const getDealerList = data => {
-    return request('get', `${serverUrl}/sys/dealer/list`, data).then(result => result)
+    return request('get', `${serverUrl}/sys/user/list`, data).then(result => result)
 }
 
 

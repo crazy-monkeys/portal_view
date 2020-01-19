@@ -94,7 +94,7 @@
               </el-col> -->
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="订单类型" prop="orderType">
-                  <el-select v-model="form.orderType" size="small" filterable placeholder="" :disabled="queryId?true:false">
+                  <el-select v-model="form.orderType" size="small" filterable placeholder="" :disabled="queryId?true:false" @change="isOrderType">
                     <el-option value="A01" label="客户专货订单"></el-option>
                     <el-option value="A02" label="Buffer订单"></el-option>
                     <el-option value="A03" label="新产品订单"></el-option>
@@ -106,15 +106,15 @@
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24'>
                 <el-form-item label="客户属性" prop="customerAttr">
-                  <el-select v-model="form.customerAttr" size="small" filterable placeholder="" >
+                  <el-select v-model="form.customerAttr" size="small" filterable placeholder="">
                     <el-option value="B1" label="Account Market"></el-option>
                     <el-option value="B2" label="Mass Market"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
               <el-col :span="6" :lg='6' :md='8' :sm='8' :xs='24' v-if="form.orderType==='A01'">
-                <el-form-item label="是否加单" prop="isAdd">
-                  <el-select v-model="form.isAdd" size="small" filterable placeholder="" >
+                <el-form-item label="是否加单" prop="isAdd" >
+                  <el-select v-model="form.isAdd" size="small" filterable placeholder="" @change="isAddCH">
                     <el-option value="否" label="否"></el-option>
                     <el-option value="是" label="是"></el-option>
                   </el-select>
@@ -541,6 +541,17 @@ export default {
     },
     changeccc(val){
       // //console.log(val)
+    },
+    isAddCH(val){
+      if(val=='否'){
+        this.form.outCode = ''
+      }
+    },
+    isOrderType(val){
+      if(val!='A01'){
+        this.form.isAdd = '否'
+        this.form.outCode = ''
+      }
     },
     changeaaa(val){
       // //console.log(val)

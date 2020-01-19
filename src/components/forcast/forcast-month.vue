@@ -14,7 +14,7 @@
           <i class="el-icon-arrow-up" v-if='dialogVisible' @click='change'> 收起</i>
         </div>
         <el-form ref="form" :model="form" class="form" label-width="auto" label-position='top' :inline='true' v-show='dialogVisible'>
-           <el-form-item label="代理商名称">
+           <el-form-item label="用户称">
             <el-input size='small' placeholder="请输入" v-model="form.dealerName"></el-input>
           </el-form-item>
           <el-form-item label="修改状态" >
@@ -77,7 +77,7 @@
         <el-form ref="addForm" :model="addForm" class="form" label-width="auto" label-position='top' :rules='rules' >
           <el-form-item label="选择代理商" prop='dealer'>
             <el-select  v-model="addForm.dealer" size="small" clearable>
-              <el-option v-for="item in dealerList" :key="item.id" :value='item.id+","+item.custName' :label="item.custName"></el-option>
+              <el-option v-for="item in dealerList" :key="item.id" :value='item.id+","+item.loginName' :label="item.loginName"></el-option>
             </el-select>
           </el-form-item>
         </el-form>
