@@ -162,7 +162,17 @@
         total: 0,
       }
     },
-    download1(){
+    
+    computed: {
+     
+    },
+    created() {
+      this.getList()
+    },
+    watch: {
+    },
+    methods: {
+      download1(){
       this.$http({
             method: "get",
             url: "" + process.env.API_ROOT + "/customer/visitRecord/export",
@@ -215,15 +225,6 @@
         }); */
 
     },
-    computed: {
-     
-    },
-    created() {
-      this.getList()
-    },
-    watch: {
-    },
-    methods: {
       handleClick(){},
       suc(val){
         // //console.log(val)
