@@ -46,6 +46,7 @@
           <el-form-item label=" ">
             <el-button size='small' @click="search" type='primary' plain>搜索</el-button>
             <el-button @click='reset' size='small' type='primary' plain>重置</el-button>
+            <el-button @click='download' size='small' type='primary' plain>导出</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -230,6 +231,59 @@ export default {
         this.tableData = res.data.data.list;
         this.total = res.data.data.total;
       }
+    },
+    download(){
+      this.$http({
+            method: "get",
+            url: "" + process.env.API_ROOT + "/customer/info/export",
+            responseType: "arraybuffer",
+            headers:{
+              'Authorization': sessionStorage.getItem('data'),
+            }
+          })
+            .then(res => {
+              // console.log(res.data);
+              const blob = new Blob([res.data], {
+                type: "application/vnd.ms-excel"
+              });
+              const blobUrl = window.URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              document.body.appendChild(a);
+              a.style.display = "none";
+              a.download = "模版.xlsx";
+              a.href = blobUrl;
+              a.click();
+              document.body.removeChild(a);
+            })
+            .catch(err => {
+              // console.log(err);
+              alert("网络异常");
+            });
+      /* axios({
+        method: "post",
+        url: "/excel",
+        data:{},//this.query.data,
+        responseType: "blob"
+      })
+        .then(res => {
+         // console.log(decodeURI(res.headers['filename']));
+          const link = document.createElement("a");
+          let blob = new Blob([res.data], { type: "application/vnd.ms-excel" });
+          link.style.display = "none";
+          link.href = URL.createObjectURL(blob);
+          link.setAttribute("download", decodeURI(res.headers['filename']));
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        })
+        .catch(error => {
+          this.$Notice.error({
+            title: "错误",
+            desc: "系统数据错误"
+          });
+          console.log(error);
+        }); */
+
     },
     mod(id){
       this.$router.push(
