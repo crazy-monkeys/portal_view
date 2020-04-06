@@ -10,25 +10,25 @@
     </div>
     <div class="content">
       <div class="selBox">
-        <el-form ref="form" :model="form"   label-position="top" class="form" >
+        <el-form ref="form" :model="form"  :rules="rules"  label-position="top" class="form" >
           <el-row :gutter="22">
             <el-col :span="6">
-              <el-form-item label="客户名称">
+              <el-form-item label="客户名称" prop='custName'>
             <el-input size="small" v-model="form.custName" disabled></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="客户英文名">
+              <el-form-item label="客户英文名"  prop='custEnName'>
             <el-input size="small" v-model="form.custEnName" ></el-input>
           </el-form-item>
             </el-col>
              <el-col :span="6">
-              <el-form-item label="客户简称">
+              <el-form-item label="客户简称"  prop='custAbbreviation'>
             <el-input size="small" v-model="form.custAbbreviation" ></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="是否License客户">
+              <el-form-item label="是否License客户"  prop='isLicense'>
             <el-select v-model="form.isLicense" size="small"  placeholder="请选择">
               <el-option  label="是" :value="1"></el-option>
               <el-option  label="否" :value="0"></el-option>
@@ -36,7 +36,7 @@
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="角色">
+              <el-form-item label="角色"  prop='custRole'>
             <el-select v-model="form.custRole" size="small"  placeholder="请选择">
               <el-option label="中国客户" value="Z001"></el-option>
                   <el-option label="亚太客户" value="Z002"></el-option>
@@ -46,96 +46,44 @@
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="公司资产">
+              <el-form-item label="公司资产(万)"  prop='corportaeAssets'>
             <el-input size="small" v-model="form.corportaeAssets"></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="员工人数">
+              <el-form-item label="员工人数"  prop='staffNumber'>
             <el-input size="small" v-model="form.staffNumber"></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="研发人数">
+              <el-form-item label="研发人数"  prop='developersNumber'>
             <el-input size="small" v-model="form.developersNumber"></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="邮箱">
+              <el-form-item label="邮箱"  prop='custEmail'>
             <el-input size="small" v-model='form.custEmail'></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="公司网站">
+              <el-form-item label="公司网站"  prop='custWeb'>
             <el-input size="small" v-model='form.custWeb'></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="电话">
+              <el-form-item label="电话"  prop='custMobile'>
             <el-input size="small" v-model='form.custMobile'></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="注册时间" size="small" class="date">
+              <el-form-item label="注册时间"  prop='registTime' size="small" class="date">
             <el-date-picker v-model="form.registTime" value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
           </el-form-item>
             </el-col>
-            <!-- <el-col :span="12">
-              <el-form-item label="注册地址" >
-                <el-row :gutter="22">
-                  <el-col :span="12">
-                <el-cascader
-                  v-model="reg"
-                  :options="province"
-                  separator='-'
-                  size="small"
-                  :props="prop"
-                  placeholder="请选择省市区">
-                  </el-cascader>
-                  </el-col>
-                <el-col :span="12">
-                <el-input size="small"  v-model="regAddress"  placeholder="详细地址"></el-input>
-
-
-                </el-col>
-                </el-row>
-              </el-form-item>
-            </el-col> -->
-            <!-- <el-col :span="12">
-              <el-form-item label="办公地址" >
-                <el-row :gutter="22">
-            <el-col :span="12">
-              <el-cascader
-              v-model="work"
-              :options="province"
-              size="small"
-              separator='-'
-              :props="prop"
-              placeholder="请选择省市区">
-              </el-cascader>
-
-
-            </el-col>
-            <el-col :span="12">
-            <el-input size="small" v-model="workAddress" placeholder="详细地址"></el-input>
-
-            </el-col>
-
-
-                </el-row>
-         
-          </el-form-item>
-
-
-
-            </el-col> -->
           </el-row>
-          
-          
-          <el-form-item label="业务介绍" class="txt">
+          <el-form-item label="业务介绍"  prop='businessIntroduction' class="txt">
             <el-input type="textarea" v-model="form.businessIntroduction" :rows="2" placeholder resize="none"></el-input>
           </el-form-item>
-          
         </el-form>
       </div>
       <div class="tab">
@@ -367,42 +315,6 @@
               </el-table>
             </div>
           </el-tab-pane>
-          <!-- <el-tab-pane label="销售团队" name="fourth">
-            <div class="tabBox">
-              <el-table :data="form.accountTeams" style="width: 100%" height="300">
-                <el-table-column  label="角色类型" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                     <el-select size="small"   v-model="scope.row.roleType">
-                      <el-option value="001" label="PM"></el-option>
-                      <el-option value="002" label="Sales"></el-option>
-                      <el-option value="003" label="FAE"></el-option>
-                    </el-select>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="" label="名称" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.accountName"></el-input>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="" label="手机号" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                    <el-input size="small" v-model="scope.row.accountMobile"></el-input>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="t4" label="" show-overflow-tooltip>
-                  <template slot="header">
-                    <el-button type="primary" size="small" @click="addRow(4)">新增</el-button>
-                  </template>
-                  <template slot-scope="scope">
-                    <el-button type="text" size="small" @click="del(4,scope.$index)">删除</el-button>
-                  </template>
-                </el-table-column>
-                <div slot="empty">
-                  无数据
-                </div>
-              </el-table>
-            </div>
-          </el-tab-pane> -->
           <el-tab-pane label="关系" name="fifth">
             <div class="tabBox">
               <el-table :data="form.relationships" style="width: 100%" height="300">
@@ -574,7 +486,7 @@
         </el-tabs>
       </div>
       <div class="sub">
-        <el-button type="primary" size="small" plain @click="sub">提交</el-button>
+        <el-button type="primary" size="small" plain @click="subForm('form')">提交</el-button>
         <el-button type="primary" size="small" plain @click="cancel">取消</el-button>
       </div>
     </div>
@@ -585,12 +497,62 @@
 import {detail,add,checkCust} from "@/api/customer/query.js";
 import {stringify} from "qs";
 import {getType} from '@/api/system/param.js'
-  import {getAll} from '@/api/business/rebate.js'
+import {getAll} from '@/api/business/rebate.js'
+import formTest from '@/assets/js/formTest.js'
 
 export default {
   name: "rep",
   data() {
     return {
+      rules:{
+        custEnName:[{required: true,trigger:[ "blur",'change'],message:'客户英文名不能为空'}],
+        custName:[{required: true,trigger:[ "blur",'change'],message:'客户名称不能为空'}],
+        custAbbreviation:[{required: true,trigger:[ "blur",'change'],message:'客户简称不能为空'}],
+        isLicense:[{required: true,trigger:[ "blur",'change'],message:'是否License客户不能为空'}],
+        custRole:[{required: true,trigger:[ "blur",'change'],message:'角色不能为空'}],
+        corportaeAssets:[{required: true,trigger:[ "blur",'change'],validator:(rule, value, callback) => {
+          let reg = /^(0|[1-9][0-9]*)$/g
+            if(!value){
+              callback(new Error('公司资产不能为空'))
+            }else{
+              if(!reg.test(value)){
+                callback(new Error('公司资产只能为数字'))
+              }else{
+                callback()
+              }
+            }
+          }
+        }],
+        staffNumber:[{required: true,trigger:[ "blur",'change'],validator:(rule, value, callback) => {
+          let reg = /^(0|[1-9][0-9]*)$/g
+            if(!value){
+              callback(new Error('员工人数不能为空'))
+            }else{
+              if(!reg.test(value)){
+                callback(new Error('员工人数只能为数字'))
+              }else{
+                callback()
+              }
+            }
+          }}],
+        developersNumber:[{required: true,trigger:[ "blur",'change'],validator:(rule, value, callback) => {
+          let reg = /^(0|[1-9][0-9]*)$/g
+            if(!value){
+              callback(new Error('研发人数不能为空'))
+            }else{
+              if(!reg.test(value)){
+                callback(new Error('研发人数只能为数字'))
+              }else{
+                callback()
+              }
+            }
+          }}],
+        custWeb:[{required: true,trigger:[ "blur",'change'],message:'公司网站不能为空'}],
+        custMobile:[{required: true,trigger:[ "blur",'change'],message:'电话不能为空'}],
+        registTime:[{required: true,trigger:[ "blur",'change'],message:'注册时间不能为空'}],
+        custEmail:[{required: true,trigger:[ "blur",'change'],message:'邮箱不能为空'}],
+        businessIntroduction:[{required: true,trigger:[ "blur",'change'],message:'业务介绍不能为空'}],
+      },
       executors:[],
       contactTypes:[],
       types:[],
@@ -925,34 +887,12 @@ export default {
       }
       
     },
+    subForm(formName){
+      formTest.submitForm(this.$refs[formName],this.sub)
+    },
     async sub(){
-      // this.form.addresses=[
-      //     {country:this.form.work,addressDetail:this.form.workAddress,addressType:'A02'},
-      //     {country:this.form.reg,addressDetail:this.form.registAddress,addressType:'A01'}
-      //   ]
       var data =this.form
       data.customerStatus =2
-      // data.addresses = [{addressType: "A01",
-      //   // city: this.regAddress[1],
-      //   country: this.reg,
-      //   // custId: '',
-      //   addressDetail: this.regAddress,
-      //   // district: this.regAddress[2],
-      //   id: '',
-      //   // isDefault: 1,
-      //   // province: this.regAddress[0]
-      //   },
-      //   {addressType: "A02",
-      //   // city: this.workAddress[1],
-      //   country: this.work,
-      //   // custId: '',
-      //   addressDetail: this.workAddress,
-      //   // district: this.workAddress[2],
-      //   id: '',
-      //   // isDefault: 1,
-      //   // province: this.workAddress[0]
-      //   }
-      // ]
       var params = new FormData()
       for (let i in data) {
         // // //console.log(i,data[i])
@@ -980,9 +920,7 @@ export default {
           }
         }
       }
-        // //console.log(params)
       const res = await add(params)
-      // //console.log('新增结果',res)
       if(res){
         this.$message.success('保存成功')
         this.cancel()
@@ -1064,9 +1002,6 @@ $sc: 12;
 
   .content {
     height: 100%;
-    // background: pink;
-    // padding: 0 30px 20px;
-
     .selBox {
       padding: 0 20px 10px 20px;
       margin-bottom: 10px;
@@ -1075,11 +1010,8 @@ $sc: 12;
       background: #fff;
       .form {
         width: 100%;
-        // min-width: 900px;
-        // max-width: 1300px;
-        
         .el-form-item {
-          margin-bottom: 0;
+          // margin-bottom: 0;
           .el-cascader{
             width: 100%;
           }
