@@ -426,32 +426,32 @@
                     <el-input size="small" disabled v-model="scope.row.product"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="月份一" >
+                <el-table-column prop="" label="月份一（K/pcs）" >
                   <template slot-scope="scope">
                     <el-input size="small" disabled v-model="scope.row.pNumberOne"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="月份二" >
+                <el-table-column prop="" label="月份二（K/pcs）" >
                   <template slot-scope="scope">
                     <el-input size="small" disabled v-model="scope.row.pNumberTwo"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="月份三" >
+                <el-table-column prop="" label="月份三（K/pcs）" >
                   <template slot-scope="scope">
                     <el-input size="small" disabled v-model="scope.row.pNumberThree"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="月份四" >
+                <el-table-column prop="" label="月份四（K/pcs）" >
                   <template slot-scope="scope">
                     <el-input size="small" disabled v-model="scope.row.pNumberFour"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="月份五" >
+                <el-table-column prop="" label="月份五（K/pcs）" >
                   <template slot-scope="scope">
                     <el-input size="small" disabled v-model="scope.row.pNumberFive"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column prop="" label="月份六" >
+                <el-table-column prop="" label="月份六（K/pcs）" >
                   <template slot-scope="scope">
                     <el-input size="small" disabled v-model="scope.row.pNumberSix"></el-input>
                   </template>
