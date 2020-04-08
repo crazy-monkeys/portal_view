@@ -86,6 +86,17 @@
         top="10vh"
         >
         <el-form ref="form1" :model="form1" :rules='rules' size="small" class="form1" label-width="auto" label-position='top'  >
+          <el-form-item label="内部客户" v-if="title=='审批'" prop='inCust'>
+            <el-select v-model="form1.inCust"  filterable placeholder="请选择" > 
+              <el-option
+                v-for='item in inCusts'
+                :key='item.inCode'
+                :label='item.custName'
+                :value='item.inCode+","+item.custName'
+                >
+              </el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item :label="rowData.reportDealerName ? '销售':'代理商'" v-if="title=='审批'" :prop='(title=="审批"&&rowData.reportSalesName)?"":"value"'>
             <el-select v-model="form1.value"  filterable placeholder="请选择" > 
               <el-option
@@ -112,6 +123,7 @@
 <script>
 import Daterange from "../com/date";
 import {getList,approve,ret,getEmployeeIds,getDealers} from "@/api/customer/query.js";
+import {getCustListAll} from "@/api/stock/query.js";
 
 export default {
   name: "customerApprove",
@@ -120,6 +132,7 @@ export default {
   },
   data() {
     return {
+      inCusts:[],
       salers:[
         
       ],
@@ -128,7 +141,8 @@ export default {
       ],
       rules: {
         value: [{ required: true, trigger: "blur" ,message:'请选择'}],
-        msg: [{ required: true, trigger: "blur" ,message:'请输入'}],
+        inCust: [{ required: true, trigger: "blur" ,message:'请选择'}],
+        msg: [{ required: true, trigger: "blur" ,message:'请输入'}]
       },
       rowData:{},
       resetData:false,
@@ -143,6 +157,7 @@ export default {
       form1:{
         value:'',
         msg:'',
+        inCust:''
       },
       title:'',
       label:'',
@@ -186,9 +201,18 @@ export default {
     this.getList()
     this.getEmployeeIds()
     this.getDealers()
+    this.getCustListAll()
   },
   watch: {},
   methods: {
+    
+    async getCustListAll(){
+      const res = await getCustListAll();
+      console.log('内部客户列表',res)
+      if(res){
+       this.inCusts = res.data.data
+      }
+    },
     async getEmployeeIds(){
       const res = await getEmployeeIds();
       // //console.log('销售列表',res)
@@ -217,6 +241,7 @@ export default {
       this.form1={
         value:'',
         msg:'',
+        inCust:''
       }
       this.dialogVisible1 = false
     },
@@ -326,7 +351,9 @@ export default {
         dealerId:'',
         salesId:'',
         approvalRemark:this.form1.msg,
-        approvalType:1
+        approvalType:1,
+        inCode:this.form1.inCust.split(',')[0],
+        inName:this.form1.inCust.split(',')[1],
       }
       if(this.rowData.reportDealerName){
         data.salesId = this.form1.value
