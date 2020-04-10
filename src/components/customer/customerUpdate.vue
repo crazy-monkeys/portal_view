@@ -1113,7 +1113,7 @@ $sc: 12;
         // max-width: 1300px;
         
         .el-form-item {
-          margin-bottom: 0;
+          // margin-bottom: 0;
           .el-cascader{
             width: 100%;
           }
