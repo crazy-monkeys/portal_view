@@ -37,6 +37,7 @@
                 <el-button  type='primary' plain @click="search">查询</el-button>
                 <el-button   type='primary' plain @click="reset"> 重置</el-button>
                 <el-button @click='download1' type='primary' plain>导出</el-button>
+                <el-button @click='amdownload1' v-if="userType=='内部客户'" type='primary' plain>代理商经营部导出</el-button>
               </el-form-item>
             </el-form>
 
@@ -164,6 +165,17 @@
     },
     
     computed: {
+      userType() {
+        if(this.$store.state.loginUser.loginInfo.userType=='agent'){
+          return '代理商'
+        }else if(
+          this.$store.state.loginUser.loginInfo.userType=='subAgent'
+        ){
+          return '子代理商'
+        }else{
+          return '内部客户'
+        }
+      }
      
     },
     created() {
@@ -223,6 +235,35 @@
           });
           console.log(error);
         }); */
+
+    },
+    amdownload1(){
+      this.$http({
+            method: "get",
+            url: "" + process.env.API_ROOT + "/customer/visitRecord/agentBusinessExport",
+            responseType: "arraybuffer",
+            headers:{
+              'Authorization': sessionStorage.getItem('data'),
+            }
+          })
+            .then(res => {
+              // console.log(res.data);
+              const blob = new Blob([res.data], {
+                type: "application/vnd.ms-excel"
+              });
+              const blobUrl = window.URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              document.body.appendChild(a);
+              a.style.display = "none";
+              a.download = "模版.xlsx";
+              a.href = blobUrl;
+              a.click();
+              document.body.removeChild(a);
+            })
+            .catch(err => {
+              // console.log(err);
+              alert("网络异常");
+            });      
 
     },
       handleClick(){},
