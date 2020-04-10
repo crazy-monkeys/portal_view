@@ -327,8 +327,9 @@
                 </el-table-column>
                 <el-table-column prop="" label="关系类型" >
                   <template slot-scope="scope">
-                    <el-select size="small" v-model="scope.row.corporateType" >
-                      <el-option v-for="item in corporateTypes" :key="item.id" :label="item.zhName" :value="item.pValue"></el-option>
+                     <el-select size="small"   v-model="scope.row.corporateName">
+                      <el-option value="Z003" label="关联公司(Related Corporation)"></el-option>
+                      <el-option value="Z001" label="关联客户(Related Account)"></el-option>
                     </el-select>
                   </template>
                 </el-table-column>

@@ -46,8 +46,8 @@
           <el-form-item label=" ">
             <el-button size='small' @click="search" type='primary' plain>搜索</el-button>
             <el-button @click='reset' size='small' type='primary' plain>重置</el-button>
-            <!--<el-button @click='download' size='small' type='primary' plain>导出</el-button>-->
-            <el-button @click='amdownload' v-if="userType=='内部客户'" size='small' type='primary' plain>代理商经营部导出</el-button>
+            <!--<el-button @click='download' size='small' type='primary' plain>导出</el-button>
+            <el-button @click='amdownload' v-if="userType=='内部客户'" size='small' type='primary' plain>代理商经营部导出</el-button>-->
           </el-form-item>
         </el-form>
       </div>
