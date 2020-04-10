@@ -6,25 +6,25 @@
     </div>
     <div class="content">
       <div class="selBox">
-        <el-form ref="form" :model="form"   label-position="top" class="form" >
+        <el-form ref="form" :model="form" :rules="rules"   label-position="top" class="form" >
           <el-row :gutter="22">
             <el-col :span="6">
-              <el-form-item label="客户名称">
+              <el-form-item label="客户名称"  prop='custName'>
             <el-input size="small" v-model="form.custName" disabled></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="客户英文名">
+              <el-form-item label="客户英文名"  prop='custEnName'>
             <el-input size="small" v-model="form.custEnName" ></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="客户简称">
+              <el-form-item label="客户简称" prop='custAbbreviation'>
                 <el-input size="small" v-model="form.custAbbreviation"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="是否License客户">
+              <el-form-item label="是否License客户" prop='isLicense'>
             <el-select v-model="form.isLicense" size="small"  placeholder="请选择">
               <el-option  label="是" :value="1"></el-option>
               <el-option  label="否" :value="0"></el-option>
@@ -32,7 +32,7 @@
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="角色">
+              <el-form-item label="角色" prop='custRole'>
             <el-select v-model="form.custRole" size="small"  placeholder="请选择">
                   <el-option label="中国客户" value="Z001"></el-option>
                   <el-option label="亚太客户" value="Z002"></el-option>
@@ -42,94 +42,44 @@
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="公司资产">
+              <el-form-item label="公司资产(万)" prop='corportaeAssets'>
             <el-input size="small" v-model="form.corportaeAssets"></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="员工人数">
+              <el-form-item label="员工人数" prop='staffNumber'>
             <el-input size="small" v-model="form.staffNumber"></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="研发人数">
+              <el-form-item label="研发人数"  prop='developersNumber'>
             <el-input size="small" v-model="form.developersNumber"></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="邮箱">
+              <el-form-item label="邮箱"  prop='custEmail'>
             <el-input size="small" v-model='form.custEmail'></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="公司网站">
+              <el-form-item label="公司网站" prop='custWeb'>
             <el-input size="small" v-model='form.custWeb'></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="电话">
+              <el-form-item label="电话" prop='custMobile'>
             <el-input size="small" v-model='form.custMobile'></el-input>
           </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="注册时间" size="small" class="date">
+              <el-form-item label="注册时间"  prop='registTime' size="small" class="date">
             <el-date-picker v-model="form.registTime" value-format="yyyy-MM-dd" type="date" placeholder="选择日期"></el-date-picker>
           </el-form-item>
             </el-col>
-            <!-- <el-col :span="12">
-              <el-form-item label="注册地址" >
-                <el-row :gutter="22">
-                  <el-col :span="12">
-                <el-cascader
-                  v-model="reg"
-                  :options="province"
-                  separator='-'
-                  size="small"
-                  :props="prop"
-                  placeholder="请选择省市区">
-                  </el-cascader>
-                  </el-col>
-                <el-col :span="12">
-                <el-input size="small"  v-model="regAddress"  placeholder="详细地址"></el-input>
-                </el-col>
-                </el-row>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="办公地址" >
-                <el-row :gutter="22">
-                <el-col :span="12">
-                  <el-cascader
-                  v-model="work"
-                  :options="province"
-                  size="small"
-                  separator='-'
-                  :props="prop"
-                  placeholder="请选择省市区">
-                  </el-cascader>
-
-
-                </el-col>
-                <el-col :span="12">
-                <el-input size="small" v-model="workAddress" placeholder="详细地址"></el-input>
-
-                </el-col>
-
-
-                    </el-row>
-            
-              </el-form-item>
-
-
-
-            </el-col> -->
           </el-row>
-          
-          
-          <el-form-item label="业务介绍" class="txt">
+          <el-form-item label="业务介绍"  prop='businessIntroduction' class="txt">
             <el-input type="textarea" v-model="form.businessIntroduction" :rows="2" placeholder resize="none"></el-input>
           </el-form-item>
-          
         </el-form>
       </div>
       <div class="tab">
@@ -464,7 +414,7 @@
               </el-table>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="展锐产品型号" name="sixth">
+          <el-tab-pane label="展锐产品型号(K)" name="sixth">
             <div class="tabBox">
               <el-table :data="form.customerProducts" style="width: 100%" height="300">
                 <el-table-column prop="" label="物料"  width="150">
@@ -607,7 +557,7 @@
         </el-tabs>
       </div>
       <div class="sub">
-        <el-button type="primary" size="small" plain @click="sub">提交</el-button>
+        <el-button type="primary" size="small" plain @click="subForm('form')">提交</el-button>
         <el-button type="primary" size="small" plain @click="cancel">取消</el-button>
       </div>
     </div>
@@ -620,11 +570,61 @@ import {stringify} from "qs";
 import {getType} from '@/api/system/param.js'
 import {getEmployeeIds} from '@/api/customer/query.js'
   import {getAll} from '@/api/business/rebate.js'
+import formTest from '@/assets/js/formTest.js'
 
 export default {
   name: "customerUpdate",
   data() {
     return {
+      rules:{
+        custEnName:[{required: true,trigger:[ "blur",'change'],message:'客户英文名不能为空'}],
+        custName:[{required: true,trigger:[ "blur",'change'],message:'客户名称不能为空'}],
+        custAbbreviation:[{required: true,trigger:[ "blur",'change'],message:'客户简称不能为空'}],
+        isLicense:[{required: true,trigger:[ "blur",'change'],message:'是否License客户不能为空'}],
+        custRole:[{required: true,trigger:[ "blur",'change'],message:'角色不能为空'}],
+        corportaeAssets:[{required: true,trigger:[ "blur",'change'],validator:(rule, value, callback) => {
+          let reg = /^(0|[1-9][0-9]*)$/g
+            if(!value){
+              callback(new Error('公司资产不能为空'))
+            }else{
+              if(!reg.test(value)){
+                callback(new Error('公司资产只能为数字'))
+              }else{
+                callback()
+              }
+            }
+          }
+        }],
+        staffNumber:[{required: true,trigger:[ "blur",'change'],validator:(rule, value, callback) => {
+          let reg = /^(0|[1-9][0-9]*)$/g
+            if(!value){
+              callback(new Error('员工人数不能为空'))
+            }else{
+              if(!reg.test(value)){
+                callback(new Error('员工人数只能为数字'))
+              }else{
+                callback()
+              }
+            }
+          }}],
+        developersNumber:[{required: true,trigger:[ "blur",'change'],validator:(rule, value, callback) => {
+          let reg = /^(0|[1-9][0-9]*)$/g
+            if(!value){
+              callback(new Error('研发人数不能为空'))
+            }else{
+              if(!reg.test(value)){
+                callback(new Error('研发人数只能为数字'))
+              }else{
+                callback()
+              }
+            }
+          }}],
+        custWeb:[{required: true,trigger:[ "blur",'change'],message:'公司网站不能为空'}],
+        custMobile:[{required: true,trigger:[ "blur",'change'],message:'电话不能为空'}],
+        registTime:[{required: true,trigger:[ "blur",'change'],message:'注册时间不能为空'}],
+        custEmail:[{required: true,trigger:[ "blur",'change'],message:'邮箱不能为空'}],
+        businessIntroduction:[{required: true,trigger:[ "blur",'change'],message:'业务介绍不能为空'}],
+      },
       executors:[],
       employeeIds:[],
       contactTypes:[],
@@ -748,6 +748,9 @@ export default {
     },
   },
   methods: {
+    subForm(formName){
+      formTest.submitForm(this.$refs[formName],this.sub)
+    },
      async getAll(){
         const res = await getAll();
         // //console.log('所有执行方',res);
