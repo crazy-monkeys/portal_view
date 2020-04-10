@@ -54,7 +54,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="公司资产">
+              <el-form-item label="公司资产(万)">
                 <el-input size="small" v-model="form.corportaeAssets"></el-input>
               </el-form-item>
             </el-col>
@@ -418,7 +418,7 @@
               </el-table>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="产品型号" name="sixth">
+          <el-tab-pane label="展锐产品型号(K)" name="sixth">
             <div class="tabBox">
               <el-table :data="form.customerProducts" style="width: 100%" height="300">
                 <el-table-column prop="" label="物料" >
