@@ -281,6 +281,12 @@ export default new Router({
 
 
                 //交付管理
+
+                {
+                    path: 'handover/deliver',
+                    name: 'deliver',
+                    component: resolve => require(['@/components/handOver/deliver'], resolve),
+                },
                 //出收货  详情
                 {
                     path: 'handOver/shipment/detail',
